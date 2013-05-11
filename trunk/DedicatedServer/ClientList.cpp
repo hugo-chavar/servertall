@@ -38,7 +38,7 @@ std::list<Client*>::iterator ClientList::findClient(std::string userID){
 bool ClientList::isUserIDAvailable(std::string userID) {
 	bool available = false;
 
-	if (this->getClient(userID) != NULL) // CAMBIADO DE == A !=
+	if (this->getClient(userID) == NULL)
 		available = true;
 
 	return available;

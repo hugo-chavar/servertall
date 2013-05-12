@@ -32,7 +32,7 @@ void ChatManager::processRequests() {
 		instructionOut.clear();
 		std::cout << instructionIn.serialize() << std::endl;
 		switch (instructionIn.getOpCode()) {
-			case OPCODE_CHAT_LOGOUT_REQUEST:
+			case OPCODE_DISCONNECT_FROM_CHAT:
 				argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
 				client = this->getClients().detachClient(argument);
 				client->stopClient();
@@ -41,7 +41,7 @@ void ChatManager::processRequests() {
 				//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_USERD_ID,argument);
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_FROM,argument);
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MESSAGE,"---logged out---");
-				this->getClients().addBroadcastFrom(instructionOut,argument);
+				this->getClients().addBroadcast(instructionOut,argument);
 				std::cout << "THE USER " << argument << " DISCONNECTED FROM CHAT" << std::endl;
 				break;
 			case OPCODE_CHAT_MESSAGE_OUT:
@@ -59,12 +59,12 @@ void ChatManager::processRequests() {
 					}
 				} else {
 					std::cout << "BROADCASTING CHAT INSTRUCTION: " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_MESSAGE) << std::endl;
-					this->getClients().addBroadcastFrom(instructionOut,instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+					this->getClients().addBroadcast(instructionOut,instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 				}
 				break;
 			case OPCODE_CONNECTION_ERROR: {
-				std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) << " DISCONECTED ABRUPTLY" << std::endl;
-				client = this->getClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+				std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) << " DISCONECTED ABRUPTLY FROM CHAT" << std::endl;
+				client = this->getClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 				if (client != NULL) {
 					client->stopClient();
 					delete client;

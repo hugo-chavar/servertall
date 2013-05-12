@@ -4,25 +4,25 @@
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
-ClientList::ClientList(){
+ClientList::ClientList() {
 }
 
 // ----------------------------------- PRIVATE METHODS -----------------------------------
 
-Mutex& ClientList::getClientListMutex(){
+Mutex& ClientList::getClientListMutex() {
 	return this->clientListMutex;
 }
 
-std::list<Client*>& ClientList::getClients(){
+std::list<Client*>& ClientList::getClients() {
 	return this->clients;
 }
 
 //IMPORTANT: CALL ONLY AFTER LOCK.
-std::list<Client*>::iterator ClientList::findClient(std::string userID){
+std::list<Client*>::iterator ClientList::findClient(std::string userID) {
 	std::list<Client*>::iterator i = this->getClients().begin();
 	bool found = false;
 
-	while( (i != this->getClients().end()) && (!found) ){
+	while( (i != this->getClients().end()) && (!found) ) {
 		if ((*i)->getUserID() == userID){
 			found = true;
 		}else{
@@ -85,8 +85,8 @@ Client* ClientList::detachClient(std::string userID) {
 	return client;
 }
 
-bool ClientList::addInstructionTo(Instruction instruction, std::string userID) {
-	Client* client = this->getClient(userID);
+bool ClientList::addInstructionTo(Instruction& instruction, std::string to) {
+	Client* client = this->getClient(to);
 
 	if (client != NULL) {
 		client->addInstruction(instruction);
@@ -96,11 +96,11 @@ bool ClientList::addInstructionTo(Instruction instruction, std::string userID) {
 	}
 }
 
-void ClientList::addBroadcastFrom(Instruction instruction, std::string userID) {
+void ClientList::addBroadcast(Instruction& instruction, std::string from) {
 	this->getClientListMutex().lock();
 
 	for (std::list<Client*>::iterator it = this->getClients().begin(); it != this->getClients().end(); ++it) {
-		if (userID != (*it)->getUserID())
+		if (from != (*it)->getUserID())
 			(*it)->addInstruction(instruction);
 	}
 

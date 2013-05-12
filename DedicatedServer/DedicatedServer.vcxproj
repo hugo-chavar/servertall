@@ -37,10 +37,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\Libraries\PThreads\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\Libraries\SDL-1.2.15\include;..\Libraries\PThreads\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>..\Libraries\PThreads\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\Libraries\SDL-1.2.15\lib\x86;..\Libraries\PThreads\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -50,7 +50,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>pthreadVC2.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>pthreadVC2.lib;Ws2_32.lib;SDL.lib;SDLmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -73,7 +73,7 @@
     <ClCompile Include="ClientList.cpp" />
     <ClCompile Include="ClientUpdater.cpp" />
     <ClCompile Include="ConditionVariable.cpp" />
-    <ClCompile Include="Conector.cpp" />
+    <ClCompile Include="Connector.cpp" />
     <ClCompile Include="DirList.cpp" />
     <ClCompile Include="Instruction.cpp" />
     <ClCompile Include="InstructionQueue.cpp" />
@@ -84,6 +84,7 @@
     <ClCompile Include="Receiver.cpp" />
     <ClCompile Include="Sender.cpp" />
     <ClCompile Include="Serializable.cpp" />
+    <ClCompile Include="SimulationManager.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="StringUtilities.cpp" />
     <ClCompile Include="Thread.cpp" />
@@ -105,6 +106,7 @@
     <ClInclude Include="Receiver.h" />
     <ClInclude Include="Sender.h" />
     <ClInclude Include="Serializable.h" />
+    <ClInclude Include="SimulationManager.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="StringUtilities.h" />
     <ClInclude Include="Thread.h" />

@@ -30,9 +30,9 @@ public:
 
 	Client* detachClient(std::string userID);
 
-	bool addInstructionTo(Instruction instruction, std::string userID);
+	bool addInstructionTo(Instruction& instruction, std::string to);
 
-	void addBroadcastFrom(Instruction instruction, std::string userID);
+	void addBroadcast(Instruction& instruction, std::string from = "");
 
 	//TODO: ADD BROADCAST MECHANISM TO SENDERS.
 	//void broadcast();

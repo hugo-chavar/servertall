@@ -24,7 +24,7 @@ public:
 
 	Socket* getSocket();
 
-	void addInstruction(Instruction instruction);
+	void addInstruction(Instruction& instruction);
 
 	void startClient();
 

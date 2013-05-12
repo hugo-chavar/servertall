@@ -6,6 +6,8 @@
 #include "Listener.h"
 #include "InstructionQueue.h"
 
+#define TAMBUFFER 1024
+
 class ClientUpdater : public Thread {
 private:
 	bool shuttingDown;
@@ -33,6 +35,10 @@ private:
 	void updateClient();
 
 	void* run();
+
+	void sendDirectory(std::string path);
+
+	void sendFile(std::string path);
 
 public:
 	ClientUpdater();

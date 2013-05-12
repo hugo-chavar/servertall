@@ -76,7 +76,7 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			std::cout << "THE USER " << argument << " DISCONNECTED FROM SIMULATION" << std::endl;
 			break;
 		case OPCODE_CLIENT_COMMAND:
-			std::cout << "PROCESSING COMMAND FROM CLIENT" << std::endl;
+			std::cout << "PROCESSING COMMAND FROM CLIENT: " << instructionIn.serialize() << std::endl;
 			break;
 		case OPCODE_CONNECTION_ERROR: {
 			std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) << " DISCONECTED ABRUPTLY FROM SIMULATION" << std::endl;

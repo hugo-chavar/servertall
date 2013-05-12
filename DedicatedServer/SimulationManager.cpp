@@ -44,10 +44,10 @@ void SimulationManager::simulate() {
 		// AVANZAR LA SIMULACIÓN UN DELTA DE TIEMPO.
 
 		// HACER UN BROADCAST DEL UPDATE A LOS CLIENTES
-		instructionOut.clear();
+/*		instructionOut.clear();
 		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 		instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_DUMMY,"DUMMY UPDATE");
-		this->getClients().addBroadcast(instructionOut);
+		this->getClients().addBroadcast(instructionOut);*/
 
 		if (milisecondsTonextFrame >= SDL_GetTicks() - frameStartedAt)
 			SDL_Delay(static_cast<unsigned int>(milisecondsTonextFrame - (SDL_GetTicks() - frameStartedAt)));

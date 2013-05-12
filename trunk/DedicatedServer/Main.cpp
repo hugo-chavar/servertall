@@ -4,6 +4,7 @@
 
 #include "Main.h"
 #include "ChatManager.h"
+#include "SimulationManager.h"
 #include "LoginManager.h"
 
 #ifndef DEFAULT_PORT_TO_LISTEN
@@ -19,10 +20,15 @@ int main(int argc, char *argv[]){
 
 	WSAData ws;
 	WSAStartup(MAKEWORD(2,2),&ws);
+
 	ChatManager chatManager;
 	chatManager.startChatManager();
+
+	SimulationManager simulationManager;
+	simulationManager.startSimulationManager();
+
 	//Port to listen and max pending connections must be retrieved from YAML
-	LoginManager loginManager(DEFAULT_PORT_TO_LISTEN,DEFAULT_MAX_PENDING_CONNECTIONS,chatManager);
+	LoginManager loginManager(DEFAULT_PORT_TO_LISTEN,DEFAULT_MAX_PENDING_CONNECTIONS,chatManager,simulationManager);
 	loginManager.startLoginManager();
 
 	if (!loginManager.isStatusOk()){
@@ -32,6 +38,7 @@ int main(int argc, char *argv[]){
 	}
 
 	std::cin >> command;
+
 	while (command != "exit"){
 
 		std::cout << "COMMAND NOT RECOGNIZED: " << command << std::endl;

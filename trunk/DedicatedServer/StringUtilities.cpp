@@ -67,6 +67,11 @@ namespace stringUtilities {
 		return stringstream.str();
 	}
 
+	std::string unsignedToString(unsigned i) {
+		int aux = static_cast<int>(i);
+		return intToString(aux);
+	}
+
 	std::string floatToString(float f) {
 		std::stringstream stringstream;
 		stringstream << f;

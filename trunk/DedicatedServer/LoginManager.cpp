@@ -4,7 +4,7 @@
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
-LoginManager::LoginManager(int portToListen, int maxPendingConnections, ChatManager& chatManager) : listener(INADDR_ANY,portToListen,maxPendingConnections,this->getPreLoggedClients(),this->getInstructionQueue()), chatManager(chatManager) {
+LoginManager::LoginManager(int portToListen, int maxPendingConnections, ChatManager& chatManager, SimulationManager& simulationManager) : listener(INADDR_ANY,portToListen,maxPendingConnections,this->getPreLoggedClients(),this->getInstructionQueue()), chatManager(chatManager), simulationManager(simulationManager) {
 	this->statusOk = true;
 	this->error = "";
 	this->maxFileUpdaters = MAX_FILE_UPDATERS;
@@ -45,6 +45,10 @@ ChatManager& LoginManager::getChatManager() {
 	return this->chatManager;
 }
 
+SimulationManager& LoginManager::getSimulationManager() {
+	return this->simulationManager;
+}
+
 void LoginManager::setStatusOk(bool statusOk) {
 	this->statusOk = statusOk;
 }
@@ -66,7 +70,6 @@ void LoginManager::processRequests() {
 	Instruction instructionIn;
 	Instruction instructionOut;
 	Client* client = NULL;
-	Client* newClient = NULL;
 	std::string argument = "";
 	unsigned int index = 0;
 	bool found = false;
@@ -107,7 +110,6 @@ void LoginManager::processRequests() {
 							index = i;
 						}
 					}
-
 					if (index < this->getMaxFileUpdaters()) {
 						client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 						if (client != NULL) {// THIS CHECK SHOULD BE UNNECESARY.....
@@ -127,11 +129,6 @@ void LoginManager::processRequests() {
 					if ( (client != NULL) && (!this->getLoggedClients().isUserIDAvailable(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID))) ) {
 						instructionOut.setOpCode(OPCODE_CHAT_CONNECTION_ESTABLISHED);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"SOME CHAT GREEETING MESSAGE");
-						//newClient = new Client(client->getSocket(),this->getChatManager().getInstructionQueue(),client->getUserID(),true);
-						//client->getConnector().setSocket(NULL);
-						//client->stopClient();
-						//delete client;
-						//newClient->startClient();
 						client->getConnector().setInstructionQueue(&this->getChatManager().getInstructionQueue());
 						client->setUserID(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID));
 						this->getChatManager().getClients().addClient(client);
@@ -142,18 +139,16 @@ void LoginManager::processRequests() {
 					}
 					break;
 				case OPCODE_CONNECT_TO_SIMULATION:
-					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID);
+					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
 					client = this->getPreLoggedClients().detachClient(argument);
-					if (client != NULL) {
-						instructionOut.setOpCode(OPCODE_LOGIN_OK);
+					if ( (client != NULL) && (!this->getLoggedClients().isUserIDAvailable(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID))) ) {
+						instructionOut.setOpCode(OPCODE_SIMULATION_CONNECTION_ESTABLISHED);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"SOME SIMULATION GREEETING MESSAGE");
-						//newClient = new Client(client->getSocket(),this->getSimulation().getInstructionQueue(),client->getUserID(),true);
-						//newClient->startClient();
-						//this->getSimulation().getClientList().addClient(newClient);
-						//newClient->addInstruction(instructionOut);
-						std::cout << "THE USER " << argument << " CONNECTED TO SIMULATION" << std::endl;
-						client->stopClient();
-						delete client;
+						client->getConnector().setInstructionQueue(&this->getSimulationManager().getInstructionQueue());
+						client->setUserID(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID));
+						this->getSimulationManager().getClients().addClient(client);
+						client->addInstruction(instructionOut);
+						std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID) << " CONNECTED TO SIMULATION" << std::endl;
 					} else {
 						std::cout << "THIS SHOULD NEVER EVER EVER HAPPEN EITHER" << std::endl;
 					}
@@ -171,7 +166,7 @@ void LoginManager::processRequests() {
 					break;
 				case OPCODE_DISCONNECT:
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
-					client = this->getLoggedClients().detachClient(argument);
+					client = this->getPreLoggedClients().detachClient(argument);
 					if (client != NULL) {
 						client->stopClient();
 						delete client;
@@ -182,12 +177,11 @@ void LoginManager::processRequests() {
 				case OPCODE_CONNECTION_ERROR:
 					std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) << " DISCONECTED ABRUPTLY" << std::endl;
 					client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
-					if (client != NULL) {
-						client->stopClient();
-						delete client;
-					} else {
-						std::cout << "THE FINAL EXAMPLE OF SOMETHING THAT SHOULD NEVER EVER EVER HAPPEN" << std::endl;
+					if (client == NULL) {
+						client = this->getLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 					}
+					client->stopClient();
+					delete client;
 					break;
 				default:
 					instructionOut.setOpCode(OPCODE_INVALID);

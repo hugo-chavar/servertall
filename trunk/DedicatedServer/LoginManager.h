@@ -11,6 +11,7 @@
 #include "Listener.h"
 #include "InstructionQueue.h"
 #include "ChatManager.h"
+#include "SimulationManager.h"
 
 class LoginManager : public Thread {
 private:
@@ -27,9 +28,9 @@ private:
 
 	std::vector<ClientUpdater> clientUpdaters;
 
-	//Simulator& simulator;
-
 	ChatManager& chatManager;
+
+	SimulationManager& simulationManager;
 
 	bool statusOk;
 
@@ -49,6 +50,8 @@ private:
 
 	ChatManager& getChatManager();
 
+	SimulationManager& getSimulationManager();
+
 	void setStatusOk(bool statusOk);
 
 	void setError(std::string error);
@@ -64,7 +67,7 @@ private:
 	void* run();
 
 public:
-	LoginManager(int portToListen, int maxPendingConnections, ChatManager& chatManager);
+	LoginManager(int portToListen, int maxPendingConnections, ChatManager& chatManager, SimulationManager& simulationManager);
 
 	bool isStatusOk();
 

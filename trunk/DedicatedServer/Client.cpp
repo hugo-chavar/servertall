@@ -38,7 +38,7 @@ Socket* Client::getSocket() {
 	return this->getConnector().getSocket();
 }
 
-void Client::addInstruction(Instruction instruction) {
+void Client::addInstruction(Instruction& instruction) {
 	this->getConnector().addInstruction(instruction);
 }
 

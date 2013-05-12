@@ -19,7 +19,6 @@ int main(int argc, char *argv[]){
 
 	WSAData ws;
 	WSAStartup(MAKEWORD(2,2),&ws);
-
 	ChatManager chatManager;
 	chatManager.startChatManager();
 	//Port to listen and max pending connections must be retrieved from YAML
@@ -33,7 +32,6 @@ int main(int argc, char *argv[]){
 	}
 
 	std::cin >> command;
-
 	while (command != "exit"){
 
 		std::cout << "COMMAND NOT RECOGNIZED: " << command << std::endl;

@@ -74,6 +74,7 @@
     <ClCompile Include="ClientUpdater.cpp" />
     <ClCompile Include="ConditionVariable.cpp" />
     <ClCompile Include="Conector.cpp" />
+    <ClCompile Include="DirList.cpp" />
     <ClCompile Include="Instruction.cpp" />
     <ClCompile Include="InstructionQueue.cpp" />
     <ClCompile Include="Listener.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="ClientUpdater.h" />
     <ClInclude Include="ConditionVariable.h" />
     <ClInclude Include="Connector.h" />
+    <ClInclude Include="DirList.h" />
     <ClInclude Include="LoginManager.h" />
     <ClInclude Include="Instruction.h" />
     <ClInclude Include="InstructionQueue.h" />

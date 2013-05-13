@@ -57,29 +57,10 @@ void ClientUpdater::updateClient() {
 	bool finished = false;
 	this->getClient()->getConnector().setInstructionQueue(&this->getInstructionQueue());
 
-	unsigned int i = 0;
+	instructionOut.clear();
+	sendDirectory("../Images");
+	sendDirectory("../Configuration");
 
-	do {
-		//mandar instrucción.
-		instructionOut.clear();
-		instructionOut.setOpCode(OPCODE_UPDATE_FILE);
-		this->getClient()->addInstruction(instructionOut);
-		i++;
-		instructionIn = this->getInstructionQueue().getNextInstruction(true);
-		std::cout << instructionIn.serialize() << std::endl;
-		if (i == 3)
-			finished = true;
-		//procesar instrucción.
-	} while(!this->isShuttingDown() && !finished );
-
-/*	while(!this->isShuttingDown() && !finished){
-		instructionOut.clear();
-		sendDirectory("../Images");
-		sendDirectory("../Configuration");
-		finished = true;
-	}*/
-	
-	this->getClient()->getConnector().setInstructionQueue(&this->getServerInstructionQueue());
 	instructionOut.clear();
 	instructionOut.setOpCode(OPCODE_UPDATE_COMPLETE);
 	this->getClient()->addInstruction(instructionOut);
@@ -90,6 +71,7 @@ void ClientUpdater::updateClient() {
 void ClientUpdater::sendFile(std::string path)
 {
 	Instruction instructionOut;
+	Instruction instructionIn;
 	instructionOut.clear();
 
 	std::ifstream archivo;
@@ -102,6 +84,8 @@ void ClientUpdater::sendFile(std::string path)
 	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SERIALIZED_PATH,path);
 	this->getClient()->addInstruction(instructionOut);
 	instructionOut.clear();
+	this->receiveConfirmation();
+
 	archivo.seekg(0, std::ios::end);
 	int tamanio=(int)archivo.tellg();
 	archivo.seekg(0, std::ios::beg);
@@ -115,31 +99,37 @@ void ClientUpdater::sendFile(std::string path)
 		archivo.read(buffer,sizeof(buffer));
 		int leidos=(int)archivo.gcount();
 		enviados+=leidos;
-		std::string str_buff(buffer,leidos);
+		std::string str_buff=stringUtilities::replaceCharForString('\0',buffer,leidos,"<BARRACERO>");
 		instructionOut.setOpCode(OPCODE_UPDATE_FILE);
 		instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SERIALIZED_FILE,str_buff);
 		this->getClient()->addInstruction(instructionOut);
 		instructionOut.clear();
+		this->receiveConfirmation();
 	}
+	archivo.close();
 	instructionOut.setOpCode(OPCODE_UPDATE_FILE_COMPLETE);
 	this->getClient()->addInstruction(instructionOut);
-	archivo.close();
+	this->receiveConfirmation();
 }
 
 void ClientUpdater::sendDirectory(std::string path)
 {
 	Instruction instructionOut;
+	Instruction instructionIn;
 	instructionOut.clear();
 	//Envio arbol de directorios
 	DirList dirList=DirList();
 	std::string dir_string="";
 	dirList.serializarDirectorio(path,dir_string);
 	instructionOut.setOpCode(OPCODE_UPDATE_DIRECTORY);
-
-	//TODO:agregar argumento con nombre del directorio
 	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SERIALIZED_PATH,path);
 	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SERIALIZED_DIR,dir_string);
 	this->getClient()->addInstruction(instructionOut);
+	do
+	{
+	instructionIn = this->getInstructionQueue().getNextInstruction(true);
+	}
+	while(instructionIn.getOpCode()!=OPCODE_UPDATE_RECV);
 
 	//Envio archivos
 	std::vector<std::string> directorios_v;
@@ -170,6 +160,15 @@ void ClientUpdater::sendDirectory(std::string path)
 	}
 }
 
+void ClientUpdater::receiveConfirmation()
+{
+	Instruction instructionIn;
+			do
+			{
+				instructionIn = this->getInstructionQueue().getNextInstruction(true);
+			}
+			while(instructionIn.getOpCode()!=OPCODE_UPDATE_RECV);
+}
 
 void* ClientUpdater::run() {
 	this->updateClient();

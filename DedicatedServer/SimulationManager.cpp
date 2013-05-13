@@ -27,8 +27,10 @@ void SimulationManager::simulate() {
 	Instruction instructionIn;
 	Instruction instructionOut;
 	//TODO: create FPS manager.
-	float milisecondsTonextFrame = static_cast<float>(1000/60); //HARDCODED FPS
+	float milisecondsTonextFrame = static_cast<float>(1000)/60; //HARDCODED FPS
 	unsigned int frameStartedAt = 0;
+	
+	unsigned int i = 0;
 
 	while(!this->isStopping()) {
 		frameStartedAt = SDL_GetTicks();
@@ -44,10 +46,11 @@ void SimulationManager::simulate() {
 		// AVANZAR LA SIMULACIÓN UN DELTA DE TIEMPO.
 
 		// HACER UN BROADCAST DEL UPDATE A LOS CLIENTES
-/*		instructionOut.clear();
+		instructionOut.clear();
 		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
-		instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_DUMMY,"DUMMY UPDATE");
-		this->getClients().addBroadcast(instructionOut);*/
+		instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_DUMMY,"DUMMY UPDATE" + stringUtilities::unsignedToString(i));
+		this->getClients().addBroadcast(instructionOut);
+		i++;
 
 		if (milisecondsTonextFrame >= SDL_GetTicks() - frameStartedAt)
 			SDL_Delay(static_cast<unsigned int>(milisecondsTonextFrame - (SDL_GetTicks() - frameStartedAt)));

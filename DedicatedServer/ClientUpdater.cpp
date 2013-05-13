@@ -9,7 +9,7 @@
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
-ClientUpdater::ClientUpdater() {
+ClientUpdater::ClientUpdater(InstructionQueue& serverInstructionQueue) : serverInstructionQueue(serverInstructionQueue) {
 	this->shuttingDown = false;
 	this->statusOk = true;
 	this->error = "";
@@ -30,6 +30,14 @@ void ClientUpdater::setAvailable(bool available) {
 	this->available = available;
 }
 
+InstructionQueue& ClientUpdater::getInstructionQueue() {
+	return this->instructionQueue;
+}
+
+InstructionQueue& ClientUpdater::getServerInstructionQueue() {
+	return this->serverInstructionQueue;
+}
+
 Client* ClientUpdater::getClient() {
 	return this->client;
 }
@@ -45,16 +53,35 @@ void ClientUpdater::setError(std::string error) {
 void ClientUpdater::updateClient() {
 	Instruction instructionIn;
 	Instruction instructionOut;
-	Client* client = NULL;
 	std::string argument = "";
 	bool finished = false;
-	while(!this->isShuttingDown() && !finished){
+	this->getClient()->getConnector().setInstructionQueue(&this->getInstructionQueue());
+
+	unsigned int i = 0;
+
+	do {
+		//mandar instrucción.
+		instructionOut.clear();
+		instructionOut.setOpCode(OPCODE_UPDATE_FILE);
+		this->getClient()->addInstruction(instructionOut);
+		i++;
+		std::cout << "1" << std::endl;
+		instructionIn = this->getInstructionQueue().getNextInstruction(true);
+		std::cout << "2 - " << instructionIn.serialize() << std::endl;
+		if (i == 3)
+			finished = true;
+		std::cout << "3" << std::endl;
+		//procesar instrucción.
+	} while(!this->isShuttingDown() && !finished );
+
+/*	while(!this->isShuttingDown() && !finished){
 		instructionOut.clear();
 		sendDirectory("../Images");
 		sendDirectory("../Configuration");
 		finished = true;
-	}
+	}*/
 	
+	this->getClient()->getConnector().setInstructionQueue(&this->getServerInstructionQueue());
 	instructionOut.clear();
 	instructionOut.setOpCode(OPCODE_UPDATE_COMPLETE);
 	this->getClient()->addInstruction(instructionOut);
@@ -62,7 +89,7 @@ void ClientUpdater::updateClient() {
 	this->stopClientUpdater();
 }
 
-void ClientUpdater::sendFile(string path)
+void ClientUpdater::sendFile(std::string path)
 {
 	Instruction instructionOut;
 	instructionOut.clear();
@@ -101,7 +128,7 @@ void ClientUpdater::sendFile(string path)
 	archivo.close();
 }
 
-void ClientUpdater::sendDirectory(string path)
+void ClientUpdater::sendDirectory(std::string path)
 {
 	Instruction instructionOut;
 	instructionOut.clear();
@@ -119,7 +146,7 @@ void ClientUpdater::sendDirectory(string path)
 	//Envio archivos
 	std::vector<std::string> directorios_v;
 	stringUtilities::splitString(dir_string,directorios_v,'~');
-	string directorioCorriente=path;
+	std::string directorioCorriente=path;
 
 	for(int i=0;i<directorios_v.size();i++)
 	{

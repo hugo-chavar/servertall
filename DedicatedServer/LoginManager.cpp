@@ -198,7 +198,7 @@ void LoginManager::processRequests() {
 }
 
 void LoginManager::createClientUpdater() {
-	ClientUpdater clientUpdater;
+	ClientUpdater clientUpdater(this->getInstructionQueue());
 	this->getClientUpdaters().push_back(clientUpdater);
 }
 

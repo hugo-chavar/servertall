@@ -14,6 +14,10 @@ private:
 
 	bool available;
 
+	InstructionQueue instructionQueue;
+
+	InstructionQueue& serverInstructionQueue;
+
 	Client* client;
 
 	bool statusOk;
@@ -25,6 +29,10 @@ private:
 	void setShuttingDown(bool shuttingDown);
 
 	void setAvailable(bool available);
+
+	InstructionQueue& getInstructionQueue();
+
+	InstructionQueue& getServerInstructionQueue();
 
 	Client* getClient();
 
@@ -41,7 +49,7 @@ private:
 	void sendFile(std::string path);
 
 public:
-	ClientUpdater();
+	ClientUpdater(InstructionQueue& serverInstructionQueue);
 
 	void setClient(Client* client);
 

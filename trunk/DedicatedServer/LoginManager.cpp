@@ -94,6 +94,7 @@ void LoginManager::processRequests() {
 						client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 						client->setUserID(argument);
 						this->getLoggedClients().addClient(client);
+						Game::instance().addPlayer(argument, "frodo"); // Chequear al momento de elegir si existe el personaje, no en el logeo. Mutex?
 						std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
 					} else {
 						instructionOut.setOpCode(OPCODE_USERID_NOT_AVAILABLE);

@@ -21,8 +21,6 @@ int main(int argc, char *argv[]){
 	std::string command;
 
 	Game::instance().initialize();
-	// AGREGAR addPlayer(player) EN EL LOGINMANAGER POR CADA LOGGEO.
-	// Game::instance().addPlayer(player1);
 
 	WSAData ws;
 	WSAStartup(MAKEWORD(2,2),&ws);

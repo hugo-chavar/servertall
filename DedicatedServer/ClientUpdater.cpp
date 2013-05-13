@@ -65,12 +65,10 @@ void ClientUpdater::updateClient() {
 		instructionOut.setOpCode(OPCODE_UPDATE_FILE);
 		this->getClient()->addInstruction(instructionOut);
 		i++;
-		std::cout << "1" << std::endl;
 		instructionIn = this->getInstructionQueue().getNextInstruction(true);
-		std::cout << "2 - " << instructionIn.serialize() << std::endl;
+		std::cout << instructionIn.serialize() << std::endl;
 		if (i == 3)
 			finished = true;
-		std::cout << "3" << std::endl;
 		//procesar instrucción.
 	} while(!this->isShuttingDown() && !finished );
 
@@ -201,9 +199,10 @@ void ClientUpdater::startClientUpdater() {
 }
 
 void ClientUpdater::stopClientUpdater() {
-	this->setClient(NULL);
 	this->setShuttingDown(true);
+	this->getInstructionQueue().stopWaiting();
 	this->join();
+	this->setClient(NULL);
 	this->setAvailable(true);
 }
 

@@ -31,7 +31,8 @@ public:
 	AnimatedEntity* animatedEntityAt(unsigned pos);
 	EntityObject* entityObjectAt(unsigned pos);
 	Configuration* configuration();
-	void addPlayer(Player player);
+	void addPlayer(string userID, string characterName);
+	PersonajeModelo* findCharacter(string name);
 
 private:
 	Game();

@@ -47,7 +47,24 @@ AnimatedEntity* Game::animatedEntityAt(unsigned pos) {
 	return NULL;
 }
 
-void Game::addPlayer(Player player) {
+PersonajeModelo* Game::findCharacter(string name) {
+	bool found = false;
+	PersonajeModelo* character = NULL;
+	int i = 0;
+	while ((i<_world.vMainCharacters()->size()) && (!found)) {
+		if (_world.vMainCharacters()->at(i)->getAnimation()->name()==name) {
+			found = true;
+			character = _world.vMainCharacters()->at(i);
+		}
+		else
+			i++;
+	}
+	return character;
+}
+
+void Game::addPlayer(string userID, string characterName) {
+	PersonajeModelo *character = findCharacter(characterName);
+	Player player(userID, character);
 	player.getCharacter()->setVelocidad(_configuration->mainCharacterSpeed());
 	////player.getCharacter()->setName(nombreJugador);
 	player.getCharacter()->createVision(_configuration->visionRange());

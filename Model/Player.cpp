@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(int userID, PersonajeModelo *character) {
+Player::Player(string userID, PersonajeModelo *character) {
 	_userID = userID;
 	_character = character;
 }

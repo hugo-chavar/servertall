@@ -7,12 +7,12 @@
 class Player {
 
 public:
-	Player(int userID, PersonajeModelo *character);
+	Player(string userID, PersonajeModelo *character);
 	~Player();
 	PersonajeModelo *getCharacter();
 
 private:
-	int _userID;
+	string _userID;
 	PersonajeModelo *_character;
 
 };

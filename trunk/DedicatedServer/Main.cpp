@@ -6,6 +6,8 @@
 #include "ChatManager.h"
 #include "SimulationManager.h"
 #include "LoginManager.h"
+#include "Game.h"
+#include "Player.h"
 
 #ifndef DEFAULT_PORT_TO_LISTEN
 #define DEFAULT_PORT_TO_LISTEN 9443
@@ -17,6 +19,10 @@
 
 int main(int argc, char *argv[]){
 	std::string command;
+
+	Game::instance().initialize();
+	// AGREGAR addPlayer(player) EN EL LOGINMANAGER POR CADA LOGGEO.
+	// Game::instance().addPlayer(player1);
 
 	WSAData ws;
 	WSAStartup(MAKEWORD(2,2),&ws);
@@ -36,7 +42,7 @@ int main(int argc, char *argv[]){
 		std::cerr << "Error: " << loginManager.getError() << std::endl;
 		return EXIT_FAILURE;
 	}
-
+	
 	std::cin >> command;
 
 	while (command != "exit"){

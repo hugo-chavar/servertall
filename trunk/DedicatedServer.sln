@@ -2,6 +2,17 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C++ Express 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DedicatedServer", "DedicatedServer\DedicatedServer.vcxproj", "{EE6889AD-6273-4AB5-AE4D-D3623422B9E9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{746EE20C-33A8-41E5-8DBF-EB3A15229599} = {746EE20C-33A8-41E5-8DBF-EB3A15229599}
+		{212F5671-8725-44EA-B548-EBD7852B6D5E} = {212F5671-8725-44EA-B548-EBD7852B6D5E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Model", "Model\Model.vcxproj", "{212F5671-8725-44EA-B548-EBD7852B6D5E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{746EE20C-33A8-41E5-8DBF-EB3A15229599} = {746EE20C-33A8-41E5-8DBF-EB3A15229599}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{746EE20C-33A8-41E5-8DBF-EB3A15229599}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +24,14 @@ Global
 		{EE6889AD-6273-4AB5-AE4D-D3623422B9E9}.Debug|Win32.Build.0 = Debug|Win32
 		{EE6889AD-6273-4AB5-AE4D-D3623422B9E9}.Release|Win32.ActiveCfg = Release|Win32
 		{EE6889AD-6273-4AB5-AE4D-D3623422B9E9}.Release|Win32.Build.0 = Release|Win32
+		{212F5671-8725-44EA-B548-EBD7852B6D5E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{212F5671-8725-44EA-B548-EBD7852B6D5E}.Debug|Win32.Build.0 = Debug|Win32
+		{212F5671-8725-44EA-B548-EBD7852B6D5E}.Release|Win32.ActiveCfg = Release|Win32
+		{212F5671-8725-44EA-B548-EBD7852B6D5E}.Release|Win32.Build.0 = Release|Win32
+		{746EE20C-33A8-41E5-8DBF-EB3A15229599}.Debug|Win32.ActiveCfg = Debug|Win32
+		{746EE20C-33A8-41E5-8DBF-EB3A15229599}.Debug|Win32.Build.0 = Debug|Win32
+		{746EE20C-33A8-41E5-8DBF-EB3A15229599}.Release|Win32.ActiveCfg = Release|Win32
+		{746EE20C-33A8-41E5-8DBF-EB3A15229599}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

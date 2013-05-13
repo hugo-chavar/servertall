@@ -26,7 +26,7 @@ private:
 	//This probably should be in the config file.
 	unsigned int maxFileUpdaters;
 
-	std::vector<ClientUpdater> clientUpdaters;
+	std::vector<ClientUpdater*> clientUpdaters;
 
 	ChatManager& chatManager;
 
@@ -46,7 +46,7 @@ private:
 
 	unsigned int getMaxFileUpdaters();
 
-	std::vector<ClientUpdater>& getClientUpdaters();
+	std::vector<ClientUpdater*>& getClientUpdaters();
 
 	ChatManager& getChatManager();
 

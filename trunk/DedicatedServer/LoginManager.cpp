@@ -37,7 +37,7 @@ unsigned int LoginManager::getMaxFileUpdaters() {
 	return this->maxFileUpdaters;
 }
 
-std::vector<ClientUpdater>& LoginManager::getClientUpdaters() {
+std::vector<ClientUpdater*>& LoginManager::getClientUpdaters() {
 	return this->clientUpdaters;
 }
 
@@ -105,7 +105,7 @@ void LoginManager::processRequests() {
 					break;
 				case OPCODE_UPDATE_REQUEST:
 					for (unsigned int i = 0; (i < this->getMaxFileUpdaters() && !found); i++) {
-						if (this->getClientUpdaters()[i].isAvailable()) {
+						if (this->getClientUpdaters()[i]->isAvailable()) {
 							found = true;
 							index = i;
 						}
@@ -114,8 +114,8 @@ void LoginManager::processRequests() {
 						client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 						if (client != NULL) {// THIS CHECK SHOULD BE UNNECESARY.....
 							std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) << " IS UPDATING" << std::endl;
-							this->getClientUpdaters()[index].setClient(client);
-							this->getClientUpdaters()[index].startClientUpdater();
+							this->getClientUpdaters()[index]->setClient(client);
+							this->getClientUpdaters()[index]->startClientUpdater();
 						}
 					} else {
 						instructionOut.setOpCode(OPCODE_SERVER_BUSY);
@@ -198,7 +198,7 @@ void LoginManager::processRequests() {
 }
 
 void LoginManager::createClientUpdater() {
-	ClientUpdater clientUpdater(this->getInstructionQueue());
+	ClientUpdater* clientUpdater = new ClientUpdater(this->getInstructionQueue());
 	this->getClientUpdaters().push_back(clientUpdater);
 }
 
@@ -231,4 +231,9 @@ void LoginManager::stopLoginManager() {
 // ----------------------------------- DESTRUCTOR ----------------------------------------
 
 LoginManager::~LoginManager() {
+	for (unsigned int i = 0; i < this->getMaxFileUpdaters(); i++) {
+		if (!this->getClientUpdaters()[i]->isAvailable())
+			this->getClientUpdaters()[i]->stopClientUpdater();
+		delete this->getClientUpdaters()[i];
+	}
 }

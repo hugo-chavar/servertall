@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include "DirList.h"
-#include "stringUtilities.h"
+#include "StringUtilities.h"
 #include <fstream>
 
 #include "Instruction.h"

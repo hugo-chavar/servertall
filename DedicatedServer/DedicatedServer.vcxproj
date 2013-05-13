@@ -37,20 +37,21 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\Libraries\SDL-1.2.15\include;..\Libraries\PThreads\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\Libraries\Parser YAML\include;..\Libraries\SDL-1.2.15\include;..\Libraries\PThreads\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>..\Libraries\SDL-1.2.15\lib\x86;..\Libraries\PThreads\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\Libraries\SDL-1.2.15\lib\x86;..\Libraries\Parser YAML\bin\Debug;..\Libraries\PThreads\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>../Model;../Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>pthreadVC2.lib;Ws2_32.lib;SDL.lib;SDLmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Parser.lib;pthreadVC2.lib;Ws2_32.lib;SDL.lib;SDLmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -86,7 +87,6 @@
     <ClCompile Include="Serializable.cpp" />
     <ClCompile Include="SimulationManager.cpp" />
     <ClCompile Include="Socket.cpp" />
-    <ClCompile Include="StringUtilities.cpp" />
     <ClCompile Include="Thread.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -108,8 +108,15 @@
     <ClInclude Include="Serializable.h" />
     <ClInclude Include="SimulationManager.h" />
     <ClInclude Include="Socket.h" />
-    <ClInclude Include="StringUtilities.h" />
     <ClInclude Include="Thread.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{746ee20c-33a8-41e5-8dbf-eb3a15229599}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.vcxproj">
+      <Project>{212f5671-8725-44ea-b548-ebd7852b6d5e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

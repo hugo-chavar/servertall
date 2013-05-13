@@ -57,10 +57,10 @@ void ClientUpdater::updateClient() {
 	bool finished = false;
 	this->getClient()->getConnector().setInstructionQueue(&this->getInstructionQueue());
 
-	instructionOut.clear();
 	sendDirectory("../Images");
 	sendDirectory("../Configuration");
 
+	this->getClient()->getConnector().setInstructionQueue(&this->getServerInstructionQueue());
 	instructionOut.clear();
 	instructionOut.setOpCode(OPCODE_UPDATE_COMPLETE);
 	this->getClient()->addInstruction(instructionOut);

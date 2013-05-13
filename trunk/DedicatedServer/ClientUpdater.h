@@ -48,6 +48,8 @@ private:
 
 	void sendFile(std::string path);
 
+	void receiveConfirmation();
+
 public:
 	ClientUpdater(InstructionQueue& serverInstructionQueue);
 

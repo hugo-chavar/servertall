@@ -101,4 +101,18 @@ namespace stringUtilities {
 		return string.substr(from,to);
 	}
 
+std::string replaceCharForString(char charR,char* buff,int size,std::string replacer)
+{
+	std::string result="";
+	for(int i=0;i<size;i++)
+	{
+		if(buff[i]==charR)
+		{
+		result+=replacer;
+		}
+		else
+			result+=buff[i];
+	}
+	return result;
+}
 } // namespace StringUtilities

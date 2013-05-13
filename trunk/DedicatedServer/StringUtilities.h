@@ -34,6 +34,8 @@ std::string floatToString(float f);
 //Metodo para remover los espacios en blanco al comienzo y al final del string.
 std::string trim(std::string string);
 
+std::string replaceCharForString(char charR,char* buff,int size,std::string replacer);
+
 }
 
 #endif // _STRINGUTILITIES_H_

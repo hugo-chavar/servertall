@@ -75,7 +75,9 @@ string Game::manageMovementUpdate(string userID, string destination) {
 	Player *player = findPlayer(userID);
 	int numberOfTiles = 1;
 	string movementArgument = stringUtilities::intToString(numberOfTiles);
-	pair <int, int> nextTile = player->getCharacter()->mover(stringUtilities::stringToPairInt(destination));
+	pair <int, int> pair_destination = stringUtilities::stringToPairInt(destination);
+	player->getCharacter()->setDestino(pair_destination.first, pair_destination.second);
+	pair <int, int> nextTile = player->getCharacter()->mover(pair_destination);
 	if (nextTile.first<0) {
 		numberOfTiles = 0;
 		movementArgument = stringUtilities::intToString(numberOfTiles);

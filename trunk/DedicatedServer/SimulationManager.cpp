@@ -46,10 +46,10 @@ void SimulationManager::simulate() {
 		// AVANZAR LA SIMULACIÓN UN DELTA DE TIEMPO.
 
 		// HACER UN BROADCAST DEL UPDATE A LOS CLIENTES
-		instructionOut.clear();
-		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
-		instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_DUMMY,"DUMMY UPDATE" + stringUtilities::unsignedToString(i));
-		this->getClients().addBroadcast(instructionOut);
+		//instructionOut.clear();
+		//instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
+		//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_DUMMY,"DUMMY UPDATE" + stringUtilities::unsignedToString(i));
+		//this->getClients().addBroadcast(instructionOut);
 		i++;
 
 		if (milisecondsTonextFrame >= SDL_GetTicks() - frameStartedAt)
@@ -82,12 +82,13 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			std::cout << "PROCESSING COMMAND FROM CLIENT: " << instructionIn.serialize() << std::endl;
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
 			string userID = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
+			client = this->getClients().getClient(userID);
 			string movementArgument = Game::instance().manageMovementUpdate(userID, argument);
 			instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 			string animation = "0";
 			argument = userID+","+movementArgument+","+animation;
 			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
-			client->addInstruction(instructionOut);
+			this->getClients().addBroadcast(instructionOut);
 			}
 			break;
 		case OPCODE_CONNECTION_ERROR: {

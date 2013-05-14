@@ -35,6 +35,7 @@ public:
 	void addPlayer(string userID, string characterName);
 	PersonajeModelo* findCharacter(string name);
 	string manageMovementUpdate(string userID, string destination);
+	void managePositionUpdate(string userID, string position);
 	Player* findPlayer(string userID);
 
 private:

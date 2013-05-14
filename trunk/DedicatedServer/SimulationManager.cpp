@@ -48,7 +48,13 @@ void SimulationManager::simulate() {
 		// HACER UN BROADCAST DEL UPDATE A LOS CLIENTES
 		//instructionOut.clear();
 		//instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
-		//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_DUMMY,"DUMMY UPDATE" + stringUtilities::unsignedToString(i));
+		//string userID = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
+		//string movementArgument = stringUtilities::pairIntToString(Game::instance().findPlayer(userID)->getCharacter()->getPosition());
+		//string animation = "0";
+		//string argument = userID+","+movementArgument+","+animation;
+		//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
+		//this->getClients().addBroadcast(instructionOut);
+		//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE,"DUMMY UPDATE" + stringUtilities::unsignedToString(i));
 		//this->getClients().addBroadcast(instructionOut);
 		i++;
 
@@ -80,15 +86,31 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			break;
 		case OPCODE_CLIENT_COMMAND: {
 			std::cout << "PROCESSING COMMAND FROM CLIENT: " << instructionIn.serialize() << std::endl;
-			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
 			string userID = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
 			client = this->getClients().getClient(userID);
-			string movementArgument = Game::instance().manageMovementUpdate(userID, argument);
-			instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
-			string animation = "0";
-			argument = userID+","+movementArgument+","+animation;
-			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
-			this->getClients().addBroadcast(instructionOut);
+			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
+			if (argument!="") {
+				string movementArgument = Game::instance().manageMovementUpdate(userID, argument);
+				instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
+				string animation = "0";
+				argument = userID+","+movementArgument+","+animation;
+				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
+				this->getClients().addBroadcast(instructionOut);
+			}
+			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_STATE);
+			if (argument!="") {
+				instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
+				string animation = argument;
+				argument = userID+",0,"+animation;
+				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
+				this->getClients().addBroadcast(instructionOut);
+			}
+			}
+			break;
+		case OPCODE_SIMULATION_UPDATE: {
+			string userID = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
+			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CURRENT_POSITION);
+			Game::instance().managePositionUpdate(userID, argument);
 			}
 			break;
 		case OPCODE_CONNECTION_ERROR: {

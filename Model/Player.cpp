@@ -10,3 +10,7 @@ Player::~Player() { }
 PersonajeModelo *Player::getCharacter() {
 	return _character;
 }
+
+string Player::getUserID() {
+	return _userID;
+}

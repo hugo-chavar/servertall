@@ -64,11 +64,42 @@ PersonajeModelo* Game::findCharacter(string name) {
 
 void Game::addPlayer(string userID, string characterName) {
 	PersonajeModelo *character = findCharacter(characterName);
-	Player player(userID, character);
-	player.getCharacter()->setVelocidad(_configuration->mainCharacterSpeed());
+	Player *player = new Player(userID, character);
+	player->getCharacter()->setVelocidad(_configuration->mainCharacterSpeed());
 	////player.getCharacter()->setName(nombreJugador);
-	player.getCharacter()->createVision(_configuration->visionRange());
+	player->getCharacter()->createVision(_configuration->visionRange());
 	_players.push_back(player);
+}
+
+string Game::manageMovementUpdate(string userID, string destination) {
+	Player *player = findPlayer(userID);
+	int numberOfTiles = 1;
+	string movementArgument = stringUtilities::intToString(numberOfTiles);
+	pair <int, int> nextTile = player->getCharacter()->mover(stringUtilities::stringToPairInt(destination));
+	if (nextTile.first<0) {
+		numberOfTiles = 0;
+		movementArgument = stringUtilities::intToString(numberOfTiles);
+		return movementArgument;
+	}
+	player->getCharacter()->setCurrent(nextTile.first, nextTile.second);
+	string str_nextTile = stringUtilities::pairIntToString(nextTile);
+	movementArgument = movementArgument+","+str_nextTile;
+	return movementArgument;
+}
+
+Player* Game::findPlayer(string userID) {
+	bool found = false;
+	Player* player = NULL;
+	int i = 0;
+	while ((i<_players.size()) && (!found)) {
+		if (_players[i]->getUserID()==userID) {
+			found = true;
+			player = _players[i];
+		}
+		else
+			i++;
+	}
+	return player;
 }
 
 Configuration* Game::configuration() {

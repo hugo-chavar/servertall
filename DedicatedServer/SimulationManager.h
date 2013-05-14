@@ -4,6 +4,7 @@
 #include "Thread.h"
 #include "ClientList.h"
 #include "InstructionQueue.h"
+#include "Game.h"
 
 class SimulationManager : public Thread {
 private:

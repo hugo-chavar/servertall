@@ -78,8 +78,17 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			delete client;
 			std::cout << "THE USER " << argument << " DISCONNECTED FROM SIMULATION" << std::endl;
 			break;
-		case OPCODE_CLIENT_COMMAND:
+		case OPCODE_CLIENT_COMMAND: {
 			std::cout << "PROCESSING COMMAND FROM CLIENT: " << instructionIn.serialize() << std::endl;
+			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
+			string userID = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
+			string movementArgument = Game::instance().manageMovementUpdate(userID, argument);
+			instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
+			string animation = "0";
+			argument = userID+","+movementArgument+","+animation;
+			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
+			client->addInstruction(instructionOut);
+			}
 			break;
 		case OPCODE_CONNECTION_ERROR: {
 			std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) << " DISCONECTED ABRUPTLY FROM SIMULATION" << std::endl;

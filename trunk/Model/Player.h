@@ -10,6 +10,7 @@ public:
 	Player(string userID, PersonajeModelo *character);
 	~Player();
 	PersonajeModelo *getCharacter();
+	string getUserID();
 
 private:
 	string _userID;

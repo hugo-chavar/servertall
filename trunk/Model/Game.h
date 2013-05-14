@@ -11,6 +11,7 @@
 ////#include "..\View\TimeManager.h"
 #include "..\Model\YAMLParser.h"
 #include "Player.h"
+#include "StringUtilities.h"
 ////#include "Login.h"
 ////#include "Connector.h"
 ////#include "InstructionQueue.h"
@@ -33,12 +34,14 @@ public:
 	Configuration* configuration();
 	void addPlayer(string userID, string characterName);
 	PersonajeModelo* findCharacter(string name);
+	string manageMovementUpdate(string userID, string destination);
+	Player* findPlayer(string userID);
 
 private:
 	Game();
 	StageModel _world;
 	Configuration* _configuration;
-	vector <Player> _players;
+	vector <Player*> _players;
 };
 
 #endif

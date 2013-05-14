@@ -54,6 +54,16 @@ void PersonajeModelo::atacar() {
 	}
 }
 
+void PersonajeModelo::defender() {
+	animacionActual = DEFENDER;
+	targetParcial = target = current;
+	if (estado >= MOVIMIENTO) {
+		estado = estado + DEFENDER - MOVIMIENTO;
+	} else {
+		estado = estado + DEFENDER - PARADO;
+	}
+}
+
 bool PersonajeModelo::estaAnimandose() {
 	return this->isAnimating;
 }
@@ -62,9 +72,15 @@ void PersonajeModelo::animar(char opcion) {
 	if ((isActivo)&&(animacionActual == SIN_CAMBIO)) {
 		
 		switch (opcion) {
-		case 'a': {
+		case ('a'): {
 			this->setAnimating(true);
 			this->atacar();
+			break;
+				  }
+		case ('s'): {
+			this->setAnimating(true);
+			this->defender();
+			break;
 				  }
 		default:;
 		}

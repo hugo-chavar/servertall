@@ -53,6 +53,7 @@ private:
 	void moverse(std::pair<int, int>& destino, float &velocidadAni);
 	//void activarDesactivar();
 	void atacar();
+	void defender();
 
 	void initialize(int pos_x, int pos_y);
 	

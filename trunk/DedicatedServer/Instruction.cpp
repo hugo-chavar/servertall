@@ -7,10 +7,12 @@
 
 Instruction::Instruction() {
 	this->opCode = OPCODE_NO_OPCODE;
+	this->broadcastId = 0;
 }
 
 void Instruction::clear() {
 	this->setOpCode(OPCODE_NO_OPCODE);
+	this->setBroadcastId(0);
 	this->getArguments().clear();
 }
 
@@ -20,6 +22,14 @@ void Instruction::setOpCode(unsigned int opCode) {
 
 unsigned int Instruction::getOpCode() const {
 	return this->opCode;
+}
+
+unsigned int Instruction::getBroadcastId() {
+	return this->broadcastId;
+}
+
+void Instruction::setBroadcastId(unsigned int broadcastId) {
+	this->broadcastId = broadcastId;
 }
 
 std::map<unsigned int,std::string>& Instruction::getArguments() {
@@ -46,8 +56,17 @@ void Instruction::deserialize(std::string serializedInstruction) {
 	stringUtilities::splitString(serializedInstruction,instructionParams,'|');
 
 	this->setOpCode(stringUtilities::stringToInt(instructionParams[0]));
-	for (unsigned int i = 1; i < instructionParams.size(); i = i + 2) {
-		this->insertArgument(static_cast<unsigned int>(stringUtilities::stringToInt(instructionParams[i])),instructionParams[i + 1]);
+	if(this->getOpCode()!=OPCODE_UPDATE_FILE)
+	{
+		for (unsigned int i = 1; i < instructionParams.size(); i = i + 2) {
+			this->insertArgument(static_cast<unsigned int>(stringUtilities::stringToInt(instructionParams[i])),instructionParams[i + 1]);
+		}
+	}else
+	{
+		int posicion=serializedInstruction.find_first_of('|',0);
+		posicion=serializedInstruction.find_first_of('|',posicion+1);
+		serializedInstruction.erase(0,posicion+1);
+		this->insertArgument(static_cast<unsigned int>(stringUtilities::stringToInt(instructionParams[1])),serializedInstruction);
 	}
 }
 

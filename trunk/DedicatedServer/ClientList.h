@@ -4,6 +4,7 @@
 #include <list>
 
 #include "Mutex.h"
+#include "ConditionVariable.h"
 #include "Client.h"
 #include "Instruction.h"
 
@@ -13,9 +14,13 @@ private:
 
 	std::list<Client*> clients;
 
+	ConditionVariable broadcastConditionVariable;
+
 	Mutex& getClientListMutex();
 
 	std::list<Client*>& getClients();
+
+	ConditionVariable& getBroadcastConditionVariable();
 
 	std::list<Client*>::iterator findClient(std::string userID);
 

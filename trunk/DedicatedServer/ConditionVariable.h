@@ -10,6 +10,10 @@ private:
 
 	pthread_cond_t conditionVariable;
 
+	unsigned int broadcastId;
+
+	void setBroadcastId(unsigned int broadcastId);
+
 	pthread_cond_t& getConditionVariable();
 
 public:
@@ -18,6 +22,12 @@ public:
 	Mutex& getConditionMutex();
 
 	int wait();
+
+	unsigned int getBroadcastId();
+
+	unsigned int getNextBroadcastId();
+
+	int broadcast();
 
 	int signal();
 

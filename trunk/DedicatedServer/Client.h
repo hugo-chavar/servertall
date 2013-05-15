@@ -26,6 +26,8 @@ public:
 
 	void addInstruction(Instruction& instruction);
 
+	void addBroadcast(Instruction& instruction);
+
 	void startClient();
 
 	void stopClient();

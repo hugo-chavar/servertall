@@ -2,10 +2,11 @@
 
 #include <string>
 #include "Sprite.h"
+#include "SDL.h"
 //#include "Camera.h"
 //#include "Surface.h"
 
-using namespace view;
+//using namespace view;
 
 class Entity
 {
@@ -27,6 +28,6 @@ public:
 	bool isFreezed();
 	void setRectangle(std::pair<int, int> pos, Sprite* sprite );
 	void resetSpriteState(); //virtual?
-	//SDL_Rect getSdlRect();
+	SDL_Rect getSdlRect();
 };
 

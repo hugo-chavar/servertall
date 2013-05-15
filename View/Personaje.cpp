@@ -18,7 +18,7 @@ Personaje::Personaje(PersonajeModelo* pj) {
 	ePot.first = 0;
 	ePot.second = 0;
 	serr = 0;
-	crearNombre(modelo->getName());
+	//crearNombre(modelo->getName());
 
 	//this->modelo->getAnimation()->fps(static_cast<int>(this->modelo->getAnimation()->fps() * (this->modelo->getVelocidad()/2)));
 
@@ -26,18 +26,18 @@ Personaje::Personaje(PersonajeModelo* pj) {
 	this->resetSpriteState();
 }
 
-void Personaje::crearNombre(string textoNombre) {
-	//TTF_Font *font = NULL;
-	//SDL_Rect cuadroMensaje;
-
-	//cuadroMensaje.x = spriteRect.x + 25;
-	//cuadroMensaje.y = spriteRect.y;
-	//SDL_Color textColor = { 255, 255, 255 };
-	//font = TTF_OpenFont( FUENTE, 12 );
-	//nombre = TTF_RenderText_Blended( font, textoNombre.c_str(), textColor );
-	//SDL_SetClipRect(nombre, (&cuadroMensaje));
-	//TTF_CloseFont( font );
-}
+//void Personaje::crearNombre(string textoNombre) {
+//	//TTF_Font *font = NULL;
+//	//SDL_Rect cuadroMensaje;
+//
+//	//cuadroMensaje.x = spriteRect.x + 25;
+//	//cuadroMensaje.y = spriteRect.y;
+//	//SDL_Color textColor = { 255, 255, 255 };
+//	//font = TTF_OpenFont( FUENTE, 12 );
+//	//nombre = TTF_RenderText_Blended( font, textoNombre.c_str(), textColor );
+//	//SDL_SetClipRect(nombre, (&cuadroMensaje));
+//	//TTF_CloseFont( font );
+//}
 
 void Personaje::loadSprites() {
 	AnimatedEntity* animatedEntity;
@@ -436,4 +436,9 @@ void Personaje::fromString(std::string data) {
 	std::string freezed = splittedData[2];
 	int status = stringUtilities::stringToInt(splittedData[3]);
 	int surface = stringUtilities::stringToInt(splittedData[4]);
+}
+
+
+int PersonajeModelo::getEstado() {
+	return estado;
 }

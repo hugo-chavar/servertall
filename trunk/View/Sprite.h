@@ -20,6 +20,8 @@ protected:
 	EntityObject* spriteEntity;
 	int estado; 
 	int surfacesCount;
+	int surfaceWidth;
+	int surfaceHeight;
 	//std::vector<view::Surface* > surfaces;
 	virtual void loadSurfaces();
 	virtual void initialize();
@@ -34,6 +36,8 @@ public:
 	int baseWidth();
 	int baseHeight();
 	int getCurrentState();
+	int getSurfaceWidth();
+	int getSurfaceHeight();
 	//view::Surface* getSurfaceAt(int state);
 	//view::Surface* getCurrentSurface();
 	//void addSurface(std::string path);

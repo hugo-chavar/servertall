@@ -77,6 +77,7 @@
     <ClCompile Include="Personaje.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteAnimado.cpp" />
+    <ClCompile Include="Surface.cpp" />
     <ClCompile Include="TileView.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Stage.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteAnimado.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="Surface.h" />
     <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <ItemGroup>

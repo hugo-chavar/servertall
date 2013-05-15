@@ -1,21 +1,14 @@
+#include "Main.h"
+
 #include <iostream>
 #include <winsock2.h>
 #include <windows.h>
 
-#include "Main.h"
 #include "ChatManager.h"
 #include "SimulationManager.h"
 #include "LoginManager.h"
 #include "Game.h"
 #include "Player.h"
-
-#ifndef DEFAULT_PORT_TO_LISTEN
-#define DEFAULT_PORT_TO_LISTEN 9443
-#endif//DEFAULT_PORT_TO_LISTEN
-
-#ifndef DEFAULT_MAX_PENDING_CONNECTIONS
-#define DEFAULT_MAX_PENDING_CONNECTIONS 5
-#endif//DEFAULT_MAX_PENDING_CONNECTIONS
 
 int main(int argc, char *argv[]){
 	std::string command;
@@ -40,7 +33,9 @@ int main(int argc, char *argv[]){
 		std::cerr << "Error: " << loginManager.getError() << std::endl;
 		return EXIT_FAILURE;
 	}
-	
+
+	std::cout << "SERVER STARTUP COMPLETE." << command << std::endl;
+
 	std::cin >> command;
 
 	while (command != "exit"){
@@ -52,7 +47,7 @@ int main(int argc, char *argv[]){
 
 	loginManager.stopLoginManager();
 
-	std::cout << "finishing...." << std::endl;
+	std::cout << "Finishing...." << std::endl;
 
 	system("PAUSE");
 

@@ -45,6 +45,11 @@ public:
 	Player* findPlayer(string userID);
 	bool isCharacterTypeValid(string characterType);
 
+	//NUEVOS METODOS
+	void setPlayerName(string name);
+	void setPlayerCharacterId(string char_id);
+	string getPlayerCharacterId()
+
 private:
 	view::Stage worldView;
 	Personaje* personaje;

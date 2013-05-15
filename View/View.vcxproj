@@ -83,7 +83,6 @@
     <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameView.h" />
@@ -92,6 +91,7 @@
     <ClInclude Include="SpriteAnimado.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Surface.h" />
+    <ClInclude Include="TileView.h" />
     <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <ItemGroup>

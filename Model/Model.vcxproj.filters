@@ -51,10 +51,10 @@
     <ClCompile Include="Player.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterVision.cpp">
+    <ClCompile Include="Circle.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="Circle.cpp">
+    <ClCompile Include="CharacterVision.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,10 +104,10 @@
     <ClInclude Include="Player.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterVision.h">
+    <ClInclude Include="Circle.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Circle.h">
+    <ClInclude Include="CharacterVision.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

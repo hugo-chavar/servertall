@@ -156,7 +156,8 @@ void Personaje::calcularSigTileAMover(){
 		serr = 0;
 		tileActual = modelo->getPosition();
 		modelo->setIsInCenterTile(true);
-		animacion = modelo->mover(tile, velocidad);
+		//animacion = modelo->mover(tile);
+		modelo->mover(tile);
 		estado = procesarAnimacion(animacion);
 		if (estadoAnterior != estado) {
 			ePot.first = 0;
@@ -264,7 +265,7 @@ void Personaje::setDestino(int xTile, int yTile){
 }
 
 void Personaje::calcularvelocidadRelativa(std::pair<float, float>& factor) {
-	float deltaTime = Game::instance().time()->getDeltaTime();
+	float deltaTime = GameView::instance().time()->getDeltaTime();
 
 	if (delta.first != 0){ //Hay movimiento en x
 		if (delta.second != 0) { //Diagonal

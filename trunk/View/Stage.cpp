@@ -1,5 +1,5 @@
 #include "Stage.h"
-#include "Surface.h"
+//#include "Surface.h"
 #include "EntityObject.h"
 #include "DataTypes.h"
 #include "TileModel.h"
@@ -250,7 +250,7 @@ TileView* view::Stage::getTileAt(KeyPair k) {
 //	}
 //}
 
-void Stage::deleteStage() {
+void view::Stage::deleteStage() {
 	TileView* aux = this->firstTile;
 	TileView* nextAux;
 	while (aux) {
@@ -262,7 +262,7 @@ void Stage::deleteStage() {
 }
 
 
-void Stage::updateTiles() {
+void view::Stage::updateTiles() {
 	TileView* aux = this->firstTile;
 	while (aux) {
 		aux->update();
@@ -270,7 +270,7 @@ void Stage::updateTiles() {
 	}
 }
 
-void Stage::updateSprites() {
+void view::Stage::updateSprites() {
 	for (unsigned i = 0 ; i < spriteArray.size(); i++) {
 		spriteArray[i]->actualizarFrame();
 	}

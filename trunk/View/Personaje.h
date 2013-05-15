@@ -28,6 +28,7 @@ public:
 	std::string toString();
 	void fromString(std::string data) ;
 	//void resetSpriteState(); poner en virtual en entity para activar esto
+	int getEstado();
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual
 	int procesarAnimacion(int animacion);
@@ -42,7 +43,7 @@ private:
 	//void freezar();
 	void animar();
 	void detenerAnimacion();
-	void crearNombre(string textoNombre);
+	//void crearNombre(string textoNombre);
 	std::pair<int, int> tileActual;
 	//SDL_Surface *nombre;
 	PersonajeModelo* modelo;

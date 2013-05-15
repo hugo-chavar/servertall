@@ -1,6 +1,5 @@
 #include "Engine.h"
-
-#include "Surface.h"
+#include "SDL.h"
 #include "Game.h"
 //#include "Instruction.h"
 #include "../Common/stringUtilities.h"
@@ -52,9 +51,9 @@ int Engine::execute() {
 	while(this->isRunning()) {
 		frameStartedAt = SDL_GetTicks();
 		(Game::instance().time())->updateTime();
-		while(SDL_PollEvent(&sdlEvent)) {
-			this->onEvent(&sdlEvent);
-		}
+		//while(SDL_PollEvent(&sdlEvent)) {
+		//	this->onEvent(&sdlEvent);
+		//}
 
 		this->update();
 

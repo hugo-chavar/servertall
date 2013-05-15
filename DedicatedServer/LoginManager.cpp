@@ -89,18 +89,45 @@ void LoginManager::processRequests() {
 				case OPCODE_LOGIN_REQUEST:
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID);
 					if ( (argument != "") && (this->getLoggedClients().isUserIDAvailable(argument)) ) {
+						string characterType = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER);
+						if (Game::instance().isCharacterTypeValid(characterType)) {
+							instructionOut.setOpCode(OPCODE_LOGIN_OK);
+							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome " + argument);
+							client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+							client->setUserID(argument);
+							this->getLoggedClients().addClient(client);
+							Game::instance().addPlayer(argument, characterType);
+							std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
+						}
+						else {
+							instructionOut.setOpCode(OPCODE_INVALID_CHARACTER);
+							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"Invalid main character number");
+							client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+							std::cout << "INVALID CHARACTER NUMBER FOR USER ID " << argument << std::endl;
+						}
+					} else if ((argument != "") && (!this->getLoggedClients().isUserIDAvailable(argument))) {
 						instructionOut.setOpCode(OPCODE_LOGIN_OK);
-						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome " + argument);
-						client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
-						client->setUserID(argument);
-						this->getLoggedClients().addClient(client);
-						Game::instance().addPlayer(argument, "frodo"); // Chequear al momento de elegir si existe el personaje, no en el logeo. Mutex?
+						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome back " + argument);
+						this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+						client = this->getLoggedClients().getClient(argument);
+						client->addInstruction(instructionOut);
+						instructionOut.clear();
+						instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
+						string position = Game::instance().managePlayerInitialSynchPosition(argument);
+						string vision = Game::instance().managePlayerInitialSynchVision(argument);
+						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CURRENT_POSITION, position);
+						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_VISION, vision);
 						std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
-					} else {
+					}
+					else {
 						instructionOut.setOpCode(OPCODE_USERID_NOT_AVAILABLE);
-						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"User ID already in use");
+						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"Invalid user ID");
 						client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
-						std::cout << "THE USERID " << argument << " IS ALREADY IN USE" << std::endl;
+						std::cout << "THE USERID " << argument << " IS INVALID" << std::endl;
+						//instructionOut.setOpCode(OPCODE_USERID_NOT_AVAILABLE);
+						//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"User ID already in use");
+						//client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+						//std::cout << "THE USERID " << argument << " IS ALREADY IN USE" << std::endl;
 					}
 					client->addInstruction(instructionOut);
 					break;

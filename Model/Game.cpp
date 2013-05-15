@@ -47,26 +47,20 @@ AnimatedEntity* Game::animatedEntityAt(unsigned pos) {
 	return NULL;
 }
 
-PersonajeModelo* Game::findCharacter(string name) {
-	bool found = false;
-	PersonajeModelo* character = NULL;
-	int i = 0;
-	while ((i<_world.vMainCharacters()->size()) && (!found)) {
-		if (_world.vMainCharacters()->at(i)->getAnimation()->name()==name) {
-			found = true;
-			character = _world.vMainCharacters()->at(i);
-		}
-		else
-			i++;
-	}
-	return character;
+bool Game::isCharacterTypeValid(string characterType) {
+	int type = stringUtilities::stringToInt(characterType);
+	if (_world.vMainCharacters()->size()>type)
+		return true;
+	return false;
 }
 
-void Game::addPlayer(string userID, string characterName) {
-	PersonajeModelo *character = findCharacter(characterName);
+void Game::addPlayer(string userID, string characterType) {
+	PersonajeModelo* character = NULL;
+	PersonajeModelo aux = *_world.vMainCharacters()->at(stringUtilities::stringToInt(characterType));
+	character = &aux;
 	Player *player = new Player(userID, character);
 	player->getCharacter()->setVelocidad(_configuration->mainCharacterSpeed());
-	////player.getCharacter()->setName(nombreJugador);
+	player->getCharacter()->setName(userID);
 	player->getCharacter()->createVision(_configuration->visionRange());
 	_players.push_back(player);
 }
@@ -87,10 +81,15 @@ string Game::manageMovementUpdate(string userID, string destination, unsigned in
 			movementArgument = stringUtilities::intToString(numberOfTiles);
 			return movementArgument;
 		}*/
-		str_nextTiles = str_nextTiles+","+stringUtilities::pairIntToString(nextTile);
-		player->getCharacter()->setCurrent(nextTile.first, nextTile.second);
-		if ((nextTile.first==pair_destination.first) && (nextTile.second==pair_destination.second))
-			finished = true;
+
+
+		// SACADO PARA QUE COMPILE
+
+		//str_nextTiles = str_nextTiles+","+stringUtilities::pairIntToString(nextTile);
+		//player->getCharacter()->setCurrent(nextTile.first, nextTile.second);
+		//if ((nextTile.first==pair_destination.first) && (nextTile.second==pair_destination.second))
+		//	finished = true;
+
 		numberOfTiles++;
 	}
 	movementArgument = stringUtilities::intToString(numberOfTiles);
@@ -115,6 +114,26 @@ string Game::manageMovementUpdate(string userID, string destination, unsigned in
 void Game::managePositionUpdate(string userID, string position) {
 	pair <int, int> pair_position = stringUtilities::stringToPairInt(position);
 	Game::instance().findPlayer(userID)->getCharacter()->setCurrent(pair_position.first, pair_position.second);
+}
+
+string Game::managePlayersUpdate() {
+	string argument = "";
+	for (int i=0; i<_players.size(); i++)
+		argument = _players[i]->getUserID()+","+_players[i]->getCharacter()->toString()+":";
+	argument.pop_back();
+	return argument;
+}
+
+string Game::managePlayerInitialSynchPosition(string userID) {
+	Player *player = findPlayer(userID);
+	string position = stringUtilities::pairIntToString(player->getCharacter()->getPosition());
+	return position;
+}
+
+string Game::managePlayerInitialSynchVision(string userID) {
+	Player *player = findPlayer(userID);
+	string vision = player->getCharacter()->getVision()->toString();
+	return vision;
 }
 
 Player* Game::findPlayer(string userID) {

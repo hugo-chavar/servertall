@@ -43,6 +43,10 @@ void PersonajeModelo::initialize(int pos_x, int pos_y) {
 	ultimoDeltaTime = 0;
 }
 
+// IMPLEMENTAR
+string PersonajeModelo::toString() {
+	return "";
+}
 
 void PersonajeModelo::setCurrent(int x, int y) {
 	current.first = x;
@@ -444,6 +448,7 @@ int PersonajeModelo::getRefPixelX() {
 
 int PersonajeModelo::getRefPixelY() {
 	return this->animation->pixelRefY();
+}
 
 bool PersonajeModelo::isCenteredInTile() {
 	return ((delta.first == 0) && (delta.second == 0));
@@ -682,7 +687,6 @@ float PersonajeModelo::getPixelX() {
 
 float PersonajeModelo::getPixelY() {
 	return (this->pixelActual.second);
-=======
 }
 //
 //void PersonajeModelo::setRefPixelX(int) {
@@ -692,12 +696,3 @@ float PersonajeModelo::getPixelY() {
 //void PersonajeModelo::setRefPixelY(int) {
 //	this->isAnimating = value;
 //}
-
-int PersonajeModelo::getRefPixelX() {
-	return this->animation->pixelRefX();
-}
-
-int PersonajeModelo::getRefPixelY() {
-	return this->animation->pixelRefY();
->>>>>>> .r34
-}

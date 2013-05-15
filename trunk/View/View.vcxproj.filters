@@ -39,17 +39,14 @@
     <ClCompile Include="TimeManager.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="GameView.cpp">
+    <ClCompile Include="Surface.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="Surface.cpp">
+    <ClCompile Include="GameView.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Engine.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -71,10 +68,13 @@
     <ClInclude Include="TimeManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="Surface.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
     <ClInclude Include="GameView.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Surface.h">
+    <ClInclude Include="TileView.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

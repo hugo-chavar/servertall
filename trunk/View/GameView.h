@@ -13,6 +13,7 @@
 #include "..\Model\YAMLParser.h"
 #include "Player.h"
 #include "StringUtilities.h"
+#include "TimeManager.h"
 
 
 class GameView {
@@ -44,19 +45,15 @@ public:
 	string managePlayerInitialSynchVision(string userID);
 	Player* findPlayer(string userID);
 	bool isCharacterTypeValid(string characterType);
-
-	//NUEVOS METODOS
-	void setPlayerName(string name);
-	void setPlayerCharacterId(string char_id);
-	string getPlayerCharacterId()
+	TimeManager* time();
 
 private:
 	view::Stage worldView;
 	Personaje* personaje;
 	map <string,Personaje*> personajes;//agrego diccionario de personajes
+	TimeManager _time;
 
 	//DEL MODEL
-	GameView();
 	StageModel _world;
 	Configuration* _configuration;
 	vector <Player*> _players;

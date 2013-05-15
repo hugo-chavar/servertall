@@ -88,26 +88,6 @@ Personaje* GameView::getMyPersonaje() {
 	return NULL;
 }
 
-Configuration* GameView::configuration() {
-	return &_configuration;
-}
-
-void GameView::setPlayerName(string name) {
-	this->playerName=name;
-}
-
-string GameView::getPlayerName() {
-	return this->playerName;
-}
-
-void GameView::setPlayerCharacterId(string char_id) {
-	playerCharacterId=char_id;
-}
-
-string GameView::getPlayerCharacterId() {
-	return this->playerCharacterId;
-}
-
 
 // DEL MODEL
 
@@ -231,6 +211,10 @@ Player* GameView::findPlayer(string userID) {
 			i++;
 	}
 	return player;
+}
+
+TimeManager* GameView::time() {
+	return &_time;
 }
 
 Configuration* GameView::configuration() {

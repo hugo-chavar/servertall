@@ -1,5 +1,5 @@
 #include "CharacterVision.h"
-#include "Game.h"
+#include "GameView.h"
 #include "TileModel.h"
 #include "StringUtilities.h"
 #include "Logger.h"

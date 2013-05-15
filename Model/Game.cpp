@@ -71,7 +71,7 @@ void Game::addPlayer(string userID, string characterName) {
 	_players.push_back(player);
 }
 
-string Game::manageMovementUpdate(string userID, string destination) {
+string Game::manageMovementUpdate(string userID, string destination, unsigned int deltaTime) {
 	Player *player = findPlayer(userID);
 	pair <int, int> current = player->getCharacter()->getPosition();
 	pair <int, int> pair_destination = stringUtilities::stringToPairInt(destination);
@@ -81,12 +81,12 @@ string Game::manageMovementUpdate(string userID, string destination) {
 	string movementArgument = "";
 	string str_nextTiles = "";
 	while (!finished) {
-		pair <int, int> nextTile = player->getCharacter()->mover(pair_destination);
-		if (nextTile.first<0) {
+		player->getCharacter()->mover(deltaTime);
+		/*if (nextTile.first<0) {
 			numberOfTiles = 0;
 			movementArgument = stringUtilities::intToString(numberOfTiles);
 			return movementArgument;
-		}
+		}*/
 		str_nextTiles = str_nextTiles+","+stringUtilities::pairIntToString(nextTile);
 		player->getCharacter()->setCurrent(nextTile.first, nextTile.second);
 		if ((nextTile.first==pair_destination.first) && (nextTile.second==pair_destination.second))

@@ -17,6 +17,10 @@ std::list<Client*>& ClientList::getClients() {
 	return this->clients;
 }
 
+ConditionVariable& ClientList::getBroadcastConditionVariable() {
+	return this->broadcastConditionVariable;
+};
+
 //IMPORTANT: CALL ONLY AFTER LOCK.
 std::list<Client*>::iterator ClientList::findClient(std::string userID) {
 	std::list<Client*>::iterator i = this->getClients().begin();
@@ -47,6 +51,7 @@ bool ClientList::isUserIDAvailable(std::string userID) {
 void ClientList::addClient(Client* client){
 	this->getClientListMutex().lock();
 
+	client->getConnector().setBroadcastConditionVariable(&this->getBroadcastConditionVariable());
 	this->getClients().push_back(client);
 
 	this->getClientListMutex().unlock();
@@ -101,10 +106,11 @@ void ClientList::addBroadcast(Instruction& instruction, std::string from) {
 
 	for (std::list<Client*>::iterator it = this->getClients().begin(); it != this->getClients().end(); ++it) {
 		if (from != (*it)->getUserID())
-			(*it)->addInstruction(instruction);
+			(*it)->addBroadcast(instruction);
 	}
-
 	this->getClientListMutex().unlock();
+
+	this->getBroadcastConditionVariable().broadcast();
 }
 
 // ----------------------------------- DESTRUCTOR ----------------------------------------

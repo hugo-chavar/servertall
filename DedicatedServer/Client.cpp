@@ -42,6 +42,10 @@ void Client::addInstruction(Instruction& instruction) {
 	this->getConnector().addInstruction(instruction);
 }
 
+void Client::addBroadcast(Instruction& instruction) {
+	this->getConnector().addBroadcast(instruction);
+}
+
 void Client::startClient() {
 	this->getConnector().startConnector();
 }

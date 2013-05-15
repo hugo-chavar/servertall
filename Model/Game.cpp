@@ -18,13 +18,17 @@ StageModel* Game::world() {
 	return &_world;
 }
 
+TimeManager* Game::time() {
+	return &_time;
+}
+
 bool Game::initialize() {
 	yParser.parse();
 	_world = yParser.vStages()[0];
 	unsigned stageActual = 0;
 	allEntities = yParser.allLists();
 	_configuration = yParser.getConfig();
-
+	this->_time.initializeTime();
 	//si hubieron problemas salgo
 	if (!_configuration)
 		return false;
@@ -75,7 +79,7 @@ string Game::manageMovementUpdate(string userID, string destination, unsigned in
 	string movementArgument = "";
 	string str_nextTiles = "";
 	while (!finished) {
-		player->getCharacter()->mover(deltaTime);
+		//player->getCharacter()->mover(deltaTime);
 		/*if (nextTile.first<0) {
 			numberOfTiles = 0;
 			movementArgument = stringUtilities::intToString(numberOfTiles);

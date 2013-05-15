@@ -22,8 +22,8 @@ public:
 	bool getIsActivo();
 	int getEstado();
 	float getVelocidad();
-	pair <int, int> mover(std::pair<int, int> destino);
-	/*int mover(std::pair<int, int>& destino, float &velocidadAni);*/	//Devuelve el estado, que son las orientaciones. Devuelve la velocidad
+	/*pair <int, int> mover(std::pair<int, int> destino);*/
+	int mover(std::pair<int, int>& destino, float &velocidadAni);	//Devuelve el estado, que son las orientaciones. Devuelve la velocidad
 	~PersonajeModelo();											//del movimiento, la corrección de la vista no se la hace
 	string nextDirectory();
 	bool hasDirectoryRemaining();
@@ -57,8 +57,8 @@ private:
 	void limpiarPath();
 	int quedarseQuieto(float &velocidadAni);
 	//Modifica las variables del modelo para representar el movimiento
-	pair<int, int> moverse();
-	//void moverse(std::pair<int, int>& destino, float &velocidadAni);
+	/*pair<int, int> moverse();*/
+	void moverse(std::pair<int, int>& destino, float &velocidadAni);
 	//void activarDesactivar();
 	void atacar();
 	void defender();

@@ -34,7 +34,7 @@ public:
 	Configuration* configuration();
 	void addPlayer(string userID, string characterName);
 	PersonajeModelo* findCharacter(string name);
-	string manageMovementUpdate(string userID, string destination);
+	string manageMovementUpdate(string userID, string destination, unsigned int deltaTime);
 	void managePositionUpdate(string userID, string position);
 	Player* findPlayer(string userID);
 

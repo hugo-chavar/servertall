@@ -90,7 +90,8 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			client = this->getClients().getClient(userID);
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
 			if (argument!="") {
-				string movementArgument = Game::instance().manageMovementUpdate(userID, argument);
+				unsigned int deltaTime = SDL_GetTicks();
+				string movementArgument = Game::instance().manageMovementUpdate(userID, argument, deltaTime);
 				instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 				string animation = "0";
 				argument = userID+","+movementArgument+","+animation;

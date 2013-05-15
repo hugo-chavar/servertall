@@ -12,7 +12,7 @@
 #include "InstructionQueue.h"
 #include "ChatManager.h"
 #include "SimulationManager.h"
-#include "Game.h"
+#include "GameView.h"
 
 class LoginManager : public Thread {
 private:

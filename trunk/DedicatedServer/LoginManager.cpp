@@ -90,13 +90,13 @@ void LoginManager::processRequests() {
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID);
 					if ( (argument != "") && (this->getLoggedClients().isUserIDAvailable(argument)) ) {
 						string characterType = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER);
-						if (Game::instance().isCharacterTypeValid(characterType)) {
+						if (GameView::instance().isCharacterTypeValid(characterType)) {
 							instructionOut.setOpCode(OPCODE_LOGIN_OK);
 							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome " + argument);
 							client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 							client->setUserID(argument);
 							this->getLoggedClients().addClient(client);
-							Game::instance().addPlayer(argument, characterType);
+							GameView::instance().addPlayer(argument, characterType);
 							std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
 						}
 						else {
@@ -113,8 +113,8 @@ void LoginManager::processRequests() {
 						client->addInstruction(instructionOut);
 						instructionOut.clear();
 						instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
-						string position = Game::instance().managePlayerInitialSynchPosition(argument);
-						string vision = Game::instance().managePlayerInitialSynchVision(argument);
+						string position = GameView::instance().managePlayerInitialSynchPosition(argument);
+						string vision = GameView::instance().managePlayerInitialSynchVision(argument);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CURRENT_POSITION, position);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_VISION, vision);
 						std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;

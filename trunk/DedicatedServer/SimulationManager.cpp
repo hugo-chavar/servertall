@@ -48,7 +48,7 @@ void SimulationManager::simulate() {
 		// HACER UN BROADCAST DEL UPDATE A LOS CLIENTES
 		instructionOut.clear();
 		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
-		string argument = Game::instance().managePlayersUpdate();
+		string argument = GameView::instance().managePlayersUpdate();
 		instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
 		this->getClients().addBroadcast(instructionOut);
 
@@ -89,7 +89,7 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
 			if (argument!="") {
 				unsigned int deltaTime = SDL_GetTicks();
-				string movementArgument = Game::instance().manageMovementUpdate(userID, argument, deltaTime);
+				string movementArgument = GameView::instance().manageMovementUpdate(userID, argument, deltaTime);
 				instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 				string animation = "0";
 				argument = userID+","+movementArgument+","+animation;
@@ -109,7 +109,7 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 		case OPCODE_SIMULATION_UPDATE: {
 			string userID = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CURRENT_POSITION);
-			Game::instance().managePositionUpdate(userID, argument);
+			GameView::instance().managePositionUpdate(userID, argument);
 			}
 			break;
 		case OPCODE_CONNECTION_ERROR: {

@@ -74,7 +74,6 @@
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="EntityObject.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="ListaPath.cpp" />
     <ClCompile Include="Nodo.cpp" />
     <ClCompile Include="Par.cpp" />
@@ -93,7 +92,6 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="DataTypes.h" />
     <ClInclude Include="EntityObject.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="ListaPath.h" />
     <ClInclude Include="Nodo.h" />
     <ClInclude Include="Par.h" />

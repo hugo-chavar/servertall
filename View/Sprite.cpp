@@ -1,5 +1,6 @@
 #include <sstream> 
 #include "Sprite.h"
+#include "Surface.h"
 #include "AnimatedEntity.h"
 #include "DirList.h"
 
@@ -48,5 +49,10 @@ int Sprite::getCurrentState() {
 }
 
 void Sprite::loadSurfaces() {
+	view::Surface* auxSurface = new view::Surface();
+	auxSurface->load(path);
+	this->surfaceWidth = auxSurface->getWidth();
+	this->surfaceHeight = auxSurface->getHeight();
+	auxSurface->free();
 	surfacesCount = 1;
 }

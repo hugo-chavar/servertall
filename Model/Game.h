@@ -2,20 +2,18 @@
 #define _GAME_H_
 #pragma warning(disable: 4512)
 
+
 #include <fstream>
 #include <string>
 #include "DataTypes.h"
 #include "PersonajeModelo.h"
 #include "Configuration.h"
 #include "StageModel.h"
-#include "..\DedicatedServer\TimeManager.h"
-#include "..\Model\YAMLParser.h"
+//#include "TimeManager.h"
+#include "YAMLParser.h"
 #include "Player.h"
 #include "StringUtilities.h"
-////#include "Login.h"
-////#include "Connector.h"
-////#include "InstructionQueue.h"
-////#include "ModelUpdater.h"
+
 
 class Game
 {
@@ -25,7 +23,7 @@ public:
 	static Game& instance();
 	StageModel* world();
 	bool initialize();
-	TimeManager* time();
+	//TimeManager* time();
 	bool insidePlayerVision(Player player, std::pair<int,int>);
 	bool isKnownByPlayer(Player player, std::pair<int,int>);
 	EntLists allEntities;
@@ -45,7 +43,7 @@ public:
 private:
 	Game();
 	StageModel _world;
-	TimeManager _time;
+	//TimeManager _time;
 	Configuration* _configuration;
 	vector <Player*> _players;
 };

@@ -4,14 +4,14 @@
 #include "DataTypes.h"
 #include "TileModel.h"
 
-#define START_LEVEL 0
-#define EXTRA_TILES_TO_RENDER 9
+//#define START_LEVEL 0
+//#define EXTRA_TILES_TO_RENDER 9
 
-view::Stage::Stage() {
+Stage::Stage() {
 	_personaje = NULL;
 }
 
-view::Stage::~Stage() {
+Stage::~Stage() {
 	for (unsigned int i = 0; i < spriteArray.size(); i++) {
 		delete spriteArray[i];
 	}
@@ -22,13 +22,9 @@ view::Stage::~Stage() {
 		_personaje = NULL;
 	}
 	deleteStage();
-	//if (this->fog){
-	//	this->fog->free();
-	//	delete this->fog;
-	//}
 }
 
-void view::Stage::loadSprites() {
+void Stage::loadSprites() {
 	//carga de sprites estaticos
 	Sprite* auxSprite;
 	unsigned staticEntitiesModelCount = Game::instance().allEntities.vEntitiesObject.size();
@@ -36,7 +32,6 @@ void view::Stage::loadSprites() {
 		EntityObject *entity = Game::instance().allEntities.vEntitiesObject[a];
 		mapEntityToSprite[entity->name()] = int(a);
 		auxSprite = new Sprite(entity);
-		//auxSprite->initialize();
 		spriteArray.push_back(auxSprite);
 		auxSprite = NULL;
 	}
@@ -47,13 +42,12 @@ void view::Stage::loadSprites() {
 		AnimatedEntity *entity = Game::instance().allEntities.vAnimatedEntities[a];
 		mapEntityToSprite[entity->name()] = int(a + staticEntitiesModelCount);
 		auxAnimatedSprite = new SpriteAnimado(entity);
-		//auxAnimatedSprite->initialize();
 		spriteArray.push_back(auxAnimatedSprite);
 		auxAnimatedSprite = NULL;
 	}
 }
 
-TileView* view::Stage::createTile(TileModel* tileModel) {
+TileView* Stage::createTile(TileModel* tileModel) {
 	TileView* tile = new TileView(tileModel);
 	int posSpriteEntity = mapEntityToSprite.at(tile->getGroundEntityName());
 	tile->createGround(spriteArray[posSpriteEntity]);
@@ -65,7 +59,7 @@ TileView* view::Stage::createTile(TileModel* tileModel) {
 	return tile;
 }
 
-void view::Stage::generateStage() {
+void Stage::generateStage() {
 	TileModel* tileModel = worldModel->getFirstTile();
 	this->firstTile = this->createTile(tileModel);
 	tileLevels.push_back(this->firstTile);
@@ -93,14 +87,14 @@ void view::Stage::generateStage() {
 		tileModel = tileModel->getNextTile();
 	}
 }
+//
+//void Stage::setTilesInCamera(int w, int h) {
+//	unsigned horizontalTilesInCamera = static_cast<unsigned>(ceil(static_cast<float>(w) / DEFAULT_TILE_WIDTH));
+//	unsigned verticalTilesInCamera = static_cast<unsigned>(ceil(static_cast<float>(h) / DEFAULT_TILE_HEIGHT));
+//	minLevelsInCamera = horizontalTilesInCamera + verticalTilesInCamera;
+//}
 
-void view::Stage::setTilesInCamera(int w, int h) {
-	unsigned horizontalTilesInCamera = static_cast<unsigned>(ceil(static_cast<float>(w) / DEFAULT_TILE_WIDTH));
-	unsigned verticalTilesInCamera = static_cast<unsigned>(ceil(static_cast<float>(h) / DEFAULT_TILE_HEIGHT));
-	minLevelsInCamera = horizontalTilesInCamera + verticalTilesInCamera;
-}
-
-bool view::Stage::initialize() {
+bool Stage::initialize() {
 	worldModel = Game::instance().world();
 	
 	this->loadSprites();
@@ -115,21 +109,21 @@ bool view::Stage::initialize() {
 	return true;
 }
 
-void view::Stage::update() {
+void Stage::update() {
 	this->updateSprites();
 	this->updateTiles();
 	_personaje->update();
 }
 
-Personaje* view::Stage::personaje() {
+Personaje* Stage::personaje() {
 	return _personaje;
 }
 
-TileView* view::Stage::getTileAt(KeyPair k) {
+TileView* Stage::getTileAt(KeyPair k) {
 	return tilesMap.at(k);
 }
 
-//TileView* view::Stage::getFirstMatch(std::pair<int,int> k) {
+//TileView* Stage::getFirstMatch(std::pair<int,int> k) {
 //	TileView* aux = tileLevels.at(this->fixLevel(k));
 //	KeyPair position = aux->getPosition();
 //	while ((static_cast<int>(position.second) > k.second) && (aux)) {
@@ -140,7 +134,7 @@ TileView* view::Stage::getTileAt(KeyPair k) {
 //	return aux;
 //}
 //
-//TileView* view::Stage::getLastMatch(TileView* firstMatch, std::pair<int,int> k) {
+//TileView* Stage::getLastMatch(TileView* firstMatch, std::pair<int,int> k) {
 //	TileView* aux = firstMatch;
 //	KeyPair position = aux->getPosition();
 //	while ((static_cast<int>(position.first) <= k.first) && (!aux->EOL())) {
@@ -150,19 +144,19 @@ TileView* view::Stage::getTileAt(KeyPair k) {
 //	return aux;
 //}
 //
-//void view::Stage::fixKeyLeftBottom(int level, std::pair<int,int> &k) {
+//void Stage::fixKeyLeftBottom(int level, std::pair<int,int> &k) {
 //	while (level < (k.first + k.second)) {
 //			k.first--;
 //	}
 //}
 //
-//void view::Stage::fixKeyRightBottom(int level, std::pair<int,int> &k) {
+//void Stage::fixKeyRightBottom(int level, std::pair<int,int> &k) {
 //	while (level < (k.first + k.second)) {
 //			k.second--;
 //	}
 //}
 //
-//int view::Stage::fixLevel(std::pair<int,int> k) {
+//int Stage::fixLevel(std::pair<int,int> k) {
 //	int level = k.first + k.second;
 //	if (level > this->worldModel->maxLevels() ) {
 //		level = this->worldModel->maxLevels();
@@ -172,7 +166,7 @@ TileView* view::Stage::getTileAt(KeyPair k) {
 //	return level;
 //}
 //
-//int view::Stage::fixStartLevel(int endLevel, std::pair<int,int> &ref) {
+//int Stage::fixStartLevel(int endLevel, std::pair<int,int> &ref) {
 //	int level = this->fixLevel(ref);
 //	if (((endLevel - level) < minLevelsInCamera) && (level > START_LEVEL)) {
 //		if ((endLevel - minLevelsInCamera) > START_LEVEL) {
@@ -185,7 +179,7 @@ TileView* view::Stage::getTileAt(KeyPair k) {
 //	return level;
 //}
 //
-//void view::Stage::alignLevel(std::pair<int,int> &k1, std::pair<int,int> &k2) {
+//void Stage::alignLevel(std::pair<int,int> &k1, std::pair<int,int> &k2) {
 //	int level1 = this->fixLevel(k1);
 //	int level2 = this->fixLevel(k2);
 //	while (level1 > level2 )  {
@@ -198,7 +192,7 @@ TileView* view::Stage::getTileAt(KeyPair k) {
 //	}
 //}
 
-// void view::Stage::calculateTilesToRender(Camera& camera) { 
+// void Stage::calculateTilesToRender(Camera& camera) { 
 //	renderHelper.clear();
 //	std::pair<int,int> position = std::make_pair(static_cast<int>(camera.getOffsetX()),static_cast<int>(camera.getOffsetY()));
 //	std::pair<int,int> cameraReferenceTile = this->worldModel->pixelToTileCoordinates(position);
@@ -235,7 +229,7 @@ TileView* view::Stage::getTileAt(KeyPair k) {
 //
 //}
 
-//void view::Stage::render(Camera& camera) {
+//void Stage::render(Camera& camera) {
 //	this->calculateTilesToRender(camera);
 //	renderHelper.renderGround(camera);
 //	renderHelper.startRenderingEntities();
@@ -250,7 +244,7 @@ TileView* view::Stage::getTileAt(KeyPair k) {
 //	}
 //}
 
-void view::Stage::deleteStage() {
+void Stage::deleteStage() {
 	TileView* aux = this->firstTile;
 	TileView* nextAux;
 	while (aux) {
@@ -262,7 +256,7 @@ void view::Stage::deleteStage() {
 }
 
 
-void view::Stage::updateTiles() {
+void Stage::updateTiles() {
 	TileView* aux = this->firstTile;
 	while (aux) {
 		aux->update();
@@ -270,7 +264,7 @@ void view::Stage::updateTiles() {
 	}
 }
 
-void view::Stage::updateSprites() {
+void Stage::updateSprites() {
 	for (unsigned i = 0 ; i < spriteArray.size(); i++) {
 		spriteArray[i]->actualizarFrame();
 	}

@@ -7,13 +7,13 @@
 #include "ChatManager.h"
 #include "SimulationManager.h"
 #include "LoginManager.h"
-#include "GameView.h"
+//#include "GameView.h"
 #include "Player.h"
 
 int main(int argc, char *argv[]){
 	std::string command;
 
-	GameView::instance().initialize();
+	//GameView::instance().initialize();
 
 	WSAData ws;
 	WSAStartup(MAKEWORD(2,2),&ws);

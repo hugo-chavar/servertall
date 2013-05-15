@@ -1,7 +1,7 @@
 #ifndef _SURFACE_H_
 #define _SURFACE_H_
 
-#include "SDL.h"
+#include "../Libraries/SDL-1.2.15/include/SDL.h"
 #include <string>
 
 namespace view{

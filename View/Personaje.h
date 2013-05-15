@@ -45,7 +45,7 @@ private:
 	void animar();
 	void detenerAnimacion();
 	//void crearNombre(string textoNombre);
-	std::pair<int, int> tileActual;
+	std::pair<int, int> tileActual; //TODO: Ver porque ya está en PersonajeModelo como posición
 	//SDL_Surface *nombre;
 	PersonajeModelo* modelo;
 	std::vector<SpriteAnimado*> sprites;

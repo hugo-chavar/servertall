@@ -1,13 +1,13 @@
 #include "Player.h"
 
-Player::Player(string userID, PersonajeModelo *character) {
+Player::Player(string userID, Personaje *character) {
 	_userID = userID;
 	_character = character;
 }
 
 Player::~Player() { }
 
-PersonajeModelo *Player::getCharacter() {
+Personaje *Player::getCharacter() {
 	return _character;
 }
 

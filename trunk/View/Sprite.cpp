@@ -50,7 +50,7 @@ int Sprite::getCurrentState() {
 
 void Sprite::loadSurfaces() {
 	view::Surface* auxSurface = new view::Surface();
-	auxSurface->load(path);
+	auxSurface->load(spriteEntity->imagePath());
 	this->surfaceWidth = auxSurface->getWidth();
 	this->surfaceHeight = auxSurface->getHeight();
 	auxSurface->free();

@@ -20,7 +20,7 @@ class GameView {
 public:
 	GameView(void);
 	~GameView(void);
-	bool initialize(view::Camera camera);
+	bool initialize(); //
 	view::Stage* getWorldView();
 	Personaje* getMyPersonaje();
 	Personaje* getPersonaje(string name);
@@ -28,7 +28,7 @@ public:
 
 	//DEL MODEL
 	StageModel* world();
-	bool initialize();
+	//bool initialize();
 	bool insidePlayerVision(Player player, std::pair<int,int>);
 	bool isKnownByPlayer(Player player, std::pair<int,int>);
 	EntLists allEntities;

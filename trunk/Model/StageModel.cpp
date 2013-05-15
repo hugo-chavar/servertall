@@ -123,11 +123,11 @@ bool StageModel::isInsideWorld(pair<int,int> tileCoordinates) {
 	return ( (tileCoordinates.first >= 0) && (tileCoordinates.first < static_cast<int>(this->width())) && (tileCoordinates.second >= 0) && (tileCoordinates.second < static_cast<int>(this->height())) );
 }
 
-void StageModel::destino(Player player,int x,int y,float cameraX,float cameraY){
-	std::pair<int,int> destino = pixelToTileCoordinatesInStage(make_pair(x,y), cameraX, cameraY);
-	if(isInsideWorld(destino)) 
-		player.getCharacter()->setDestino(destino.first,destino.second);
-}
+//void StageModel::destino(Player player,int x,int y,float cameraX,float cameraY){
+//	std::pair<int,int> destino = pixelToTileCoordinatesInStage(make_pair(x,y), cameraX, cameraY);
+//	if(isInsideWorld(destino)) 
+//		player.getCharacter()->setDestino(destino.first,destino.second);
+//}
 
 void StageModel::insertMainCharacter(PersonajeModelo* pm){
 	_vMainCharacters.push_back(pm);

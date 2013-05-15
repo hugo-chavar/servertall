@@ -3,6 +3,8 @@
 #include "SDL.h"
 #include "StringUtilities.h"
 
+#include "GameView.h"
+
 #include <iostream>
 
 
@@ -48,8 +50,7 @@ void SimulationManager::simulate() {
 		// HACER UN BROADCAST DEL UPDATE A LOS CLIENTES
 		instructionOut.clear();
 		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
-		//std::string argument = GameView::instance().managePlayersUpdate();
-		std::string argument = ""; //reemplazar x linea de arriba cuando compile GameView
+		std::string argument = GameView::instance().managePlayersUpdate();
 		instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
 		this->getClients().addBroadcast(instructionOut);
 
@@ -89,9 +90,8 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			client = this->getClients().getClient(userID);
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
 			if (argument!="") {
-				unsigned int deltaTime = SDL_GetTicks();
-				//std::string movementArgument = GameView::instance().manageMovementUpdate(userID, argument, deltaTime);
-				std::string movementArgument =  ""; //reemplazar x linea de arriba cuando compile GameView
+				//unsigned int deltaTime = SDL_GetTicks();
+				std::string movementArgument = GameView::instance().manageMovementUpdate(userID, argument); //, deltaTime
 				instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 				std::string animation = "0";
 				argument = userID+","+movementArgument+","+animation;
@@ -108,11 +108,7 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			}
 			}
 			break;
-		case OPCODE_SIMULATION_UPDATE: {
-			std::string userID = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
-			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CURRENT_POSITION);
-//			GameView::instance().managePositionUpdate(userID, argument);
-			}
+		case OPCODE_SIMULATION_UPDATE:
 			break;
 		case OPCODE_CONNECTION_ERROR: {
 			std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) << " DISCONECTED ABRUPTLY FROM SIMULATION" << std::endl;

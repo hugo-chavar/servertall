@@ -1,20 +1,21 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
-#include "PersonajeModelo.h"
+#include "Personaje.h"
+#include <string.h>
 
 
 class Player {
 
 public:
-	Player(string userID, PersonajeModelo *character);
+	Player(string userID, Personaje *character);
 	~Player();
-	PersonajeModelo *getCharacter();
+	Personaje *getCharacter();
 	string getUserID();
 
 private:
 	string _userID;
-	PersonajeModelo *_character;
+	Personaje *_character;
 
 };
 

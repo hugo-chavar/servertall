@@ -9,7 +9,6 @@
 #include "DataTypes.h"
 #include "PersonajeModelo.h"
 #include "TileModel.h"
-#include "Player.h"
 
 using namespace std;
 
@@ -40,7 +39,7 @@ public:
 	pair<int,int> pixelToTileCoordinatesInStage(pair<int,int> pixelCoordinates,float cameraX,float cameraY);
 	pair<int,int> pixelToTileCoordinates(pair<int,int> pixelCoordinates);
 	bool isInsideWorld(pair<int,int> tileCoordinates);
-	void destino(Player player,int x,int y,float cameraX,float cameraY);
+	//void destino(Player player,int x,int y,float cameraX,float cameraY);
 
 	PersonajeModelo* modelMainCharacters(unsigned );
 	TileModel* getFirstTile();

@@ -1,27 +1,12 @@
 #include "GameView.h"
 
 
-GameView::GameView(void) { }
+GameView::GameView() { }
 
-GameView::~GameView(void) {
-//	_login.cleanUp();
-}
+GameView::~GameView() { }
 
 bool GameView::initialize() //view::Camera camera
 {
-	// DEL MODEL
-	yParser.parse();
-	_world = yParser.vStages()[0];
-	unsigned stageActual = 0;
-	allEntities = yParser.allLists();
-	_configuration = yParser.getConfig();
-
-	//si hubieron problemas salgo
-	if (!_configuration)
-		return false;
-
-	return true;
-
 	//Yami este metodo todavia no esta.Hay que ver que cosas de aca van, porq es una copia del del modelo por ahora
 
 	//	bool mapInitialized = worldView.initialize();
@@ -31,7 +16,7 @@ bool GameView::initialize() //view::Camera camera
 	//YAMLParser connectionParser;
 	//connectionParser.parse(CONNECTION_DIRECTORY, true);
 	//int serverPortNumber = connectionParser.getConfigPort();
-	//std::string serverIpAddress = connectionParser.getConfigIp();
+	//string serverIpAddress = connectionParser.getConfigIp();
 
 	//ClientUpdater clientUpdater;
 	//clientUpdater.setServerIp(serverIpAddress);
@@ -57,7 +42,7 @@ bool GameView::initialize() //view::Camera camera
 	//this->_time.initializeTime();
 	//_login.initialize();
 	//this->getModelUpdater()->startUpdating();
-	//return true;
+	return true;
 
 }
 
@@ -66,70 +51,47 @@ GameView& GameView::instance() {
 	return singleton;
 }
 
-view::Stage* GameView::getWorldView() {
+Stage* GameView::getWorldView() {
 	return &worldView;
 }
 
-Personaje* GameView::getPersonaje(string name) {
-	Personaje* personaje = NULL;
-	std::map<std::string,Personaje*>::iterator it = this->personajes.find(name);
-
-	if (it != this->personajes.end())
-		personaje = it->second;
-
-	return personaje;
-}
-
-Personaje* GameView::getMyPersonaje() {
-	if (this->personaje){
-		return this->personaje;
-	}
-	Logger::instance().nullPointer("function Personaje* GameView::getMyPersonaje");
-	return NULL;
-}
-
-
-// DEL MODEL
-
-StageModel* GameView::world() {
-	return &_world;
-}
-
-EntityObject* GameView::entityObjectAt(unsigned pos) {
-	if (allEntities.vEntitiesObject.size() > pos)
-		return allEntities.vEntitiesObject.at(pos);
-	Logger::instance().nullPointer("function EntityObject* Game::animatedEntityAt");
-	return NULL;
-}
-
-AnimatedEntity* GameView::animatedEntityAt(unsigned pos) {
-	if (allEntities.vAnimatedEntities.size() > pos)
-		return allEntities.vAnimatedEntities.at(pos);
-	Logger::instance().nullPointer("function AnimatedEntity* Game::animatedEntityAt");
-	return NULL;
-}
-
-bool GameView::isCharacterTypeValid(string characterType) {
-	int type = stringUtilities::stringToInt(characterType);
-	if (_world.vMainCharacters()->size()>type)
-		return true;
-	return false;
-}
+//Personaje* GameView::getPersonaje(string name) {
+//	Personaje* personaje = NULL;
+//	std::map<string,Personaje*>::iterator it = this->personajes.find(name);
+//
+//	if (it != this->personajes.end())
+//		personaje = it->second;
+//
+//	return personaje;
+//}
 
 void GameView::addPlayer(string userID, string characterType) {
-	PersonajeModelo* character = NULL;
-	PersonajeModelo aux = *_world.vMainCharacters()->at(stringUtilities::stringToInt(characterType));
-	character = &aux;
+	Personaje* character = new Personaje(Game::instance().world()->vMainCharacters()->at(stringUtilities::stringToInt(characterType)));
 	Player *player = new Player(userID, character);
-	player->getCharacter()->setVelocidad(_configuration->mainCharacterSpeed());
-	player->getCharacter()->setName(userID);
-	player->getCharacter()->createVision(_configuration->visionRange());
-	_players.push_back(player);
+	player->getCharacter()->personajeModelo()->setVelocidad(Game::instance().configuration()->mainCharacterSpeed());
+	player->getCharacter()->personajeModelo()->setName(userID);
+	player->getCharacter()->personajeModelo()->createVision(Game::instance().configuration()->visionRange());
+	this->_players.push_back(player);
 }
 
-string GameView::manageMovementUpdate(string userID, string destination, unsigned int deltaTime) {
+Player* GameView::findPlayer(string userID) {
+	bool found = false;
+	Player* player = NULL;
+	int i = 0;
+	while ((i < this->_players.size()) && (!found)) {
+		if (this->_players[i]->getUserID() == userID) {
+			found = true;
+			player = this->_players[i];
+		}
+		else
+			i++;
+	}
+	return player;
+}
+
+string GameView::manageMovementUpdate(string userID, string destination) { //, unsigned int deltaTime
 	Player *player = findPlayer(userID);
-	pair <int, int> current = player->getCharacter()->getPosition();
+	pair <int, int> current = player->getCharacter()->personajeModelo()->getPosition();
 	pair <int, int> pair_destination = stringUtilities::stringToPairInt(destination);
 	player->getCharacter()->setDestino(pair_destination.first, pair_destination.second);
 	bool finished = false;
@@ -137,7 +99,7 @@ string GameView::manageMovementUpdate(string userID, string destination, unsigne
 	string movementArgument = "";
 	string str_nextTiles = "";
 	while (!finished) {
-		player->getCharacter()->mover(deltaTime);
+		//player->getCharacter()->mover(deltaTime);
 		/*if (nextTile.first<0) {
 			numberOfTiles = 0;
 			movementArgument = stringUtilities::intToString(numberOfTiles);
@@ -156,7 +118,7 @@ string GameView::manageMovementUpdate(string userID, string destination, unsigne
 	}
 	movementArgument = stringUtilities::intToString(numberOfTiles);
 	movementArgument = movementArgument+str_nextTiles;
-	player->getCharacter()->setCurrent(current.first, current.second);
+	player->getCharacter()->personajeModelo()->setCurrent(current.first, current.second);
 	//int numberOfTiles = 1;
 	//string movementArgument = stringUtilities::intToString(numberOfTiles);
 	//pair <int, int> pair_destination = stringUtilities::stringToPairInt(destination);
@@ -173,11 +135,6 @@ string GameView::manageMovementUpdate(string userID, string destination, unsigne
 	return movementArgument;
 }
 
-void GameView::managePositionUpdate(string userID, string position) {
-	pair <int, int> pair_position = stringUtilities::stringToPairInt(position);
-	Game::instance().findPlayer(userID)->getCharacter()->setCurrent(pair_position.first, pair_position.second);
-}
-
 string GameView::managePlayersUpdate() {
 	string argument = "";
 	for (int i=0; i<_players.size(); i++)
@@ -188,44 +145,25 @@ string GameView::managePlayersUpdate() {
 
 string GameView::managePlayerInitialSynchPosition(string userID) {
 	Player *player = findPlayer(userID);
-	string position = stringUtilities::pairIntToString(player->getCharacter()->getPosition());
+	string position = stringUtilities::pairIntToString(player->getCharacter()->personajeModelo()->getPosition());
 	return position;
 }
 
 string GameView::managePlayerInitialSynchVision(string userID) {
 	Player *player = findPlayer(userID);
-	string vision = player->getCharacter()->getVision()->toString();
+	string vision = player->getCharacter()->personajeModelo()->getVision()->toString();
 	return vision;
 }
 
-Player* GameView::findPlayer(string userID) {
-	bool found = false;
-	Player* player = NULL;
-	int i = 0;
-	while ((i<_players.size()) && (!found)) {
-		if (_players[i]->getUserID()==userID) {
-			found = true;
-			player = _players[i];
-		}
-		else
-			i++;
-	}
-	return player;
-}
-
-TimeManager* GameView::time() {
-	return &_time;
-}
-
-Configuration* GameView::configuration() {
-	if (_configuration)
-			return _configuration;
-	Logger::instance().nullPointer("Configuration* Game::configuration");
-	return NULL;
+bool GameView::isCharacterTypeValid(string characterType) {
+	int type = stringUtilities::stringToInt(characterType);
+	if (Game::instance().world()->vMainCharacters()->size()>type)
+		return true;
+	return false;
 }
 
 bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos){
-	bool inside = player.getCharacter()->getVision()->isInsideVision(pos);
+	bool inside = player.getCharacter()->personajeModelo()->getVision()->isInsideVision(pos);
 
 	if (!inside) {
 		TileModel* relatedTile = Game::instance().world()->getTileAt(pos)->getRelatedTile();
@@ -233,7 +171,7 @@ bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos){
 			// preguntar si es drawable() e ir salteando..
 			while ( (!inside) && (relatedTile != Game::instance().world()->getTileAt(pos)) ) {
 				pair<int, int> posRelated = relatedTile->getPosition();
-				inside = player.getCharacter()->getVision()->isInsideVision(posRelated);
+				inside = player.getCharacter()->personajeModelo()->getVision()->isInsideVision(posRelated);
 				relatedTile = relatedTile->getRelatedTile();
 			}
 		}
@@ -242,5 +180,9 @@ bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos){
 }
 
 bool GameView::isKnownByPlayer(Player player, std::pair<int,int> pos) {
-	return player.getCharacter()->getVision()->testPosition(pos);
+	return player.getCharacter()->personajeModelo()->getVision()->testPosition(pos);
 }
+
+//TimeManager* GameView::time() {
+//	return &_time;
+//}

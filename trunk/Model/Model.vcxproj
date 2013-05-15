@@ -80,7 +80,6 @@
     <ClCompile Include="Par.cpp" />
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="PersonajeModelo.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="StageModel.cpp" />
     <ClCompile Include="TileModel.cpp" />
     <ClCompile Include="YAMLParser.cpp" />
@@ -100,7 +99,6 @@
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="PersonajeConstantes.h" />
     <ClInclude Include="PersonajeModelo.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="StageModel.h" />
     <ClInclude Include="TileModel.h" />
     <ClInclude Include="YAMLParser.h" />

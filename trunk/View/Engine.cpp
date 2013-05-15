@@ -8,7 +8,7 @@ Engine::Engine() {
 	this->running = true;
 	//TODO: must be either in the config file or an in-game parameter.
 	this->desiredFPS = 100;
-	this->chat.setIsTyping(false);
+	//this->chat.setIsTyping(false);
 
 	//WSAData ws;
 	//WSAStartup(MAKEWORD(2,2),&ws);

@@ -7,7 +7,7 @@ GameView::~GameView(void) {
 //	_login.cleanUp();
 }
 
-bool GameView::initialize(view::Camera camera)
+bool GameView::initialize() //view::Camera camera
 {
 	// DEL MODEL
 	yParser.parse();

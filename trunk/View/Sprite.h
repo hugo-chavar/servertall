@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
-//#include "Surface.h"
+#include "Surface.h"
 #include "AnimatedEntity.h"
 
 

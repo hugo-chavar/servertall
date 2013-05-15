@@ -42,6 +42,10 @@ public:
 	void update();
 	std::pair<int, int> obtenerFrentePersonaje();
 	void setAnimating(bool value);
+	//void setRefPixelX(int);
+	//void setRefPixelY(int);
+	int getRefPixelX();
+	int getRefPixelY();
 private:
 
 	int siCaminaDetenerse();

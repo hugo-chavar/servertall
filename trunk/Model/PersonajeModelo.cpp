@@ -466,3 +466,19 @@ std::pair<int, int> PersonajeModelo::obtenerFrentePersonaje() {
 void PersonajeModelo::setAnimating(bool value) {
 	this->isAnimating = value;
 }
+//
+//void PersonajeModelo::setRefPixelX(int) {
+//	this->isAnimating = value;
+//}
+//
+//void PersonajeModelo::setRefPixelY(int) {
+//	this->isAnimating = value;
+//}
+
+int PersonajeModelo::getRefPixelX() {
+	return this->animation->pixelRefX();
+}
+
+int PersonajeModelo::getRefPixelY() {
+	return this->animation->pixelRefY();
+}

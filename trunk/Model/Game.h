@@ -32,11 +32,14 @@ public:
 	AnimatedEntity* animatedEntityAt(unsigned pos);
 	EntityObject* entityObjectAt(unsigned pos);
 	Configuration* configuration();
-	void addPlayer(string userID, string characterName);
-	PersonajeModelo* findCharacter(string name);
+	void addPlayer(string userID, string characterType);
 	string manageMovementUpdate(string userID, string destination, unsigned int deltaTime);
 	void managePositionUpdate(string userID, string position);
+	string managePlayersUpdate();
+	string managePlayerInitialSynchPosition(string userID);
+	string managePlayerInitialSynchVision(string userID);
 	Player* findPlayer(string userID);
+	bool isCharacterTypeValid(string characterType);
 
 private:
 	Game();

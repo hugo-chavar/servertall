@@ -46,14 +46,12 @@ void SimulationManager::simulate() {
 		// AVANZAR LA SIMULACIÓN UN DELTA DE TIEMPO.
 
 		// HACER UN BROADCAST DEL UPDATE A LOS CLIENTES
-		//instructionOut.clear();
-		//instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
-		//string userID = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
-		//string movementArgument = stringUtilities::pairIntToString(Game::instance().findPlayer(userID)->getCharacter()->getPosition());
-		//string animation = "0";
-		//string argument = userID+","+movementArgument+","+animation;
-		//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
-		//this->getClients().addBroadcast(instructionOut);
+		instructionOut.clear();
+		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
+		string argument = Game::instance().managePlayersUpdate();
+		instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
+		this->getClients().addBroadcast(instructionOut);
+
 		//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE,"DUMMY UPDATE" + stringUtilities::unsignedToString(i));
 		//this->getClients().addBroadcast(instructionOut);
 		i++;

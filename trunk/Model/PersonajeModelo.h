@@ -43,17 +43,16 @@ public:
 	void update();
 	std::pair<int, int> obtenerFrentePersonaje();
 	void setAnimating(bool value);
-<<<<<<< .mine
+	string toString();
 
 	//Getters de pixel
 	float getPixelX();
 	float getPixelY();
-=======
 	//void setRefPixelX(int);
 	//void setRefPixelY(int);
 	int getRefPixelX();
 	int getRefPixelY();
->>>>>>> .r34
+
 private:
 
 	int siCaminaDetenerse();

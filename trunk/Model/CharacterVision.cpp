@@ -83,7 +83,7 @@ string CharacterVision::toString() {
 		for (pos.second = 0; pos.second < this->mapWidth; pos.second++) {
 			if (this->testPosition(pos)){
 				out.append(stringUtilities::pairIntToString(pos));
-				out.append(":");
+				out.append(";");
 			}
 		}
 	}

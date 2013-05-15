@@ -17,10 +17,10 @@ Game& Game::instance() {
 StageModel* Game::world() {
 	return &_world;
 }
-
-TimeManager* Game::time() {
-	return &_time;
-}
+//
+//TimeManager* Game::time() {
+//	return &_time;
+//}
 
 bool Game::initialize() {
 	yParser.parse();
@@ -28,7 +28,7 @@ bool Game::initialize() {
 	unsigned stageActual = 0;
 	allEntities = yParser.allLists();
 	_configuration = yParser.getConfig();
-	this->_time.initializeTime();
+	//this->_time.initializeTime();
 	//si hubieron problemas salgo
 	if (!_configuration)
 		return false;
@@ -122,9 +122,9 @@ void Game::managePositionUpdate(string userID, string position) {
 
 string Game::managePlayersUpdate() {
 	string argument = "";
-	for (int i=0; i<_players.size(); i++)
-		argument = _players[i]->getUserID()+","+_players[i]->getCharacter()->toString()+":";
-	argument.pop_back();
+	//for (int i=0; i<_players.size(); i++)
+	//	argument = _players[i]->getUserID()+","+_players[i]->getCharacter()->toString()+":";
+	//argument.pop_back();
 	return argument;
 }
 

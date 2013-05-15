@@ -6,7 +6,7 @@
 #include "SpriteAnimado.h"
 #include "PersonajeModelo.h"
 #include "Entity.h"
-#include "GameView.h"
+//#include "GameView.h"
 
 class Personaje : public Entity {
 public:

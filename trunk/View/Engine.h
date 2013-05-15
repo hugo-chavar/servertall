@@ -15,7 +15,7 @@ class Engine {
 		Engine();
 	
 		//TODO: Create getter/setter
-		view::Stage worldView;
+		Stage worldView;
 
 	
 		bool isRunning();

@@ -1,6 +1,6 @@
 #include "Personaje.h"
 #include "../Model/PersonajeConstantes.h"
-#include "SDL_ttf.h"
+//#include "SDL_ttf.h"
 #include "Logger.h"
 #include "StringUtilities.h"
 
@@ -157,7 +157,7 @@ void Personaje::calcularSigTileAMover(){
 		tileActual = modelo->getPosition();
 		modelo->setIsInCenterTile(true);
 		//animacion = modelo->mover(tile);
-		modelo->mover(tile);
+		//modelo->mover(tile); //TODO: <----HACER QUE COMPILE ESTA LINEA
 		estado = procesarAnimacion(animacion);
 		if (estadoAnterior != estado) {
 			ePot.first = 0;
@@ -265,8 +265,8 @@ void Personaje::setDestino(int xTile, int yTile){
 }
 
 void Personaje::calcularvelocidadRelativa(std::pair<float, float>& factor) {
-	float deltaTime = GameView::instance().time()->getDeltaTime();
-
+	//float deltaTime = GameView::instance().time()->getDeltaTime();
+	float deltaTime = 1000.0; //reemplazar x linea de arriba cuando compile GameView
 	if (delta.first != 0){ //Hay movimiento en x
 		if (delta.second != 0) { //Diagonal
 			factor.first = static_cast<float>((velocidad*deltaTime) *0.707);
@@ -425,7 +425,7 @@ std::string Personaje::toString() {
 	out.append(stringUtilities::intToString(this->getEstado()));
 	out.append(";");
 	out.append(stringUtilities::intToString(sprites[this->getEstado()]->getCurrentState()));
-
+	return out;
 }
 
 //tilex, tiley, pixelx, pixely, isFreezed, nro_status, nro_surface
@@ -437,6 +437,7 @@ void Personaje::fromString(std::string data) {
 	std::string freezed = splittedData[2];
 	int status = stringUtilities::stringToInt(splittedData[3]);
 	int surface = stringUtilities::stringToInt(splittedData[4]);
+
 }
 
 

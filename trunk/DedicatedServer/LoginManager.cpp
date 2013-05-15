@@ -89,14 +89,15 @@ void LoginManager::processRequests() {
 				case OPCODE_LOGIN_REQUEST:
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID);
 					if ( (argument != "") && (this->getLoggedClients().isUserIDAvailable(argument)) ) {
-						string characterType = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER);
-						if (GameView::instance().isCharacterTypeValid(characterType)) {
+						std::string characterType = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER);
+						/*if (GameView::instance().isCharacterTypeValid(characterType)) {*/
+						if (false) { //reemplazar x linea de arriba cuando compile GameView
 							instructionOut.setOpCode(OPCODE_LOGIN_OK);
 							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome " + argument);
 							client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 							client->setUserID(argument);
 							this->getLoggedClients().addClient(client);
-							GameView::instance().addPlayer(argument, characterType);
+							//GameView::instance().addPlayer(argument, characterType); no compila gameview
 							std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
 						}
 						else {
@@ -113,8 +114,10 @@ void LoginManager::processRequests() {
 						client->addInstruction(instructionOut);
 						instructionOut.clear();
 						instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
-						string position = GameView::instance().managePlayerInitialSynchPosition(argument);
-						string vision = GameView::instance().managePlayerInitialSynchVision(argument);
+						/*std::string position = GameView::instance().managePlayerInitialSynchPosition(argument);
+						std::string vision = GameView::instance().managePlayerInitialSynchVision(argument);*/
+						std::string position = ""; //TODO: reemplazar por lineas de arriba cuando compile GameView
+						std::string vision = "";//TODO: reemplazar por lineas de arriba cuando compile GameView
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CURRENT_POSITION, position);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_VISION, vision);
 						std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;

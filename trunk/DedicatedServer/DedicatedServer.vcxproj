@@ -87,7 +87,6 @@
     <ClCompile Include="SimulationManager.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="Thread.cpp" />
-    <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChatManager.h" />
@@ -108,7 +107,6 @@
     <ClInclude Include="SimulationManager.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="Thread.h" />
-    <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
@@ -116,9 +114,6 @@
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.vcxproj">
       <Project>{212f5671-8725-44ea-b548-ebd7852b6d5e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\View\View.vcxproj">
-      <Project>{1e54591b-f570-44e3-a78d-a8025ca47cd9}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

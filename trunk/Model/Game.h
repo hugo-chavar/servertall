@@ -8,7 +8,7 @@
 #include "PersonajeModelo.h"
 #include "Configuration.h"
 #include "StageModel.h"
-////#include "..\View\TimeManager.h"
+#include "..\DedicatedServer\TimeManager.h"
 #include "..\Model\YAMLParser.h"
 #include "Player.h"
 #include "StringUtilities.h"
@@ -25,6 +25,7 @@ public:
 	static Game& instance();
 	StageModel* world();
 	bool initialize();
+	TimeManager* time();
 	bool insidePlayerVision(Player player, std::pair<int,int>);
 	bool isKnownByPlayer(Player player, std::pair<int,int>);
 	EntLists allEntities;
@@ -44,6 +45,7 @@ public:
 private:
 	Game();
 	StageModel _world;
+	TimeManager _time;
 	Configuration* _configuration;
 	vector <Player*> _players;
 };

@@ -4,7 +4,7 @@
 #include "Logger.h"
 #include "StringUtilities.h"
 
-#include "Game.h"
+#include "../Model/Game.h"
 
 
 Personaje::Personaje(PersonajeModelo* pj) {

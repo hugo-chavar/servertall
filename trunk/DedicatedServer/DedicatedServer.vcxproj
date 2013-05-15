@@ -87,6 +87,7 @@
     <ClCompile Include="SimulationManager.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="Thread.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChatManager.h" />
@@ -107,6 +108,7 @@
     <ClInclude Include="SimulationManager.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="Thread.h" />
+    <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">

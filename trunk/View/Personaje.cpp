@@ -441,6 +441,6 @@ void Personaje::fromString(std::string data) {
 }
 
 
-int PersonajeModelo::getEstado() {
+int Personaje::getEstado() {
 	return estado;
 }

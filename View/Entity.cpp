@@ -21,8 +21,8 @@ void Entity::setRectangle(std::pair<int, int> pos, Sprite* sprite ) {
 	spriteRect = posicionIsometricaPorTiles(pos.first, pos.second, sprite);
 	/*spriteRect.w = (Uint16)(sprite->getFrameActual()->getSuperficie()->w);
 	spriteRect.h = (Uint16)(sprite->getFrameActual()->getSuperficie()->h);*/
-	spriteRect.w = (Uint16)(sprite->getSurfaceWidth());
-	spriteRect.h = (Uint16)(sprite->getSurfaceHeight());
+	//spriteRect.w = (Uint16)(sprite->getSurfaceWidth());
+	//spriteRect.h = (Uint16)(sprite->getSurfaceHeight());
 }
 
 SDL_Rect Entity::posicionIsometricaPorTiles(int tileX,int tileY,Sprite* sprite) {

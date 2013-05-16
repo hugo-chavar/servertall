@@ -64,11 +64,11 @@ bool SpriteAnimado::tiempoFrameCumplido(float delta) {
 void SpriteAnimado::loadSurfaces() {
 	AnimatedEntity* auxEntity = (AnimatedEntity*)spriteEntity;
 	auxEntity->imagesPaths()->restartCurrentPosition();
-	view::Surface* auxSurface = new view::Surface();
+	/*view::Surface* auxSurface = new view::Surface();
 	auxSurface->load(auxEntity->imagesPaths()->nextFullPath());
 	this->surfaceWidth = auxSurface->getWidth();
 	this->surfaceHeight = auxSurface->getHeight();
-	auxSurface->free();
+	auxSurface->free();*/
 	surfacesCount = auxEntity->imagesPaths()->count();
 }
 

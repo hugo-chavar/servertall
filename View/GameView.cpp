@@ -5,46 +5,12 @@ GameView::GameView() { }
 
 GameView::~GameView() { }
 
-bool GameView::initialize() //view::Camera camera
-{
-	Game::instance().initialize();
-	//Yami este metodo todavia no esta.Hay que ver que cosas de aca van, porq es una copia del del modelo por ahora
+bool GameView::initialize() {
+	bool modelInitialized = Game::instance().initialize();;
 
-	//	bool mapInitialized = worldView.initialize();
-	//	bool chatInitialized = chat.initialize(camera);
-	//	return (mapInitialized && chatInitialized);
+	bool mapInitialized = worldView.initialize();
 
-	//YAMLParser connectionParser;
-	//connectionParser.parse(CONNECTION_DIRECTORY, true);
-	//int serverPortNumber = connectionParser.getConfigPort();
-	//string serverIpAddress = connectionParser.getConfigIp();
-
-	//ClientUpdater clientUpdater;
-	//clientUpdater.setServerIp(serverIpAddress);
-	//clientUpdater.setServerPort(serverPortNumber);
-	////clientUpdater.updateClient();
-	//yParser.parse(CONFIGFILE_DIRECTORY, false);
-	//_world = yParser.vStages()[0];
-	//unsigned stageActual = 0;
-	//unsigned personActual = 0;
-	//allEntities = yParser.allLists();
-	//_configuration = yParser.getConfig();
-	//_configuration.serverPort(serverPortNumber);
-	//_configuration.serverIp(serverIpAddress);
-	////selecciono el primero del primer stage
-	//_personaje = yParser.modelMainCharacters(stageActual,personActual); 
-	////si hubieron problemas salgo
-	//if (!_personaje)
-	//	return false;
-	//_personaje->setVelocidad(_configuration.mainCharacterSpeed());
-	//_personaje->createVision(_configuration.visionRange());
-	//this->_personaje->setName(this->playerName);
-	//personajes.insert(std::pair<string,PersonajeModelo*>(this->playerName,_personaje));
-	//this->_time.initializeTime();
-	//_login.initialize();
-	//this->getModelUpdater()->startUpdating();
-	return true;
-
+	return (modelInitialized&mapInitialized);
 }
 
 GameView& GameView::instance() {

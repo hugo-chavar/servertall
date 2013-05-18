@@ -7,6 +7,7 @@ GameView::~GameView() { }
 
 bool GameView::initialize() //view::Camera camera
 {
+	Game::instance().initialize();
 	//Yami este metodo todavia no esta.Hay que ver que cosas de aca van, porq es una copia del del modelo por ahora
 
 	//	bool mapInitialized = worldView.initialize();
@@ -145,17 +146,10 @@ string GameView::managePlayersUpdate() {
 	return argument;
 }
 
-//esto no se va a usar.. poner en un solo metodo todo lo del personaje
-string GameView::managePlayerInitialSynchPosition(string userID) {
+string GameView::managePlayerInitialSynch(string userID) {
 	Player *player = findPlayer(userID);
-	string position = stringUtilities::pairIntToString(player->getCharacter()->personajeModelo()->getPosition());
-	return position;
-}
-
-string GameView::managePlayerInitialSynchVision(string userID) {
-	Player *player = findPlayer(userID);
-	string vision = player->getCharacter()->personajeModelo()->getVision()->toString();
-	return vision;
+	string characterInit = player->getCharacter()->initToString();
+	return characterInit;
 }
 
 bool GameView::isCharacterTypeValid(string characterType) {

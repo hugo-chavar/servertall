@@ -116,10 +116,8 @@ void LoginManager::processRequests() {
 						client->addInstruction(instructionOut);
 						instructionOut.clear();
 						instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
-						std::string position = GameView::instance().managePlayerInitialSynchPosition(argument);
-						std::string vision = GameView::instance().managePlayerInitialSynchVision(argument);
-						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CURRENT_POSITION, position);
-						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_VISION, vision);
+						std::string characterInit = GameView::instance().managePlayerInitialSynch(argument);
+						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
 						std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
 					}
 					else {

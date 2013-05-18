@@ -10,13 +10,11 @@
 
 class Personaje : public Entity {
 public:
-	Personaje(PersonajeModelo* pj);
+	Personaje(PersonajeModelo*);
 	~Personaje();
 	void update();
-	//void render(Camera& camera);
-	void setDestino(int xTile, int yTile);
-	
-	std::pair<int,int> posicion();
+
+
 	PersonajeModelo* personajeModelo();
 	void loadSprites();
 	void clearSprites() ;
@@ -28,11 +26,15 @@ public:
 	void setAnimating(bool value);
 	std::string toString();
 	void fromString(std::string data) ;
-	//void resetSpriteState(); poner en virtual en entity para activar esto
-	int getEstado();
+	void setPixelPosition(std::pair<int, int> pixel);
+	std::pair<int, int> getPixelPosition();
+
+	//TODO: REFACTOR
+	int getCurrentSpritePosition();
+	void setDestino(int xTile, int yTile);
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual
-	int procesarAnimacion(int animacion);
+	int getSpritePosition(int currentAnimationNumber);
 	void calcularvelocidadRelativa(std::pair<float, float>& factor);
 	void mover();
 	void calcularSigTileAMover();
@@ -50,10 +52,9 @@ private:
 	PersonajeModelo* modelo;
 	std::vector<SpriteAnimado*> sprites;
 	float velocidad; //velocidad actual
-	int estado; //estado actual, si se mueve y en que dirección
+	int currentSpritePosition; //estado actual, si se mueve y en que dirección
 	std::pair<float, float> delta; //Cuanto recorrio en x y en y del movimiento
 	std::pair<float, float> ePot; //Cuanto se mueve por ciclo en x y en y
 	int serr; //variable usada para coordinar el movimiento en x y en y en la diagonal
-	//bool isAnimating;
 };
 #endif

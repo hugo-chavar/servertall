@@ -25,7 +25,6 @@ unsigned int Engine::getDesiredFPS() {
 int Engine::execute() {
 	float milisecondsTonextFrame = static_cast<float>(1000/this->getDesiredFPS());
 	unsigned int frameStartedAt = 0;
-	SDL_Event sdlEvent;
 
 	this->initialize();
  

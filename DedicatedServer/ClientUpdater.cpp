@@ -134,34 +134,27 @@ void ClientUpdater::sendDirectory(std::string path)
 	//Envio archivos
 	std::vector<std::string> directorios_v;
 	stringUtilities::splitString(dir_string,directorios_v,'~');
-	std::string directorioCorriente=path;
+	std::string directorioCorriente = path;
 
-	for(int i=0;i<directorios_v.size();i++)
-	{
-	std::string str=directorios_v[i];
-		if(str!="")
-		{
-			if(str.back()=='>')
-			{
+	for(unsigned i=0; i<directorios_v.size(); i++)	{
+	std::string str = directorios_v[i];
+		if(str != "")	{
+			if(str.back() == '>') {
 				str.erase(str.end()-1);
 				directorioCorriente=directorioCorriente+"/"+str;
-			}
-			else if(str=="..")
-			{
+			} else if(str == "..") {
 				//Borro desde la ultima / al final en el directorio corriente
-				int inicial=directorioCorriente.find_last_of('/',directorioCorriente.size()-1);
+				int inicial = directorioCorriente.find_last_of('/',directorioCorriente.size()-1);
 				directorioCorriente.erase(inicial,directorioCorriente.size()-1);
 			}
-			else 
-			{
+			else {
 				sendFile(directorioCorriente+"/"+str);
 			}
 		}
 	}
 }
 
-void ClientUpdater::receiveConfirmation()
-{
+void ClientUpdater::receiveConfirmation() {
 	Instruction instructionIn;
 			do
 			{

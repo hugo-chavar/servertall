@@ -77,7 +77,7 @@ void GameView::addPlayer(string userID, string characterType) {
 Player* GameView::findPlayer(string userID) {
 	bool found = false;
 	Player* player = NULL;
-	int i = 0;
+	unsigned i = 0;
 	while ((i < this->_players.size()) && (!found)) {
 		if (this->_players[i]->getUserID() == userID) {
 			found = true;
@@ -137,9 +137,11 @@ string GameView::manageMovementUpdate(string userID, string destination) { //, u
 
 string GameView::managePlayersUpdate() {
 	string argument = "";
-	for (int i=0; i<_players.size(); i++)
-		argument = _players[i]->getUserID()+","+_players[i]->getCharacter()->toString()+":";
-	argument.pop_back();
+	if (_players.size() > 0) {
+		for (int i=0; i < _players.size(); i++)
+			argument = _players[i]->getUserID()+","+_players[i]->getCharacter()->toString()+":";
+		argument.pop_back();
+	}
 	return argument;
 }
 
@@ -157,12 +159,13 @@ string GameView::managePlayerInitialSynchVision(string userID) {
 
 bool GameView::isCharacterTypeValid(string characterType) {
 	int type = stringUtilities::stringToInt(characterType);
-	if (Game::instance().world()->vMainCharacters()->size()>type)
+	int charactersCount = static_cast< int > (Game::instance().world()->vMainCharacters()->size());
+	if (( charactersCount >= type) && (type >= 0))
 		return true;
 	return false;
 }
 
-bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos){
+bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos) {
 	bool inside = player.getCharacter()->personajeModelo()->getVision()->isInsideVision(pos);
 
 	if (!inside) {

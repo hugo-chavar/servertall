@@ -1,6 +1,8 @@
 #ifndef _LISTENER_H_
 #define _LISTENER_H_
 
+#pragma warning(disable: 4512)
+
 #include "Thread.h"
 #include "Socket.h"
 #include "ClientList.h"

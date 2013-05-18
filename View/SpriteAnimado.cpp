@@ -72,7 +72,10 @@ void SpriteAnimado::loadSurfaces() {
 	surfacesCount = auxEntity->imagesPaths()->count();
 }
 
-
 void SpriteAnimado::setSticks(int ticks) {
 	comienzo_frame = ticks;
+}
+
+void SpriteAnimado::setCurrentState(unsigned state) {
+	estado = state;
 }

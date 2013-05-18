@@ -138,13 +138,14 @@ string GameView::manageMovementUpdate(string userID, string destination) { //, u
 string GameView::managePlayersUpdate() {
 	string argument = "";
 	if (_players.size() > 0) {
-		for (int i=0; i < _players.size(); i++)
-			argument = _players[i]->getUserID()+","+_players[i]->getCharacter()->toString()+":";
+		for (unsigned i = 0; i < _players.size(); i++)
+			argument = _players[i]->getUserID()+","+_players[i]->getCharacter()->updateToString()+":";
 		argument.pop_back();
 	}
 	return argument;
 }
 
+//esto no se va a usar.. poner en un solo metodo todo lo del personaje
 string GameView::managePlayerInitialSynchPosition(string userID) {
 	Player *player = findPlayer(userID);
 	string position = stringUtilities::pairIntToString(player->getCharacter()->personajeModelo()->getPosition());

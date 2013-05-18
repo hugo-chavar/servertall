@@ -18,10 +18,11 @@ public:
 	void actualizarFrame();
 	void getNextFrame();
 	SpriteAnimado(AnimatedEntity* entity);
-	//Dice si el sprite esta en el ultimo frame
+	//Dice si el sprite esta en el ultimo frame     <------- :S WTF!!??????? 
 	bool ultimoFrame();
 	void reiniciar();
 	~SpriteAnimado();
 	void setSticks(int ticks);
+	void setCurrentState(unsigned state);
 };
 

@@ -10,8 +10,7 @@
 Personaje::Personaje(PersonajeModelo* pj) {
 	modelo = pj;
 	tileActual = pj->getPosition();
-	//pj->getCurrent(tileActual);
-	this->currentSpritePosition = this->getSpritePosition(pj->getEstado());
+	this->currentSpritePosition = this->calculateSpritePosition(pj->getEstado());
 	velocidad = pj->getVelocidad();
 	delta.first = 0;
 	delta.second = 0;
@@ -25,19 +24,6 @@ Personaje::Personaje(PersonajeModelo* pj) {
 	this->setFreezed(false);
 	this->resetSpriteState();
 }
-
-//void Personaje::crearNombre(string textoNombre) {
-//	//TTF_Font *font = NULL;
-//	//SDL_Rect cuadroMensaje;
-//
-//	//cuadroMensaje.x = spriteRect.x + 25;
-//	//cuadroMensaje.y = spriteRect.y;
-//	//SDL_Color textColor = { 255, 255, 255 };
-//	//font = TTF_OpenFont( FUENTE, 12 );
-//	//nombre = TTF_RenderText_Blended( font, textoNombre.c_str(), textColor );
-//	//SDL_SetClipRect(nombre, (&cuadroMensaje));
-//	//TTF_CloseFont( font );
-//}
 
 void Personaje::loadSprites() {
 	AnimatedEntity* animatedEntity;
@@ -73,9 +59,6 @@ void Personaje::addFirstSprite(AnimatedEntity* entity) {
 	SpriteAnimado* newSprite = new SpriteAnimado(entity);
 	sprites.push_back(newSprite);
 	this->setRectangle(tileActual, newSprite);
-	/*spriteRect = posicionIsometricaPorTiles(tileActual.first, tileActual.second,newSprite);
-	spriteRect.w = static_cast<Uint16>(newSprite->getFrameActual()->getSuperficie()->w);
-	spriteRect.h = static_cast<Uint16>(newSprite->getFrameActual()->getSuperficie()->h);*/
 }
 
 bool Personaje::isCenteredInTile() {
@@ -99,10 +82,9 @@ void Personaje::setFreezed(bool value) {
 //}
 
 void Personaje::detenerAnimacion() {
-	//sprites[estado]->actualizarFrame();
 	modelo->terminarAnimacion();
 	int currentAnimationNumber = modelo->getEstado();
-	this->currentSpritePosition = this->getSpritePosition(currentAnimationNumber);
+	this->currentSpritePosition = this->calculateSpritePosition(currentAnimationNumber);
 }
 
 void Personaje::animar() {
@@ -110,11 +92,11 @@ void Personaje::animar() {
 	if (!this->modelo->estaAnimandose())
 		return;
 	int currentAnimationNumber = modelo->getEstado();
-	if (this->getSpritePosition(currentAnimationNumber) != this->currentSpritePosition) {
+	if (this->calculateSpritePosition(currentAnimationNumber) != this->currentSpritePosition) {
 		sprites[this->currentSpritePosition]->reiniciar();
-		sprites[this->getSpritePosition(currentAnimationNumber)]->reiniciar();
+		sprites[this->calculateSpritePosition(currentAnimationNumber)]->reiniciar();
 	}
-	this->currentSpritePosition = this->getSpritePosition(currentAnimationNumber);
+	this->currentSpritePosition = this->calculateSpritePosition(currentAnimationNumber);
 	if (sprites[this->currentSpritePosition]->ultimoFrame()) {
 		this->detenerAnimacion();
 	}
@@ -157,8 +139,8 @@ void Personaje::calcularSigTileAMover(){
 		tileActual = modelo->getPosition();
 		modelo->setIsInCenterTile(true);
 		//animacion = modelo->mover(tile);
-		//modelo->mover(tile); //TODO: <----HACER QUE COMPILE ESTA LINEA
-		this->currentSpritePosition = this->getSpritePosition(currentAnimationNumber);
+		//modelo->mover(tile); //TODO: <----HACER QUE COMPILE ESTA LINEA!!!!
+		this->currentSpritePosition = this->calculateSpritePosition(currentAnimationNumber);
 		if (previousSpritePosition != this->currentSpritePosition) {
 			ePot.first = 0;
 			ePot.second = 0;
@@ -218,9 +200,6 @@ void Personaje::moverSpriteEnY() {
 	float factorT = 0;	//El truncamiento de la variable factor
 	
 	if (((ePot.second >= 1)/*&&(serr != 1))||((serr == 1)&&(delta.first == 0)&&(ePot.second >= 1)*/)) {
-		//if ((delta.first == 0)/*&&(serr != 1)*/) { // evito actualizar dos veces en diagonal
-		//	sprites[this->currentSpritePosition]->getNextFrame();
-		//}
 		serr = 0;
 		factorT = std::floor(ePot.second);
 		ePot.second -= factorT;
@@ -245,19 +224,6 @@ void Personaje::moverSpriteEnY() {
 		}
 	}
 }
-
-//void Personaje::render(Camera& camera) {
-//	SDL_Rect cuadroMensaje;
-//
-//	cuadroMensaje.x = spriteRect.x + 25;
-//	cuadroMensaje.y = spriteRect.y;
-//	//camera.render(this->spriteRect, sprites[this->currentSpritePosition]->getFrameActual()->getSuperficie(this->freezed));
-//	if (this->freezed)
-//		camera.render(spriteRect,sprites[this->currentSpritePosition]->getSurfaceAt(freezedSpriteState)->getShadow());
-//	camera.render(this->spriteRect, sprites[this->currentSpritePosition]->getSurfaceAt(freezedSpriteState)->getSurfaceToShow(this->freezed));
-//	SDL_SetClipRect(nombre, (&cuadroMensaje));
-//	camera.render(cuadroMensaje, this->nombre);
-//}
 
 void Personaje::setDestino(int xTile, int yTile){
 	modelo->setDestino(xTile, yTile);
@@ -284,7 +250,7 @@ void Personaje::calcularvelocidadRelativa(std::pair<float, float>& factor) {
 	}
 }
 
-int Personaje::getSpritePosition(int currentAnimationNumber) {
+int Personaje::calculateSpritePosition(int currentAnimationNumber) {
 	if ((currentAnimationNumber < MOVIMIENTO) || (currentAnimationNumber >= (MOVIMIENTO + FACTOR_ORIENTACION))) {
 		delta.first = 0;
 		delta.second = 0;
@@ -370,7 +336,6 @@ Personaje::~Personaje(){
 	if (sprites.size() > 0) {
 		this->clearSprites();
 	}
-	//SDL_FreeSurface( nombre );
 }
 
 PersonajeModelo* Personaje::personajeModelo(){
@@ -397,13 +362,12 @@ std::pair<int,int> Personaje::getPosicionAnteriorEnTiles(){
 	return tileActual;
 }
 
-//tilex, tiley, pixelx, pixely, isFreezed, nro_status, nro_surface
-std::string Personaje::toString() {
+//tilex, tiley; pixelx, pixely; isFreezed; nro_status; nro_surface
+std::string Personaje::updateToString() {
 	std::string out;
-	std::pair<int,int> pixels;
-	out = stringUtilities::pairIntToString(tileActual);
+	out = stringUtilities::pairIntToString(modelo->getPosition());
 	out.append(";");
-	out.append(stringUtilities::pairIntToString(pixels));
+	out.append(stringUtilities::pairIntToString(this->getPixelPosition()));
 	out.append(";");
 	if (this->isFreezed()) {
 		out.append("F");
@@ -417,19 +381,23 @@ std::string Personaje::toString() {
 	return out;
 }
 
-//tilex, tiley, pixelx, pixely, isFreezed, nro_status, nro_surface
-void Personaje::fromString(std::string data) {
+//tilex, tiley; pixelx, pixely; isFreezed; nro_status; nro_surface
+void Personaje::updateFromString(std::string data) {
 	vector <std::string> splittedData;
 	stringUtilities::splitString(data, splittedData, ';');
 	std::pair<int,int> tilePosition = stringUtilities::stringToPairInt(splittedData[0]);
 	std::pair<int,int> pixels = stringUtilities::stringToPairInt(splittedData[1]);
-	std::string freezed = splittedData[2];
-	int status = stringUtilities::stringToInt(splittedData[3]);
-	int surface = stringUtilities::stringToInt(splittedData[4]);
+	this->setFreezed(splittedData[2] == "F");
+	this->setCurrentSpritePosition(stringUtilities::stringToInt(splittedData[3]));
+	sprites[this->getCurrentSpritePosition()]->setCurrentState(stringUtilities::stringToInt(splittedData[4]));
 }
 
 int Personaje::getCurrentSpritePosition() {
 	return this->currentSpritePosition;
+}
+
+void Personaje::setCurrentSpritePosition(int pos) {
+	this->currentSpritePosition = pos;
 }
 
 std::pair<int,int> Personaje::getPixelPosition() {
@@ -439,4 +407,20 @@ std::pair<int,int> Personaje::getPixelPosition() {
 void Personaje::setPixelPosition(std::pair<int,int> pixel) {
 	spriteRect.x = static_cast< Sint16 >(pixel.first);
 	spriteRect.y = static_cast< Sint16 >(pixel.second);
+}
+
+//tilex,tiley;pixelx,pixely;isFreezed;nro_status;nro_surface~datos_vision
+std::string Personaje::initToString() {
+	std::string out = this->updateToString();
+	out.append("~");
+	out.append(this->modelo->getVision()->toString());
+	return out;
+}
+
+//tilex,tiley;pixelx,pixely;isFreezed;nro_status;nro_surface~datos_vision
+void Personaje::initFromString(std::string data) {
+	vector <std::string> splittedData;
+	stringUtilities::splitString(data, splittedData, '~');
+	this->updateFromString(splittedData[0]);
+	this->modelo->getVision()->fromString(splittedData[1]);
 }

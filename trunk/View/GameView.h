@@ -27,8 +27,7 @@ public:
 	bool isKnownByPlayer(Player player, std::pair<int,int>);
 	string manageMovementUpdate(string userID, string destination); //, unsigned int deltaTime
 	string managePlayersUpdate();
-	string managePlayerInitialSynchPosition(string userID);
-	string managePlayerInitialSynchVision(string userID);
+	string managePlayerInitialSynch(string userID);
 	//TimeManager* time();
 
 private:

@@ -7,6 +7,13 @@ Player::Player(string userID, Personaje *character) {
 
 Player::~Player() { }
 
+void Player::initialize(float speed, string userID, unsigned int visionRange) {
+	_character->personajeModelo()->setVelocidad(speed);
+	_character->personajeModelo()->setName(userID);
+	_character->personajeModelo()->createVision(visionRange);
+	_character->loadSprites();
+}
+
 Personaje *Player::getCharacter() {
 	return _character;
 }

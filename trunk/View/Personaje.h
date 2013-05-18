@@ -6,15 +6,12 @@
 #include "SpriteAnimado.h"
 #include "PersonajeModelo.h"
 #include "Entity.h"
-//#include "GameView.h"
 
 class Personaje : public Entity {
 public:
 	Personaje(PersonajeModelo*);
 	~Personaje();
 	void update();
-
-
 	PersonajeModelo* personajeModelo();
 	void loadSprites();
 	void clearSprites() ;
@@ -24,17 +21,21 @@ public:
 	std::pair<int,int> getPosicionAnteriorEnTiles();
 	void setFreezed(bool value);
 	void setAnimating(bool value);
-	std::string toString();
-	void fromString(std::string data) ;
+	std::string updateToString();
+	void updateFromString(std::string data);
+	std::string initToString();
+	void initFromString(std::string data);
 	void setPixelPosition(std::pair<int, int> pixel);
 	std::pair<int, int> getPixelPosition();
-
-	//TODO: REFACTOR
 	int getCurrentSpritePosition();
+	void setCurrentSpritePosition(int pos);
+
+	//TODO: refactor, check if needed
 	void setDestino(int xTile, int yTile);
+
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual
-	int getSpritePosition(int currentAnimationNumber);
+	int calculateSpritePosition(int currentAnimationNumber);
 	void calcularvelocidadRelativa(std::pair<float, float>& factor);
 	void mover();
 	void calcularSigTileAMover();
@@ -43,12 +44,9 @@ private:
 	void moverSpriteEnX();
 	void moverSpriteEnY();
 	bool isCenteredInTile();
-	//void freezar();
 	void animar();
 	void detenerAnimacion();
-	//void crearNombre(string textoNombre);
-	std::pair<int, int> tileActual; //TODO: Ver porque ya está en PersonajeModelo como posición
-	//SDL_Surface *nombre;
+	std::pair<int, int> tileActual; //TODO: Ver porque ya está en PersonajeModelo como posición <-- refactor needed
 	PersonajeModelo* modelo;
 	std::vector<SpriteAnimado*> sprites;
 	float velocidad; //velocidad actual

@@ -6,6 +6,7 @@
 #include "GameView.h"
 
 #include <iostream>
+#define DESIREDFPS 60
 
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
@@ -29,7 +30,7 @@ void SimulationManager::simulate() {
 	Instruction instructionIn;
 	Instruction instructionOut;
 	//TODO: create FPS manager.
-	float milisecondsTonextFrame = static_cast<float>(1000)/60; //HARDCODED FPS
+	float milisecondsTonextFrame = static_cast<float>(1000)/DESIREDFPS; 
 	unsigned int frameStartedAt = 0;
 	
 	unsigned int i = 0;
@@ -45,7 +46,11 @@ void SimulationManager::simulate() {
 		}
 		this->getInstructionQueue().unLock();
 
-		// AVANZAR LA SIMULACIÓN UN DELTA DE TIEMPO.
+		// AVANZO LA SIMULACIÓN UN DELTA DE TIEMPO.
+		frameStartedAt = SDL_GetTicks();
+		GameView::instance().update();
+
+		// AVANZO LA SIMULACIÓN UN DELTA DE TIEMPO.
 
 		// HACER UN BROADCAST DEL UPDATE A LOS CLIENTES
 		instructionOut.clear();

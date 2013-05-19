@@ -15,6 +15,7 @@ using namespace std;
 class GameView {
 
 public:
+	void update();
 	~GameView();
 	static GameView& instance();
 	bool initialize();

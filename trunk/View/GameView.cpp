@@ -135,6 +135,14 @@ bool GameView::isCharacterTypeValid(string characterType) {
 	return false;
 }
 
+void GameView::update()
+{
+		for(int i=0;i<this->_players.size();i++)
+		{
+			_players[i]->getCharacter()->update();
+		}
+}
+
 //------------------------ METODOS QUE NO SE USAN EN UN PRINCIPIO EN EL SERVER-----------------------------
 
 bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos) {
@@ -161,3 +169,4 @@ bool GameView::isKnownByPlayer(Player player, std::pair<int,int> pos) {
 //TimeManager* GameView::time() {
 //	return &_time;
 //}
+

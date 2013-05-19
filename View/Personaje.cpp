@@ -138,7 +138,7 @@ void Personaje::calcularSigTileAMover(){
 	if (this->isCenteredInTile()) {
 		serr = 0;
 		tileActual = modelo->getPosition();
-		modelo->setIsInCenterTile(true);
+		//modelo->setIsInCenterTile(true);
 		//animacion = modelo->mover(tile);
 		//modelo->mover(tile); //TODO: <----HACER QUE COMPILE ESTA LINEA!!!!
 		this->currentSpritePosition = this->calculateSpritePosition(currentAnimationNumber);
@@ -149,7 +149,7 @@ void Personaje::calcularSigTileAMover(){
 		//std::string aux = stringUtilities::floatToString(velocidad);
 		//common::Logger::instance().log("Velocidad: "+ aux);
 		if (velocidad != 0) {
-			modelo->setIsInCenterTile(false);
+			//modelo->setIsInCenterTile(false);
 			modelo->setCurrent(tile.first, tile.second);
 		}
 	}

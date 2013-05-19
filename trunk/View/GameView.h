@@ -7,7 +7,7 @@
 #include "Stage.h"
 #include "Game.h"
 #include "Player.h"
-//#include "StringUtilities.h"
+#include "CharacterFactory.h"
 
 using namespace std;
 
@@ -35,6 +35,7 @@ private:
 	Stage worldView;
 	vector <Player*> _players;
 	//TimeManager _time;
+	CharacterFactory characterFactory;
 
 };
 

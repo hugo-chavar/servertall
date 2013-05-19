@@ -24,6 +24,7 @@ bool Game::initialize() {
 	_world = yParser.vStages()[0];
 	_stageActual = 0;
 	allEntities = yParser.allLists();
+	_world.loadNamedChars();
 	//_configuration = yParser.getConfig();
 	//this->_time.initializeTime();
 

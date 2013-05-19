@@ -39,8 +39,13 @@ struct Screen {
 struct Config {
 	float main_character_speed;
 	int scroll_margin;
-	int port;
+	//int port;
 	int vision_range;
+};
+
+struct Connection {
+	int port;
+	std::string ip;
 };
 
 struct Entities {
@@ -61,6 +66,7 @@ struct sStage {
 	vector <EntityDef> vEntitiesDef;
 	vector <sMainCharacter> vMainCharacters_aux;
 	vector <PersonajeModelo*> vMainCharacters;
+	map <string,PersonajeModelo*> mapMainCharacters;
 };
 
 struct Stages {
@@ -75,8 +81,9 @@ class YAMLParser {
 
 private:
 	Screen screen;
-	Configuration * config;
+	Configuration game_config;
 	Config configuration;
+	Connection connection;
 	EntLists entities;
 	Stages stages;
 
@@ -91,22 +98,20 @@ private:
 	void manageStageCase();
 	bool entityBaseIsInMapRange(int entityDef_index, sStage stage_aux, EntityObject* entityObjectType, AnimatedEntity* animatedEntityType);
 
-
 public:
 	YAMLParser();
 	~YAMLParser();
 
-	void parse();
+	void parse(string directory, bool connecting);
 	vector <StageModel> vStages();
 	EntLists allLists();
 
 	AnimatedEntity* findAnimatedEntityType(string name);
 	EntityObject* findEntityObjectType(string name);
-
-	//conexion con el modelo logico
-	PersonajeModelo* modelMainCharacters(unsigned, unsigned);
-	Configuration* getConfig();
-
+	/*PersonajeModelo* modelMainCharacters(unsigned, unsigned);*/
+	Configuration getConfig();
+	int getConfigPort();
+	std::string getConfigIp();
 };
 
 

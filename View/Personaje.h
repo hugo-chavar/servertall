@@ -29,8 +29,8 @@ public:
 	std::pair<int, int> getPixelPosition();
 	int getCurrentSpritePosition();
 	void setCurrentSpritePosition(int pos);
-
-	//TODO: refactor, check if needed
+	void setPlayerName(std::string name);
+	std::string getPlayerName();
 	void setDestino(int xTile, int yTile);
 
 private:
@@ -54,5 +54,7 @@ private:
 	std::pair<float, float> delta; //Cuanto recorrio en x y en y del movimiento
 	std::pair<float, float> ePot; //Cuanto se mueve por ciclo en x y en y
 	int serr; //variable usada para coordinar el movimiento en x y en y en la diagonal
+
+	std::string playerName;
 };
 #endif

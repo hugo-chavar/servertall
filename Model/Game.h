@@ -28,13 +28,15 @@ public:
 	AnimatedEntity* animatedEntityAt(unsigned pos);
 	EntityObject* entityObjectAt(unsigned pos);
 	Configuration* configuration();
+	int getStageNumber();
+	void setStageNumber(int stageNo);
 
 private:
 	Game();
 	StageModel _world;
 	//TimeManager _time;
-	Configuration* _configuration;
-
+	Configuration _configuration;
+	int stageNumber;
 };
 
 #endif

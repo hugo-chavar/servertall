@@ -91,12 +91,12 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
 			if (argument!="") {
 				//unsigned int deltaTime = SDL_GetTicks();
-				std::string movementArgument = GameView::instance().manageMovementUpdate(userID, argument); //, deltaTime
-				instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
+				/*std::string movementArgument = */GameView::instance().manageMovementUpdate(userID, argument); //, deltaTime
+				/*instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 				std::string animation = "0";
 				argument = userID+","+movementArgument+","+animation;
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
-				this->getClients().addBroadcast(instructionOut);
+				this->getClients().addBroadcast(instructionOut);*/
 			}
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_STATE);
 			if (argument!="") {

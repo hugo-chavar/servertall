@@ -55,36 +55,37 @@ Player* GameView::findPlayer(string userID) {
 	return player;
 }
 
-string GameView::manageMovementUpdate(string userID, string destination) { //, unsigned int deltaTime
+//DONE: Changed return value to void
+void GameView::manageMovementUpdate(string userID, string destination) { //, unsigned int deltaTime
 	Player *player = findPlayer(userID);
-	pair <int, int> current = player->getCharacter()->personajeModelo()->getPosition();
+	/*pair <int, int> current = player->getCharacter()->personajeModelo()->getPosition();*/
 	pair <int, int> pair_destination = stringUtilities::stringToPairInt(destination);
 	player->getCharacter()->setDestino(pair_destination.first, pair_destination.second);
-	bool finished = false;
-	int numberOfTiles = 0;
-	string movementArgument = "";
-	string str_nextTiles = "";
-	while (!finished) {
-		//player->getCharacter()->mover(deltaTime);
-		/*if (nextTile.first<0) {
-			numberOfTiles = 0;
-			movementArgument = stringUtilities::intToString(numberOfTiles);
-			return movementArgument;
-		}*/
+	/*bool finished = false;
+	int numberOfTiles = 0;*/
+	/*string movementArgument = "";
+	string str_nextTiles = "";*/
+	//while (!finished) {
+	//	//player->getCharacter()->mover(deltaTime);
+	//	/*if (nextTile.first<0) {
+	//		numberOfTiles = 0;
+	//		movementArgument = stringUtilities::intToString(numberOfTiles);
+	//		return movementArgument;
+	//	}*/
 
 
-		// SACADO PARA QUE COMPILE
+	//	// SACADO PARA QUE COMPILE
 
-		//str_nextTiles = str_nextTiles+","+stringUtilities::pairIntToString(nextTile);
-		//player->getCharacter()->setCurrent(nextTile.first, nextTile.second);
-		//if ((nextTile.first==pair_destination.first) && (nextTile.second==pair_destination.second))
-		//	finished = true;
+	//	//str_nextTiles = str_nextTiles+","+stringUtilities::pairIntToString(nextTile);
+	//	//player->getCharacter()->setCurrent(nextTile.first, nextTile.second);
+	//	//if ((nextTile.first==pair_destination.first) && (nextTile.second==pair_destination.second))
+	//	//	finished = true;
 
-		numberOfTiles++;
-	}
-	movementArgument = stringUtilities::intToString(numberOfTiles);
-	movementArgument = movementArgument+str_nextTiles;
-	player->getCharacter()->personajeModelo()->setCurrent(current.first, current.second);
+	//	numberOfTiles++;
+	//}
+	/*movementArgument = stringUtilities::intToString(numberOfTiles);
+	movementArgument = movementArgument+str_nextTiles;*/
+	/*player->getCharacter()->personajeModelo()->setCurrent(current.first, current.second);*/
 	//int numberOfTiles = 1;
 	//string movementArgument = stringUtilities::intToString(numberOfTiles);
 	//pair <int, int> pair_destination = stringUtilities::stringToPairInt(destination);
@@ -98,7 +99,7 @@ string GameView::manageMovementUpdate(string userID, string destination) { //, u
 	/*player->getCharacter()->setCurrent(nextTile.first, nextTile.second);*/
 	////string str_nextTile = stringUtilities::pairIntToString(nextTile);
 	////movementArgument = movementArgument+","+str_nextTile;
-	return movementArgument;
+	/*return movementArgument;*/
 }
 
 string GameView::managePlayersUpdate() {

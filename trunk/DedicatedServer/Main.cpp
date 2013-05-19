@@ -34,7 +34,7 @@ int main(int argc, char *argv[]){
 		return EXIT_FAILURE;
 	}
 
-	std::cout << "SERVER STARTUP COMPLETE." << command << std::endl;
+	std::cout << "SERVER STARTUP COMPLETE.\n" << command << std::endl;
 
 	std::cin >> command;
 

@@ -115,7 +115,7 @@ string GameView::managePlayersUpdate() {
 	string argument = "";
 	if (_players.size() > 0) {
 		for (unsigned i = 0; i < _players.size(); i++)
-			argument = _players[i]->getUserID() + ";" + _players[i]->getCharacter()->updateToString() + ":";
+			argument.append(_players[i]->getUserID() + ";" + _players[i]->getCharacter()->updateToString() + ":");
 		argument.pop_back();
 	}
 	return argument;

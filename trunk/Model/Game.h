@@ -21,6 +21,7 @@ public:
 
 	static Game& instance();
 	StageModel* world();
+	unsigned stageActual();
 	bool initialize();
 	//TimeManager* time();
 	EntLists allEntities;
@@ -34,6 +35,7 @@ public:
 private:
 	Game();
 	StageModel _world;
+	unsigned _stageActual;
 	//TimeManager _time;
 	Configuration _configuration;
 	int stageNumber;

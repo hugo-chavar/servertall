@@ -22,7 +22,7 @@ StageModel* Game::world() {
 bool Game::initialize() {
 	yParser.parse(CONFIGFILE_DIRECTORY,false);
 	_world = yParser.vStages()[0];
-	unsigned stageActual = 0;
+	_stageActual = 0;
 	allEntities = yParser.allLists();
 	//_configuration = yParser.getConfig();
 	//this->_time.initializeTime();
@@ -47,4 +47,8 @@ AnimatedEntity* Game::animatedEntityAt(unsigned pos) {
 
 Configuration* Game::configuration() {
 	return &_configuration;
+}
+
+unsigned Game::stageActual() {
+	return _stageActual;
 }

@@ -96,6 +96,7 @@ void LoginManager::processRequests() {
 						if (GameView::instance().isCharacterTypeValid(characterType)) {
 							instructionOut.setOpCode(OPCODE_LOGIN_OK);
 							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome " + argument);
+							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));
 							client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 							client->setUserID(argument);
 							this->getLoggedClients().addClient(client);
@@ -111,6 +112,7 @@ void LoginManager::processRequests() {
 					} else if ((argument != "") && (!this->getLoggedClients().isUserIDAvailable(argument))) {
 						instructionOut.setOpCode(OPCODE_LOGIN_OK);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome back " + argument);
+						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));
 						this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 						client = this->getLoggedClients().getClient(argument);
 						client->addInstruction(instructionOut);

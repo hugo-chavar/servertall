@@ -124,6 +124,8 @@ bool GameView::isCharacterTypeValid(string characterType) {
 	return false;
 }
 
+//------------------------ METODOS QUE NO SE USAN EN UN PRINCIPIO EN EL SERVER-----------------------------
+
 bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos) {
 	bool inside = player.getCharacter()->personajeModelo()->getVision()->isInsideVision(pos);
 

@@ -26,7 +26,7 @@ void AnimatedEntity::copy(AnimatedEntity* entity){
 }
 
 bool AnimatedEntity::hasNoImages() {
-	return _images.empty();// && (_images.emptyDir())
+	return _images.empty();
 }
 
 bool AnimatedEntity::hasNoDir() {

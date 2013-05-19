@@ -382,3 +382,5 @@ escenarios:
            x: 0 
            y: 0 
          - tipoEntidad: frodo
+           x: 3 
+           y: 3 

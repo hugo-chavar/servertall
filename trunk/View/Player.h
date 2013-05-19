@@ -13,10 +13,13 @@ public:
 	//void initialize(float speed, string userID, unsigned int visionRange);
 	Personaje *getCharacter();
 	string getUserID();
+	void startUpdating();
+	bool isUpdating();
 
 private:
 	string _userID;
 	Personaje *_character;
+	bool updating;
 
 };
 

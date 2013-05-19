@@ -3,6 +3,7 @@
 Player::Player(string userID, Personaje *character) {
 	_userID = userID;
 	_character = character;
+	this->updating = false;
 }
 
 Player::~Player() { }
@@ -20,4 +21,12 @@ Personaje *Player::getCharacter() {
 
 string Player::getUserID() {
 	return _userID;
+}
+
+void Player::startUpdating() {
+	this->updating = true;
+}
+
+bool Player::isUpdating() {
+	return this->updating;
 }

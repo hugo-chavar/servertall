@@ -114,8 +114,10 @@ void GameView::manageAnimationUpdate(string userID, string animation) {
 string GameView::managePlayersUpdate() {
 	string argument = "";
 	if (_players.size() > 0) {
-		for (unsigned i = 0; i < _players.size(); i++)
-			argument.append(_players[i]->getUserID() + ";" + _players[i]->getCharacter()->updateToString() + ":");
+		for (unsigned i = 0; i < _players.size(); i++) {
+			if (_players[i]->isUpdating())
+				argument.append(_players[i]->getUserID() + ";" + _players[i]->getCharacter()->updateToString() + ":");
+		}
 		argument.pop_back();
 	}
 	return argument;
@@ -135,12 +137,16 @@ bool GameView::isCharacterTypeValid(string characterType) {
 	return false;
 }
 
-void GameView::update()
-{
-		for(int i=0;i<this->_players.size();i++)
-		{
-			_players[i]->getCharacter()->update();
+void GameView::update() {
+		for(unsigned i = 0; i < this->_players.size(); i++) {
+			if (_players[i]->isUpdating())
+				_players[i]->getCharacter()->update();
 		}
+}
+
+void GameView::startUpdatingPlayer(string userID) {
+	Player *player = findPlayer(userID);
+	player->startUpdating();
 }
 
 //------------------------ METODOS QUE NO SE USAN EN UN PRINCIPIO EN EL SERVER-----------------------------

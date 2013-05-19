@@ -102,6 +102,7 @@ void LoginManager::processRequests() {
 							this->getLoggedClients().addClient(client);
 							GameView::instance().addPlayer(argument, characterType);
 							std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
+							GameView::instance().startUpdatingPlayer(argument);
 						}
 						else {
 							instructionOut.setOpCode(OPCODE_INVALID_CHARACTER);

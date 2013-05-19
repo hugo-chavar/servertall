@@ -30,6 +30,7 @@ public:
 	void manageAnimationUpdate(string userID, string animation);
 	string managePlayersUpdate();
 	string managePlayerInitialSynch(string userID);
+	void startUpdatingPlayer(string userID);
 	//TimeManager* time();
 
 private:

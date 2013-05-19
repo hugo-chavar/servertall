@@ -424,3 +424,11 @@ void Personaje::initFromString(std::string data) {
 	this->updateFromString(splittedData[0]);
 	this->modelo->getVision()->fromString(splittedData[1]);
 }
+
+void Personaje::setPlayerName(std::string name) {
+	this->playerName = name;
+}
+
+std::string Personaje::getPlayerName() {
+	return this->playerName;
+}

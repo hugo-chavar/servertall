@@ -20,15 +20,12 @@ StageModel* Game::world() {
 //}
 
 bool Game::initialize() {
-	yParser.parse();
+	yParser.parse(CONFIGFILE_DIRECTORY,false);
 	_world = yParser.vStages()[0];
 	unsigned stageActual = 0;
 	allEntities = yParser.allLists();
-	_configuration = yParser.getConfig();
+	//_configuration = yParser.getConfig();
 	//this->_time.initializeTime();
-	//si hubieron problemas salgo
-	if (!_configuration)
-		return false;
 
 	return true;
 }
@@ -49,8 +46,5 @@ AnimatedEntity* Game::animatedEntityAt(unsigned pos) {
 }
 
 Configuration* Game::configuration() {
-	if (_configuration)
-			return _configuration;
-	Logger::instance().nullPointer("Configuration* Game::configuration");
-	return NULL;
+	return &_configuration;
 }

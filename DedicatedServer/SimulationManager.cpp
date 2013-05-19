@@ -2,7 +2,7 @@
 
 #include "SDL.h"
 #include "StringUtilities.h"
-
+#include "Logger.h"
 #include "GameView.h"
 
 #include <iostream>
@@ -51,6 +51,7 @@ void SimulationManager::simulate() {
 		instructionOut.clear();
 		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 		std::string argument = GameView::instance().managePlayersUpdate();
+		Logger::instance().log("Argument "+argument);
 		instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
 		this->getClients().addBroadcast(instructionOut);
 

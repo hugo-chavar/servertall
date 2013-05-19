@@ -110,7 +110,7 @@ void Personaje::update() {
 		this->animar();
 	}
 	modelo->update();
-	sprites[this->currentSpritePosition]->actualizarFrame();
+	//sprites[this->currentSpritePosition]->actualizarFrame();
 
 }
 

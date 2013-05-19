@@ -46,8 +46,9 @@ public:
 	//void setRefPixelY(int);
 	int getRefPixelX();
 	int getRefPixelY();
-	bool getIsInCenterTile();
-	void setIsInCenterTile(bool);
+	void restartDirectories();
+	//bool getIsInCenterTile();
+	//void setIsInCenterTile(bool);
 private:
 
 	int siCaminaDetenerse();
@@ -81,7 +82,7 @@ private:
 	AnimatedEntity * animation;
 	string name;
 	CharacterVision* vision;
-	bool isInCenterTile;
+	//bool isInCenterTile;
 };
 
 

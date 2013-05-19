@@ -435,13 +435,17 @@ int PersonajeModelo::getRefPixelY() {
 	return this->animation->pixelRefY();
 }
 
+//
+//bool PersonajeModelo::getIsInCenterTile()
+//{
+//	return this->isInCenterTile;
+//}
+//
+//void PersonajeModelo::setIsInCenterTile(bool is)
+//{
+//	this->isInCenterTile=is;
+//}
 
-bool PersonajeModelo::getIsInCenterTile()
-{
-	return this->isInCenterTile;
-}
-
-void PersonajeModelo::setIsInCenterTile(bool is)
-{
-	this->isInCenterTile=is;
+void PersonajeModelo::restartDirectories() {
+	this->animation->imagesPaths()->restartCurrentPosition();
 }

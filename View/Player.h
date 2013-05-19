@@ -10,7 +10,7 @@ class Player {
 public:
 	Player(string userID, Personaje *character);
 	~Player();
-	void initialize(float speed, string userID, unsigned int visionRange);
+	//void initialize(float speed, string userID, unsigned int visionRange);
 	Personaje *getCharacter();
 	string getUserID();
 

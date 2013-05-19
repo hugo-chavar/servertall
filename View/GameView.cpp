@@ -33,9 +33,10 @@ Stage* GameView::getWorldView() {
 //}
 
 void GameView::addPlayer(string userID, string characterType) {
-	Personaje* character = new Personaje(Game::instance().world()->vMainCharacters()->at(stringUtilities::stringToInt(characterType)));
+	Personaje* character =characterFactory.createViewCharacter(characterType, userID) ;
+	//Personaje* character = new Personaje(Game::instance().world()->vMainCharacters()->at(stringUtilities::stringToInt(characterType)));
 	Player *player = new Player(userID, character);
-	player->initialize(Game::instance().configuration()->mainCharacterSpeed(), userID, Game::instance().configuration()->visionRange());
+	//player->initialize(Game::instance().configuration()->mainCharacterSpeed(), userID, Game::instance().configuration()->visionRange());
 	this->_players.push_back(player);
 }
 

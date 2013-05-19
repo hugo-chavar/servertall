@@ -26,6 +26,7 @@ public:
 	bool insidePlayerVision(Player player, std::pair<int,int>);
 	bool isKnownByPlayer(Player player, std::pair<int,int>);
 	void manageMovementUpdate(string userID, string destination); //, unsigned int deltaTime
+	void manageAnimationUpdate(string userID, string animation);
 	string managePlayersUpdate();
 	string managePlayerInitialSynch(string userID);
 	//TimeManager* time();

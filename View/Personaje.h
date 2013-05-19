@@ -32,6 +32,7 @@ public:
 	void setPlayerName(std::string name);
 	std::string getPlayerName();
 	void setDestino(int xTile, int yTile);
+	void animateModel(char animation);
 
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual

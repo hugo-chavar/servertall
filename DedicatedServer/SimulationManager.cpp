@@ -101,11 +101,12 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			}
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_STATE);
 			if (argument!="") {
-				instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
+				GameView::instance().manageAnimationUpdate(userID, argument);
+				/*instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 				std::string animation = argument;
 				argument = userID+",0,"+animation;
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
-				this->getClients().addBroadcast(instructionOut);
+				this->getClients().addBroadcast(instructionOut);*/
 			}
 			}
 			break;

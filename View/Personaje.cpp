@@ -230,6 +230,10 @@ void Personaje::setDestino(int xTile, int yTile){
 	modelo->setDestino(xTile, yTile);
 }
 
+void Personaje::animateModel(char animacion) {
+	modelo->animar(animacion);
+}
+
 void Personaje::calcularvelocidadRelativa(std::pair<float, float>& factor) {
 	//float deltaTime = GameView::instance().time()->getDeltaTime();
 	float deltaTime = 1000.0; //reemplazar x linea de arriba cuando compile GameView

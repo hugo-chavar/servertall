@@ -102,6 +102,15 @@ void GameView::manageMovementUpdate(string userID, string destination) { //, uns
 	/*return movementArgument;*/
 }
 
+void GameView::manageAnimationUpdate(string userID, string animation) {
+	char opcion_animacion;
+	Player *player = findPlayer(userID);
+	if (animation.size() == 1) {
+		opcion_animacion = animation.front();
+		player->getCharacter()->animateModel(opcion_animacion);
+	}
+}
+
 string GameView::managePlayersUpdate() {
 	string argument = "";
 	if (_players.size() > 0) {

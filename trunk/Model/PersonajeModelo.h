@@ -53,6 +53,7 @@ private:
 	int siCaminaDetenerse();
 	int cambiarEstado(int x, int y, int cambio);
 	int obtenerOrientacion(int x, int y);	//Obtiene el sentido según el signo de x e y
+	void orientar(std::pair<int, int> destino); //orienta el personaje para que mire hacia destino
 	bool esNecesarioCalcularNuevoPath();
 	void limpiarPath();
 	int quedarseQuieto(float &velocidadAni);

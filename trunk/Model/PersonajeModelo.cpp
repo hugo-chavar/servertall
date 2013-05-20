@@ -214,6 +214,7 @@ int PersonajeModelo::mover(std::pair<int, int>& destino, float& velocidadAni) {
 		targetParcial.second = target.second;
 		caminoSize = pathF.getPath(current.first, current.second, targetParcial.first, targetParcial.second, xPath, yPath);
 		if (caminoSize == 0) { //Si no se tiene que mover, seteo el destino en los parciales
+			this->orientar(target);
 			target.first = targetParcial.first;
 			target.second = targetParcial.second;
 		}
@@ -229,6 +230,11 @@ int PersonajeModelo::mover(std::pair<int, int>& destino, float& velocidadAni) {
 	cambio = ESTADO_MOVIMIENTO;
 	estado = cambiarEstado(destino.first, destino.second, cambio);
 	return estado;
+}
+
+void PersonajeModelo::orientar(std::pair<int, int> destino) {
+	int cambio = ESTADO_MOVIMIENTO;
+	estado = cambiarEstado(destino.first, destino.second, cambio);
 }
 
 bool PersonajeModelo::esNecesarioCalcularNuevoPath(){

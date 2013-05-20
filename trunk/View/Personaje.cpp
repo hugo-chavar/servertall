@@ -236,7 +236,7 @@ void Personaje::animateModel(char animacion) {
 
 void Personaje::calcularvelocidadRelativa(std::pair<float, float>& factor) {
 	//float deltaTime = GameView::instance().time()->getDeltaTime();
-	float deltaTime = 1000.0; //reemplazar x linea de arriba cuando compile GameView
+	float deltaTime = 1.0; //reemplazar x linea de arriba cuando compile GameView
 	if (delta.first != 0){ //Hay movimiento en x
 		if (delta.second != 0) { //Diagonal
 			factor.first = static_cast<float>((velocidad*deltaTime) *0.707);
@@ -408,7 +408,7 @@ void Personaje::setCurrentSpritePosition(int pos) {
 }
 
 std::pair<int,int> Personaje::getPixelPosition() {
-	return std::make_pair< int, int >((spriteRect.x  + delta.first), spriteRect.y + delta.second);
+	return std::make_pair< int, int >(spriteRect.x, spriteRect.y);//  + delta.first  + delta.first
 }
 
 void Personaje::setPixelPosition(std::pair<int,int> pixel) {

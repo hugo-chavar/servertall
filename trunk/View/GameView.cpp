@@ -8,7 +8,9 @@ GameView::~GameView() { }
 bool GameView::initialize() {
 	bool modelInitialized = Game::instance().initialize();;
 
-	bool mapInitialized = worldView.initialize();
+	bool mapInitialized = this->worldView.initialize();
+
+	this->getTimer()->initializeTime();
 
 	return (modelInitialized&mapInitialized);
 }
@@ -139,15 +141,20 @@ bool GameView::isCharacterTypeValid(string characterType) {
 }
 
 void GameView::update() {
-		for(unsigned i = 0; i < this->_players.size(); i++) {
-			if (_players[i]->isUpdating())
-				_players[i]->getCharacter()->update();
-		}
+	for(unsigned i = 0; i < this->_players.size(); i++) {
+		if (_players[i]->isUpdating())
+			_players[i]->getCharacter()->update();
+	}
+	this->getTimer()->updateTime();
 }
 
 void GameView::startUpdatingPlayer(string userID) {
 	Player *player = findPlayer(userID);
 	player->startUpdating();
+}
+
+TimeManager* GameView::getTimer() {
+	return &time;
 }
 
 //------------------------ METODOS QUE NO SE USAN EN UN PRINCIPIO EN EL SERVER-----------------------------
@@ -173,7 +180,4 @@ bool GameView::isKnownByPlayer(Player player, std::pair<int,int> pos) {
 	return player.getCharacter()->personajeModelo()->getVision()->testPosition(pos);
 }
 
-//TimeManager* GameView::time() {
-//	return &_time;
-//}
 

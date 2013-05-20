@@ -6,23 +6,20 @@ class SpriteAnimado: public Sprite {
 private:
 	float delay;
 	float fps;
-	int comienzo_frame;
-	//void cargarFrames(AnimatedEntity * entity);
-	void avanzarFrames();
-	bool tiempoFrameCumplido(float delta);
-	//void loadSurfaces(EntityObject * entity);
-	
+	float accumulatedTime;
+	void advance();
+	bool timeIsOver();
+
 	void loadSurfaces();
 public:
 	void initialize();
-	void actualizarFrame();
-	void getNextFrame();
+	void updateFrame();
+	//void getNextFrame();
 	SpriteAnimado(AnimatedEntity* entity);
-	//Dice si el sprite esta en el ultimo frame     <------- :S WTF!!??????? 
-	bool ultimoFrame();
-	void reiniciar();
+	bool lastFrame();
+	void restart();
 	~SpriteAnimado();
-	void setSticks(int ticks);
+	void addSticks(float ticks);
 	void setCurrentState(unsigned state);
 };
 

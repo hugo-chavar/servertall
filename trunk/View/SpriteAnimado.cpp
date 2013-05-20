@@ -1,4 +1,5 @@
 #include "SpriteAnimado.h"
+#include "GameView.h"
 
 SpriteAnimado::SpriteAnimado(AnimatedEntity* entity) {
 	//this->inicializar(entity->pixelRefX(),entity->pixelRefY(),entity->baseWidth(),entity->baseHeight());
@@ -23,59 +24,55 @@ void SpriteAnimado::initialize() {
 	this->loadSurfaces();
 }
 
-void SpriteAnimado::actualizarFrame() {
-	float deltaTime = 0.0;
+void SpriteAnimado::updateFrame() {
+	float deltaTime = GameView::instance().getTimer()->getDeltaTime();
 	if (estado == 0)
-		deltaTime = delay;
-	if ( tiempoFrameCumplido(deltaTime))
-		this->avanzarFrames();
+		deltaTime -= delay;
+	//comienzo_frame = SDL_GetTicks();
+	this->addSticks(deltaTime); //TODO: traer del timer
+	if ( this->timeIsOver())
+		this->advance();
 }
+//
+//void SpriteAnimado::getNextFrame() {
+//	this->avanzarFrames();
+//}
 
-void SpriteAnimado::getNextFrame() {
-	this->avanzarFrames();
-}
-
-bool SpriteAnimado::ultimoFrame() {
-	if (estado >= (surfacesCount - 1)) {
+bool SpriteAnimado::lastFrame() {
+	if (this->estado >= (surfacesCount - 1)) {
 		return true;
 	} else {
 		return false;
 	}
 }
 
-void SpriteAnimado::reiniciar() {
-	estado = 0;
+void SpriteAnimado::restart() {
+	this->estado = 0;
 }
 
-void SpriteAnimado::avanzarFrames() {
-	//comienzo_frame = SDL_GetTicks();
-	this->setSticks(500); //TODO: traer del timer
-	if ( this->ultimoFrame() )
-		estado = 0;
+void SpriteAnimado::advance() {
+	if ( this->lastFrame() )
+		this->estado = 0;
 	else
-		estado = estado++;
+		this->estado++;
+	this->accumulatedTime -= (1000/fps);
 }
 
-bool SpriteAnimado::tiempoFrameCumplido(float delta) {
-	return ((500 - comienzo_frame) >= ((1000/fps) + delta)); //TODO: traer del timer
+bool SpriteAnimado::timeIsOver() {
+	return (this->accumulatedTime >= (1000/fps));
 }
 
 
 void SpriteAnimado::loadSurfaces() {
 	AnimatedEntity* auxEntity = (AnimatedEntity*)spriteEntity;
-	auxEntity->imagesPaths()->restartCurrentPosition();
-	/*view::Surface* auxSurface = new view::Surface();
-	auxSurface->load(auxEntity->imagesPaths()->nextFullPath());
-	this->surfaceWidth = auxSurface->getWidth();
-	this->surfaceHeight = auxSurface->getHeight();
-	auxSurface->free();*/
+	//auxEntity->imagesPaths()->restartCurrentPosition();
 	surfacesCount = auxEntity->imagesPaths()->count();
 }
 
-void SpriteAnimado::setSticks(int ticks) {
-	comienzo_frame = ticks;
+void SpriteAnimado::addSticks(float ticks) {
+	this->accumulatedTime += ticks;
 }
 
 void SpriteAnimado::setCurrentState(unsigned state) {
-	estado = state;
+	this->estado = state;
 }

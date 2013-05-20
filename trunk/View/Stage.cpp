@@ -266,6 +266,6 @@ void Stage::updateTiles() {
 
 void Stage::updateSprites() {
 	for (unsigned i = 0 ; i < spriteArray.size(); i++) {
-		spriteArray[i]->actualizarFrame();
+		spriteArray[i]->updateFrame();
 	}
 }

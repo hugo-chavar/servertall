@@ -57,7 +57,7 @@ void SimulationManager::simulate() {
 		std::string argument = GameView::instance().managePlayersUpdate();
 		
 		if (argument.size() > 0) {
-			Logger::instance().log("Argument "+argument);
+			//Logger::instance().log("Argument "+argument);
 			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
 			this->getClients().addBroadcast(instructionOut);
 		}
@@ -90,6 +90,7 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			client->stopClient();
 			delete client;
 			std::cout << "THE USER " << argument << " DISCONNECTED FROM SIMULATION" << std::endl;
+			GameView::instance().setDisconnectedPlayer(argument);
 			break;
 		case OPCODE_CLIENT_COMMAND: {
 			std::cout << "PROCESSING COMMAND FROM CLIENT: " << instructionIn.serialize() << std::endl;
@@ -98,7 +99,8 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
 			if (argument!="") {
 				//unsigned int deltaTime = SDL_GetTicks();
-				/*std::string movementArgument = */GameView::instance().manageMovementUpdate(userID, argument); //, deltaTime
+				/*std::string movementArgument = */
+				GameView::instance().manageMovementUpdate(userID, argument); //, deltaTime
 				/*instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 				std::string animation = "0";
 				argument = userID+","+movementArgument+","+animation;
@@ -119,12 +121,14 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 		case OPCODE_SIMULATION_UPDATE:
 			break;
 		case OPCODE_CONNECTION_ERROR: {
-			std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) << " DISCONECTED ABRUPTLY FROM SIMULATION" << std::endl;
-			client = this->getClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
+			std::cout << "THE USER " << argument << " DISCONECTED ABRUPTLY FROM SIMULATION" << std::endl;
+			client = this->getClients().detachClient(argument);
 			if (client != NULL) {
 				client->stopClient();
 				delete client;
 			}
+			GameView::instance().setDisconnectedPlayer(argument);
 			break;
 		}
 		default:

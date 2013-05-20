@@ -29,7 +29,7 @@ void PersonajeModelo::initialize(int pos_x, int pos_y) {
 	caminoSize = 0;
 	estado = PARADO_S;
 	velocidad = DEFAULT_MAIN_CHARACTER_SPEED;
-	this->setIsActivo(true);
+	this->setActive(true);
 	orientacion = SUR;
 	this->setAnimating(false);
 	animacionActual = SIN_CAMBIO;
@@ -71,7 +71,7 @@ bool PersonajeModelo::estaAnimandose() {
 }
 
 void PersonajeModelo::animar(char opcion) {
-	if ((isActivo)&&(animacionActual == SIN_CAMBIO)) {
+	if ((this->isActive()) && (animacionActual == SIN_CAMBIO)) {
 		
 		switch (opcion) {
 		case (OPCION_ATACAR): {
@@ -117,7 +117,7 @@ int PersonajeModelo::delay() {
 }
 
 void PersonajeModelo::setDestino(int x, int y) {
-	if ((isActivo)&&(!this->estaAnimandose())) {
+	if ((this->isActive())&&(!this->estaAnimandose())) {
 		target.first = x;
 		target.second = y;
 		targetParcial.first = x;
@@ -126,54 +126,23 @@ void PersonajeModelo::setDestino(int x, int y) {
 }
 
 void PersonajeModelo::setEstado(int state) {
-	estado = state;
+	this->estado = state;
 }
 
-void PersonajeModelo::setIsActivo(bool active) {
-		isActivo = active;
+void PersonajeModelo::setActive(bool value) {
+		this->active = value;
 }
 
-//void PersonajeModelo::setIsActivo() {
-//	activarDesactivar();
-//	if (isActivo) {
-//		isActivo = false;
-//	} else {
-//		isActivo = true;
-//	}
-//}
-//
-//void PersonajeModelo::activarDesactivar() {
-//	if ((this->estaAnimando())) {
-//		this->terminarAnimacion();
-//	}
-//	if (isActivo) {
-//		if (estado >= MOVIMIENTO) {
-//			estado = estado + FREEZAR - MOVIMIENTO;
-//		} else {
-//			estado = estado + FREEZAR - PARADO;
-//		}
-//		targetParcial = target = current;
-//	} else {
-//		estado = estado - FREEZAR + PARADO;
-//	}
-//}
-
-
-bool PersonajeModelo::getIsActivo() {
-	return isActivo;
+bool PersonajeModelo::isActive() {
+	return this->active;
 }
 
 void PersonajeModelo::setVelocidad(float vel) {
-	velocidad = vel;
+	this->velocidad = vel;
 }
 
-//void PersonajeModelo::getCurrent(std::pair<int, int>& actual) {
-//	actual.first = current.first;
-//	actual.second = current.second;
-//}
-
 int PersonajeModelo::getEstado() {
-	return estado;
+	return this->estado;
 }
 
 float PersonajeModelo::getVelocidad() {
@@ -418,7 +387,13 @@ std::pair<int, int> PersonajeModelo::obtenerFrentePersonaje() {
 void PersonajeModelo::setAnimating(bool value) {
 	this->isAnimating = value;
 }
-//
+
+void PersonajeModelo::restartDirectories() {
+	this->animation->imagesPaths()->restartCurrentPosition();
+}
+
+//---------------------------Maybe useful in the future--------------------------------------
+
 //void PersonajeModelo::setRefPixelX(int) {
 //	this->isAnimating = value;
 //}
@@ -426,26 +401,11 @@ void PersonajeModelo::setAnimating(bool value) {
 //void PersonajeModelo::setRefPixelY(int) {
 //	this->isAnimating = value;
 //}
-
-int PersonajeModelo::getRefPixelX() {
-	return this->animation->pixelRefX();
-}
-
-int PersonajeModelo::getRefPixelY() {
-	return this->animation->pixelRefY();
-}
-
 //
-//bool PersonajeModelo::getIsInCenterTile()
-//{
-//	return this->isInCenterTile;
+//int PersonajeModelo::getRefPixelX() {
+//	return this->animation->pixelRefX();
 //}
 //
-//void PersonajeModelo::setIsInCenterTile(bool is)
-//{
-//	this->isInCenterTile=is;
+//int PersonajeModelo::getRefPixelY() {
+//	return this->animation->pixelRefY();
 //}
-
-void PersonajeModelo::restartDirectories() {
-	this->animation->imagesPaths()->restartCurrentPosition();
-}

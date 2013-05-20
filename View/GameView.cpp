@@ -157,6 +157,11 @@ TimeManager* GameView::getTimer() {
 	return &time;
 }
 
+void GameView::setDisconnectedPlayer(string userID) {
+	Player *player = findPlayer(userID);
+	player->getCharacter()->personajeModelo()->setActive(false);
+}
+
 //------------------------ METODOS QUE NO SE USAN EN UN PRINCIPIO EN EL SERVER-----------------------------
 
 bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos) {

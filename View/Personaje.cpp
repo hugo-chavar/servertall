@@ -104,7 +104,7 @@ void Personaje::animar() {
 }
 
 void Personaje::update() {
-	this->setFreezed(!modelo->getIsActivo());
+	this->setFreezed(!modelo->isActive());
 	this->mover();
 	if (this->isCenteredInTile()) {
 		this->animar();

@@ -18,8 +18,8 @@ public:
 	void setDestino(int x, int y);
 	void setVelocidad(float vel);
 	//void getCurrent(std::pair<int, int>& actual);
-	void setIsActivo(bool active);
-	bool getIsActivo();
+	void setActive(bool active);
+	bool isActive();
 	int getEstado();
 	float getVelocidad();
 	/*pair <int, int> mover(std::pair<int, int> destino);*/
@@ -44,11 +44,10 @@ public:
 	void setAnimating(bool value);
 	//void setRefPixelX(int);
 	//void setRefPixelY(int);
-	int getRefPixelX();
-	int getRefPixelY();
+	//int getRefPixelX();
+	//int getRefPixelY();
 	void restartDirectories();
-	//bool getIsInCenterTile();
-	//void setIsInCenterTile(bool);
+
 private:
 
 	int siCaminaDetenerse();
@@ -78,7 +77,7 @@ private:
 	int estado;
 	int orientacion;
 	float velocidad;
-	bool isActivo;
+	bool active;
 	AnimatedEntity * animation;
 	string name;
 	CharacterVision* vision;

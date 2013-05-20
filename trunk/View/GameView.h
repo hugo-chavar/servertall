@@ -32,6 +32,7 @@ public:
 	string managePlayersUpdate();
 	string managePlayerInitialSynch(string userID);
 	void startUpdatingPlayer(string userID);
+	void setDisconnectedPlayer(string userID);
 	TimeManager* getTimer();
 
 private:

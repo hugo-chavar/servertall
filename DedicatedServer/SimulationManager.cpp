@@ -56,10 +56,12 @@ void SimulationManager::simulate() {
 		instructionOut.clear();
 		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 		std::string argument = GameView::instance().managePlayersUpdate();
-		Logger::instance().log("Argument "+argument);
-		instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
-		this->getClients().addBroadcast(instructionOut);
-
+		
+		if (argument.size() > 0) {
+			Logger::instance().log("Argument "+argument);
+			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
+			this->getClients().addBroadcast(instructionOut);
+		}
 		//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE,"DUMMY UPDATE" + stringUtilities::unsignedToString(i));
 		//this->getClients().addBroadcast(instructionOut);
 		i++;

@@ -12,7 +12,7 @@ void TimeManager::initializeTime() {
 }
 
 void TimeManager::updateTime() {
-	deltaTime = (static_cast<float>(SDL_GetTicks() - startTime) / 1000);
+	deltaTime = static_cast<float>(SDL_GetTicks() - startTime);
 	startTime = SDL_GetTicks();
 }
 

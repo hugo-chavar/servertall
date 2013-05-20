@@ -8,6 +8,7 @@
 #include "Game.h"
 #include "Player.h"
 #include "CharacterFactory.h"
+#include "TimeManager.h"
 
 using namespace std;
 
@@ -31,13 +32,13 @@ public:
 	string managePlayersUpdate();
 	string managePlayerInitialSynch(string userID);
 	void startUpdatingPlayer(string userID);
-	//TimeManager* time();
+	TimeManager* getTimer();
 
 private:
 	GameView();
 	Stage worldView;
 	vector <Player*> _players;
-	//TimeManager _time;
+	TimeManager time;
 	CharacterFactory characterFactory;
 
 };

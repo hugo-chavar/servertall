@@ -1,6 +1,6 @@
 #include "Personaje.h"
 #include "../Model/PersonajeConstantes.h"
-//#include "SDL_ttf.h"
+#include "GameView.h"
 #include "Logger.h"
 #include "StringUtilities.h"
 
@@ -94,11 +94,11 @@ void Personaje::animar() {
 		return;
 	int currentAnimationNumber = modelo->getEstado();
 	if (this->calculateSpritePosition(currentAnimationNumber) != this->currentSpritePosition) {
-		sprites[this->currentSpritePosition]->reiniciar();
-		sprites[this->calculateSpritePosition(currentAnimationNumber)]->reiniciar();
+		sprites[this->currentSpritePosition]->restart();
+		sprites[this->calculateSpritePosition(currentAnimationNumber)]->restart();
 	}
 	this->currentSpritePosition = this->calculateSpritePosition(currentAnimationNumber);
-	if (sprites[this->currentSpritePosition]->ultimoFrame()) {
+	if (sprites[this->currentSpritePosition]->lastFrame()) {
 		this->detenerAnimacion();
 	}
 }
@@ -110,7 +110,7 @@ void Personaje::update() {
 		this->animar();
 	}
 	modelo->update();
-	//sprites[this->currentSpritePosition]->actualizarFrame();
+	sprites[this->currentSpritePosition]->updateFrame();
 
 }
 
@@ -235,9 +235,10 @@ void Personaje::animateModel(char animacion) {
 }
 
 void Personaje::calcularvelocidadRelativa(std::pair<float, float>& factor) {
-	//float deltaTime = GameView::instance().time()->getDeltaTime();
-	float deltaTime = 1.0; //reemplazar x linea de arriba cuando compile GameView
-	if (delta.first != 0){ //Hay movimiento en x
+	float deltaTime = GameView::instance().getTimer()->getDeltaTime()/10;
+	//Logger::instance().log("Delta "+ stringUtilities::floatToString(deltaTime1));
+	//float deltaTime = 1.0; //reemplazar x linea de arriba cuando compile GameView
+	if (delta.first != 0) { //Hay movimiento en x
 		if (delta.second != 0) { //Diagonal
 			factor.first = static_cast<float>((velocidad*deltaTime) *0.707);
 			factor.second = static_cast<float>((velocidad*deltaTime) *0.707/2);
@@ -408,7 +409,7 @@ void Personaje::setCurrentSpritePosition(int pos) {
 }
 
 std::pair<int,int> Personaje::getPixelPosition() {
-	return std::make_pair< int, int >(spriteRect.x, spriteRect.y);//  + delta.first  + delta.first
+	return std::make_pair< int, int >(spriteRect.x, spriteRect.y);
 }
 
 void Personaje::setPixelPosition(std::pair<int,int> pixel) {

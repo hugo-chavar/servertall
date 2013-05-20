@@ -22,6 +22,7 @@ public:
 	static Game& instance();
 	StageModel* world();
 	unsigned stageActual();
+	void setStageActual(unsigned stageActual);
 	bool initialize();
 	//TimeManager* time();
 	EntLists allEntities;

@@ -21,8 +21,7 @@ StageModel* Game::world() {
 
 bool Game::initialize() {
 	yParser.parse(CONFIGFILE_DIRECTORY,false);
-	_world = yParser.vStages()[0];
-	_stageActual = 0;
+	_world = yParser.vStages()[this->stageActual()];
 	allEntities = yParser.allLists();
 	_world.loadNamedChars();
 	//_configuration = yParser.getConfig();
@@ -54,4 +53,8 @@ Configuration* Game::configuration() {
 
 unsigned Game::stageActual() {
 	return _stageActual;
+}
+
+void Game::setStageActual(unsigned stageActual) {
+	this->_stageActual = stageActual;
 }

@@ -139,7 +139,7 @@ void Personaje::calcularSigTileAMover(){
 		serr = 0;
 		tileActual = modelo->getPosition();
 		//modelo->setIsInCenterTile(true);
-		//animacion = modelo->mover(tile);
+		currentAnimationNumber = modelo->mover(tile, velocidad);
 		//modelo->mover(tile); //TODO: <----HACER QUE COMPILE ESTA LINEA!!!!
 		this->currentSpritePosition = this->calculateSpritePosition(currentAnimationNumber);
 		if (previousSpritePosition != this->currentSpritePosition) {

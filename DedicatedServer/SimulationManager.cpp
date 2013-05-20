@@ -47,7 +47,6 @@ void SimulationManager::simulate() {
 		this->getInstructionQueue().unLock();
 
 		// AVANZO LA SIMULACIÓN UN DELTA DE TIEMPO.
-		frameStartedAt = SDL_GetTicks();
 		GameView::instance().update();
 
 		// AVANZO LA SIMULACIÓN UN DELTA DE TIEMPO.

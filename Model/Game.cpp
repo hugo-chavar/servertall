@@ -21,7 +21,37 @@ StageModel* Game::world() {
 
 bool Game::initialize() {
 	yParser.parse(CONFIGFILE_DIRECTORY,false);
-	_world = yParser.vStages()[this->stageActual()];
+	//aca va la seleccion de escenarios....ok?si/ ok.. me desconecto
+	std::string command;
+	std::vector<std::string> scenarios;
+	unsigned int scenario = 0;
+	bool scenarioPicked = false;
+
+	for(int i=0;i<yParser.vStages().size();i++)
+	scenarios.push_back(yParser.vStages()[i].name());
+
+	while (!scenarioPicked){
+		std::cout << "Please choose a scenario: " << std::endl;
+
+		for (unsigned int i = 0; i < scenarios.size(); i++) {
+			std::cout << stringUtilities::unsignedToString(i + 1) << " - " << scenarios[i] << std::endl;
+		}
+
+		std::cin >> command;
+
+		scenario = stringUtilities::stringToUnsigned(command); 
+		if (scenario > 0 && scenario <= scenarios.size()) {
+			scenarioPicked = true;
+			std::cout << "Loading escenario: " << scenarios[scenario - 1] << std::endl;
+		} else {
+			std::cout << "There is no escenario with ID " << stringUtilities::unsignedToString(scenario) << std::endl;			
+		}
+	}
+
+	Game::instance().setStageActual(scenario - 1);
+
+	_world = yParser.vStages()[this->stageActual()]; //aca con un simple for obtenes los escenarios
+
 	allEntities = yParser.allLists();
 	_world.loadNamedChars();
 	//_configuration = yParser.getConfig();

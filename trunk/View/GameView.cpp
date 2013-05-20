@@ -162,6 +162,11 @@ void GameView::setDisconnectedPlayer(string userID) {
 	player->getCharacter()->personajeModelo()->setActive(false);
 }
 
+void GameView::wakeUpPlayer(string userID) {
+	Player *player = findPlayer(userID);
+	player->getCharacter()->personajeModelo()->setActive(true);
+}
+
 //------------------------ METODOS QUE NO SE USAN EN UN PRINCIPIO EN EL SERVER-----------------------------
 
 bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos) {

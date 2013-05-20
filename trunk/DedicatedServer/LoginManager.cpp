@@ -102,6 +102,7 @@ void LoginManager::processRequests() {
 							this->getLoggedClients().addClient(client);
 							GameView::instance().addPlayer(argument, characterType);
 							std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
+							GameView::instance().wakeUpPlayer(argument);
 							GameView::instance().startUpdatingPlayer(argument);
 						}
 						else {
@@ -111,6 +112,7 @@ void LoginManager::processRequests() {
 							std::cout << "INVALID CHARACTER NUMBER FOR USER ID " << argument << std::endl;
 						}
 					} else if ((argument != "") && (!this->getLoggedClients().isUserIDAvailable(argument))) {
+						//codigo que no se llama nunca
 						instructionOut.setOpCode(OPCODE_LOGIN_OK);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome back " + argument);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));
@@ -122,6 +124,7 @@ void LoginManager::processRequests() {
 						std::string characterInit = GameView::instance().managePlayerInitialSynch(argument);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
 						std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
+						GameView::instance().wakeUpPlayer(argument);
 					}
 					else {
 						instructionOut.setOpCode(OPCODE_USERID_NOT_AVAILABLE);

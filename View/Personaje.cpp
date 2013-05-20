@@ -408,7 +408,7 @@ void Personaje::setCurrentSpritePosition(int pos) {
 }
 
 std::pair<int,int> Personaje::getPixelPosition() {
-	return std::make_pair< int, int >(spriteRect.x, spriteRect.y);
+	return std::make_pair< int, int >((spriteRect.x  + delta.first), spriteRect.y + delta.second);
 }
 
 void Personaje::setPixelPosition(std::pair<int,int> pixel) {

@@ -34,14 +34,15 @@ public:
 	void startUpdatingPlayer(string userID);
 	void setDisconnectedPlayer(string userID);
 	TimeManager* getTimer();
-	void wakeUpPlayer(string userID);
-
+void wakeUpPlayer(string userID);
+SpriteAnimado* getErrorImage();
 private:
 	GameView();
 	Stage worldView;
 	vector <Player*> _players;
 	TimeManager time;
 	CharacterFactory characterFactory;
+	SpriteAnimado* errorImage;
 
 };
 

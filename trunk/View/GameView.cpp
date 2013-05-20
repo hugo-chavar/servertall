@@ -3,7 +3,11 @@
 
 GameView::GameView() { }
 
-GameView::~GameView() { }
+GameView::~GameView() {
+	if (errorImage != NULL) {
+		delete errorImage;
+	}
+}
 
 bool GameView::initialize() {
 	bool modelInitialized = Game::instance().initialize();;
@@ -11,6 +15,14 @@ bool GameView::initialize() {
 	bool mapInitialized = this->worldView.initialize();
 
 	this->getTimer()->initializeTime();
+
+	AnimatedEntity errorEntity;
+	
+	errorEntity.loadImages(ERROR_ANIMATED_DIR);
+
+	errorEntity.delay(0);
+
+	errorImage = new SpriteAnimado(&errorEntity);
 
 	return (modelInitialized&mapInitialized);
 }
@@ -166,7 +178,9 @@ void GameView::wakeUpPlayer(string userID) {
 	Player *player = findPlayer(userID);
 	player->getCharacter()->personajeModelo()->setActive(true);
 }
-
+SpriteAnimado* GameView::getErrorImage() {
+	return errorImage;
+}
 //------------------------ METODOS QUE NO SE USAN EN UN PRINCIPIO EN EL SERVER-----------------------------
 
 bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos) {

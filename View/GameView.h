@@ -34,6 +34,7 @@ public:
 	void startUpdatingPlayer(string userID);
 	void setDisconnectedPlayer(string userID);
 	TimeManager* getTimer();
+	void wakeUpPlayer(string userID);
 
 private:
 	GameView();

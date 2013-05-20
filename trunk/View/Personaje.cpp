@@ -369,20 +369,22 @@ std::pair<int,int> Personaje::getPosicionAnteriorEnTiles(){
 
 //tilex, tiley; pixelx, pixely; isFreezed; nro_status; nro_surface
 std::string Personaje::updateToString() {
-	std::string out;
-	out = stringUtilities::pairIntToString(modelo->getPosition());
-	out.append(";");
-	out.append(stringUtilities::pairIntToString(this->getPixelPosition()));
-	out.append(";");
-	if (this->isFreezed()) {
-		out.append("F");
-	} else {
-		out.append("N");
+	std::string out = "";
+	if (this->getCurrentSpritePosition() >= 0){
+		out = stringUtilities::pairIntToString(modelo->getPosition());
+		out.append(";");
+		out.append(stringUtilities::pairIntToString(this->getPixelPosition()));
+		out.append(";");
+		if (this->isFreezed()) {
+			out.append("F");
+		} else {
+			out.append("N");
+		}
+		out.append(";");
+		out.append(stringUtilities::intToString(this->getCurrentSpritePosition()));
+		out.append(";");
+		out.append(stringUtilities::intToString(sprites[this->getCurrentSpritePosition()]->getCurrentState()));
 	}
-	out.append(";");
-	out.append(stringUtilities::intToString(this->getCurrentSpritePosition()));
-	out.append(";");
-	out.append(stringUtilities::intToString(sprites[this->getCurrentSpritePosition()]->getCurrentState()));
 	return out;
 }
 

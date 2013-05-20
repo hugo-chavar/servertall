@@ -118,7 +118,8 @@ string GameView::managePlayersUpdate() {
 			if (_players[i]->isUpdating())
 				argument.append(_players[i]->getUserID() + ";" + _players[i]->getCharacter()->updateToString() + ":");
 		}
-		argument.pop_back();
+		if (argument.size() > 0)
+			argument.pop_back();
 	}
 	return argument;
 }

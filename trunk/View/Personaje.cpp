@@ -7,8 +7,9 @@
 #include "../Model/Game.h"
 
 
-Personaje::Personaje(PersonajeModelo* pj) {
+Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	modelo = pj;
+	this->character_id=char_id;
 	tileActual = pj->getPosition();
 	this->currentSpritePosition = this->calculateSpritePosition(pj->getEstado());
 	velocidad = pj->getVelocidad();
@@ -368,7 +369,7 @@ std::pair<int,int> Personaje::getPosicionAnteriorEnTiles(){
 	return tileActual;
 }
 
-//tilex, tiley; pixelx, pixely; isFreezed; nro_status; nro_surface
+//tilex, tiley; pixelx, pixely; isFreezed; nro_status; nro_surface; character_id
 std::string Personaje::updateToString() {
 	std::string out = "";
 	if (this->getCurrentSpritePosition() >= 0){
@@ -385,11 +386,14 @@ std::string Personaje::updateToString() {
 		out.append(stringUtilities::intToString(this->getCurrentSpritePosition()));
 		out.append(";");
 		out.append(stringUtilities::intToString(sprites[this->getCurrentSpritePosition()]->getCurrentState()));
+		out.append(";");
+		out.append(this->character_id);
+
 	}
 	return out;
 }
 
-//tilex, tiley; pixelx, pixely; isFreezed; nro_status; nro_surface
+//tilex, tiley; pixelx, pixely; isFreezed; nro_status; nro_surface,character_id
 void Personaje::updateFromString(std::string data) {
 	vector <std::string> splittedData;
 	stringUtilities::splitString(data, splittedData, ';');
@@ -439,4 +443,8 @@ void Personaje::setPlayerName(std::string name) {
 
 std::string Personaje::getPlayerName() {
 	return this->playerName;
+}
+
+std::string Personaje::getCharacterId() {
+	return this->character_id;
 }

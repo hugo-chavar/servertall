@@ -20,7 +20,7 @@ PersonajeModelo* CharacterFactory::createModelCharacter(std::string entityName) 
 }
 
 Personaje* CharacterFactory::createViewCharacter(std::string entityName, std::string playerName) {
-	Personaje* newViewCharacter = new Personaje(this->createModelCharacter(entityName));
+	Personaje* newViewCharacter = new Personaje(this->createModelCharacter(entityName),entityName);
 	newViewCharacter->setPlayerName(playerName);
 	newViewCharacter->loadSprites();
 	return newViewCharacter;

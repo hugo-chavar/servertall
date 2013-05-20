@@ -21,7 +21,6 @@ StageModel* Game::world() {
 
 bool Game::initialize() {
 	yParser.parse(CONFIGFILE_DIRECTORY,false);
-	//aca va la seleccion de escenarios....ok?si/ ok.. me desconecto
 	std::string command;
 	std::vector<std::string> scenarios;
 	unsigned int scenario = 0;
@@ -50,7 +49,7 @@ bool Game::initialize() {
 
 	Game::instance().setStageActual(scenario - 1);
 
-	_world = yParser.vStages()[this->stageActual()]; //aca con un simple for obtenes los escenarios
+	_world = yParser.vStages()[this->stageActual()];
 
 	allEntities = yParser.allLists();
 	_world.loadNamedChars();

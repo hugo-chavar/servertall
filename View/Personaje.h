@@ -9,7 +9,7 @@
 
 class Personaje : public Entity {
 public:
-	Personaje(PersonajeModelo*);
+	Personaje(PersonajeModelo*,std::string char_id);
 	~Personaje();
 	void update();
 	PersonajeModelo* personajeModelo();
@@ -33,6 +33,7 @@ public:
 	std::string getPlayerName();
 	void setDestino(int xTile, int yTile);
 	void animateModel(char animation);
+	std::string getCharacterId();
 
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual
@@ -57,5 +58,6 @@ private:
 	int serr; //variable usada para coordinar el movimiento en x y en y en la diagonal
 
 	std::string playerName;
+	std::string character_id;
 };
 #endif

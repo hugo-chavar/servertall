@@ -95,12 +95,24 @@ void Personaje::animar() {
 		return;
 	int currentAnimationNumber = modelo->getEstado();
 	if (this->calculateSpritePosition(currentAnimationNumber) != this->currentSpritePosition) {
-		sprites[this->currentSpritePosition]->restart();
-		sprites[this->calculateSpritePosition(currentAnimationNumber)]->restart();
+		if (this->currentSpritePosition > (sprites.size()-1)) {
+			GameView::instance().getErrorImage()->restart();
+		} else {
+			sprites[this->currentSpritePosition]->restart();
+		}
+		if (this->calculateSpritePosition(currentAnimationNumber) > (sprites.size()-1)) {
+			GameView::instance().getErrorImage()->restart();
+		} else {
+			sprites[this->calculateSpritePosition(currentAnimationNumber)]->restart();
+		}
 	}
 	this->currentSpritePosition = this->calculateSpritePosition(currentAnimationNumber);
-	if (sprites[this->currentSpritePosition]->lastFrame()) {
-		this->detenerAnimacion();
+	if (this->currentSpritePosition > (sprites.size()-1)) {
+		if (GameView::instance().getErrorImage()->lastFrame())
+			this->detenerAnimacion();
+	} else {
+		if (sprites[this->currentSpritePosition]->lastFrame())
+			this->detenerAnimacion();
 	}
 }
 
@@ -111,8 +123,11 @@ void Personaje::update() {
 		this->animar();
 	}
 	modelo->update();
-	sprites[this->currentSpritePosition]->updateFrame();
-
+	if (this->currentSpritePosition > (sprites.size()-1)) {
+		GameView::instance().getErrorImage()->updateFrame();
+	} else {
+		sprites[this->currentSpritePosition]->updateFrame();
+	}
 }
 
 void Personaje::mover() {
@@ -385,7 +400,11 @@ std::string Personaje::updateToString() {
 		out.append(";");
 		out.append(stringUtilities::intToString(this->getCurrentSpritePosition()));
 		out.append(";");
-		out.append(stringUtilities::intToString(sprites[this->getCurrentSpritePosition()]->getCurrentState()));
+		if (this->getCurrentSpritePosition() > (sprites.size()-1)) {
+			out.append(stringUtilities::intToString(GameView::instance().getErrorImage()->getCurrentState()));
+		} else {
+			out.append(stringUtilities::intToString(sprites[this->getCurrentSpritePosition()]->getCurrentState()));
+		}
 		out.append(";");
 		out.append(this->character_id);
 
@@ -401,7 +420,11 @@ void Personaje::updateFromString(std::string data) {
 	std::pair<int,int> pixels = stringUtilities::stringToPairInt(splittedData[1]);
 	this->setFreezed(splittedData[2] == "F");
 	this->setCurrentSpritePosition(stringUtilities::stringToInt(splittedData[3]));
-	sprites[this->getCurrentSpritePosition()]->setCurrentState(stringUtilities::stringToInt(splittedData[4]));
+	if (this->getCurrentSpritePosition() > (sprites.size()-1)) {
+		GameView::instance().getErrorImage()->setCurrentState(stringUtilities::stringToInt(splittedData[4]));
+	} else {
+		sprites[this->getCurrentSpritePosition()]->setCurrentState(stringUtilities::stringToInt(splittedData[4]));
+	}
 }
 
 int Personaje::getCurrentSpritePosition() {

@@ -140,7 +140,9 @@ string GameView::managePlayersUpdate() {
 
 string GameView::managePlayerInitialSynch(string userID) {
 	Player *player = findPlayer(userID);
-	string characterInit = player->getCharacter()->initToString();
+	string characterInit="";
+	if (player)
+		characterInit = player->getCharacter()->initToString();
 	return characterInit;
 }
 

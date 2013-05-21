@@ -123,6 +123,16 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			}
 			}
 			break;
+		case OPCODE_INIT_SYNCHRONIZE:{
+			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
+			client = this->getClients().getClient(argument);										
+			instructionOut.clear();
+			instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
+			std::string characterInit = GameView::instance().managePlayerInitialSynch(argument);
+			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
+			client->addInstruction(instructionOut);
+									 }
+			break;
 		case OPCODE_SIMULATION_UPDATE:
 			break;
 		case OPCODE_CONNECTION_ERROR: {

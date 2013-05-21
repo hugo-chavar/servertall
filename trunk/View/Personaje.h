@@ -34,6 +34,7 @@ public:
 	void setDestino(int xTile, int yTile);
 	void animateModel(char animation);
 	std::string getCharacterId();
+	bool isCenteredInTile();
 
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual
@@ -45,7 +46,7 @@ private:
 	void moverSprite(std::pair<float, float>& factor);
 	void moverSpriteEnX();
 	void moverSpriteEnY();
-	bool isCenteredInTile();
+	void setCenteredInTile(bool centroTile);
 	void animar();
 	void detenerAnimacion();
 	std::pair<int, int> tileActual; //TODO: Ver porque ya está en PersonajeModelo como posición <-- refactor needed
@@ -56,6 +57,7 @@ private:
 	std::pair<float, float> delta; //Cuanto recorrio en x y en y del movimiento
 	std::pair<float, float> ePot; //Cuanto se mueve por ciclo en x y en y
 	int serr; //variable usada para coordinar el movimiento en x y en y en la diagonal
+	bool centeredInTile;
 
 	std::string playerName;
 	std::string character_id;

@@ -23,6 +23,7 @@ Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	//this->modelo->getAnimation()->fps(static_cast<int>(this->modelo->getAnimation()->fps() * (this->modelo->getVelocidad()/2)));
 
 	this->setFreezed(false);
+	this->setCenteredInTile(true);
 	this->resetSpriteState();
 }
 
@@ -67,6 +68,13 @@ bool Personaje::isCenteredInTile() {
 	return ((delta.first == 0) && (delta.second == 0));
 }
 
+#pragma warning( push )
+#pragma warning( disable : 4100)
+void Personaje::setCenteredInTile(bool centroTile) {
+	centeredInTile = ((delta.first == 0) && (delta.second == 0));
+}
+#pragma warning( pop )
+
 void Personaje::setFreezed(bool value) {
 		//TODO:
 	this->freezed = value;
@@ -95,19 +103,19 @@ void Personaje::animar() {
 		return;
 	int currentAnimationNumber = modelo->getEstado();
 	if (this->calculateSpritePosition(currentAnimationNumber) != this->currentSpritePosition) {
-		if (this->currentSpritePosition > (sprites.size()-1)) {
+		if (this->currentSpritePosition > (signed)(sprites.size()-1)) {
 			GameView::instance().getErrorImage()->restart();
 		} else {
 			sprites[this->currentSpritePosition]->restart();
 		}
-		if (this->calculateSpritePosition(currentAnimationNumber) > (sprites.size()-1)) {
+		if (this->calculateSpritePosition(currentAnimationNumber) > (signed)(sprites.size()-1)) {
 			GameView::instance().getErrorImage()->restart();
 		} else {
 			sprites[this->calculateSpritePosition(currentAnimationNumber)]->restart();
 		}
 	}
 	this->currentSpritePosition = this->calculateSpritePosition(currentAnimationNumber);
-	if (this->currentSpritePosition > (sprites.size()-1)) {
+	if (this->currentSpritePosition > (signed)(sprites.size()-1)) {
 		if (GameView::instance().getErrorImage()->lastFrame())
 			this->detenerAnimacion();
 	} else {
@@ -123,7 +131,7 @@ void Personaje::update() {
 		this->animar();
 	}
 	modelo->update();
-	if (this->currentSpritePosition > (sprites.size()-1)) {
+	if (this->currentSpritePosition > (signed)(sprites.size()-1)) {
 		GameView::instance().getErrorImage()->updateFrame();
 	} else {
 		sprites[this->currentSpritePosition]->updateFrame();
@@ -400,14 +408,19 @@ std::string Personaje::updateToString() {
 		//out.append(";");
 		out.append(stringUtilities::intToString(this->getCurrentSpritePosition()));
 		out.append(";");
-		if (this->getCurrentSpritePosition() > (sprites.size()-1)) {
+		if (this->getCurrentSpritePosition() > (signed)(sprites.size()-1)) {
 			out.append(stringUtilities::intToString(GameView::instance().getErrorImage()->getCurrentState()));
 		} else {
 			out.append(stringUtilities::intToString(sprites[this->getCurrentSpritePosition()]->getCurrentState()));
 		}
 		out.append(";");
 		out.append(this->character_id);
-
+		out.append(";");
+		if (this->isCenteredInTile()) {
+			out.append("T");
+		} else {
+			out.append("F");
+		}
 	}
 	return out;
 }
@@ -420,11 +433,12 @@ void Personaje::updateFromString(std::string data) {
 	std::pair<int,int> pixels = stringUtilities::stringToPairInt(splittedData[1]);
 	//this->setFreezed(splittedData[2] == "F");
 	//this->setCurrentSpritePosition(stringUtilities::stringToInt(splittedData[3]));
-	if (this->getCurrentSpritePosition() > (sprites.size()-1)) {
+	if (this->getCurrentSpritePosition() > (signed)(sprites.size()-1)) {
 		GameView::instance().getErrorImage()->setCurrentState(stringUtilities::stringToInt(splittedData[3]));
 	} else {
 		sprites[this->getCurrentSpritePosition()]->setCurrentState(stringUtilities::stringToInt(splittedData[3]));
 	}
+	this->setCenteredInTile(splittedData[4] == "T");
 }
 
 int Personaje::getCurrentSpritePosition() {

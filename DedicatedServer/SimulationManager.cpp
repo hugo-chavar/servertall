@@ -32,6 +32,7 @@ void SimulationManager::simulate() {
 	//TODO: create FPS manager.
 	float milisecondsTonextFrame = static_cast<float>(1000)/DESIREDFPS; 
 	unsigned int frameStartedAt = 0;
+	std::string lastBroadcast;
 	
 	unsigned int i = 0;
 
@@ -58,8 +59,12 @@ void SimulationManager::simulate() {
 		
 		if (argument.size() > 0) {
 			//Logger::instance().log("Argument "+argument);
-			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
-			this->getClients().addBroadcast(instructionOut);
+			if (lastBroadcast != argument){
+				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
+				lastBroadcast = argument;
+				this->getClients().addBroadcast(instructionOut);
+				//std::cout<<"Hola: "<<argument<<std::endl;
+			}
 		}
 		//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE,"DUMMY UPDATE" + stringUtilities::unsignedToString(i));
 		//this->getClients().addBroadcast(instructionOut);

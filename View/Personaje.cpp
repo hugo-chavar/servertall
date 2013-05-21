@@ -392,12 +392,12 @@ std::string Personaje::updateToString() {
 		out.append(";");
 		out.append(stringUtilities::pairIntToString(this->getPixelPosition()));
 		out.append(";");
-		if (this->isFreezed()) {
-			out.append("F");
-		} else {
-			out.append("N");
-		}
-		out.append(";");
+		//if (this->isFreezed()) {
+		//	out.append("F");
+		//} else {
+		//	out.append("N");
+		//}
+		//out.append(";");
 		out.append(stringUtilities::intToString(this->getCurrentSpritePosition()));
 		out.append(";");
 		if (this->getCurrentSpritePosition() > (sprites.size()-1)) {
@@ -418,12 +418,12 @@ void Personaje::updateFromString(std::string data) {
 	stringUtilities::splitString(data, splittedData, ';');
 	std::pair<int,int> tilePosition = stringUtilities::stringToPairInt(splittedData[0]);
 	std::pair<int,int> pixels = stringUtilities::stringToPairInt(splittedData[1]);
-	this->setFreezed(splittedData[2] == "F");
-	this->setCurrentSpritePosition(stringUtilities::stringToInt(splittedData[3]));
+	//this->setFreezed(splittedData[2] == "F");
+	//this->setCurrentSpritePosition(stringUtilities::stringToInt(splittedData[3]));
 	if (this->getCurrentSpritePosition() > (sprites.size()-1)) {
-		GameView::instance().getErrorImage()->setCurrentState(stringUtilities::stringToInt(splittedData[4]));
+		GameView::instance().getErrorImage()->setCurrentState(stringUtilities::stringToInt(splittedData[3]));
 	} else {
-		sprites[this->getCurrentSpritePosition()]->setCurrentState(stringUtilities::stringToInt(splittedData[4]));
+		sprites[this->getCurrentSpritePosition()]->setCurrentState(stringUtilities::stringToInt(splittedData[3]));
 	}
 }
 

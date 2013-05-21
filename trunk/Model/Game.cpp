@@ -26,8 +26,8 @@ bool Game::initialize() {
 	unsigned int scenario = 0;
 	bool scenarioPicked = false;
 
-	for(int i=0;i<yParser.vStages().size();i++)
-	scenarios.push_back(yParser.vStages()[i].name());
+	for(unsigned i=0; i< yParser.vStages().size(); i++)
+		scenarios.push_back(yParser.vStages()[i].name());
 
 	while (!scenarioPicked){
 		std::cout << "Please choose a scenario: " << std::endl;

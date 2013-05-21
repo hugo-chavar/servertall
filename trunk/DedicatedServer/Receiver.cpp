@@ -72,6 +72,15 @@ std::string Receiver::receiveMessageFromSocket() {
 	std::string messageEndTag = MESSAGE_ENVELOPE_END_TAG;
 	unsigned int messageEndPosition = 0;
 
+	messageEndPosition = this->getReminder().find(messageEndTag);
+	if (messageEndPosition != this->getReminder().npos) {
+		messageEndPosition += messageEndTag.length();
+		message = this->getReminder().substr(0,messageEndPosition);
+		this->setReminder(this->getReminder().substr(messageEndPosition));
+
+		return message;
+	}
+
 	do {
 		bytesReceived = this->getSocket()->receiveData(buffer,512);
 		if (bytesReceived <= 0) {

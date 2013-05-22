@@ -61,7 +61,7 @@ void SimulationManager::simulate() {
 			//Logger::instance().log("Argument "+argument);
 			if (this->lastBroadcast != argument){
 				this->lastBroadcast = argument;
-				argument.append(stringUtilities::intToString(static_cast <int> (SDL_GetTicks())));
+				//argument.append(stringUtilities::intToString(static_cast <int> (SDL_GetTicks())));
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
 				
 				this->getClients().addBroadcast(instructionOut);

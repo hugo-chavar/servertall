@@ -60,8 +60,10 @@ void SimulationManager::simulate() {
 		if (argument.size() > 0) {
 			//Logger::instance().log("Argument "+argument);
 			if (lastBroadcast != argument){
-				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
 				lastBroadcast = argument;
+				argument.append(stringUtilities::intToString(static_cast <int> (SDL_GetTicks())));
+				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
+				//lastBroadcast = argument;
 				this->getClients().addBroadcast(instructionOut);
 				//std::cout<<"Hola: "<<argument<<std::endl;
 			}

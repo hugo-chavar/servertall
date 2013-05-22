@@ -23,7 +23,8 @@ ConditionVariable& ClientList::getBroadcastConditionVariable() {
 
 //IMPORTANT: CALL ONLY AFTER LOCK.
 std::list<Client*>::iterator ClientList::findClient(std::string userID) {
-	std::list<Client*>::iterator i = this->getClients().begin();
+	std::list<Client*>::iterator i;
+	i = this->getClients().begin();
 	bool found = false;
 
 	while( (i != this->getClients().end()) && (!found) ) {
@@ -76,7 +77,8 @@ Client* ClientList::detachClient(std::string userID) {
 
 	this->getClientListMutex().lock();
 
-	std::list<Client*>::iterator it = this->findClient(userID);
+	std::list<Client*>::iterator it;
+	it = this->findClient(userID);
 	if (it != this->getClients().end()) {
 		client = *it;
 		*it = NULL;

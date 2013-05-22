@@ -200,9 +200,24 @@ void GameView::wakeUpPlayer(string userID) {
 	Player *player = findPlayer(userID);
 	player->getCharacter()->personajeModelo()->setActive(true);
 }
+
 SpriteAnimado* GameView::getErrorImage() {
 	return errorImage;
 }
+
+string GameView::manageCharactersPlaying() {
+	string argument = "";
+	if (_players.size() > 0) {
+		for (unsigned i = 0; i < _players.size(); i++) {
+			if (_players[i]->isUpdating())
+				argument.append( _players[i]->getCharacter()->idToString() + ":");
+		}
+		if (argument.size() > 0)
+			argument.pop_back();
+	}
+	return argument;
+}
+
 //------------------------ METODOS QUE NO SE USAN EN UN PRINCIPIO EN EL SERVER-----------------------------
 
 bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos) {

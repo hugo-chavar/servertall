@@ -49,7 +49,7 @@ int main(int argc, char *argv[]){
 
 	std::cout << "Finishing...." << std::endl;
 
-	system("PAUSE");
+	//system("PAUSE"); <--don't use it!! causing crash, find a better way if needed
 
 	WSACleanup();
 

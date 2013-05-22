@@ -32,7 +32,7 @@ void SimulationManager::simulate() {
 	//TODO: create FPS manager.
 	float milisecondsTonextFrame = static_cast<float>(1000)/DESIREDFPS; 
 	unsigned int frameStartedAt = 0;
-	std::string lastBroadcast;
+	this->lastBroadcast = "";
 	
 	unsigned int i = 0;
 
@@ -59,11 +59,10 @@ void SimulationManager::simulate() {
 		
 		if (argument.size() > 0) {
 			//Logger::instance().log("Argument "+argument);
-			if (lastBroadcast != argument){
-				lastBroadcast = argument;
+			if (this->lastBroadcast != argument){
 				argument.append(stringUtilities::intToString(static_cast <int> (SDL_GetTicks())));
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
-				//lastBroadcast = argument;
+				this->lastBroadcast = argument;
 				this->getClients().addBroadcast(instructionOut);
 				//std::cout<<"Hola: "<<argument<<std::endl;
 			}
@@ -105,14 +104,8 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			client = this->getClients().getClient(userID);
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
 			if (argument!="") {
-				//unsigned int deltaTime = SDL_GetTicks();
-				/*std::string movementArgument = */
 				GameView::instance().manageMovementUpdate(userID, argument); //, deltaTime
-				/*instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
-				std::string animation = "0";
-				argument = userID+","+movementArgument+","+animation;
-				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
-				this->getClients().addBroadcast(instructionOut);*/
+
 			}
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_STATE);
 			if (argument!="") {
@@ -133,7 +126,14 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			std::string characterInit = GameView::instance().managePlayerInitialSynch(argument);
 			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
 			client->addInstruction(instructionOut);
-									 }
+			//una vez inicializado el nuevo players aviso a los demás que hay gente entrando a la fiesta..
+			instructionOut.clear();
+			instructionOut.setOpCode(OPCODE_CHARACTERS_SYNCHRONIZE);
+			argument = GameView::instance().manageCharactersPlaying();
+			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTERS_UPDATE, argument);
+			this->lastBroadcast = "";
+			this->getClients().addBroadcast(instructionOut);
+			}
 			break;
 		case OPCODE_SIMULATION_UPDATE:
 			break;

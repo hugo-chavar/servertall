@@ -35,8 +35,9 @@ public:
 	void setDisconnectedPlayer(string userID);
 	bool isThereACharInTile(int tileX, int tileY);
 	TimeManager* getTimer();
-void wakeUpPlayer(string userID);
-SpriteAnimado* getErrorImage();
+	void wakeUpPlayer(string userID);
+	SpriteAnimado* getErrorImage();
+	string manageCharactersPlaying();
 private:
 	GameView();
 	Stage worldView;

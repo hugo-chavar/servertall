@@ -26,6 +26,8 @@ private:
 
 	void* run();
 
+	std::string lastBroadcast;
+
 public:
 	SimulationManager();
 

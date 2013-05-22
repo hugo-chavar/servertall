@@ -151,8 +151,8 @@ string GameView::managePlayersUpdate() {
 		}
 		if (argument.size() > 0)
 		{
-			argument.append(":"+SDL_GetTicks());
-			argument.pop_back();
+			//argument.append(stringUtilities::intToString(static_cast <int> (SDL_GetTicks())));
+			//argument.pop_back();
 		}
 	}
 	return argument;

@@ -150,7 +150,10 @@ string GameView::managePlayersUpdate() {
 				argument.append(_players[i]->getUserID() + ";" + _players[i]->getCharacter()->updateToString() + ":");
 		}
 		if (argument.size() > 0)
+		{
+			argument.append(":"+SDL_GetTicks());
 			argument.pop_back();
+		}
 	}
 	return argument;
 }

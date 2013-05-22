@@ -93,7 +93,7 @@ void LoginManager::processRequests() {
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID);
 					if ( (argument != "") && (this->getLoggedClients().isUserIDAvailable(argument)) ) {
 						std::string characterType = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER);
-						if (GameView::instance().isCharacterTypeValid(characterType)) {
+						//if (GameView::instance().isCharacterTypeValid(characterType)) {
 							instructionOut.setOpCode(OPCODE_LOGIN_OK);
 							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome " + argument);
 							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));
@@ -104,13 +104,13 @@ void LoginManager::processRequests() {
 							std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
 							GameView::instance().wakeUpPlayer(argument);
 							GameView::instance().startUpdatingPlayer(argument);
-						}
-						else {
-							instructionOut.setOpCode(OPCODE_INVALID_CHARACTER);
-							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"Invalid main character number");
-							client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
-							std::cout << "INVALID CHARACTER NUMBER FOR USER ID " << argument << std::endl;
-						}
+						//}
+						//else {
+						//	instructionOut.setOpCode(OPCODE_INVALID_CHARACTER);
+						//	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"Invalid main character number");
+						//	client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+						//	std::cout << "INVALID CHARACTER NUMBER FOR USER ID " << argument << std::endl;
+						//}
 					} else if ((argument != "") && (!this->getLoggedClients().isUserIDAvailable(argument))) {
 						//codigo que no se llama nunca
 						instructionOut.setOpCode(OPCODE_LOGIN_OK);

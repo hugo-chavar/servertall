@@ -2,7 +2,8 @@
 #define _CIRCLE_H_
 
 #include <set>
-#include <list>
+//#include <list>
+#include <vector>
 
 using namespace std;
 
@@ -20,7 +21,8 @@ public:
 private:
 	set <pair<int, int> > limits;
 	set <pair<int, int> >::iterator itlim;
-	list <pair<int, int> > orderedLimits;
+	//list <pair<int, int> > orderedLimits;
+	vector <pair<int, int> > orderedLimits;
 	pair<int, int> center;
 };
 

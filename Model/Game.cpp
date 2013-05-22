@@ -53,7 +53,7 @@ bool Game::initialize() {
 
 	allEntities = yParser.allLists();
 	_world.loadNamedChars();
-	//_configuration = yParser.getConfig();
+	_configuration = yParser.getConfig();
 	//this->_time.initializeTime();
 	Logger::instance().setFile(LOGFILE);
 	Logger::instance().log("Iniciando el juego..");

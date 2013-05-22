@@ -1,5 +1,5 @@
 #include "StageModel.h"
-#include "Game.h"
+#include "../View/GameView.h"
 #include "stringUtilities.h"
 #include "Constants.h"
 
@@ -91,6 +91,9 @@ void StageModel::name(string value) {
 unsigned int StageModel::cost(unsigned int x, unsigned int y) {
 	TileModel* tile = _tilesMap->at(make_pair(x,y));
 	if ( (tile->getOtherEntity()) || (tile->getRelatedTile()))
+		return 0;
+	std::string a;
+	if (GameView::instance().isThereACharInTile((signed) x, (signed) y))
 		return 0;
 	return 1;
 }

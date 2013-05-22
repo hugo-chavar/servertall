@@ -247,6 +247,9 @@ bool PersonajeModelo::esNecesarioCalcularNuevoPath(){
 	if ((posMov==caminoSize)&&((target.first!=targetParcial.first)||(target.second!=targetParcial.second))) { //Si completo el primer pedazo del camino
 		return true;
 	}
+	if ((Game::instance().world())->cost(xPath[posMov], yPath[posMov]) == 0) { //Hay un pj en el tile al que se va a mover
+		return true;
+	}
 	return false;
 }
 

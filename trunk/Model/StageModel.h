@@ -60,6 +60,7 @@ public:
 	void loadNamedChars();
 	PersonajeModelo* getCharacter(string name);
 private:
+
 	string _name;
 	unsigned int _width;
 	unsigned int _height;

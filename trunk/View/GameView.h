@@ -33,6 +33,7 @@ public:
 	string managePlayerInitialSynch(string userID);
 	void startUpdatingPlayer(string userID);
 	void setDisconnectedPlayer(string userID);
+	bool isThereACharInTile(int tileX, int tileY);
 	TimeManager* getTimer();
 void wakeUpPlayer(string userID);
 SpriteAnimado* getErrorImage();

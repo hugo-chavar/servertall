@@ -152,7 +152,7 @@ string GameView::managePlayersUpdate() {
 		if (argument.size() > 0)
 		{
 			//argument.append(stringUtilities::intToString(static_cast <int> (SDL_GetTicks())));
-			//argument.pop_back();
+			argument.pop_back();
 		}
 	}
 	return argument;

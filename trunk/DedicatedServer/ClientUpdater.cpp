@@ -56,7 +56,6 @@ void ClientUpdater::updateClient() {
 	Instruction instructionIn;
 	Instruction instructionOut;
 	std::string argument = "";
-	bool finished = false;
 	this->getClient()->getConnector().setInstructionQueue(&this->getInstructionQueue());
 	
 	if((!sendDirectory("../Images"))||(!sendDirectory("../Configuration")))

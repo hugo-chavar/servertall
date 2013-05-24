@@ -4,16 +4,18 @@
 #include "DirList.h"
 #include "StringUtilities.h"
 #include <fstream>
+#include "Logger.h"
 
 #include "Instruction.h"
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
-ClientUpdater::ClientUpdater(InstructionQueue& serverInstructionQueue) : serverInstructionQueue(serverInstructionQueue) {
+ClientUpdater::ClientUpdater(InstructionQueue& serverInstructionQueue,Mutex * updaterMutex) : serverInstructionQueue(serverInstructionQueue) {
 	this->shuttingDown = false;
 	this->statusOk = true;
 	this->error = "";
 	this->available = true;
+	this->mutexUpdates=updaterMutex;
 }
 
 // ----------------------------------- PRIVATE METHODS -----------------------------------
@@ -56,9 +58,11 @@ void ClientUpdater::updateClient() {
 	std::string argument = "";
 	bool finished = false;
 	this->getClient()->getConnector().setInstructionQueue(&this->getInstructionQueue());
-
-	sendDirectory("../Images");
-	sendDirectory("../Configuration");
+	
+	if((!sendDirectory("../Images"))||(!sendDirectory("../Configuration")))
+	{
+	std::cout<<"There was and error while sending files"<<std::endl;
+	}
 
 	this->getClient()->getConnector().setInstructionQueue(&this->getServerInstructionQueue());
 	instructionOut.clear();
@@ -68,7 +72,7 @@ void ClientUpdater::updateClient() {
 	this->stopClientUpdater();
 }
 
-void ClientUpdater::sendFile(std::string path)
+bool ClientUpdater::sendFile(std::string path)
 {
 	Instruction instructionOut;
 	Instruction instructionIn;
@@ -78,13 +82,13 @@ void ClientUpdater::sendFile(std::string path)
 	//chequeo que el archivo abra correctamente
 	archivo.open(path,std::ios::binary);
 	if (!archivo)
-		return;
+		return false;
 
 	instructionOut.setOpCode(OPCODE_UPDATE_FILE_START);
 	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SERIALIZED_PATH,path);
 	this->getClient()->addInstruction(instructionOut);
 	instructionOut.clear();
-	this->receiveConfirmation();
+	//this->receiveConfirmation();
 
 	archivo.seekg(0, std::ios::end);
 	int tamanio=(int)archivo.tellg();
@@ -93,7 +97,7 @@ void ClientUpdater::sendFile(std::string path)
 	char buffer[TAMBUFFER];
 	
 	//envio el archivo por partes
-	while(enviados<tamanio)
+	while(enviados<tamanio &&  this->getClient()->getConnector().isConnectionOK())
 	{
 		archivo.seekg(enviados);
 		archivo.read(buffer,sizeof(buffer));
@@ -104,15 +108,16 @@ void ClientUpdater::sendFile(std::string path)
 		instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SERIALIZED_FILE,str_buff);
 		this->getClient()->addInstruction(instructionOut);
 		instructionOut.clear();
-		this->receiveConfirmation();
+		//this->receiveConfirmation();
 	}
 	archivo.close();
 	instructionOut.setOpCode(OPCODE_UPDATE_FILE_COMPLETE);
 	this->getClient()->addInstruction(instructionOut);
-	this->receiveConfirmation();
+	//this->receiveConfirmation();
+	return  (this->getClient()->getConnector().isConnectionOK());
 }
 
-void ClientUpdater::sendDirectory(std::string path)
+bool ClientUpdater::sendDirectory(std::string path)
 {
 	Instruction instructionOut;
 	Instruction instructionIn;
@@ -125,18 +130,19 @@ void ClientUpdater::sendDirectory(std::string path)
 	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SERIALIZED_PATH,path);
 	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SERIALIZED_DIR,dir_string);
 	this->getClient()->addInstruction(instructionOut);
-	do
-	{
-	instructionIn = this->getInstructionQueue().getNextInstruction(true);
-	}
-	while(instructionIn.getOpCode()!=OPCODE_UPDATE_RECV);
+	//do
+	//{
+	//instructionIn = this->getInstructionQueue().getNextInstruction(true);
+	//}
+	//while(instructionIn.getOpCode()!=OPCODE_UPDATE_RECV);
 
 	//Envio archivos
 	std::vector<std::string> directorios_v;
 	stringUtilities::splitString(dir_string,directorios_v,'~');
 	std::string directorioCorriente = path;
-
-	for(unsigned i=0; i<directorios_v.size(); i++)	{
+	
+	unsigned i=0;
+	while(i<directorios_v.size() && this->getClient()->getConnector().isConnectionOK()){
 	std::string str = directorios_v[i];
 		if(str != "")	{
 			if(str.back() == '>') {
@@ -148,20 +154,25 @@ void ClientUpdater::sendDirectory(std::string path)
 				directorioCorriente.erase(inicial,directorioCorriente.size()-1);
 			}
 			else {
-				sendFile(directorioCorriente+"/"+str);
+				if(!sendFile(directorioCorriente+"/"+str))
+				{
+					return false;
+				}
 			}
 		}
+		i++;
 	}
+	return  this->getClient()->getConnector().isConnectionOK();
 }
 
-void ClientUpdater::receiveConfirmation() {
-	Instruction instructionIn;
-			do
-			{
-				instructionIn = this->getInstructionQueue().getNextInstruction(true);
-			}
-			while(instructionIn.getOpCode()!=OPCODE_UPDATE_RECV);
-}
+//void ClientUpdater::receiveConfirmation() {
+//	Instruction instructionIn;
+//			do
+//			{
+//				instructionIn = this->getInstructionQueue().getNextInstruction(true);
+//			}
+//			while(instructionIn.getOpCode()!=OPCODE_UPDATE_RECV);
+//}
 
 void* ClientUpdater::run() {
 	this->updateClient();
@@ -187,6 +198,9 @@ void ClientUpdater::setClient(Client* client) {
 }
 
 void ClientUpdater::startClientUpdater() {
+	this->setAvailable(false);
+	//this->mutexUpdates->lock();
+	common::Logger::instance().log("mutexLock");
 	this->start();
 }
 
@@ -196,6 +210,8 @@ void ClientUpdater::stopClientUpdater() {
 	this->join();
 	this->setClient(NULL);
 	this->setAvailable(true);
+	this->mutexUpdates->unlock();
+	common::Logger::instance().log("mutexUnLock");
 }
 
 // ----------------------------------- DESTRUCTOR ----------------------------------------

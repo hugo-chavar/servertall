@@ -2,7 +2,7 @@
 #define _LOGIN_MANAGER_H_
 
 #ifndef MAX_FILE_UPDATERS
-#define MAX_FILE_UPDATERS 3
+#define MAX_FILE_UPDATERS 4
 #endif//MAX_FILE_UPDATERS
 
 #include "Thread.h"
@@ -66,6 +66,8 @@ private:
 	void createClientUpdater();
 
 	void* run();
+
+	Mutex updaterMutex;
 
 public:
 	LoginManager(int portToListen, int maxPendingConnections, ChatManager& chatManager, SimulationManager& simulationManager);

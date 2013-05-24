@@ -44,14 +44,16 @@ private:
 
 	void* run();
 
-	void sendDirectory(std::string path);
+	bool sendDirectory(std::string path);
 
-	void sendFile(std::string path);
+	bool sendFile(std::string path);
 
 	void receiveConfirmation();
 
+	Mutex* mutexUpdates;
+
 public:
-	ClientUpdater(InstructionQueue& serverInstructionQueue);
+	ClientUpdater(InstructionQueue& serverInstructionQueue,Mutex * updaterMutex);
 
 	void setClient(Client* client);
 

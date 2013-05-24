@@ -30,8 +30,8 @@ void SimulationManager::simulate() {
 	Instruction instructionIn;
 	Instruction instructionOut;
 	//TODO: create FPS manager.
-	float milisecondsTonextFrame = static_cast<float>(1000)/DESIREDFPS; 
-	unsigned int frameStartedAt = 0;
+	Uint32 milisecondsTonextFrame = 1000/DESIREDFPS; 
+	Uint32 frameStartedAt = 0;
 	this->lastBroadcast = "";
 	
 	unsigned int i = 0;
@@ -73,7 +73,7 @@ void SimulationManager::simulate() {
 		i++;
 
 		if (milisecondsTonextFrame >= SDL_GetTicks() - frameStartedAt)
-			SDL_Delay(static_cast<unsigned int>(milisecondsTonextFrame - (SDL_GetTicks() - frameStartedAt)));
+			SDL_Delay(milisecondsTonextFrame - (SDL_GetTicks() - frameStartedAt));
 	}
 }
 

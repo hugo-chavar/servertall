@@ -139,7 +139,7 @@ void LoginManager::processRequests() {
 					client->addInstruction(instructionOut);
 					break;
 				case OPCODE_UPDATE_REQUEST:
-					this->updaterMutex.lock();
+					found=false;
 					for (unsigned int i = 0; (i < this->getMaxFileUpdaters() && !found); i++) {
 						if (this->getClientUpdaters()[i]->isAvailable()) {
 							found = true;

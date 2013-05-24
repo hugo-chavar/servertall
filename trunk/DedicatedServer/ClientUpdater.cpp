@@ -199,7 +199,7 @@ void ClientUpdater::setClient(Client* client) {
 
 void ClientUpdater::startClientUpdater() {
 	this->setAvailable(false);
-	//this->mutexUpdates->lock();
+	this->mutexUpdates->lock();
 	common::Logger::instance().log("mutexLock");
 	this->start();
 }

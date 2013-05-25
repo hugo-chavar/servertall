@@ -1,12 +1,12 @@
 #include "Socket.h"
 
-#include <iostream>
+// ----------------------------------- CONSTRUCTORS --------------------------------------
 
-Socket::Socket(){
+Socket::Socket() {
 	this->setMaxPendingConnections(0);
 }
 
-Socket::Socket(unsigned long ip, int port, const int maxPendingConnections){
+Socket::Socket(unsigned long ip, int port, const int maxPendingConnections) {
 	this->setSocketFileDescriptor(socket(AF_INET,SOCK_STREAM,0));
 	memset((void*)&(this->getAddress()),0,sizeof(this->getAddress()));
 	this->getAddress().sin_family = AF_INET;
@@ -15,6 +15,8 @@ Socket::Socket(unsigned long ip, int port, const int maxPendingConnections){
 	this->setMaxPendingConnections(maxPendingConnections);
 }
 
+// ----------------------------------- PRIVATE METHODS -----------------------------------
+
 void Socket::setSocketFileDescriptor(const SOCKET socketFileDescriptor){
 	this->socketFileDescriptor = socketFileDescriptor;
 }
@@ -22,6 +24,20 @@ void Socket::setSocketFileDescriptor(const SOCKET socketFileDescriptor){
 void Socket::setMaxPendingConnections(const int maxPendingConnections){
 	this->maxPendingConnections = maxPendingConnections;
 }
+
+SOCKET Socket::getSocketFileDescriptor(){
+	return this->socketFileDescriptor;
+}
+
+int Socket::getMaxPendingConnections(){
+	return this->maxPendingConnections;
+}
+
+struct sockaddr_in& Socket::getAddress(){
+	return this->address;
+}
+
+// ----------------------------------- PUBLIC METHODS ------------------------------------
 
 const int Socket::bindSocket(){
 	return bind(this->getSocketFileDescriptor(),(struct sockaddr*)&(this->getAddress()),sizeof(this->getAddress()));
@@ -65,17 +81,7 @@ void Socket::disconect(){
 	closesocket(this->getSocketFileDescriptor());
 }
 
-SOCKET Socket::getSocketFileDescriptor(){
-	return this->socketFileDescriptor;
-}
-
-struct sockaddr_in& Socket::getAddress(){
-	return this->address;
-}
-
-int Socket::getMaxPendingConnections(){
-	return this->maxPendingConnections;
-}
+// ----------------------------------- DESTRUCTOR ----------------------------------------
 
 Socket::~Socket(){
 }

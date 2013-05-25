@@ -5,23 +5,27 @@
 
 #include "StringUtilities.h"
 
+// ----------------------------------- CONSTRUCTOR ---------------------------------------
+
 Instruction::Instruction() {
 	this->opCode = OPCODE_NO_OPCODE;
 	this->broadcastId = 0;
 }
 
-void Instruction::clear() {
-	this->setOpCode(OPCODE_NO_OPCODE);
-	this->setBroadcastId(0);
-	this->getArguments().clear();
+// ----------------------------------- PRIVATE METHODS -----------------------------------
+
+std::map<unsigned int,std::string>& Instruction::getArguments() {
+	return this->arguments;
+}
+
+// ----------------------------------- PUBLIC METHODS ------------------------------------
+
+unsigned int Instruction::getOpCode() const {
+	return this->opCode;
 }
 
 void Instruction::setOpCode(unsigned int opCode) {
 	this->opCode = opCode;
-}
-
-unsigned int Instruction::getOpCode() const {
-	return this->opCode;
 }
 
 unsigned int Instruction::getBroadcastId() {
@@ -32,8 +36,14 @@ void Instruction::setBroadcastId(unsigned int broadcastId) {
 	this->broadcastId = broadcastId;
 }
 
-std::map<unsigned int,std::string>& Instruction::getArguments() {
-	return this->arguments;
+void Instruction::clear() {
+	this->setOpCode(OPCODE_NO_OPCODE);
+	this->setBroadcastId(0);
+	this->getArguments().clear();
+}
+
+void Instruction::insertArgument(unsigned int key, std::string value) {
+	this->getArguments().insert(std::pair<unsigned int,std::string>(key,value));
 }
 
 std::string Instruction::getArgument(unsigned int key) {
@@ -44,10 +54,6 @@ std::string Instruction::getArgument(unsigned int key) {
 		argument = it->second;
 
 	return argument;
-}
-
-void Instruction::insertArgument(unsigned int key, std::string value) {
-	this->getArguments().insert(std::pair<unsigned int,std::string>(key,value));
 }
 
 void Instruction::deserialize(std::string serializedInstruction) {
@@ -83,6 +89,8 @@ std::string Instruction::serialize() {
 
 	return serializedInstruction;
 }
+
+// ----------------------------------- DESTRUCTOR ----------------------------------------
 
 Instruction::~Instruction(){
 }

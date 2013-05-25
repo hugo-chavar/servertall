@@ -1,10 +1,10 @@
 #include "Listener.h"
 
-#include <iostream>
-
-
 #include "Instruction.h"
 #include "StringUtilities.h"
+#include "CraPPyLog.h"
+
+// ----------------------------------- CONSTRUCTOR ---------------------------------------
 
 Listener::Listener(unsigned long ip, int port, const int maxPendingConnections, ClientList& preLoggedClients, InstructionQueue& instructionQueue) : preLoggedClients(preLoggedClients), instructionQueue(instructionQueue), socket(ip,port,maxPendingConnections) {
 	this->statusOk = true;
@@ -12,9 +12,7 @@ Listener::Listener(unsigned long ip, int port, const int maxPendingConnections, 
 	this->lastGeneratedUserId = 0;
 }
 
-void Listener::startListening() {
-	this->start();
-}
+// ----------------------------------- PRIVATE METHODS -----------------------------------
 
 unsigned int Listener::getLastGeneratedUserId() {
 	return this->lastGeneratedUserId;
@@ -29,10 +27,6 @@ unsigned int Listener::getNextUserId() {
 	return this->getLastGeneratedUserId();
 }
 
-Socket Listener::getSocket() {
-	return this->socket;
-}
-
 ClientList& Listener::getPreLoggedClients() {
 	return this->preLoggedClients;
 }
@@ -41,20 +35,16 @@ InstructionQueue& Listener::getInstructionQueue() {
 	return this->instructionQueue;
 }
 
+Socket Listener::getSocket() {
+	return this->socket;
+}
+
 void Listener::setStatusOk(bool statusOk) {
 	this->statusOk = statusOk;
 }
 
-bool Listener::isStatusOk(){
-	return this->statusOk;
-}
-
 void Listener::setError(std::string error) {
 	this->error = error;
-}
-
-std::string Listener::getError() {
-	return this->error;
 }
 
 void Listener::listen() {
@@ -68,9 +58,8 @@ void Listener::listen() {
 		this->getSocket().listenForConnections();
 
 		while (!this->isStopping()) {
-			std::cout << "------------------------LISTENING--------------------" << std::endl;
 			if ((newSocket = this->getSocket().acceptConnection()) != NULL ) {
-				std::cout << "--------------------CONNECTION ACCEPTED--------------------" << std::endl;
+				LOG_DEBUG("CONNECTION ACCEPTED");
 
 				newClient = new Client(newSocket,&(this->getInstructionQueue()),stringUtilities::intToString(this->getNextUserId()),true);
 				newClient->startClient();
@@ -78,7 +67,7 @@ void Listener::listen() {
 				this->getPreLoggedClients().addClient(newClient);
 			}else{
 				if (!this->isStopping()) {
-					std::cerr << "Connection error" << std::endl;
+					LOG_ERROR("CONNECTION ERROR");
 				}
 			}
 		}
@@ -90,11 +79,29 @@ void* Listener::run() {
 	return NULL;
 }
 
+// ----------------------------------- PUBLIC METHODS ------------------------------------
+
+void Listener::startListening() {
+	this->start();
+	LOG_DEBUG("LISTENER THREAD STARTED");
+}
+
+bool Listener::isStatusOk(){
+	return this->statusOk;
+}
+
+std::string Listener::getError() {
+	return this->error;
+}
+
 void Listener::stopListening() {
 	this->setStopping(true);
 	this->getSocket().disconect();
 	this->join();
+	LOG_DEBUG("LISTENER THREAD STOPPED");
 }
+
+// ----------------------------------- DESTRUCTOR ----------------------------------------
 
 Listener::~Listener() {
 }

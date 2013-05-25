@@ -2,9 +2,8 @@
 
 #pragma warning(disable: 4355)
 
-#include <iostream>
 #include "Game.h"
-//#include "GameView.h"
+#include "CraPPyLog.h"
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
@@ -13,7 +12,6 @@ LoginManager::LoginManager(int portToListen, int maxPendingConnections, ChatMana
 	this->error = "";
 	this->maxFileUpdaters = MAX_FILE_UPDATERS;
 	this->getClientUpdaters().reserve(this->maxFileUpdaters);
-	//SEE IF WORKS FINE.
 	for (unsigned int i = 0; i < this->maxFileUpdaters; i++) {
 		this->createClientUpdater();
 	}
@@ -87,8 +85,7 @@ void LoginManager::processRequests() {
 		instructionIn = this->getInstructionQueue().getNextInstruction(true);
 		while(!this->isStopping()) {
 			instructionOut.clear();
-			//TODO: USE LOGGER WHEN ITS FINISHED.
-			std::cout << instructionIn.serialize() << std::endl;
+			LOG_DEBUG("RECEIVED THE FOLLOWING ISTRUCTION: " + instructionIn.serialize());
 			switch (instructionIn.getOpCode()) {
 				case OPCODE_LOGIN_REQUEST:
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID);
@@ -102,7 +99,8 @@ void LoginManager::processRequests() {
 							client->setUserID(argument);
 							this->getLoggedClients().addClient(client);
 							//GameView::instance().addPlayer(argument, characterType);
-							std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
+							//std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
+							LOG_DEBUG("THE USER " + argument + " LOGGED IN");
 							//GameView::instance().wakeUpPlayer(argument);
 							//GameView::instance().startUpdatingPlayer(argument);
 						//}
@@ -124,14 +122,14 @@ void LoginManager::processRequests() {
 						instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
 						//std::string characterInit = GameView::instance().managePlayerInitialSynch(argument);
 						//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
-						std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
+						LOG_DEBUG("THE USER " + argument + " LOGGED IN");
 						//GameView::instance().wakeUpPlayer(argument);
 					}
 					else {
 						instructionOut.setOpCode(OPCODE_USERID_NOT_AVAILABLE);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"Invalid user ID");
 						client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
-						std::cout << "THE USERID " << argument << " IS INVALID" << std::endl;
+						LOG_DEBUG("THE USERID " + argument + " IS NOT AVAILABLE");
 						//instructionOut.setOpCode(OPCODE_USERID_NOT_AVAILABLE);
 						//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"User ID already in use");
 						//client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
@@ -150,7 +148,7 @@ void LoginManager::processRequests() {
 					if (index < this->getMaxFileUpdaters()) {
 						client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 						if (client != NULL) {// THIS CHECK SHOULD BE UNNECESARY.....
-							std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) << " IS UPDATING" << std::endl;
+							LOG_DEBUG("THE USER " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) + " IS UPDATING");
 							common::Logger::instance().log("index:"+stringUtilities::intToString(index));							
 							this->getClientUpdaters()[index]->setClient(client);
 							this->getClientUpdaters()[index]->startClientUpdater();
@@ -171,9 +169,9 @@ void LoginManager::processRequests() {
 						client->setUserID(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID));
 						this->getChatManager().getClients().addClient(client);
 						client->addInstruction(instructionOut);
-						std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID) << " CONNECTED TO CHAT" << std::endl;
+						LOG_DEBUG("THE USER " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID) + " CONNECTED TO CHAT");
 					} else {
-						std::cout << "THIS SHOULD NEVER EVER EVER HAPPEN" << std::endl;
+						LOG_ERROR("THE NON-EXISTANT USER " + argument + " TRIED TO CONNECT TO CHAT");
 					}
 					break;
 				case OPCODE_CONNECT_TO_SIMULATION:
@@ -186,40 +184,45 @@ void LoginManager::processRequests() {
 						client->setUserID(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID));
 						this->getSimulationManager().getClients().addClient(client);
 						client->addInstruction(instructionOut);
-						std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID) << " CONNECTED TO SIMULATION" << std::endl;
+						LOG_DEBUG("THE USER " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID) + " CONNECTED TO SIMULATION");
 					} else {
-						std::cout << "THIS SHOULD NEVER EVER EVER HAPPEN EITHER" << std::endl;
+						LOG_ERROR("THE NON-EXISTANT USER " + argument + " TRIED TO CONNECT TO SIMULATION");
 					}
 					break;
 				case OPCODE_LOGOUT_REQUEST:
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
 					client = this->getLoggedClients().detachClient(argument);
 					if (client != NULL) {
-						std::cout << "THE USER " << argument << " LOGGED OUT" << std::endl;
+						LOG_DEBUG("THE USER " + argument + " LOGGED OUT");
 						client->stopClient();
 						delete client;
 					} else {
-						std::cout << "THIS IS ANOTHER THING THAT SHOULD NEVER EVER EVER HAPPEN" << std::endl;
+						LOG_ERROR("THE NON-EXISTANT USER " + argument + " TRIED TO LOG OUT");
 					}
 					break;
 				case OPCODE_DISCONNECT:
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
 					client = this->getPreLoggedClients().detachClient(argument);
 					if (client != NULL) {
+						LOG_DEBUG("THE USER " + argument + " DISCONNECTED");
 						client->stopClient();
 						delete client;
 					} else {
-						std::cout << "THIS IS ANOTHER THING THAT SHOULD NEVER EVER EVER HAPPEN" << std::endl;
+						LOG_ERROR("THE NON-EXISTANT USER " + argument + " TRIED TO DISCONNECT");
 					}
 					break;
 				case OPCODE_CONNECTION_ERROR:
-					std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) << " DISCONECTED ABRUPTLY" << std::endl;
+					LOG_ERROR("THE USER " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) + " DISCONECTED ABRUPTLY");
 					client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 					if (client == NULL) {
 						client = this->getLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 					}
+					if (client != NULL) {
 					client->stopClient();
 					delete client;
+					} else {
+						LOG_ERROR("CONNECTION ERROR RECEIVED FROM THE NON-EXISTANT USER " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+					}
 					break;
 				default:
 					instructionOut.setOpCode(OPCODE_INVALID);
@@ -257,6 +260,7 @@ std::string LoginManager::getError() {
 
 void LoginManager::startLoginManager() {
 	this->start();
+	LOG_DEBUG("LOGIN MANAGER THREAD STARTED");
 }
 
 void LoginManager::stopLoginManager() {
@@ -264,6 +268,7 @@ void LoginManager::stopLoginManager() {
 	this->setStopping(true);
 	this->getInstructionQueue().stopWaiting();
 	this->join();
+	LOG_DEBUG("LOGIN MANAGER THREAD STOPPED");
 }
 
 // ----------------------------------- DESTRUCTOR ----------------------------------------

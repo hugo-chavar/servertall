@@ -91,8 +91,6 @@ private:
 public:
 	Instruction();
 
-	void clear();
-
 	unsigned int getOpCode() const;
 
 	void setOpCode(unsigned int opCode);
@@ -100,6 +98,8 @@ public:
 	unsigned int getBroadcastId();
 
 	void setBroadcastId(unsigned int broadcastId);
+
+	void clear();
 
 	void insertArgument(unsigned int key,std::string value);
 

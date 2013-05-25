@@ -8,15 +8,17 @@
 #include "SimulationManager.h"
 #include "LoginManager.h"
 #include "GameView.h"
-//#include "Player.h"
+#include "CraPPyLog.h"
 
 int main(int argc, char *argv[]){
+	LOG_DEBUG("PROGRAM STARTED");
 	std::string command;
-
-	GameView::instance().initialize();
 
 	WSAData ws;
 	WSAStartup(MAKEWORD(2,2),&ws);
+
+	GameView::instance().initialize();
+
 
 	ChatManager chatManager;
 	chatManager.startChatManager();
@@ -51,9 +53,9 @@ int main(int argc, char *argv[]){
 
 	std::cout << "Finishing...." << std::endl;
 
-	//system("PAUSE"); <--don't use it!! causing crash, find a better way if needed
-
 	WSACleanup();
+
+	LOG_DEBUG("PROGRAM FINISHED");
 
 	return EXIT_SUCCESS;
 }

@@ -2,12 +2,8 @@
 
 #include "SDL.h"
 #include "StringUtilities.h"
-#include "Logger.h"
 #include "GameView.h"
-
-#include <iostream>
-#define DESIREDFPS 60
-
+#include "CraPPyLog.h"
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
@@ -96,11 +92,11 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			client = this->getClients().detachClient(argument);
 			client->stopClient();
 			delete client;
-			std::cout << "THE USER " << argument << " DISCONNECTED FROM SIMULATION" << std::endl;
+			LOG_DEBUG("THE USER " + argument + " DISCONNECTED FROM SIMULATION");
 			GameView::instance().setDisconnectedPlayer(argument);
 			break;
 		case OPCODE_CLIENT_COMMAND: {
-			std::cout << "PROCESSING COMMAND FROM CLIENT: " << instructionIn.serialize() << std::endl;
+			LOG_DEBUG("PROCESSING COMMAND FROM CLIENT: " + instructionIn.serialize());
 			std::string userID = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
 			client = this->getClients().getClient(userID);
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
@@ -144,7 +140,7 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			break;
 		case OPCODE_CONNECTION_ERROR: {
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
-			std::cout << "THE USER " << argument << " DISCONECTED ABRUPTLY FROM SIMULATION" << std::endl;
+			LOG_ERROR("THE USER " + argument + " DISCONECTED ABRUPTLY FROM SIMULATION");
 			client = this->getClients().detachClient(argument);
 			if (client != NULL) {
 				client->stopClient();
@@ -154,7 +150,7 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			break;
 		}
 		default:
-			std::cout << "INVALID OPCODE" << std::endl;
+			LOG_WARNING("INVALID OPCODE RECEIVED FROM CLIENT " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 	}
 }
 
@@ -183,6 +179,7 @@ std::string SimulationManager::getError() {
 
 void SimulationManager::startSimulationManager() {
 	this->start();
+	LOG_DEBUG("SIMULATOR MANAGER THREAD STARTED");
 }
 
 void SimulationManager::stopSimulationManager() {
@@ -190,6 +187,7 @@ void SimulationManager::stopSimulationManager() {
 	this->setStopping(true);
 	this->getInstructionQueue().stopWaiting();
 	this->join();
+	LOG_DEBUG("SIMULATOR MANAGER THREAD STOPPED");
 }
 
 // ----------------------------------- DESTRUCTOR ----------------------------------------

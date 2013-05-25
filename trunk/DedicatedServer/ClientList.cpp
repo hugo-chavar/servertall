@@ -1,6 +1,6 @@
-#include <iostream>
-
 #include "ClientList.h"
+
+#include "CraPPyLog.h"
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
@@ -84,7 +84,7 @@ Client* ClientList::detachClient(std::string userID) {
 		*it = NULL;
 		this->getClients().erase(it);
 	} else {
-		std::cout << "YOU SHOULD'N BE HERE KID >=(" << std::endl;
+		LOG_ERROR("TRYING TO DETACH NON-EXISTANT CLIENT WITH ID " + userID);
 	}
 
 	this->getClientListMutex().unlock();
@@ -119,8 +119,7 @@ void ClientList::addBroadcast(Instruction& instruction, std::string from) {
 
 ClientList::~ClientList(){
 	for(std::list<Client*>::iterator it = this->getClients().begin(); it != this->getClients().end(); ++it){
-		//ONLY CASE WHERE STOP IS UP TO THE CLIENT LIST. IDEALLY AT THIS POINT EVERY CLIENT MUST HAVE BEEN
-		//DETACHED AND STOPED BY THE CLASS CONTAINING THE LIST.
+		//ONLY CASE WHERE STOP IS UP TO THE CLIENT LIST. IDEALLY AT THIS POINT EVERY CLIENT MUST HAVE BEEN DETACHED AND STOPED BY THE CLASS CONTAINING THE LIST.
 		(*it)->stopClient();
 		delete *it;
 	}

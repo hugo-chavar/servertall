@@ -18,7 +18,7 @@ private:
 
 public:
 	ConditionVariable();
-	//TODO: WHY PUBLIC???
+
 	Mutex& getConditionMutex();
 
 	int wait();

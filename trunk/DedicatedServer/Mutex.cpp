@@ -1,8 +1,16 @@
 #include "Mutex.h"
 
+// ----------------------------------- CONSTRUCTOR ---------------------------------------
+
 Mutex::Mutex(){
 	pthread_mutex_init(&(this->mutex),NULL);
 }
+
+// ----------------------------------- PRIVATE METHODS -----------------------------------
+
+// NO PRIVATE METHODS.
+
+// ----------------------------------- PUBLIC METHODS ------------------------------------
 
 pthread_mutex_t& Mutex::getMutex(){
 	return this->mutex;
@@ -24,6 +32,8 @@ bool Mutex::tryLock(){
 int Mutex::unlock(){
 	return pthread_mutex_unlock(&(this->mutex));
 }
+
+// ----------------------------------- DESTRUCTOR ----------------------------------------
 
 Mutex::~Mutex(){
 	pthread_mutex_destroy(&(this->mutex));

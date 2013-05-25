@@ -1,21 +1,13 @@
 #include "ConditionVariable.h"
 
+// ----------------------------------- CONSTRUCTOR ---------------------------------------
+
 ConditionVariable::ConditionVariable() {
 	pthread_cond_init(&(this->conditionVariable),NULL);
 	this->broadcastId = 1;
 }
 
-Mutex& ConditionVariable::getConditionMutex() {
-	return this->conditionMutex;
-}
-
-pthread_cond_t& ConditionVariable::getConditionVariable() {
-	return this->conditionVariable;
-}
-
-unsigned int ConditionVariable::getBroadcastId() {
-	return this->broadcastId;
-}
+// ----------------------------------- PRIVATE METHODS -----------------------------------
 
 void ConditionVariable::setBroadcastId(unsigned int broadcastId) {
 	if (broadcastId == 0)
@@ -23,9 +15,22 @@ void ConditionVariable::setBroadcastId(unsigned int broadcastId) {
 	this->broadcastId = broadcastId;
 }
 
+pthread_cond_t& ConditionVariable::getConditionVariable() {
+	return this->conditionVariable;
+}
+
+// ----------------------------------- PUBLIC METHODS ------------------------------------
+
+Mutex& ConditionVariable::getConditionMutex() {
+	return this->conditionMutex;
+}
 
 int ConditionVariable::wait() {
 	return pthread_cond_wait(&(this->getConditionVariable()),&(this->getConditionMutex().getMutex()));
+}
+
+unsigned int ConditionVariable::getBroadcastId() {
+	return this->broadcastId;
 }
 
 unsigned int ConditionVariable::getNextBroadcastId() {
@@ -51,6 +56,8 @@ int ConditionVariable::broadcast() {
 int ConditionVariable::signal() {
 	return pthread_cond_signal(&(this->getConditionVariable()));
 }
+
+// ----------------------------------- DESTRUCTOR ----------------------------------------
 
 ConditionVariable::~ConditionVariable() {
 	pthread_cond_destroy(&(this->conditionVariable));

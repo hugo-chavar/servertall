@@ -1,12 +1,12 @@
 #include "ClientUpdater.h"
 
-#include <iostream>
+#include <fstream>
+
 #include "DirList.h"
 #include "StringUtilities.h"
-#include <fstream>
 #include "Logger.h"
-
 #include "Instruction.h"
+#include "CraPPyLog.h"
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
@@ -58,9 +58,8 @@ void ClientUpdater::updateClient() {
 	std::string argument = "";
 	this->getClient()->getConnector().setInstructionQueue(&this->getInstructionQueue());
 	
-	if((!sendDirectory("../Images"))||(!sendDirectory("../Configuration")))
-	{
-	std::cout<<"There was and error while sending files"<<std::endl;
+	if((!sendDirectory("../Images"))||(!sendDirectory("../Configuration"))) {
+		LOG_ERROR("There was and error while sending files");
 	}
 
 	this->getClient()->getConnector().setInstructionQueue(&this->getServerInstructionQueue());
@@ -201,6 +200,7 @@ void ClientUpdater::startClientUpdater() {
 	this->mutexUpdates->lock();
 	common::Logger::instance().log("mutexLock");
 	this->start();
+	LOG_DEBUG("CLIENT UPDATER THREAD STARTED");
 }
 
 void ClientUpdater::stopClientUpdater() {
@@ -211,6 +211,7 @@ void ClientUpdater::stopClientUpdater() {
 	this->setAvailable(true);
 	this->mutexUpdates->unlock();
 	common::Logger::instance().log("mutexUnLock");
+	LOG_DEBUG("CLIENT UPDATER THREAD STOPPED");
 }
 
 // ----------------------------------- DESTRUCTOR ----------------------------------------

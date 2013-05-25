@@ -1,23 +1,23 @@
 #ifndef _SOCKET_H_
 #define _SOCKET_H_
 
-
 #include <sys/types.h>
 #include <winsock2.h>
 
 class Socket{
 private:
+
 	SOCKET socketFileDescriptor;
 
 	struct sockaddr_in address;
 
 	int maxPendingConnections;
 
+	Socket();
+
 	void setSocketFileDescriptor(const SOCKET socketFileDescriptor);
 
 	void setMaxPendingConnections(const int maxPendingConnections);
-
-	Socket();
 
 	SOCKET getSocketFileDescriptor();
 

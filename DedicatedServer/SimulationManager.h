@@ -5,6 +5,9 @@
 #include "ClientList.h"
 #include "InstructionQueue.h"
 
+#ifndef DESIREDFPS
+#define DESIREDFPS 60
+#endif//DESIREDFPS
 
 class SimulationManager : public Thread {
 private:

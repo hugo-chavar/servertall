@@ -1,6 +1,7 @@
 #include "Sender.h"
 
-#include <iostream>
+#include "CraPPyLog.h"
+
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
 Sender::Sender(Socket* socket) {
@@ -39,14 +40,12 @@ void Sender::send(){
 			if (instruction.getBroadcastId() != 0) {
 				if (this->getBroadcastConditionVariable() != NULL) {
 					this->getBroadcastConditionVariable()->getConditionMutex().lock();
-					//std::cout << "lock3" << std::endl;
 					if (this->getBroadcastConditionVariable()->getBroadcastId() == instruction.getBroadcastId() ) {
 						this->getBroadcastConditionVariable()->wait();
 					}
 					this->getBroadcastConditionVariable()->getConditionMutex().unlock();
-					//std::cout << "unlock3" << std::endl;
 				} else {
-					std::cout << "WARNING: INSTRUCTION MARKED AS BROADCAST BUT NO BROADCAST CONDITION VARIABLE IS SET" << std::endl;
+					LOG_WARNING("INSTRUCTION MARKED AS BROADCAST BUT NO BROADCAST CONDITION VARIABLE WAS SET");
 				}
 			}
 

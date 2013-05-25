@@ -9,7 +9,7 @@ private:
 
 public:
 	Mutex();
-	//TODO: WHY PUBLIC?????
+
 	pthread_mutex_t& getMutex();
 
 	int lock();

@@ -1,7 +1,5 @@
 #include "Receiver.h"
 
-#include <iostream>
-
 #include "StringUtilities.h"
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------

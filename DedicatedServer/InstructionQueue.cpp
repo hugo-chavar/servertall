@@ -1,7 +1,11 @@
 #include "InstructionQueue.h"
 
+// ----------------------------------- CONSTRUCTOR ---------------------------------------
+
 InstructionQueue::InstructionQueue() {
 }
+
+// ----------------------------------- PRIVATE METHODS -----------------------------------
 
 Mutex& InstructionQueue::getMutex() {
 	return this->mutex;
@@ -11,9 +15,7 @@ ConditionVariable& InstructionQueue::getConditionVariable() {
 	return this->conditionVariable;
 }
 
-std::queue<Instruction>& InstructionQueue::getInstructionQueue() {
-	return this->instructionQueue;
-}
+// ----------------------------------- PUBLIC METHODS ------------------------------------
 
 void InstructionQueue::addInstruction(Instruction& instruction) {
 	this->getMutex().lock();
@@ -49,6 +51,10 @@ void InstructionQueue::lock() {
 	this->getMutex().lock();
 }
 
+std::queue<Instruction>& InstructionQueue::getInstructionQueue() {
+	return this->instructionQueue;
+}
+
 void InstructionQueue::unLock() {
 	this->getMutex().unlock();
 }
@@ -58,6 +64,8 @@ void InstructionQueue::stopWaiting() {
 	this->getConditionVariable().signal();
 	this->getConditionVariable().getConditionMutex().unlock();
 }
+
+// ----------------------------------- DESTRUCTOR ----------------------------------------
 
 InstructionQueue::~InstructionQueue() {
 }

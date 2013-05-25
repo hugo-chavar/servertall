@@ -1,7 +1,6 @@
 #include "ChatManager.h"
 
-#include <iostream>
-
+#include "CraPPyLog.h"
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
@@ -30,7 +29,7 @@ void ChatManager::processRequests() {
 	instructionIn = this->getInstructionQueue().getNextInstruction(true);
 	while(!this->isStopping()){
 		instructionOut.clear();
-		std::cout << instructionIn.serialize() << std::endl;
+		LOG_DEBUG("RECEIVED THE FOLLOWING INSTRUCTION: " + instructionIn.serialize());
 		switch (instructionIn.getOpCode()) {
 			case OPCODE_DISCONNECT_FROM_CHAT:
 				argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
@@ -42,7 +41,8 @@ void ChatManager::processRequests() {
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_FROM,argument);
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MESSAGE,"---logged out---");
 				this->getClients().addBroadcast(instructionOut,argument);
-				std::cout << "THE USER " << argument << " DISCONNECTED FROM CHAT" << std::endl;
+				LOG_DEBUG("THE USER " + argument + " DISCONNECTED FROM CHAT");
+				//std::cout << "THE USER " << argument << " DISCONNECTED FROM CHAT" << std::endl;
 				break;
 			case OPCODE_CHAT_MESSAGE_OUT:
 				instructionOut.setOpCode(OPCODE_CHAT_MESSAGE_IN);
@@ -53,17 +53,21 @@ void ChatManager::processRequests() {
 					client = this->getClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_TO));
 					if (client != NULL) {
 						client->addInstruction(instructionOut);
-						std::cout << "SENDING SINGLE CHAT INSTRUCTION: " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_TO) << std::endl;
+						LOG_DEBUG("SENDING MESSAGE: " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_MESSAGE) + ". to: " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_TO));
+						//std::cout << "SENDING SINGLE CHAT INSTRUCTION: " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_TO) << std::endl;
 					} else {
-						std::cout << "IT SEEMS CLIENT " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_TO) << " HAS LOGGED OUT" << std::endl;
+						LOG_DEBUG("USER " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_TO) + " COULD NOT RECEIVE LAST MESSAGE SINCE IT HAS LOGGED OUT");
+						//std::cout << "IT SEEMS CLIENT " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_TO) << " HAS LOGGED OUT" << std::endl;
 					}
 				} else {
-					std::cout << "BROADCASTING CHAT INSTRUCTION: " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_MESSAGE) << std::endl;
+					LOG_DEBUG("BROADCASTING MESSAGE: " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_MESSAGE));
+					//std::cout << "BROADCASTING CHAT INSTRUCTION: " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_MESSAGE) << std::endl;
 					this->getClients().addBroadcast(instructionOut,instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 				}
 				break;
 			case OPCODE_CONNECTION_ERROR: {
-				std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) << " DISCONECTED ABRUPTLY FROM CHAT" << std::endl;
+				LOG_ERROR("THE USER " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) + " DISCONECTED ABRUPTLY FROM CHAT");
+				//std::cout << "THE USER " << instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) << " DISCONECTED ABRUPTLY FROM CHAT" << std::endl;
 				client = this->getClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 				if (client != NULL) {
 					client->stopClient();
@@ -72,9 +76,10 @@ void ChatManager::processRequests() {
 				break;
 			}
 			default:
+				LOG_WARNING("INVALID OPCODE RECEIVED FROM CLIENT " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 				instructionOut.setOpCode(OPCODE_INVALID);
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MESSAGE,"invalid opcode");
-			this->getClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID))->addInstruction(instructionOut);
+				this->getClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID))->addInstruction(instructionOut);
 		}
 		//To avoid process an invalid instruction if server is shutting down.
 		instructionIn = this->getInstructionQueue().getNextInstruction(true);
@@ -106,6 +111,7 @@ std::string ChatManager::getError() {
 
 void ChatManager::startChatManager() {
 	this->start();
+	LOG_DEBUG("CHAT MANAGER THREAD STARTED");
 }
 
 void ChatManager::stopChatManager() {
@@ -113,6 +119,7 @@ void ChatManager::stopChatManager() {
 	this->setStopping(true);
 	this->getInstructionQueue().stopWaiting();
 	this->join();
+	LOG_DEBUG("CHAT MANAGER THREAD STOPPED");
 }
 
 // ----------------------------------- DESTRUCTOR ----------------------------------------

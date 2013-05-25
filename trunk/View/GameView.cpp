@@ -47,11 +47,19 @@ Stage* GameView::getWorldView() {
 //}
 
 void GameView::addPlayer(string userID, string characterType) {
+	Player *player = findPlayer(userID);
+	if(player==NULL)
+	{
 	Personaje* character =characterFactory.createViewCharacter(characterType, userID) ;
 	//Personaje* character = new Personaje(Game::instance().world()->vMainCharacters()->at(stringUtilities::stringToInt(characterType)));
 	Player *player = new Player(userID, character);
 	//player->initialize(Game::instance().configuration()->mainCharacterSpeed(), userID, Game::instance().configuration()->visionRange());
 	this->_players.push_back(player);
+	}
+	else
+	{
+		player->getCharacter()->personajeModelo()->setActive(true);
+	}
 }
 
 Player* GameView::findPlayer(string userID) {
@@ -196,10 +204,10 @@ void GameView::setDisconnectedPlayer(string userID) {
 	player->getCharacter()->personajeModelo()->setActive(false);
 }
 
-void GameView::wakeUpPlayer(string userID) {
-	Player *player = findPlayer(userID);
-	player->getCharacter()->personajeModelo()->setActive(true);
-}
+//void GameView::wakeUpPlayer(string userID) {
+//	Player *player = findPlayer(userID);
+//	player->getCharacter()->personajeModelo()->setActive(true);
+//}
 
 SpriteAnimado* GameView::getErrorImage() {
 	return errorImage;

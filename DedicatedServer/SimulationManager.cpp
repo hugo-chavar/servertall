@@ -121,7 +121,11 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			break;
 		case OPCODE_INIT_SYNCHRONIZE:{
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
-			client = this->getClients().getClient(argument);										
+			client = this->getClients().getClient(argument);
+			std::string characterType = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER);
+			GameView::instance().addPlayer(argument, characterType);
+			GameView::instance().startUpdatingPlayer(argument);
+			//
 			instructionOut.clear();
 			instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
 			std::string characterInit = GameView::instance().managePlayerInitialSynch(argument);

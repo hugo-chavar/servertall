@@ -3,7 +3,8 @@
 #pragma warning(disable: 4355)
 
 #include <iostream>
-#include "GameView.h"
+#include "Game.h"
+//#include "GameView.h"
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
@@ -92,18 +93,18 @@ void LoginManager::processRequests() {
 				case OPCODE_LOGIN_REQUEST:
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID);
 					if ( (argument != "") && (this->getLoggedClients().isUserIDAvailable(argument)) ) {
-						std::string characterType = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER);
+						//std::string characterType = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER);
 						//if (GameView::instance().isCharacterTypeValid(characterType)) {
 							instructionOut.setOpCode(OPCODE_LOGIN_OK);
 							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome " + argument);
-							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));
+							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));//Esto tmb puede estar trayendo problemas
 							client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 							client->setUserID(argument);
 							this->getLoggedClients().addClient(client);
-							GameView::instance().addPlayer(argument, characterType);
+							//GameView::instance().addPlayer(argument, characterType);
 							std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
-							GameView::instance().wakeUpPlayer(argument);
-							GameView::instance().startUpdatingPlayer(argument);
+							//GameView::instance().wakeUpPlayer(argument);
+							//GameView::instance().startUpdatingPlayer(argument);
 						//}
 						//else {
 						//	instructionOut.setOpCode(OPCODE_INVALID_CHARACTER);
@@ -121,10 +122,10 @@ void LoginManager::processRequests() {
 						client->addInstruction(instructionOut);
 						instructionOut.clear();
 						instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
-						std::string characterInit = GameView::instance().managePlayerInitialSynch(argument);
-						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
+						//std::string characterInit = GameView::instance().managePlayerInitialSynch(argument);
+						//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
 						std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
-						GameView::instance().wakeUpPlayer(argument);
+						//GameView::instance().wakeUpPlayer(argument);
 					}
 					else {
 						instructionOut.setOpCode(OPCODE_USERID_NOT_AVAILABLE);

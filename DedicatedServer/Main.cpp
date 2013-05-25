@@ -43,9 +43,11 @@ int main(int argc, char *argv[]){
 		std::cout << "COMMAND NOT RECOGNIZED: " << command << std::endl;
 
 		std::cin >> command;
-	}
+	} 
 
-	loginManager.stopLoginManager();
+	loginManager.stopLoginManager(); 
+	simulationManager.stopSimulationManager();
+	chatManager.stopChatManager();
 
 	std::cout << "Finishing...." << std::endl;
 

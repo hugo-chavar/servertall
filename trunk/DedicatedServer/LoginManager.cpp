@@ -262,6 +262,11 @@ void LoginManager::startLoginManager() {
 
 void LoginManager::stopLoginManager() {
 	//TODO: GET EVERY CLIENT AND STOP IT.
+	for (unsigned int i = 0; i < this->getMaxFileUpdaters(); i++) {
+		if(!this->getClientUpdaters()[i]->isAvailable())
+			this->getClientUpdaters()[i]->stopClientUpdater();
+		delete this->getClientUpdaters()[i];
+	}
 	this->setStopping(true);
 	this->getInstructionQueue().stopWaiting();
 	this->join();
@@ -271,9 +276,9 @@ void LoginManager::stopLoginManager() {
 // ----------------------------------- DESTRUCTOR ----------------------------------------
 
 LoginManager::~LoginManager() {
-	for (unsigned int i = 0; i < this->getMaxFileUpdaters(); i++) {
+	/*for (unsigned int i = 0; i < this->getMaxFileUpdaters(); i++) {
 		if (!this->getClientUpdaters()[i]->isAvailable())
 			this->getClientUpdaters()[i]->stopClientUpdater();
-		delete this->getClientUpdaters()[i];
-	}
+		delete this->getClientUpdaters()[i];*/
+	//}
 }

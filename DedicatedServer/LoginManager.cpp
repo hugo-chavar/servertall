@@ -27,6 +27,10 @@ ClientList& LoginManager::getLoggedClients() {
 	return this->loggedClients;
 }
 
+ClientList& LoginManager::getUsedClients() {
+	return this->usedClients;
+}
+
 InstructionQueue& LoginManager::getInstructionQueue() {
 	return this->instructionQueue;
 }
@@ -90,7 +94,7 @@ void LoginManager::processRequests() {
 				case OPCODE_LOGIN_REQUEST:
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID);
 					//ATENCION CAMBIAR LAS CONDICIONES DE EL SIGUIENTE IF
-					if ( (argument != "") && (this->getLoggedClients().isUserIDAvailable(argument)) ) {
+					if ( (argument != "") && (this->getLoggedClients().isUserIDAvailable(argument)) && (this->getUsedClients().isUserIDAvailable(argument)) ) {
 						//ACA ENTRA SI EL ID NO EXISTIA
 						instructionOut.setOpCode(OPCODE_LOGIN_OK);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome " + argument);
@@ -98,21 +102,25 @@ void LoginManager::processRequests() {
 						client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 						client->setUserID(argument);
 						this->getLoggedClients().addClient(client);
+						Client *usedClient = new Client(*client);
+						this->getUsedClients().addClient(usedClient);
 						//std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
 						LOG_DEBUG("THE USER " + argument + " LOGGED IN");
-					} else if ((argument != "") && (!this->getLoggedClients().isUserIDAvailable(argument))) {
+					} else if ((argument != "") && (!this->getUsedClients().isUserIDAvailable(argument)) && (this->getLoggedClients().isUserIDAvailable(argument))) {
 						//ACA DEBERIA ENTRAR SI EL ID DE CLIENTE EXISTE PERO ESTA DESLOGGEADO
 						instructionOut.setOpCode(OPCODE_LOGIN_OK);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome back " + argument);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));
-						this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
-						client = this->getLoggedClients().getClient(argument);
+						client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+						client->setUserID(argument);
+						//client = this->getUsedClients().getClient(argument);
+						this->getLoggedClients().addClient(client);
 						client->addInstruction(instructionOut);
 						instructionOut.clear();
 						instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
 						LOG_DEBUG("THE USER " + argument + " LOGGED IN AGAIN");
 					}
-					else { //este else nunca se llama, corregir
+					else {
 						//ACA EBERIA ENTRAR SI EL CLIENTE EXISTE Y ESTA LOGGEADO
 						instructionOut.setOpCode(OPCODE_USERID_NOT_AVAILABLE);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"Invalid user ID");

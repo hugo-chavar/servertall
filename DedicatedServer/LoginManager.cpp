@@ -90,28 +90,16 @@ void LoginManager::processRequests() {
 				case OPCODE_LOGIN_REQUEST:
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID);
 					if ( (argument != "") && (this->getLoggedClients().isUserIDAvailable(argument)) ) {
-						//std::string characterType = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER);
-						//if (GameView::instance().isCharacterTypeValid(characterType)) {
-							instructionOut.setOpCode(OPCODE_LOGIN_OK);
-							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome " + argument);
-							instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));//Esto tmb puede estar trayendo problemas
-							client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
-							client->setUserID(argument);
-							this->getLoggedClients().addClient(client);
-							//GameView::instance().addPlayer(argument, characterType);
-							//std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
-							LOG_DEBUG("THE USER " + argument + " LOGGED IN");
-							//GameView::instance().wakeUpPlayer(argument);
-							//GameView::instance().startUpdatingPlayer(argument);
-						//}
-						//else {
-						//	instructionOut.setOpCode(OPCODE_INVALID_CHARACTER);
-						//	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"Invalid main character number");
-						//	client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
-						//	std::cout << "INVALID CHARACTER NUMBER FOR USER ID " << argument << std::endl;
-						//}
-					} else if ((argument != "") && (!this->getLoggedClients().isUserIDAvailable(argument))) {
-						//codigo que no se llama nunca
+						instructionOut.setOpCode(OPCODE_LOGIN_OK);
+						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome " + argument);
+						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));//Esto tmb puede estar trayendo problemas
+						client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+						client->setUserID(argument);
+						this->getLoggedClients().addClient(client);
+						//std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
+						LOG_DEBUG("THE USER " + argument + " LOGGED IN");
+					} /*else if ((argument != "") && (!this->getLoggedClients().isUserIDAvailable(argument))) {
+						
 						instructionOut.setOpCode(OPCODE_LOGIN_OK);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome back " + argument);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));
@@ -120,15 +108,13 @@ void LoginManager::processRequests() {
 						client->addInstruction(instructionOut);
 						instructionOut.clear();
 						instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
-						//std::string characterInit = GameView::instance().managePlayerInitialSynch(argument);
-						//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
 						LOG_DEBUG("THE USER " + argument + " LOGGED IN");
-						//GameView::instance().wakeUpPlayer(argument);
-					}
+					}*/
 					else {
 						instructionOut.setOpCode(OPCODE_USERID_NOT_AVAILABLE);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"Invalid user ID");
 						client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+						client->addInstruction(instructionOut);
 						LOG_DEBUG("THE USERID " + argument + " IS NOT AVAILABLE");
 						//instructionOut.setOpCode(OPCODE_USERID_NOT_AVAILABLE);
 						//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"User ID already in use");

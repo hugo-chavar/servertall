@@ -77,6 +77,15 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 	std::string argument = "";
 
 	switch (instructionIn.getOpCode()) {
+		case OPCODE_SYNCHRONIZE_CLOCK:
+			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
+			client = this->getClients().getClient(argument);
+			instructionOut.setOpCode(OPCODE_SYNCHRONIZE_CLOCK);
+			argument = stringUtilities::unsignedToString(static_cast<unsigned>(SDL_GetTicks()));
+			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CONNECTED_AT, argument);
+			client->addInstruction(instructionOut);
+			this->lastBroadcast = "";
+			break;
 		case OPCODE_SIMULATION_SYNCHRONIZE:
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
 			client = this->getClients().getClient(argument);

@@ -20,6 +20,8 @@ private:
 
 	ClientList loggedClients;
 
+	ClientList usedClients;
+
 	InstructionQueue instructionQueue;
 
 	Listener listener;
@@ -40,6 +42,8 @@ private:
 	ClientList& getPreLoggedClients();
 
 	ClientList& getLoggedClients();
+
+	ClientList& getUsedClients();
 
 	InstructionQueue& getInstructionQueue();
 

@@ -89,7 +89,9 @@ void LoginManager::processRequests() {
 			switch (instructionIn.getOpCode()) {
 				case OPCODE_LOGIN_REQUEST:
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_REQUESTED_USER_ID);
+					//ATENCION CAMBIAR LAS CONDICIONES DE EL SIGUIENTE IF
 					if ( (argument != "") && (this->getLoggedClients().isUserIDAvailable(argument)) ) {
+						//ACA ENTRA SI EL ID NO EXISTIA
 						instructionOut.setOpCode(OPCODE_LOGIN_OK);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome " + argument);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));//Esto tmb puede estar trayendo problemas
@@ -98,8 +100,8 @@ void LoginManager::processRequests() {
 						this->getLoggedClients().addClient(client);
 						//std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
 						LOG_DEBUG("THE USER " + argument + " LOGGED IN");
-					} /*else if ((argument != "") && (!this->getLoggedClients().isUserIDAvailable(argument))) {
-						
+					} else if ((argument != "") && (!this->getLoggedClients().isUserIDAvailable(argument))) {
+						//ACA DEBERIA ENTRAR SI EL ID DE CLIENTE EXISTE PERO ESTA DESLOGGEADO
 						instructionOut.setOpCode(OPCODE_LOGIN_OK);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome back " + argument);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));
@@ -108,9 +110,10 @@ void LoginManager::processRequests() {
 						client->addInstruction(instructionOut);
 						instructionOut.clear();
 						instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
-						LOG_DEBUG("THE USER " + argument + " LOGGED IN");
-					}*/
-					else {
+						LOG_DEBUG("THE USER " + argument + " LOGGED IN AGAIN");
+					}
+					else { //este else nunca se llama, corregir
+						//ACA EBERIA ENTRAR SI EL CLIENTE EXISTE Y ESTA LOGGEADO
 						instructionOut.setOpCode(OPCODE_USERID_NOT_AVAILABLE);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ERROR,"Invalid user ID");
 						client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));

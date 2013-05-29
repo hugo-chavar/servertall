@@ -60,15 +60,15 @@ void ClientUpdater::updateClient() {
 	
 	if((!sendDirectory("../Images"))||(!sendDirectory("../Configuration"))) {
 		LOG_ERROR("There was and error while sending files");
-		this->getClient()->stopClient();
-		delete client;
-	} else {
+		//this->getClient()->stopClient(); //Lo que dejo comentado hay que hacerlo andar. Hugo
+		//delete client;
+	} //else {
 
 	this->getClient()->getConnector().setInstructionQueue(&this->getServerInstructionQueue());
 	instructionOut.clear();
 	instructionOut.setOpCode(OPCODE_UPDATE_COMPLETE);
 	this->getClient()->addInstruction(instructionOut);
-	}
+	//}
 
 	this->stopClientUpdater();
 }

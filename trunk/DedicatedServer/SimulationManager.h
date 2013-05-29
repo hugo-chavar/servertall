@@ -6,7 +6,7 @@
 #include "InstructionQueue.h"
 
 #ifndef DESIREDFPS
-#define DESIREDFPS 60
+#define DESIREDFPS 50
 #endif//DESIREDFPS
 
 class SimulationManager : public Thread {

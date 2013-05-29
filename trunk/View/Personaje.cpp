@@ -415,8 +415,8 @@ std::string Personaje::updateToString() {
 		} else {
 			out.append(stringUtilities::intToString(sprites[this->getCurrentSpritePosition()]->getCurrentState()));
 		}
-		out.append(";");
-		out.append(this->character_id);
+		//out.append(";");
+		//out.append(this->character_id);
 		out.append(";");
 		if (this->isCenteredInTile()) {
 			out.append("T");

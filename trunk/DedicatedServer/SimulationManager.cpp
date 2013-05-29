@@ -46,8 +46,6 @@ void SimulationManager::simulate() {
 		// AVANZO LA SIMULACIÓN UN DELTA DE TIEMPO.
 		GameView::instance().update();
 
-		// AVANZO LA SIMULACIÓN UN DELTA DE TIEMPO.
-
 		// HACER UN BROADCAST DEL UPDATE A LOS CLIENTES
 		instructionOut.clear();
 		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
@@ -57,15 +55,15 @@ void SimulationManager::simulate() {
 			//Logger::instance().log("Argument "+argument);
 			if (this->lastBroadcast != argument){
 				this->lastBroadcast = argument;
-				//argument.append(stringUtilities::intToString(static_cast <int> (SDL_GetTicks())));
+				//argument.append(":");
+				//argument.append(stringUtilities::unsignedToString(static_cast<unsigned>(SDL_GetTicks())));
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
-				
+				argument = stringUtilities::unsignedToString(static_cast<unsigned>(SDL_GetTicks()));
+				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CONNECTED_AT, argument);
 				this->getClients().addBroadcast(instructionOut);
-				//std::cout<<"Hola: "<<argument<<std::endl;
+
 			}
 		}
-		//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE,"DUMMY UPDATE" + stringUtilities::unsignedToString(i));
-		//this->getClients().addBroadcast(instructionOut);
 		i++;
 
 		if (milisecondsTonextFrame >= SDL_GetTicks() - frameStartedAt)
@@ -83,9 +81,10 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
 			client = this->getClients().getClient(argument);
 			instructionOut.setOpCode(OPCODE_SIMULATION_SYNCHRONIZE);
-			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CONNECTED_AT,stringUtilities::unsignedToString(SDL_GetTicks()));
+			argument = stringUtilities::unsignedToString(static_cast<unsigned>(SDL_GetTicks()));
+			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CONNECTED_AT, argument);
 			client->addInstruction(instructionOut);
-			client->setActive(true);
+			this->lastBroadcast = "";
 			break;
 		case OPCODE_DISCONNECT_FROM_SIMULATION:
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
@@ -101,17 +100,12 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			client = this->getClients().getClient(userID);
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
 			if (argument!="") {
-				GameView::instance().manageMovementUpdate(userID, argument); //, deltaTime
+				GameView::instance().manageMovementUpdate(userID, argument);
 
 			}
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_STATE);
 			if (argument!="") {
 				GameView::instance().manageAnimationUpdate(userID, argument);
-				/*instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
-				std::string animation = argument;
-				argument = userID+",0,"+animation;
-				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
-				this->getClients().addBroadcast(instructionOut);*/
 			}
 			}
 			break;
@@ -121,13 +115,14 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			std::string characterType = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER);
 			GameView::instance().addPlayer(argument, characterType);
 			GameView::instance().startUpdatingPlayer(argument);
-			//
+			client->setActive(true);
+
 			instructionOut.clear();
 			instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
 			std::string characterInit = GameView::instance().managePlayerInitialSynch(argument);
 			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
 			client->addInstruction(instructionOut);
-			//una vez inicializado el nuevo players aviso a los demás que hay gente entrando a la fiesta..
+			//broadcast for new players
 			instructionOut.clear();
 			instructionOut.setOpCode(OPCODE_CHARACTERS_SYNCHRONIZE);
 			argument = GameView::instance().manageCharactersPlaying();

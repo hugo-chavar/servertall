@@ -7,6 +7,7 @@
 #include "AnimatedEntity.h"
 #include "CharacterVision.h"
 
+class Personaje;
 
 class PersonajeModelo {
 
@@ -47,12 +48,13 @@ public:
 	//int getRefPixelX();
 	//int getRefPixelY();
 	void restartDirectories();
+	int getOrientacion();
 
 private:
 
 	int siCaminaDetenerse();
 	int cambiarEstado(int x, int y, int cambio);
-	int obtenerOrientacion(int x, int y);	//Obtiene el sentido según el signo de x e y
+	int obtenerOrientacionRespectoAUnTile(int x, int y);	//Obtiene el sentido según el signo de x e y
 	void orientar(std::pair<int, int> destino); //orienta el personaje para que mire hacia destino
 	bool esNecesarioCalcularNuevoPath();
 	void limpiarPath();
@@ -62,7 +64,14 @@ private:
 	void moverse(std::pair<int, int>& destino, float &velocidadAni);
 	//void activarDesactivar();
 	void atacar();
+	void resolverAtaque();
+	void recibirDano(float dano);
 	void defender();
+	void setCurrentEnemy(int tileX, int tileY);
+	bool perseguirEnemigo();
+	void resolverAnimacion(int animacionNueva);
+	void herir();
+	void morir();
 
 	void initialize(int pos_x, int pos_y);
 	
@@ -82,7 +91,14 @@ private:
 	AnimatedEntity * animation;
 	string name;
 	CharacterVision* vision;
+	Personaje* currentEnemy; //el nombre del enemigo que esta atacando el pj
 	//bool isInCenterTile;
+
+	//------------------------ATRIBUTOS (PONGAN ACA LOS ATRIBUTOS DEL PJ: VIDA, MAGIA, DAÑO, ETC)------------------------
+	float precisionMinima;
+	float danoMaximo;
+	float vidaMaxima;
+	float vidaActual;
 };
 
 

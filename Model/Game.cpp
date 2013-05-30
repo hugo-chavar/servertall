@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Constants.h"
+#include <time.h>
 
 
 Game::Game() { }
@@ -25,6 +26,8 @@ bool Game::initialize() {
 	std::vector<std::string> scenarios;
 	unsigned int scenario = 0;
 	bool scenarioPicked = false;
+	//initialize random number generator
+	srand((unsigned)time(NULL));
 
 	for(unsigned i=0; i< yParser.vStages().size(); i++)
 		scenarios.push_back(yParser.vStages()[i].name());
@@ -59,6 +62,12 @@ bool Game::initialize() {
 	Logger::instance().log("Iniciando el juego..");
 
 	return true;
+}
+
+float Game::getRandom() {
+	float max = 1.0;
+	float min = 0.0;
+	return (float)(((float) rand() / (((float)RAND_MAX) + 1.0)) * (max-min+1) + min);
 }
 
 EntityObject* Game::entityObjectAt(unsigned pos) {

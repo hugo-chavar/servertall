@@ -32,6 +32,7 @@ public:
 	Configuration* configuration();
 	int getStageNumber();
 	void setStageNumber(int stageNo);
+	float getRandom();
 
 private:
 	Game();

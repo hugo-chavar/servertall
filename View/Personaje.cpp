@@ -166,6 +166,8 @@ void Personaje::calcularSigTileAMover(){
 		tileActual = modelo->getPosition();
 		//modelo->setIsInCenterTile(true);
 		currentAnimationNumber = modelo->mover(tile, velocidad);
+		if (this->modelo->estaAnimandose())
+			return;
 		//modelo->mover(tile); //TODO: <----HACER QUE COMPILE ESTA LINEA!!!!
 		this->currentSpritePosition = this->calculateSpritePosition(currentAnimationNumber);
 		if (previousSpritePosition != this->currentSpritePosition) {
@@ -283,85 +285,60 @@ void Personaje::calcularvelocidadRelativa(std::pair<float, float>& factor) {
 }
 
 int Personaje::calculateSpritePosition(int currentAnimationNumber) {
-	if ((currentAnimationNumber < MOVIMIENTO) || (currentAnimationNumber >= (MOVIMIENTO + FACTOR_ORIENTACION))) {
+	int orientacion = modelo->getOrientacion();
+	
+	if ((currentAnimationNumber != MOVIMIENTO)) {
 		delta.first = 0;
 		delta.second = 0;
-	}
-	switch (currentAnimationNumber) {
-	case PARADO_N: return STOP_N;
-	case PARADO_NE: return STOP_NE;
-	case PARADO_NOE: return STOP_NOE;
-	case PARADO_S: return STOP_S;
-	case PARADO_SE: return STOP_SE;
-	case PARADO_SOE: return STOP_SOE;
-	case PARADO_E: return STOP_E;
-	case PARADO_O: return STOP_O;
-	case CAMINANDO_N: { 
-		delta.first = 0;
-		delta.second = -32;
-		return WALK_N;
+		if ((orientacion <= 0)||(orientacion >= 7)) {
+			return ESTADO_ERROR;
+		}
+	} else {
+		switch (orientacion) {
+		case NORTE: {
+			delta.first = 0;
+			delta.second = -32;
+			break;
+					}
+		case NORESTE: {
+			delta.first = 32;
+			delta.second = -16;
+			break;
 					  }
-	case CAMINANDO_NE: {
-		delta.first = 32;
-		delta.second = -16;
-		return WALK_NE;
-					   }
-	case CAMINANDO_NOE: {
-		delta.first = -32;
-		delta.second = -16;
-		return WALK_NOE;
+		case NOROESTE: {
+			delta.first = -32;
+			delta.second = -16;
+			break;
 						}
-	case CAMINANDO_S: {
-		delta.first = 0;
-		delta.second = 32;
-		return WALK_S;
-					  }
-	case CAMINANDO_SE: {
-		delta.first = 32;
-		delta.second = 16;
-		return WALK_SE;
-					   }
-	case CAMINANDO_SOE: {
-		delta.first = -32;
-		delta.second = 16;
-		return WALK_SOE;
+		case SUR: {
+			delta.first = 0;
+			delta.second = 32;
+			break;
+					}
+		case SUDESTE: {
+			delta.first = 32;
+			delta.second = 16;
+			break;
 						}
-	case CAMINANDO_O: {
-		delta.first = -64;
-		delta.second = 0;
-		return WALK_O;
-					  }
-	case CAMINANDO_E: {
-		delta.first = 64;
-		delta.second = 0;
-		return WALK_E;
-					  }
-	case FREEZAR_N: return FREEZE_N;
-	case FREEZAR_NE: return FREEZE_NE;
-	case FREEZAR_NOE: return FREEZE_NOE;
-	case FREEZAR_S: return FREEZE_S;
-	case FREEZAR_SE: return FREEZE_SE;
-	case FREEZAR_SOE: return FREEZE_SOE;
-	case FREEZAR_E: return FREEZE_E;
-	case FREEZAR_O: return FREEZE_O;
-	case ATACAR_N: return ATTACK_N;
-	case ATACAR_NE: return ATTACK_NE;
-	case ATACAR_NOE: return ATTACK_NOE;
-	case ATACAR_S: return ATTACK_S;
-	case ATACAR_SE: return ATTACK_SE;
-	case ATACAR_SOE: return ATTACK_SOE;
-	case ATACAR_E: return ATTACK_E;
-	case ATACAR_O: return ATTACK_O;
-	case DEFENDER_N: return DEFEND_N;
-	case DEFENDER_NE: return DEFEND_NE;
-	case DEFENDER_NOE: return DEFEND_NOE;
-	case DEFENDER_S: return DEFEND_S;
-	case DEFENDER_SE: return DEFEND_SE;
-	case DEFENDER_SOE: return DEFEND_SOE;
-	case DEFENDER_E: return DEFEND_E;
-	case DEFENDER_O: return DEFEND_O;
-	default: return ESTADO_ERROR;
+		case SUDOESTE: {
+			delta.first = -32;
+			delta.second = 16;
+			break;
+						}
+		case OESTE: {
+			delta.first = -64;
+			delta.second = 0;
+			break;
+					}
+		case ESTE: {
+			delta.first = 64;
+			delta.second = 0;
+			break;
+					}
+		default: return ESTADO_ERROR;
+		}
 	}
+	return ((currentAnimationNumber - 1)*8 + orientacion);
 }
 
 Personaje::~Personaje(){

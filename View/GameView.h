@@ -34,6 +34,7 @@ public:
 	void startUpdatingPlayer(string userID);
 	void setDisconnectedPlayer(string userID);
 	bool isThereACharInTile(int tileX, int tileY);
+	Personaje* getCharInTile(std::pair <int, int> tile);
 	TimeManager* getTimer();
 	//void wakeUpPlayer(string userID);
 	SpriteAnimado* getErrorImage();

@@ -1,6 +1,8 @@
 #include "Sender.h"
 
 #include "CraPPyLog.h"
+#include "StringUtilities.h"
+#include "SDL.h"
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
@@ -49,6 +51,7 @@ void Sender::send(){
 				}
 			}
 
+			LOG_DEBUG("---------- ABOUT TO SEND MESSAGE: " + mensaje + " - AT: " + stringUtilities::longToString(SDL_GetTicks()));
 			this->sendMessage(mensaje);
 		}
 	} while (!this->isStopping());

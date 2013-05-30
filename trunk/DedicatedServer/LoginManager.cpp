@@ -143,12 +143,15 @@ void LoginManager::processRequests() {
 						}
 					}
 					if (index < this->getMaxFileUpdaters()) {
-						client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
-						if (client != NULL) {// THIS CHECK SHOULD BE UNNECESARY.....
+						//client = this->getPreLoggedClients().getClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+						client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+						if (client != NULL) {
 							LOG_DEBUG("THE USER " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) + " IS UPDATING");
 							common::Logger::instance().log("index:"+stringUtilities::intToString(index));							
 							this->getClientUpdaters()[index]->setClient(client);
 							this->getClientUpdaters()[index]->startClientUpdater();
+						} else {
+							LOG_ERROR("THE NON-EXISTANT USER " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) + " TRIED TO UPDATE ITS CLIENT");
 						}
 					} else {
 						instructionOut.setOpCode(OPCODE_SERVER_BUSY);
@@ -276,9 +279,4 @@ void LoginManager::stopLoginManager() {
 // ----------------------------------- DESTRUCTOR ----------------------------------------
 
 LoginManager::~LoginManager() {
-	/*for (unsigned int i = 0; i < this->getMaxFileUpdaters(); i++) {
-		if (!this->getClientUpdaters()[i]->isAvailable())
-			this->getClientUpdaters()[i]->stopClientUpdater();
-		delete this->getClientUpdaters()[i];*/
-	//}
 }

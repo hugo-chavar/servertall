@@ -62,13 +62,12 @@ void ClientUpdater::updateClient() {
 		LOG_ERROR("There was and error while sending files");
 		//this->getClient()->stopClient(); //Lo que dejo comentado hay que hacerlo andar. Hugo
 		//delete client;
-	} //else {
-
-	this->getClient()->getConnector().setInstructionQueue(&this->getServerInstructionQueue());
-	instructionOut.clear();
-	instructionOut.setOpCode(OPCODE_UPDATE_COMPLETE);
-	this->getClient()->addInstruction(instructionOut);
-	//}
+	} else {
+		this->getClient()->getConnector().setInstructionQueue(&this->getServerInstructionQueue());
+		instructionOut.clear();
+		instructionOut.setOpCode(OPCODE_UPDATE_COMPLETE);
+		this->getClient()->addInstruction(instructionOut);
+	}
 
 	this->stopClientUpdater();
 }
@@ -207,9 +206,13 @@ void ClientUpdater::startClientUpdater() {
 }
 
 void ClientUpdater::stopClientUpdater() {
+	//no se estaría usando este código
 	this->setShuttingDown(true);
 	this->getInstructionQueue().stopWaiting();
+	//no se estaría usando este código
 	this->join();
+	this->getClient()->stopClient();
+	delete this->getClient();
 	this->setClient(NULL);
 	this->setAvailable(true);
 	this->mutexUpdates->unlock();

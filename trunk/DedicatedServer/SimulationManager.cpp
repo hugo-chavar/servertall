@@ -59,6 +59,7 @@ void SimulationManager::simulate() {
 				//argument.append(stringUtilities::unsignedToString(static_cast<unsigned>(SDL_GetTicks())));
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
 				argument = stringUtilities::unsignedToString(static_cast<unsigned>(SDL_GetTicks()));
+				LOG_DEBUG("SIMULATION GENERATED AT: " + argument);
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CONNECTED_AT, argument);
 				this->getClients().addBroadcast(instructionOut);
 

@@ -5,6 +5,8 @@
 #include "PersonajeConstantes.h"
 #include "OpcionesJuego.h"
 #include "Game.h"
+#include "../View/GameView.h"
+#include "../View/Personaje.h"
 
 using namespace common;
 
@@ -27,13 +29,18 @@ void PersonajeModelo::initialize(int pos_x, int pos_y) {
 	yPath = NULL;
 	posMov = 0;
 	caminoSize = 0;
-	estado = PARADO_S;
+	estado = PARADO;
 	velocidad = DEFAULT_MAIN_CHARACTER_SPEED;
 	this->setActive(true);
 	orientacion = SUR;
 	this->setAnimating(false);
 	animacionActual = SIN_CAMBIO;
 	this->vision = NULL;
+	currentEnemy = NULL;
+	precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
+	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
+	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
+	vidaActual = vidaMaxima;
 }
 
 
@@ -46,13 +53,49 @@ void PersonajeModelo::setAnimation(AnimatedEntity* ae) {
 	animation = ae;
 }
 
-void PersonajeModelo::atacar() {
-	animacionActual = ATACAR;
+void PersonajeModelo::herir() {
+	animacionActual = HERIR;
+	this->resolverAnimacion(animacionActual);
+}
+
+void PersonajeModelo::morir() {
+	animacionActual = MORIR;
+	this->resolverAnimacion(animacionActual);
+}
+
+void PersonajeModelo::recibirDano(float dano) {
+	this->vidaActual -= dano;
+	if (vidaActual > 0) {
+		this->herir();
+	} else {
+		this->morir();
+	}
+}
+
+void PersonajeModelo::resolverAnimacion(int nuevaAnimacion) {
+	this->setAnimating(true);
 	targetParcial = target = current;
 	if (estado >= MOVIMIENTO) {
-		estado = estado + ATACAR - MOVIMIENTO;
+		estado = estado + nuevaAnimacion - MOVIMIENTO;
 	} else {
-		estado = estado + ATACAR - PARADO;
+		estado = estado + nuevaAnimacion - PARADO;
+	}
+}
+
+void PersonajeModelo::resolverAtaque(){
+	float precision = Game::instance().getRandom();
+	if (precision >= this->precisionMinima) {
+		float dano = Game::instance().getRandom() * this->danoMaximo;
+		this->currentEnemy->personajeModelo()->recibirDano(dano);
+	}
+}
+
+void PersonajeModelo::atacar() {
+	if ((currentEnemy != NULL) && (currentEnemy->getPosicionAnteriorEnTiles() == this->obtenerFrentePersonaje())) {
+		this->resolverAtaque();
+		animacionActual = ATACAR;
+		this->resolverAnimacion(animacionActual);
+		currentEnemy = NULL;
 	}
 }
 
@@ -74,11 +117,11 @@ void PersonajeModelo::animar(char opcion) {
 	if ((this->isActive()) && (animacionActual == SIN_CAMBIO)) {
 		
 		switch (opcion) {
-		case (OPCION_ATACAR): {
+		/*case (OPCION_ATACAR): {
 			this->setAnimating(true);
 			this->atacar();
 			break;
-				  }
+				  }*/
 		case (OPCION_DEFENDER): {
 			this->setAnimating(true);
 			this->defender();
@@ -116,12 +159,20 @@ int PersonajeModelo::delay() {
 	return animation->delay();
 }
 
+void PersonajeModelo::setCurrentEnemy(int tileX, int tileY) {
+	std::pair<int, int> tileDestino(tileX, tileY);
+	if ((vision != NULL) && (vision->isInsideVision(tileDestino)) && (GameView::instance().isThereACharInTile(tileX, tileY))) {
+		currentEnemy = GameView::instance().getCharInTile(tileDestino);
+	}
+}
+
 void PersonajeModelo::setDestino(int x, int y) {
 	if ((this->isActive())&&(!this->estaAnimandose())) {
 		target.first = x;
 		target.second = y;
 		targetParcial.first = x;
 		targetParcial.second = y;
+		setCurrentEnemy(x, y);
 	}
 }
 
@@ -152,7 +203,7 @@ float PersonajeModelo::getVelocidad() {
 int PersonajeModelo::siCaminaDetenerse() {
 	int cambio = SIN_CAMBIO;
 	
-	if ((estado<10) || (estado>19)) { //si esta caminando
+	if (estado == MOVIMIENTO) { //si esta caminando
 		cambio = ESTADO_MOVIMIENTO; //que se quede quieto
 	}
 	return cambio;
@@ -217,6 +268,7 @@ int PersonajeModelo::mover(std::pair<int, int>& destino, float& velocidadAni) {
 			this->orientar(target);
 			target.first = targetParcial.first;
 			target.second = targetParcial.second;
+			this->atacar();
 		}
 		if (caminoSize <  0) {
 			return (this->quedarseQuieto(velocidadAni));
@@ -237,6 +289,10 @@ void PersonajeModelo::orientar(std::pair<int, int> destino) {
 	estado = cambiarEstado(destino.first, destino.second, cambio);
 }
 
+int PersonajeModelo::getOrientacion() {
+	return this->orientacion;
+}
+
 bool PersonajeModelo::esNecesarioCalcularNuevoPath(){
 	if ((xPath == NULL)&&(yPath == NULL)) { //Si no hay camino seteado
 		return true;
@@ -244,14 +300,32 @@ bool PersonajeModelo::esNecesarioCalcularNuevoPath(){
 	if ((xPath[caminoSize-1]!=targetParcial.first)||(yPath[caminoSize-1]!=targetParcial.second)) { //Si cambio de destino durante el movimiento
 		return true;
 	}
-	if (posMov == 5/*this->getVision()->getRangeVision()*/) { //Si se movio el maximo antes de recalcular
+	if (posMov >= 5/*this->getVision()->getRangeVision()*/) { //Si se movio el maximo antes de recalcular
 		return true;
 	}
 	if ((posMov==caminoSize)&&((target.first!=targetParcial.first)||(target.second!=targetParcial.second))) { //Si completo el primer pedazo del camino
 		return true;
 	}
+	if (perseguirEnemigo()) {
+		return true;
+	}
 	if ((Game::instance().world())->cost(xPath[posMov], yPath[posMov]) == 0) { //Hay un pj en el tile al que se va a mover
 		return true;
+	}
+	return false;
+}
+
+bool PersonajeModelo::perseguirEnemigo() {
+	
+	if (currentEnemy == NULL) {
+		return false;
+	}
+	if ((currentEnemy->getPosicionAnteriorEnTiles() != target) && (vision->isInsideVision(currentEnemy->getPosicionAnteriorEnTiles()))) {
+		setDestino(currentEnemy->getPosicionAnteriorEnTiles().first, currentEnemy->getPosicionAnteriorEnTiles().second);
+		return true;
+	}
+	if (!vision->isInsideVision(currentEnemy->getPosicionAnteriorEnTiles())) {
+		currentEnemy = NULL;
 	}
 	return false;
 }
@@ -300,23 +374,17 @@ int PersonajeModelo::cambiarEstado(int x, int y, int cambio) {
 		return estado;
 	}
 	if((x==current.first)&&(y==current.second)&&(cambio==ESTADO_MOVIMIENTO)){
-		return (estado-FACTOR_ORIENTACION);
+		return (estado-PARADO);
 	}
-	orientacion = obtenerOrientacion(x, y);
-	switch (orientacion) {
-	case NORTE: return CAMINANDO_N;
-	case NORESTE: return CAMINANDO_NE;
-	case NOROESTE: return CAMINANDO_NOE;
-	case SUR: return CAMINANDO_S;
-	case SUDESTE: return CAMINANDO_SE;
-	case SUDOESTE: return CAMINANDO_SOE;
-	case ESTE: return CAMINANDO_E;
-	case OESTE: return CAMINANDO_O;
-	default: return ESTADO_ERROR;
+	orientacion = obtenerOrientacionRespectoAUnTile(x, y);
+	if ((orientacion >= 0)&&(orientacion <= 7)) {
+		return MOVIMIENTO;
+	} else {
+		return ESTADO_ERROR;
 	}
 }
 
-int PersonajeModelo::obtenerOrientacion(int x, int y) {
+int PersonajeModelo::obtenerOrientacionRespectoAUnTile(int x, int y) {
 	int xCurr = current.first;
 	int yCurr = current.second;
 	

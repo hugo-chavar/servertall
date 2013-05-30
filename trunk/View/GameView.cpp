@@ -133,6 +133,23 @@ void GameView::manageAnimationUpdate(string userID, string animation) {
 	}
 }
 
+Personaje* GameView::getCharInTile(std::pair <int, int> tile) {
+	
+	if(Game::instance().world()->isInsideWorld(tile))
+	{
+		vector <Player*>::iterator it;
+		for(it=this->_players.begin(); it!=this->_players.end(); it++)
+		{
+			pair<int,int> posChar = (*it)->getCharacter()->getPosicionEnTiles();
+			if(posChar == tile)
+			{
+				return (*it)->getCharacter();
+			}
+		}
+	}
+	return NULL;
+}
+
 bool GameView::isThereACharInTile(int tileX, int tileY) {
 	pair<int,int> tilePos (tileX, tileY);
 	if(Game::instance().world()->isInsideWorld(tilePos))

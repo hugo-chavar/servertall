@@ -49,7 +49,7 @@ void Client::startClient() {
 }
 
 void Client::stopClient() {
-	this->getConnector().stopConnector(true);
+	this->getConnector().stopConnector(false);
 }
 
 // ----------------------------------- DESTRUCTOR ----------------------------------------

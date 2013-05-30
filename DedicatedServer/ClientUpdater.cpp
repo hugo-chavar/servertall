@@ -63,7 +63,7 @@ void ClientUpdater::updateClient() {
 		//this->getClient()->stopClient(); //Lo que dejo comentado hay que hacerlo andar. Hugo
 		//delete client;
 	} else {
-		this->getClient()->getConnector().setInstructionQueue(&this->getServerInstructionQueue());
+		//this->getClient()->getConnector().setInstructionQueue(&this->getServerInstructionQueue());
 		instructionOut.clear();
 		instructionOut.setOpCode(OPCODE_UPDATE_COMPLETE);
 		this->getClient()->addInstruction(instructionOut);

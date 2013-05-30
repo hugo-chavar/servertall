@@ -147,7 +147,7 @@ void LoginManager::processRequests() {
 						client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 						if (client != NULL) {
 							LOG_DEBUG("THE USER " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID) + " IS UPDATING");
-							common::Logger::instance().log("index:"+stringUtilities::intToString(index));							
+							//common::Logger::instance().log("index:"+stringUtilities::intToString(index));							
 							this->getClientUpdaters()[index]->setClient(client);
 							this->getClientUpdaters()[index]->startClientUpdater();
 						} else {

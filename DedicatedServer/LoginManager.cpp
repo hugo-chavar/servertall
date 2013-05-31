@@ -102,8 +102,8 @@ void LoginManager::processRequests() {
 						client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 						client->setUserID(argument);
 						this->getLoggedClients().addClient(client);
-						Client *usedClient = new Client(*client);
-						this->getUsedClients().addClient(usedClient);
+						//Client *usedClient = new Client(*client);
+						//this->getUsedClients().addClient(usedClient);
 						//std::cout << "THE USER " << argument << " LOGGED IN" << std::endl;
 						LOG_DEBUG("THE USER " + argument + " LOGGED IN");
 					} else if ((argument != "") && (!this->getUsedClients().isUserIDAvailable(argument)) && (this->getLoggedClients().isUserIDAvailable(argument))) {
@@ -111,9 +111,10 @@ void LoginManager::processRequests() {
 						instructionOut.setOpCode(OPCODE_LOGIN_OK);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_GREETING,"Welcome back " + argument);
 						instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));
+						client = this->getUsedClients().detachClient(argument);
+						delete client;
 						client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 						client->setUserID(argument);
-						//client = this->getUsedClients().getClient(argument);
 						this->getLoggedClients().addClient(client);
 						client->addInstruction(instructionOut);
 						instructionOut.clear();
@@ -192,10 +193,11 @@ void LoginManager::processRequests() {
 				case OPCODE_LOGOUT_REQUEST:
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
 					client = this->getLoggedClients().detachClient(argument);
+					this->getUsedClients().addClient(client);
 					if (client != NULL) {
 						LOG_DEBUG("THE USER " + argument + " LOGGED OUT");
 						client->stopClient();
-						delete client;
+						//delete client;
 					} else {
 						LOG_ERROR("THE NON-EXISTANT USER " + argument + " TRIED TO LOG OUT");
 					}
@@ -216,6 +218,7 @@ void LoginManager::processRequests() {
 					client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 					if (client == NULL) {
 						client = this->getLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
+						this->getUsedClients().addClient(client);
 					}
 					if (client != NULL) {
 					client->stopClient();

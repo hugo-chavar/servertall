@@ -1,4 +1,5 @@
 #include "Client.h"
+#include "CraPPyLog.h"
 
 // ----------------------------------- CONSTRUCTOR ---------------------------------------
 
@@ -49,6 +50,7 @@ void Client::startClient() {
 }
 
 void Client::stopClient() {
+	LOG_DEBUG("STOPING CLIENT: " + this->getUserID());
 	this->getConnector().stopConnector(false);
 }
 

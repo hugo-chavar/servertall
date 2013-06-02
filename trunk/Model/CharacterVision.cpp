@@ -10,7 +10,6 @@ CharacterVision::CharacterVision() {
 }
 
 CharacterVision::~CharacterVision() {
-
 }
 
 void CharacterVision::setRangeVision(int value) {
@@ -49,8 +48,6 @@ void CharacterVision::updatePosition(pair<int, int> pos) {
 }
 
 void CharacterVision::updateVision() {
-	//if ((GameView::instance().getMyPersonaje() != NULL)&&(!GameView::instance().getMyPersonaje()->isCenteredInTile()))
-	//	return;
 	vision.initialize(this->position, this->rangeVision);
 	vision.fill();
 	pair<int, int > aux;
@@ -64,7 +61,7 @@ bool CharacterVision::testPosition(pair<int, int> pos) {
 	return this->mapKnowledge[pos.second].test(pos.first);
 }
 
-void CharacterVision::setKnown(pair<int, int> pos){
+void CharacterVision::setKnown(pair<int, int> pos) {
 	if (Game::instance().world()->isInsideWorld(pos)) {
 		if (testPosition(pos))
 			return;

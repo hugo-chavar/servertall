@@ -11,7 +11,7 @@ Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	modelo = pj;
 	this->character_id=char_id;
 	tileActual = pj->getPosition();
-	this->currentSpritePosition = this->calculateSpritePosition(pj->getEstado());
+	this->setCurrentSpritePosition(this->calculateSpritePosition(pj->getEstado()));
 	velocidad = pj->getVelocidad();
 	delta.first = 0;
 	delta.second = 0;
@@ -94,7 +94,7 @@ void Personaje::setFreezed(bool value) {
 void Personaje::detenerAnimacion() {
 	modelo->terminarAnimacion();
 	int currentAnimationNumber = modelo->getEstado();
-	this->currentSpritePosition = this->calculateSpritePosition(currentAnimationNumber);
+	this->setCurrentSpritePosition(this->calculateSpritePosition(currentAnimationNumber));
 }
 
 void Personaje::animar() {
@@ -102,24 +102,24 @@ void Personaje::animar() {
 	if (!this->modelo->estaAnimandose() || this->freezed)
 		return;
 	int currentAnimationNumber = modelo->getEstado();
-	if (this->calculateSpritePosition(currentAnimationNumber) != this->currentSpritePosition) {
-		if (this->currentSpritePosition > (signed)(sprites.size()-1)) {
+	if (this->calculateSpritePosition(currentAnimationNumber) != this->getCurrentSpritePosition()) {
+		if (this->getCurrentSpritePosition() > static_cast<int>(sprites.size()-1)) {
 			GameView::instance().getErrorImage()->restart();
 		} else {
-			sprites[this->currentSpritePosition]->restart();
+			sprites[this->getCurrentSpritePosition()]->restart();
 		}
-		if (this->calculateSpritePosition(currentAnimationNumber) > (signed)(sprites.size()-1)) {
+		if (this->calculateSpritePosition(currentAnimationNumber) > static_cast<int>(sprites.size()-1)) {
 			GameView::instance().getErrorImage()->restart();
 		} else {
 			sprites[this->calculateSpritePosition(currentAnimationNumber)]->restart();
 		}
 	}
-	this->currentSpritePosition = this->calculateSpritePosition(currentAnimationNumber);
-	if (this->currentSpritePosition > (signed)(sprites.size()-1)) {
+	this->setCurrentSpritePosition(this->calculateSpritePosition(currentAnimationNumber));
+	if (this->currentSpritePosition > static_cast<int>(sprites.size()-1)) {
 		if (GameView::instance().getErrorImage()->lastFrame())
 			this->detenerAnimacion();
 	} else {
-		if (sprites[this->currentSpritePosition]->lastFrame())
+		if (sprites[this->getCurrentSpritePosition()]->lastFrame())
 			this->detenerAnimacion();
 	}
 }
@@ -133,7 +133,7 @@ void Personaje::update() {
 	modelo->update();
 	if (this->freezed)
 		return;
-	if (this->currentSpritePosition > (signed)(sprites.size()-1)) {
+	if (this->getCurrentSpritePosition() > static_cast<int>(sprites.size()-1)) {
 		GameView::instance().getErrorImage()->updateFrame();
 	} else {
 		sprites[this->currentSpritePosition]->updateFrame();
@@ -150,7 +150,7 @@ void Personaje::mover() {
 	
 	calcularSigTileAMover();
 	calcularvelocidadRelativa(factor);
-	if (this->currentSpritePosition != ESTADO_ERROR) {
+	if (this->getCurrentSpritePosition() != ESTADO_ERROR) {
 		moverSprite(factor);
 	}
 }
@@ -159,7 +159,7 @@ void Personaje::mover() {
 void Personaje::calcularSigTileAMover(){
 	int currentAnimationNumber = 0;	//animacion del personaje en el sistema de PersonajeModelo
 	std::pair<int, int> tile;	//Un tile
-	int previousSpritePosition = this->currentSpritePosition;
+	int previousSpritePosition = this->getCurrentSpritePosition();
 
 	if (this->isCenteredInTile()) {
 		serr = 0;
@@ -168,8 +168,7 @@ void Personaje::calcularSigTileAMover(){
 		currentAnimationNumber = modelo->mover(tile, velocidad);
 		if (this->modelo->estaAnimandose())
 			return;
-		//modelo->mover(tile); //TODO: <----HACER QUE COMPILE ESTA LINEA!!!!
-		this->currentSpritePosition = this->calculateSpritePosition(currentAnimationNumber);
+		this->setCurrentSpritePosition(this->calculateSpritePosition(currentAnimationNumber));
 		if (previousSpritePosition != this->currentSpritePosition) {
 			ePot.first = 0;
 			ePot.second = 0;
@@ -264,8 +263,6 @@ void Personaje::animateModel(char animacion) {
 
 void Personaje::calcularvelocidadRelativa(std::pair<float, float>& factor) {
 	float deltaTime = GameView::instance().getTimer()->getDeltaTime()/10;
-	//Logger::instance().log("Delta "+ stringUtilities::floatToString(deltaTime1));
-	//float deltaTime = 1.0; //reemplazar x linea de arriba cuando compile GameView
 	if (delta.first != 0) { //Hay movimiento en x
 		if (delta.second != 0) { //Diagonal
 			factor.first = static_cast<float>((velocidad*deltaTime) *0.707);
@@ -387,7 +384,7 @@ std::string Personaje::updateToString() {
 		out.append(";");
 		out.append(stringUtilities::intToString(this->getCurrentSpritePosition()));
 		out.append(";");
-		if (this->getCurrentSpritePosition() > (signed)(sprites.size()-1)) {
+		if (this->getCurrentSpritePosition() > static_cast<int>(sprites.size()-1)) {
 			out.append(stringUtilities::intToString(GameView::instance().getErrorImage()->getCurrentState()));
 		} else {
 			out.append(stringUtilities::intToString(sprites[this->getCurrentSpritePosition()]->getCurrentState()));
@@ -412,7 +409,7 @@ void Personaje::updateFromString(std::string data) {
 	std::pair<int,int> pixels = stringUtilities::stringToPairInt(splittedData[1]);
 	this->setFreezed(splittedData[2] == "F");
 	//this->setCurrentSpritePosition(stringUtilities::stringToInt(splittedData[3]));
-	if (this->getCurrentSpritePosition() > (signed)(sprites.size()-1)) {
+	if (this->getCurrentSpritePosition() > static_cast<int>(sprites.size()-1)) {
 		GameView::instance().getErrorImage()->setCurrentState(stringUtilities::stringToInt(splittedData[3]));
 	} else {
 		sprites[this->getCurrentSpritePosition()]->setCurrentState(stringUtilities::stringToInt(splittedData[3]));
@@ -426,6 +423,8 @@ int Personaje::getCurrentSpritePosition() {
 
 void Personaje::setCurrentSpritePosition(int pos) {
 	this->currentSpritePosition = pos;
+	if (this->currentSpritePosition == -1)
+		this->currentSpritePosition = -1; //poner un stop en esta linea para debbugear
 }
 
 std::pair<int,int> Personaje::getPixelPosition() {

@@ -49,6 +49,9 @@ public:
 	//int getRefPixelY();
 	void restartDirectories();
 	int getOrientacion();
+	void increaseSpeed(float factor);
+	void increaseVisionRange(float factor);
+	void PersonajeModelo::discoverMap();
 
 private:
 

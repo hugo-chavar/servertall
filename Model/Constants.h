@@ -6,6 +6,7 @@
 #define CONFIGFILE_EXTENSION ".yaml"
 #define DEFAULT_SERVER_PORT 3500
 #define DEFAULT_VISION_RANGE 5
+#define MAX_VISION_RANGE 50
 
 #define IMAGES_EXTENSION ".png"
 #define IMAGES_DIR "../Images/"

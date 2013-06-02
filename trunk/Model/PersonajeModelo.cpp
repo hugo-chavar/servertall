@@ -472,6 +472,29 @@ void PersonajeModelo::restartDirectories() {
 	this->animation->imagesPaths()->restartCurrentPosition();
 }
 
+void PersonajeModelo::increaseSpeed(float factor)
+{
+	this->velocidad=this->velocidad*factor;
+	if(this->velocidad>MAX_MAIN_CHARACTER_SPEED)
+	{
+		this->velocidad=MAX_MAIN_CHARACTER_SPEED;
+	}
+}
+
+void PersonajeModelo::discoverMap()
+{
+	//this->getVision()->setHoleMapVision(); FALTA IMPLEMENTAR
+}
+
+void PersonajeModelo::increaseVisionRange(float factor)
+{
+	this->vision->setRangeVision(static_cast<int>(this->vision->getRangeVision()*factor));
+	if(this->vision->getRangeVision()>MAX_VISION_RANGE)
+	{
+		this->vision->setRangeVision(MAX_VISION_RANGE);
+	}
+}
+
 //---------------------------Maybe useful in the future--------------------------------------
 
 //void PersonajeModelo::setRefPixelX(int) {

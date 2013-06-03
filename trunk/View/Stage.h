@@ -27,6 +27,7 @@ public:
 	void setTilesInCamera(int h, int v);
 	Personaje* personaje();
 	map <string,Personaje*> personajes;//agrego diccionario de personajes
+	TileView* getTileAt(KeyPair k);
 private:
 	vector<Sprite*> spriteArray;
 	Personaje* _personaje;
@@ -42,7 +43,6 @@ private:
 	void generateStage();
 	void deleteStage();
 	TileView* createTile(TileModel* tile);
-	TileView* getTileAt(KeyPair k);
 	TileView* getFirstMatch(std::pair<int,int> k);
 	TileView* getLastMatch(TileView* firstMatch, std::pair<int,int> k);
 	void fixKeyLeftBottom(int level, std::pair<int,int> &k);

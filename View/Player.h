@@ -15,11 +15,14 @@ public:
 	string getUserID();
 	void startUpdating();
 	bool isUpdating();
+	void misionScore(int score);
+	int misionScore();
 
 private:
 	string _userID;
 	Personaje *_character;
 	bool updating;
+	int _misionScore;
 
 };
 

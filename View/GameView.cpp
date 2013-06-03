@@ -14,6 +14,13 @@ bool GameView::initialize() {
 
 	bool mapInitialized = this->worldView.initialize();
 
+	// Inicializar misión
+	if (flagMision.isTheChosenMision())
+		flagMision.initialize(Game::instance().world()->width(), Game::instance().world()->height());
+	//else
+	//	if (deathmatchMision.isTheChosenMision())
+	//		deathmatchMision.initialize();
+
 	this->getTimer()->initializeTime();
 
 	AnimatedEntity errorEntity;
@@ -205,6 +212,17 @@ void GameView::update() {
 			_players[i]->getCharacter()->update();
 	}
 	this->getTimer()->updateTime();
+	if (flagMision.isTheChosenMision()) {
+		if (flagMision.allFlagsDestroyed()) {
+			Player* player = this->playerWithHighestScore();
+			// TERMINAR JUEGO
+		}
+	}
+	//else
+	//	if (deathmatchMision.isTheChosenMision()) {
+	//		if (...)
+	//			// TERMINAR JUEGO
+	//	}
 }
 
 void GameView::startUpdatingPlayer(string userID) {
@@ -241,6 +259,18 @@ string GameView::manageCharactersPlaying() {
 			argument.pop_back();
 	}
 	return argument;
+}
+
+Player* GameView::playerWithHighestScore() {
+	int highestScore = 0;
+	Player* player = NULL;
+	for (unsigned int i=0; i<_players.size(); i++) {
+		if (_players[i]->misionScore() > highestScore) {
+			highestScore = _players[i]->misionScore();
+			player = _players[i];
+		}
+	}
+	return player;
 }
 
 //------------------------ METODOS QUE NO SE USAN EN UN PRINCIPIO EN EL SERVER-----------------------------

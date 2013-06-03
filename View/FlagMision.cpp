@@ -11,8 +11,16 @@ void FlagMision::initialize(int stageWidth, int stageHeight) {
 	int xPosition, yPosition;
 	int numberOfFlags = 5; // HARCODEADO
 	for (int i=0; i<numberOfFlags; i++) {
-		xPosition = rand() % stageWidth;
-		yPosition = rand() % stageHeight;
+		bool validPosition = false;
+		while (!validPosition) {
+			xPosition = rand() % stageWidth;
+			yPosition = rand() % stageHeight;
+			KeyPair position;
+			position.first = xPosition;
+			position.second = yPosition;
+			if (!GameView::instance().getWorldView()->getTileAt(position)->hasOtherEntity())
+				validPosition = true;
+		}
 		flags.push_back(new Flag(xPosition, yPosition));
 	}
 }

@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "CharacterFactory.h"
 #include "TimeManager.h"
+#include "FlagMision.h"
 
 using namespace std;
 
@@ -39,6 +40,8 @@ public:
 	//void wakeUpPlayer(string userID);
 	SpriteAnimado* getErrorImage();
 	string manageCharactersPlaying();
+	Player* playerWithHighestScore();
+
 private:
 	GameView();
 	Stage worldView;
@@ -46,6 +49,7 @@ private:
 	TimeManager time;
 	CharacterFactory characterFactory;
 	SpriteAnimado* errorImage;
+	FlagMision flagMision;
 
 };
 

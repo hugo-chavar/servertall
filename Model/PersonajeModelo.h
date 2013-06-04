@@ -53,6 +53,9 @@ public:
 	void increaseVisionRange(float factor);
 	void PersonajeModelo::discoverMap();
 
+	bool getIsReseting();
+	void setIsReseting();
+
 private:
 
 	int siCaminaDetenerse();
@@ -75,9 +78,11 @@ private:
 	void resolverAnimacion(int animacionNueva);
 	void herir();
 	void morir();
+	void resetChar();
 
 	void initialize(int pos_x, int pos_y);
 	
+	std::pair<int, int> startPosition;
 	std::pair<int, int> current;
 	std::pair<int, int> target;
 	std::pair<int, int> targetParcial;
@@ -85,6 +90,7 @@ private:
 	int* yPath;
 	int posMov;
 	int caminoSize;
+	bool isReseting;
 	bool isAnimating;
 	int animacionActual;
 	int estado;

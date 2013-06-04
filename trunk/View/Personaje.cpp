@@ -179,6 +179,10 @@ void Personaje::calcularSigTileAMover(){
 			//modelo->setIsInCenterTile(false);
 			modelo->setCurrent(tile.first, tile.second);
 		}
+		if (modelo->getIsReseting()) {
+			this->setRectangle(tileActual, sprites[this->currentSpritePosition]);
+			modelo->setIsReseting();
+		}
 	}
 }
 
@@ -287,7 +291,7 @@ int Personaje::calculateSpritePosition(int currentAnimationNumber) {
 	if ((currentAnimationNumber != MOVIMIENTO)) {
 		delta.first = 0;
 		delta.second = 0;
-		if ((orientacion <= 0)||(orientacion >= 7)) {
+		if ((orientacion < 0)||(orientacion > 7)) {
 			return ESTADO_ERROR;
 		}
 	} else {
@@ -422,9 +426,10 @@ int Personaje::getCurrentSpritePosition() {
 }
 
 void Personaje::setCurrentSpritePosition(int pos) {
+	if (pos == ESTADO_ERROR) {
+		this->currentSpritePosition = 0;
+	}
 	this->currentSpritePosition = pos;
-	if (this->currentSpritePosition == -1)
-		this->currentSpritePosition = -1; //poner un stop en esta linea para debbugear
 }
 
 std::pair<int,int> Personaje::getPixelPosition() {

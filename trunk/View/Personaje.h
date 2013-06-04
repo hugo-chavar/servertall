@@ -50,7 +50,7 @@ private:
 	//void setCenteredInTile(bool centroTile);
 	void animar();
 	void detenerAnimacion();
-	std::pair<int, int> tileActual; //TODO: Ver porque ya está en PersonajeModelo como posición <-- refactor needed
+	std::pair<int, int> tileActual; //TODO: Ver porque ya está en PersonajeModelo como posición <-- usada en getPosicionAnteriorEnTiles()
 	PersonajeModelo* modelo;
 	std::vector<SpriteAnimado*> sprites;
 	float velocidad; //velocidad actual

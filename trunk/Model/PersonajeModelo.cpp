@@ -21,6 +21,8 @@ PersonajeModelo::PersonajeModelo(int ActualX, int ActualY) {
 void PersonajeModelo::initialize(int pos_x, int pos_y) {
 	current.first = pos_x;
 	current.second = pos_y;
+	startPosition.first = pos_x;
+	startPosition.second = pos_y;
 	target.first = current.first;
 	target.second = current.second;
 	targetParcial.first = current.first;
@@ -41,6 +43,7 @@ void PersonajeModelo::initialize(int pos_x, int pos_y) {
 	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
 	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
 	vidaActual = vidaMaxima;
+	isReseting = false;
 }
 
 
@@ -132,10 +135,47 @@ void PersonajeModelo::animar(char opcion) {
 	}
 }
 
+void PersonajeModelo::resetChar() {
+	current = target = targetParcial = startPosition;
+	if (xPath == NULL) {
+		delete [] xPath;
+		xPath = NULL;
+	}
+	if (yPath == NULL) {
+		delete [] yPath;
+		yPath = NULL;
+	}
+	posMov = 0;
+	caminoSize = 0;
+	estado = PARADO;
+	velocidad = DEFAULT_MAIN_CHARACTER_SPEED;
+	orientacion = SUR;
+	this->setAnimating(false);
+	animacionActual = SIN_CAMBIO;
+	currentEnemy = NULL;
+	precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
+	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
+	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
+	vidaActual = vidaMaxima;
+	isReseting = true;
+}
+
+bool PersonajeModelo::getIsReseting(){
+	return isReseting;
+}
+
+void PersonajeModelo::setIsReseting(){
+	isReseting = false;
+}
+
 void PersonajeModelo::terminarAnimacion() {
 	this->setAnimating(false);
-	estado = estado - animacionActual + PARADO;
-	animacionActual = SIN_CAMBIO;
+	if (animacionActual == MORIR) {
+		this->resetChar();
+	} else {
+		estado = estado - animacionActual + PARADO;
+		animacionActual = SIN_CAMBIO;
+	}
 }
 
 
@@ -161,8 +201,12 @@ int PersonajeModelo::delay() {
 
 void PersonajeModelo::setCurrentEnemy(int tileX, int tileY) {
 	std::pair<int, int> tileDestino(tileX, tileY);
+
 	if ((vision != NULL) && (vision->isInsideVision(tileDestino)) && (GameView::instance().isThereACharInTile(tileX, tileY))) {
 		currentEnemy = GameView::instance().getCharInTile(tileDestino);
+		if (currentEnemy->personajeModelo() == this) {
+			currentEnemy = NULL;
+		}
 	}
 }
 

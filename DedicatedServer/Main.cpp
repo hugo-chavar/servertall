@@ -3,8 +3,6 @@
 #include <iostream>
 #include <winsock2.h>
 #include <windows.h>
-#include <stdlib.h>
-#include <time.h>
 
 #include "ChatManager.h"
 #include "SimulationManager.h"
@@ -18,7 +16,6 @@ int main(int argc, char *argv[]){
 
 	WSAData ws;
 	WSAStartup(MAKEWORD(2,2),&ws);
-	srand(time(NULL));
 
 	GameView::instance().initialize();
 

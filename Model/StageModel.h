@@ -9,6 +9,7 @@
 #include "DataTypes.h"
 #include "PersonajeModelo.h"
 #include "TileModel.h"
+#define REGENERATIONTIME 30000
 
 using namespace std;
 
@@ -25,7 +26,8 @@ public:
 	unsigned int height() const;
 	string name() const; 
 	vector <EntityDef> vEntitiesDef();
-	vector <PersonajeModelo*>* vMainCharacters(); 
+	vector <PersonajeModelo*>* vMainCharacters();
+	vector <Item*>* items();
 	void width(unsigned); 
 	void height(unsigned);
 	void setSize(unsigned, unsigned);
@@ -59,8 +61,14 @@ public:
 	//bool isThereAChar(string &name,int x, int y, float cameraX, float cameraY);
 	void loadNamedChars();
 	PersonajeModelo* getCharacter(string name);
+	void generateItems(float porcentage);
+	string manageItemsInitialSynch();
+
 private:
 
+	//void regenerateItem();
+	//Uint32 lastRegeneration;
+	void reviveItem();
 	string _name;
 	unsigned int _width;
 	unsigned int _height;
@@ -72,6 +80,8 @@ private:
 	vector <TileModel*> tileLevels;
 	vector <PersonajeModelo*> _vMainCharacters;
 	map <string,PersonajeModelo*> mapMainCharacters;
+	vector <Item*> _vItems;
+	list <string> itemChanges;
 };
 
 #endif //_STAGEMODEL_H_

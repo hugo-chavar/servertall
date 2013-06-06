@@ -9,6 +9,6 @@ class ItemFactory
 public:
 	ItemFactory(void);
 	~ItemFactory(void);
-	Item* createItem(float porcentajeAparicion);
+	Item* createItem(float porcentajeAparicion,std::pair <int,int> pos);
 };
 

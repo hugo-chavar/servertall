@@ -51,13 +51,14 @@ public:
 	int getOrientacion();
 	void increaseSpeed(float factor);
 	void increaseVisionRange(float factor);
-	void PersonajeModelo::discoverMap();
+	void discoverMap();
 
 	bool getIsReseting();
 	void setIsReseting();
 
 private:
 
+	void eatIfItem(std::pair<int, int> destino);
 	int siCaminaDetenerse();
 	int cambiarEstado(int x, int y, int cambio);
 	int obtenerOrientacionRespectoAUnTile(int x, int y);	//Obtiene el sentido según el signo de x e y

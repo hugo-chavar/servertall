@@ -6,7 +6,7 @@
 class RunningBoots : public Item
 {
 public:
-	RunningBoots(void);
+	RunningBoots(string _name,std::pair <int,int> _pos);
 	~RunningBoots(void);
 	void modifyCharacter(PersonajeModelo* personaje);
 };

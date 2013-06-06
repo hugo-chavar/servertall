@@ -1,20 +1,25 @@
 #include "TileModel.h"
 #include "Logger.h"
 #include "StringUtilities.h"
+#include "ItemFactory.h"
 
 using namespace common;
 
 
-TileModel::TileModel(){
+TileModel::TileModel(KeyPair tilePos){
 	this->groundEntity = NULL;
 	this->otherEntity = NULL;
 	this->nextTile = NULL;
 	this->relatedTile = NULL;
 	this->isDrawable = true;
 	this->endOfLevel = false;
+	this->item=NULL;
+	this->position=tilePos;
 }
 
 TileModel::~TileModel(){
+	if (this->item!=NULL)
+		delete this->item;
 }
 
 EntityObject * TileModel::getGroundEntity(){
@@ -94,4 +99,16 @@ void TileModel::addEntity(EntityObject * e){
 			Logger::instance().log("Game warning: pos "+ x+ ", "+y+" already has a entity, ignoring '"+e->name()+"'");
 		}
 	}
+}
+
+Item* TileModel::generateItem(float porcentage)
+{
+	ItemFactory factory;
+	this->item=factory.createItem(porcentage,this->getPosition());
+	return this->item;
+}
+
+Item* TileModel::getItem()
+{
+	return this->item;
 }

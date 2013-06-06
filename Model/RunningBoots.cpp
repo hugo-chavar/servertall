@@ -1,7 +1,7 @@
 #include "RunningBoots.h"
 
 
-RunningBoots::RunningBoots(void)
+RunningBoots::RunningBoots(string _name,std::pair <int,int> _pos):Item(_name,_pos)
 {
 }
 

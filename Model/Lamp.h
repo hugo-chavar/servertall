@@ -3,7 +3,7 @@
 class Lamp : public Item
 {
 public:
-	Lamp(void);
+	Lamp(string _name,std::pair <int,int> _pos);
 	~Lamp(void);
 	void modifyCharacter(PersonajeModelo* personaje);
 };

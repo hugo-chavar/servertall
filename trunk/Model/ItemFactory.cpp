@@ -13,19 +13,22 @@ ItemFactory::~ItemFactory(void)
 }
 
 //Porcentaje de aparicion indica el porcentaje de Tiles que tendran algun item
-Item* ItemFactory::createItem(float porcentajeAparicion)
+Item* ItemFactory::createItem(float porcentajeAparicion,std::pair <int,int> pos)
 {
-	int indice=(static_cast <int> (100.0/porcentajeAparicion)) * NUMBERITEMS;
+	if(porcentajeAparicion>0)
+	{
+	int indice=static_cast <int> ((100.0/porcentajeAparicion) * NUMBERITEMS);
 	int random= rand() % indice;
 	switch (random){
 		case 0:
-			return new Lamp();
+			return new Lamp("Lamp",pos);
 		case 1:
-			return new MapItem();
+			return new RunningBoots("RunningBoots",pos);
 		case 2:
-			return new MapItem();
+			return new MapItem("MapItem",pos);
 		default:
 			return NULL;
+	}
 }
 
 }

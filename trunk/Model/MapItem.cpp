@@ -1,7 +1,7 @@
 #include "MapItem.h"
 
 
-MapItem::MapItem(void)
+MapItem::MapItem(string _name,std::pair <int,int> _pos):Item(_name,_pos)
 {
 }
 

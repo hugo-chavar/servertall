@@ -392,6 +392,7 @@ void PersonajeModelo::moverse(std::pair<int, int>& destino, float &velocidad){
 	costeF = (float) coste;
 	velocidad = ((this->velocidad)*costeF);
 	posMov++;
+	this->eatIfItem(destino);
 }
 
 int PersonajeModelo::quedarseQuieto(float &velocidad){
@@ -556,3 +557,16 @@ void PersonajeModelo::increaseVisionRange(float factor)
 //int PersonajeModelo::getRefPixelY() {
 //	return this->animation->pixelRefY();
 //}
+
+void PersonajeModelo::eatIfItem(std::pair<int, int> destino)
+{	
+	Item * item=Game::instance().world()->getTileAt(destino)->getItem();
+	if(item!=NULL)
+	{
+	if(item->isAlive())
+		{
+		item->modifyCharacter(this);
+		item->kill();
+		}
+	}
+}

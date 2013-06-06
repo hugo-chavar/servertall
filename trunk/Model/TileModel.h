@@ -3,11 +3,12 @@
 
 #include "EntityObject.h"
 #include "DataTypes.h"
+#include "Item.h"
 
 class TileModel{
 
 public:
-	TileModel();
+	TileModel(KeyPair tilePos);
 	~TileModel();
 	EntityObject * getGroundEntity();
 	EntityObject * getOtherEntity();
@@ -27,6 +28,8 @@ public:
 	bool overlapped();
 	void setEOL();
 	bool EOL();
+	Item* generateItem(float porcentage);
+	Item* getItem();
 private:
 	EntityObject* groundEntity;
 	EntityObject* otherEntity;
@@ -35,6 +38,7 @@ private:
 	KeyPair position;
 	bool isDrawable;
 	bool endOfLevel;
+	Item* item;
 };
 
 

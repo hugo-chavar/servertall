@@ -73,7 +73,6 @@
     <ClCompile Include="CharacterVision.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Configuration.cpp" />
-    <ClCompile Include="Daniable.cpp" />
     <ClCompile Include="EntityObject.cpp" />
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -97,7 +96,6 @@
     <ClInclude Include="Circle.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="Daniable.h" />
     <ClInclude Include="DataTypes.h" />
     <ClInclude Include="EntityObject.h" />
     <ClInclude Include="Flag.h" />

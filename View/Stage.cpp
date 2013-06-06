@@ -55,6 +55,9 @@ TileView* Stage::createTile(TileModel* tileModel) {
 		posSpriteEntity = mapEntityToSprite.at(tile->getOtherEntityName());
 		tile->createOtherEntity(spriteArray[posSpriteEntity]);
 	}
+	else{
+		
+	}
 	tilesMap.insert(make_pair(tile->getPosition(), tile));
 	return tile;
 }

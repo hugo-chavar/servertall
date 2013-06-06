@@ -54,10 +54,10 @@
     <ClCompile Include="Daniable.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="ItemView.cpp">
+    <ClCompile Include="Flag.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="ItemFactoryView.cpp">
+    <ClCompile Include="Mision.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,7 +104,10 @@
     <ClInclude Include="ItemView.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="ItemFactoryView.h">
+    <ClInclude Include="Flag.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Mision.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

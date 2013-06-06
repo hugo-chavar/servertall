@@ -1,32 +1,31 @@
 #include "FlagMision.h"
 #include "GameView.h"
 
+
 FlagMision::FlagMision() {
 	chosen = false;
 }
 
-FlagMision::~FlagMision() { }
+FlagMision::~FlagMision() {
+	for (unsigned int i = 0; i < flags.size(); i++) {
+		delete flags[i];
+	}
+	flags.clear();
+}
 
-void FlagMision::initialize(int stageWidth, int stageHeight) {
-	int xPosition, yPosition;
+void FlagMision::initialize() {
 	int numberOfFlags = 5; // HARCODEADO
 	for (int i=0; i<numberOfFlags; i++) {
-		bool validPosition = false;
-		while (!validPosition) {
-			xPosition = rand() % stageWidth;
-			yPosition = rand() % stageHeight;
-			KeyPair position;
-			position.first = xPosition;
-			position.second = yPosition;
-			if (!GameView::instance().getWorldView()->getTileAt(position)->hasOtherEntity())
-				validPosition = true;
-		}
-		flags.push_back(new Flag(xPosition, yPosition));
+		flags.push_back(new Flag());
 	}
 }
 
 bool FlagMision::isTheChosenMision() {
 	return chosen;
+}
+
+void FlagMision::choose() {
+	chosen = true;
 }
 
 int FlagMision::findFlag(Flag* flag) {
@@ -40,7 +39,9 @@ int FlagMision::findFlag(Flag* flag) {
 void FlagMision::hurtFlag(Flag* flag, float damage, string userID) {
 	flag->hurt(damage);
 	if (flag->life() == 0) {
-		flags.erase(flags.begin()+findFlag(flag));
+		int flagNumber = findFlag(flag);
+		delete flags[flagNumber];
+		flags.erase(flags.begin()+flagNumber);
 		int score = GameView::instance().findPlayer(userID)->misionScore();
 		GameView::instance().findPlayer(userID)->misionScore(score+1);
 	}

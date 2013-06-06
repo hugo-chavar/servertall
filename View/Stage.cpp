@@ -272,3 +272,23 @@ void Stage::updateSprites() {
 		spriteArray[i]->updateFrame();
 	}
 }
+
+string Stage::manageItemsInitialSynch()
+{
+	string itemsInfo="";
+	for(int i=0;i<this->_vItems.size();i++)
+	{
+		if(_vItems[i]->isAlive())
+		{
+		itemsInfo+=_vItems[i]->getName()+";";
+		if(_vItems[i]->isHidden())
+			itemsInfo+="H;";
+		else
+			itemsInfo+="U;";
+		}
+		itemsInfo+=stringUtilities::pairIntToString(_vItems[i]->getPos())+";";
+	}
+	if(itemsInfo.size()>0)
+		itemsInfo.erase(itemsInfo.size()-1);
+	return itemsInfo; 
+}

@@ -74,7 +74,6 @@
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="EntityObject.cpp" />
-    <ClCompile Include="Flag.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemFactory.cpp" />
@@ -98,7 +97,6 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="DataTypes.h" />
     <ClInclude Include="EntityObject.h" />
-    <ClInclude Include="Flag.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemFactory.h" />

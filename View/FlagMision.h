@@ -2,8 +2,8 @@
 #ifndef __FLAGMISION_H__
 #define __FLAGMISION_H__
 
+#include <vector>
 #include "Flag.h"
-#include "Personaje.h"
 
 
 class FlagMision {
@@ -11,8 +11,9 @@ class FlagMision {
 public:
 	FlagMision();
 	~FlagMision();
-	void initialize(int stageWidth, int stageHeight);
+	void initialize();
 	bool isTheChosenMision();
+	void choose();
 	void hurtFlag(Flag* flag, float damage, string userID);
 	bool allFlagsDestroyed();
 

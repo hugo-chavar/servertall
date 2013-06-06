@@ -38,7 +38,7 @@ void PersonajeModelo::initialize(int pos_x, int pos_y) {
 	this->setAnimating(false);
 	animacionActual = SIN_CAMBIO;
 	this->vision = NULL;
-	currentEnemy = NULL;
+	following = false;
 	precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
 	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
 	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
@@ -66,15 +66,6 @@ void PersonajeModelo::morir() {
 	this->resolverAnimacion(animacionActual);
 }
 
-void PersonajeModelo::recibirDano(float dano) {
-	this->vidaActual -= dano;
-	if (vidaActual > 0) {
-		this->herir();
-	} else {
-		this->morir();
-	}
-}
-
 void PersonajeModelo::resolverAnimacion(int nuevaAnimacion) {
 	this->setAnimating(true);
 	targetParcial = target = current;
@@ -85,21 +76,17 @@ void PersonajeModelo::resolverAnimacion(int nuevaAnimacion) {
 	}
 }
 
-void PersonajeModelo::resolverAtaque(){
-	float precision = Game::instance().getRandom();
-	if (precision >= this->precisionMinima) {
-		float dano = Game::instance().getRandom() * this->danoMaximo;
-		this->currentEnemy->personajeModelo()->recibirDano(dano);
-	}
+float PersonajeModelo::getDanoMaximo() {
+	return this->danoMaximo;
+}
+
+float PersonajeModelo::getPrecisionMinima() {
+	return this->precisionMinima;
 }
 
 void PersonajeModelo::atacar() {
-	if ((currentEnemy != NULL) && (currentEnemy->getPosicionAnteriorEnTiles() == this->obtenerFrentePersonaje())) {
-		this->resolverAtaque();
 		animacionActual = ATACAR;
 		this->resolverAnimacion(animacionActual);
-		currentEnemy = NULL;
-	}
 }
 
 void PersonajeModelo::defender() {
@@ -152,7 +139,7 @@ void PersonajeModelo::resetChar() {
 	orientacion = SUR;
 	this->setAnimating(false);
 	animacionActual = SIN_CAMBIO;
-	currentEnemy = NULL;
+	following = false;
 	precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
 	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
 	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
@@ -199,15 +186,16 @@ int PersonajeModelo::delay() {
 	return animation->delay();
 }
 
-void PersonajeModelo::setCurrentEnemy(int tileX, int tileY) {
+bool PersonajeModelo::isThereAnEnemy(int tileX, int tileY) {
 	std::pair<int, int> tileDestino(tileX, tileY);
 
-	if ((vision != NULL) && (vision->isInsideVision(tileDestino)) && (GameView::instance().isThereACharInTile(tileX, tileY))) {
-		currentEnemy = GameView::instance().getCharInTile(tileDestino);
-		if (currentEnemy->personajeModelo() == this) {
-			currentEnemy = NULL;
-		}
+	if ((!this->isActive())||(this->estaAnimandose())) {
+		return false;
 	}
+	if ((vision != NULL) && (vision->isInsideVision(tileDestino)) && (GameView::instance().isThereACharInTile(tileX, tileY))) {
+		return true;
+	}
+	return false;
 }
 
 void PersonajeModelo::setDestino(int x, int y) {
@@ -216,7 +204,6 @@ void PersonajeModelo::setDestino(int x, int y) {
 		target.second = y;
 		targetParcial.first = x;
 		targetParcial.second = y;
-		setCurrentEnemy(x, y);
 	}
 }
 
@@ -312,7 +299,6 @@ int PersonajeModelo::mover(std::pair<int, int>& destino, float& velocidadAni) {
 			this->orientar(target);
 			target.first = targetParcial.first;
 			target.second = targetParcial.second;
-			this->atacar();
 		}
 		if (caminoSize <  0) {
 			return (this->quedarseQuieto(velocidadAni));
@@ -350,7 +336,7 @@ bool PersonajeModelo::esNecesarioCalcularNuevoPath(){
 	if ((posMov==caminoSize)&&((target.first!=targetParcial.first)||(target.second!=targetParcial.second))) { //Si completo el primer pedazo del camino
 		return true;
 	}
-	if (perseguirEnemigo()) {
+	if (followingEnemy()) {
 		return true;
 	}
 	if ((Game::instance().world())->cost(xPath[posMov], yPath[posMov]) == 0) { //Hay un pj en el tile al que se va a mover
@@ -359,28 +345,29 @@ bool PersonajeModelo::esNecesarioCalcularNuevoPath(){
 	return false;
 }
 
-bool PersonajeModelo::perseguirEnemigo() {
-	
-	if (currentEnemy == NULL) {
-		return false;
-	}
-	if ((currentEnemy->getPosicionAnteriorEnTiles() != target) && (vision->isInsideVision(currentEnemy->getPosicionAnteriorEnTiles()))) {
-		setDestino(currentEnemy->getPosicionAnteriorEnTiles().first, currentEnemy->getPosicionAnteriorEnTiles().second);
-		return true;
-	}
-	if (!vision->isInsideVision(currentEnemy->getPosicionAnteriorEnTiles())) {
-		currentEnemy = NULL;
-	}
-	return false;
+bool PersonajeModelo::followingEnemy() {
+	return following;
 }
 
-//pair<int, int> PersonajeModelo::moverse(){
-//	pair <int, int> destino;
-//	destino.first = xPath[posMov];
-//	destino.second = yPath[posMov];
-//	posMov++;
-//	return destino;
-//}
+void PersonajeModelo::reduceVidaActual(float vida) {
+	this->vidaActual += vida;
+}
+
+float PersonajeModelo::getVidaActual() {
+	return this->vidaActual;
+}
+
+void PersonajeModelo::setFollowingEnemy(bool enemy) {
+	following = enemy;
+}
+
+bool PersonajeModelo::canSee(std::pair<int, int> tile) {
+	return vision->isInsideVision(tile);
+}
+
+std::pair<int, int> PersonajeModelo::getTarget() {
+	return target;
+}
 
 void PersonajeModelo::moverse(std::pair<int, int>& destino, float &velocidad){
 	double coste = 0;

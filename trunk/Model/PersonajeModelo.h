@@ -55,6 +55,18 @@ public:
 
 	bool getIsReseting();
 	void setIsReseting();
+	bool isThereAnEnemy(int tileX, int tileY);
+	void atacar();
+	float getDanoMaximo();
+	float getPrecisionMinima();
+	void setFollowingEnemy(bool enemy);
+	std::pair <int, int> getTarget();
+	bool canSee(std::pair<int, int> tile);
+	void reduceVidaActual(float vida);
+	float getVidaActual();
+
+	void herir();
+	void morir();
 
 private:
 
@@ -70,15 +82,12 @@ private:
 	/*pair<int, int> moverse();*/
 	void moverse(std::pair<int, int>& destino, float &velocidadAni);
 	//void activarDesactivar();
-	void atacar();
-	void resolverAtaque();
-	void recibirDano(float dano);
 	void defender();
-	void setCurrentEnemy(int tileX, int tileY);
+	bool followingEnemy();
+	
+
 	bool perseguirEnemigo();
 	void resolverAnimacion(int animacionNueva);
-	void herir();
-	void morir();
 	void resetChar();
 
 	void initialize(int pos_x, int pos_y);
@@ -101,8 +110,8 @@ private:
 	AnimatedEntity * animation;
 	string name;
 	CharacterVision* vision;
-	Personaje* currentEnemy; //el nombre del enemigo que esta atacando el pj
 	//bool isInCenterTile;
+	bool following;
 
 	//------------------------ATRIBUTOS (PONGAN ACA LOS ATRIBUTOS DEL PJ: VIDA, MAGIA, DAÑO, ETC)------------------------
 	float precisionMinima;

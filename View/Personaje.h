@@ -36,6 +36,7 @@ public:
 	std::string getCharacterId();
 	bool isCenteredInTile();
 	std::string idToString();
+	void recibirDano(float dano);
 
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual
@@ -50,6 +51,12 @@ private:
 	//void setCenteredInTile(bool centroTile);
 	void animar();
 	void detenerAnimacion();
+	void setCurrentEnemy(int tileX, int tileY);
+	void atacar();
+	void resolverAtaque();
+	void perseguirEnemigo();
+
+
 	std::pair<int, int> tileActual; //TODO: Ver porque ya está en PersonajeModelo como posición <-- usada en getPosicionAnteriorEnTiles()
 	PersonajeModelo* modelo;
 	std::vector<SpriteAnimado*> sprites;
@@ -59,6 +66,8 @@ private:
 	std::pair<float, float> ePot; //Cuanto se mueve por ciclo en x y en y
 	int serr; //variable usada para coordinar el movimiento en x y en y en la diagonal
 	//bool centeredInTile;
+	Personaje* currentEnemy; //el nombre del enemigo que esta atacando el pj
+
 
 	std::string playerName;
 	std::string character_id;

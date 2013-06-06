@@ -18,6 +18,7 @@ Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	ePot.first = 0;
 	ePot.second = 0;
 	serr = 0;
+	currentEnemy = NULL;
 	//crearNombre(modelo->getName());
 
 	//this->modelo->getAnimation()->fps(static_cast<int>(this->modelo->getAnimation()->fps() * (this->modelo->getVelocidad()/2)));
@@ -148,6 +149,7 @@ void Personaje::mover() {
 	factor.first = 0;
 	factor.second = 0;
 	
+	perseguirEnemigo();
 	calcularSigTileAMover();
 	calcularvelocidadRelativa(factor);
 	if (this->getCurrentSpritePosition() != ESTADO_ERROR) {
@@ -178,9 +180,12 @@ void Personaje::calcularSigTileAMover(){
 		if (velocidad != 0) {
 			//modelo->setIsInCenterTile(false);
 			modelo->setCurrent(tile.first, tile.second);
+		} else {
+			this->atacar();
 		}
 		if (modelo->getIsReseting()) {
 			this->setRectangle(tileActual, sprites[this->currentSpritePosition]);
+			currentEnemy = NULL;
 			modelo->setIsReseting();
 		}
 	}
@@ -257,8 +262,67 @@ void Personaje::moverSpriteEnY() {
 	}
 }
 
+
+
+void Personaje::recibirDano(float dano) {
+	float vida = 0;
+	
+	this->modelo->reduceVidaActual(dano*(-1));
+	vida = this->modelo->getVidaActual();
+	if (vida > 0) {
+		this->modelo->herir();
+	} else {
+		this->modelo->morir();
+	}
+}
+
+void Personaje::resolverAtaque(){
+	float precision = Game::instance().getRandom();
+	if (precision >= this->modelo->getPrecisionMinima()) {
+		float dano = Game::instance().getRandom() * this->modelo->getDanoMaximo();
+		this->currentEnemy->recibirDano(dano);
+	}
+}
+
+void Personaje::atacar() {
+	if ((currentEnemy != NULL) && (currentEnemy->getPosicionAnteriorEnTiles() == this->modelo->obtenerFrentePersonaje()) && (!currentEnemy->isFreezed())) {
+		this->resolverAtaque();
+		this->modelo->atacar();
+		currentEnemy = NULL;
+	}
+}
+
+void Personaje::setCurrentEnemy(int tileX, int tileY) {
+	std::pair<int, int> tileDestino(tileX, tileY);
+
+	if (modelo->isThereAnEnemy(tileX, tileY)) {
+		currentEnemy = GameView::instance().getCharInTile(tileDestino);
+		if (currentEnemy == this) {
+			currentEnemy = NULL;
+		}
+	}
+}
+
+void Personaje::perseguirEnemigo() {
+	
+	if (currentEnemy == NULL) {
+		this->modelo->setFollowingEnemy(false);
+		return;
+	}
+	if ((currentEnemy->getPosicionAnteriorEnTiles() != modelo->getTarget()) && (modelo->canSee(currentEnemy->getPosicionAnteriorEnTiles()))) {
+		setDestino(currentEnemy->getPosicionAnteriorEnTiles().first, currentEnemy->getPosicionAnteriorEnTiles().second);
+		this->modelo->setFollowingEnemy(true);
+		return;
+	}
+	if (!modelo->canSee(currentEnemy->getPosicionAnteriorEnTiles())) {
+		currentEnemy = NULL;
+	}
+	this->modelo->setFollowingEnemy(false);
+}
+
 void Personaje::setDestino(int xTile, int yTile){
 	modelo->setDestino(xTile, yTile);
+	setCurrentEnemy(xTile, yTile);
 }
 
 void Personaje::animateModel(char animacion) {

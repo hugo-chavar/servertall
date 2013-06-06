@@ -62,7 +62,6 @@ public:
 	void loadNamedChars();
 	PersonajeModelo* getCharacter(string name);
 	void generateItems(float porcentage);
-	string manageItemsInitialSynch();
 
 private:
 

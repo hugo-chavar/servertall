@@ -75,10 +75,10 @@
     <ClCompile Include="Daniable.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Flag.cpp" />
     <ClCompile Include="FlagMision.cpp" />
     <ClCompile Include="GameView.cpp" />
-    <ClCompile Include="ItemFactoryView.cpp" />
-    <ClCompile Include="ItemView.cpp" />
+    <ClCompile Include="Mision.cpp" />
     <ClCompile Include="Personaje.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -92,10 +92,11 @@
     <ClInclude Include="Daniable.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Flag.h" />
     <ClInclude Include="FlagMision.h" />
     <ClInclude Include="GameView.h" />
-    <ClInclude Include="ItemFactoryView.h" />
     <ClInclude Include="ItemView.h" />
+    <ClInclude Include="Mision.h" />
     <ClInclude Include="Personaje.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Sprite.h" />

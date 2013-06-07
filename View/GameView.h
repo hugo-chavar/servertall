@@ -10,6 +10,7 @@
 #include "CharacterFactory.h"
 #include "TimeManager.h"
 #include "Mision.h"
+#include "Daniable.h"
 
 using namespace std;
 
@@ -35,7 +36,7 @@ public:
 	void startUpdatingPlayer(string userID);
 	void setDisconnectedPlayer(string userID);
 	bool isThereACharInTile(int tileX, int tileY);
-	Personaje* getCharInTile(std::pair <int, int> tile);
+	Daniable* getDaniableInTile(std::pair <int, int> tile);
 	TimeManager* getTimer();
 	//void wakeUpPlayer(string userID);
 	SpriteAnimado* getErrorImage();

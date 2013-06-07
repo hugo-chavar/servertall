@@ -19,7 +19,6 @@ public:
 	void addNextSprite(AnimatedEntity*);
 	void addFirstSprite(AnimatedEntity*);
 	std::pair<int,int> getPosicionEnTiles();
-	std::pair<int,int> getPosicionAnteriorEnTiles();
 	void setFreezed(bool value);
 	void setAnimating(bool value);
 	std::string updateToString();
@@ -32,6 +31,7 @@ public:
 	void setCurrentSpritePosition(int pos);
 	void setPlayerName(std::string name);
 	std::string getPlayerName();
+	std::pair<int,int> getPosicionActualEnTiles();
 	void setDestino(int xTile, int yTile);
 	void animateModel(char animation);
 	std::string getCharacterId();
@@ -61,7 +61,7 @@ private:
 	void perseguirEnemigo();
 
 
-	std::pair<int, int> tileActual; //TODO: Ver porque ya está en PersonajeModelo como posición <-- usada en getPosicionAnteriorEnTiles()
+	std::pair<int, int> tileActual; //TODO: Ver porque ya está en PersonajeModelo como posición <-- usada en getPosicionActualEnTiles()
 	PersonajeModelo* modelo;
 	std::vector<SpriteAnimado*> sprites;
 	float velocidad; //velocidad actual
@@ -70,7 +70,7 @@ private:
 	std::pair<float, float> ePot; //Cuanto se mueve por ciclo en x y en y
 	int serr; //variable usada para coordinar el movimiento en x y en y en la diagonal
 	//bool centeredInTile;
-	Personaje* currentEnemy; //el destruible que esta atacando el pj
+	Daniable* currentEnemy; //el destruible que esta atacando el pj
 
 
 	std::string playerName;

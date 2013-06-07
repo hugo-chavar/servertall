@@ -250,7 +250,7 @@ TileView* Stage::getTileAt(KeyPair k) {
 //		if (a == 53)
 //			a--;
 //		renderHelper.renderNextLevel(camera);
-//		if (renderHelper.shouldRenderThis(_personaje->getPosicionEnTiles(),_personaje->getPosicionAnteriorEnTiles()))
+//		if (renderHelper.shouldRenderThis(_personaje->getPosicionEnTiles(),_personaje->getPosicionActualEnTiles()))
 //			_personaje->render(camera);
 //	}
 //}

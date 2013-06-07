@@ -17,6 +17,10 @@ void Daniable::recibirDano(float dano)
 	//Metodo Abstracto
 }
 
+std::pair<int, int> Daniable::getPosicionActualEnTiles() {
+	//Metodo Abstracto
+}
+
 bool Daniable::isAlive() {
 	if (vidaActual > 0) {
 		return true;

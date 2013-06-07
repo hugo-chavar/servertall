@@ -137,7 +137,7 @@ void GameView::manageAnimationUpdate(string userID, string animation) {
 	}
 }
 
-Personaje* GameView::getCharInTile(std::pair <int, int> tile) {
+Daniable* GameView::getDaniableInTile(std::pair <int, int> tile) {
 	
 	if(Game::instance().world()->isInsideWorld(tile))
 	{

@@ -189,7 +189,7 @@ bool PersonajeModelo::isThereAnEnemy(int tileX, int tileY) {
 	if ((!this->isActive())||(this->estaAnimandose())) {
 		return false;
 	}
-	if ((vision != NULL) && (vision->isInsideVision(tileDestino)) && (GameView::instance().isThereACharInTile(tileX, tileY))) {
+	if ((vision != NULL) && (vision->isInsideVision(tileDestino)) && (GameView::instance().getDaniableInTile(tileDestino))) {
 		return true;
 	}
 	return false;

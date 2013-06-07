@@ -16,7 +16,7 @@ bool GameView::initialize() {
 	bool mapInitialized = this->worldView.initialize();
 
 	// ELEGIR MISIÓN ANTES
-	mision.initialize();
+	mission.initialize();
 
 	this->getTimer()->initializeTime();
 
@@ -150,6 +150,7 @@ Daniable* GameView::getDaniableInTile(std::pair <int, int> tile) {
 				return (*it)->getCharacter();
 			}
 		}
+		return mission.manageAttack(tile);
 	}
 	return NULL;
 }
@@ -209,8 +210,8 @@ void GameView::update() {
 			_players[i]->getCharacter()->update();
 	}
 	this->getTimer()->updateTime();
-	if (mision.isGameOver()) {
-		Player* player = this->playerWithHighestScore();
+	if (mission.isGameOver()) {
+		//Player* player = this->playerWithHighestScore();
 		// TERMINAR JUEGO
 	}
 }
@@ -266,16 +267,16 @@ Player* GameView::playerWithHighestScore() {
 	int highestScore = 0;
 	Player* player = NULL;
 	for (unsigned int i=0; i<_players.size(); i++) {
-		if (_players[i]->misionScore() > highestScore) {
-			highestScore = _players[i]->misionScore();
+		if (_players[i]->missionScore() > highestScore) {
+			highestScore = _players[i]->missionScore();
 			player = _players[i];
 		}					
 	}
 	return player;
 }
 
-Mision* GameView::getMision() {
-	return &mision;
+Mission* GameView::getMission() {
+	return &mission;
 }
 
 //------------------------ METODOS QUE NO SE USAN EN UN PRINCIPIO EN EL SERVER-----------------------------

@@ -1,20 +1,17 @@
 #include "Daniable.h"
 
-Daniable::Daniable()
-{
-
+Daniable::Daniable() {
 	vidaMaxima = 0;
 	vidaActual = 0;
 }
 
-Daniable::~Daniable()
-{
+Daniable::~Daniable() { }
 
-}
-
-void Daniable::recibirDano(float dano)
-{
-	//Metodo Abstracto
+void Daniable::recibirDano(float dano) {
+	if (dano > this->vidaActual)
+		vidaActual = 0;
+	else
+		vidaActual -= dano;
 }
 
 std::pair<int, int> Daniable::getPosicionActualEnTiles() {
@@ -24,8 +21,6 @@ std::pair<int, int> Daniable::getPosicionActualEnTiles() {
 bool Daniable::isAlive() {
 	if (vidaActual > 0) {
 		return true;
-	} else {
-		return false;
 	}
-	return true;
+	return false;
 }

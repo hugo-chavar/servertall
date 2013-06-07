@@ -4,7 +4,7 @@ Player::Player(string userID, Personaje *character) {
 	_userID = userID;
 	_character = character;
 	this->updating = false;
-	_misionScore = 0;
+	_missionScore = 0;
 }
 
 Player::~Player() { }
@@ -32,10 +32,10 @@ bool Player::isUpdating() {
 	return this->updating;
 }
 
-void Player::misionScore(int score) {
-	_misionScore = score;
+void Player::missionScore(int score) {
+	_missionScore = score;
 }
 
-int Player::misionScore() {
-	return _misionScore;
+int Player::missionScore() {
+	return _missionScore;
 }

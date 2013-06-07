@@ -3,8 +3,9 @@
 
 
 Flag::Flag() {
-	_life = 100; // HARCODEADO
-	entity = Game::instance().yParser.findAnimatedEntityType("bandera");
+	vidaMaxima = 100; // HARCODEADO
+	vidaActual = vidaMaxima;
+	entity =  Game::instance().yParser.findAnimatedEntityType("bandera");
 	bool validPosition = false;
 	KeyPair position;
 	while (!validPosition) {
@@ -13,21 +14,23 @@ Flag::Flag() {
 		if ((!GameView::instance().getWorldView()->getTileAt(position)->hasOtherEntity()) && (!GameView::instance().getWorldView()->getTileAt(position)->getRelatedTile()))
 			validPosition = true;
 	}
-	_position.first = position.first;
-	_position.second = position.second;
-	// TODO: Agregar entidad al mapa.
-	//GameView::instance().getWorldView()->getTileAt(position)->createOtherEntity(entity);
+	_position.first = 0;//position.first;
+	_position.second = 0;//position.second;
+	GameView::instance().getWorldView()->addOtherEntity(_position, entity->name());
+	Game::instance().world()->getTileAt(_position)->setOtherEntity(entity);
 }
 
 Flag::~Flag() { }
 
-void Flag::hurt(float damage) {
-	if (damage > this->_life)
-		_life = 0;
-	else
-		_life -= damage;
+string Flag::getName() {
+	return entity->name();
 }
 
-float Flag::life() {
-	return _life;
+pair <int,int> Flag::position() {
+	return _position;
+}
+
+void Flag::destroy() {
+	GameView::instance().getWorldView()->removeOtherEntity(_position);
+	Game::instance().world()->getTileAt(_position)->setOtherEntity(NULL);
 }

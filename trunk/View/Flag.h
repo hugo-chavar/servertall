@@ -2,20 +2,22 @@
 #ifndef __FLAG_H__
 #define __FLAG_H__
 
+#include "Daniable.h"
+#include "Entity.h"
 #include "AnimatedEntity.h"
 
 
-class Flag {
+class Flag : public Daniable, public Entity {
 
 public:
 	Flag();
 	~Flag();
-	void hurt(float damage);
-	float life();
+	string getName();
+	pair <int,int> position();
+	void destroy();
 
 private:
 	AnimatedEntity* entity;
-	float _life;
 	pair <int,int> _position;
 
 };

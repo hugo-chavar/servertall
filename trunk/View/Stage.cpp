@@ -134,6 +134,19 @@ TileView* Stage::getTileAt(KeyPair k) {
 	return tilesMap.at(k);
 }
 
+bool Stage::addOtherEntity(pair <int,int> position, string entityName) {
+	if (mapEntityToSprite.find(entityName) == mapEntityToSprite.end())
+		return false;
+	Sprite* entitySprite = spriteArray[mapEntityToSprite.at(entityName)];
+	Entity* entity = new Entity(position.first, position.second, entitySprite);
+	this->getTileAt(position)->setOtherEntity(entity);
+	return true;
+}
+
+void Stage::removeOtherEntity(pair <int,int> tile) {
+	delete(this->getTileAt(tile)->getOtherEntity());
+}
+
 //TileView* Stage::getFirstMatch(std::pair<int,int> k) {
 //	TileView* aux = tileLevels.at(this->fixLevel(k));
 //	KeyPair position = aux->getPosition();

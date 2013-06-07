@@ -1,17 +1,17 @@
 #pragma once
-#ifndef __DEATHMATCHMISION_H__
-#define __DEATHMATCHMISION_H__
+#ifndef __DEATHMATCHMISSION_H__
+#define __DEATHMATCHMISSION_H__
 
 #include "Personaje.h"
 
 
-class DeathmatchMision {
+class DeathmatchMission {
 
 public:
-	DeathmatchMision();
-	~DeathmatchMision();
+	DeathmatchMission();
+	~DeathmatchMission();
 	void initialize();
-	bool isTheChosenMision();
+	bool isTheChosenMission();
 	void updateMissionStatus(Daniable* victim, Daniable* attacker);
 	bool missionEnded();
 	void choose();

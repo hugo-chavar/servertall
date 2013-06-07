@@ -131,12 +131,10 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
 			std::string characterInit = GameView::instance().managePlayerInitialSynch(argument);
 			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
-			
-			//std::string itemsInit=Game::instance().world()->manageItemsInitialSynch();
 			std::string itemsInit = GameView::instance().getWorldView()->manageItemsInitialSynch();
-			std::string misionInit = GameView::instance().getMision()->manageMisionInitialSynch();
-			
 			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEMS_INIT,itemsInit);
+			std::string missionInit = GameView::instance().getMission()->manageMissionInitialSynch();
+			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_Mission_INIT, missionInit);
 			client->addInstruction(instructionOut);
 			//broadcast for new players
 			instructionOut.clear();

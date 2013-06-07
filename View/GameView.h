@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "CharacterFactory.h"
 #include "TimeManager.h"
-#include "Mision.h"
+#include "Mission.h"
 #include "Daniable.h"
 
 using namespace std;
@@ -43,7 +43,7 @@ public:
 	string manageCharactersPlaying();
 	Player* playerWithHighestScore();
 	Player* findPlayerByPersonaje(Daniable* personaje);
-	Mision* getMision();
+	Mission* getMission();
 
 private:
 	GameView();
@@ -52,7 +52,7 @@ private:
 	TimeManager time;
 	CharacterFactory characterFactory;
 	SpriteAnimado* errorImage;
-	Mision mision;
+	Mission mission;
 
 };
 

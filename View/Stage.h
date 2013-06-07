@@ -28,7 +28,8 @@ public:
 	Personaje* personaje();
 	map <string,Personaje*> personajes;//agrego diccionario de personajes
 	TileView* getTileAt(KeyPair k);
-	void addEntity(string name,TileView* tile);
+	bool addOtherEntity(std::pair <int,int> position, std::string entityName);
+	void removeOtherEntity(pair <int,int> tile);
 	Sprite* getSprite(string name);
 	string manageItemsInitialSynch();
 

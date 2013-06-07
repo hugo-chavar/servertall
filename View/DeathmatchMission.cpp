@@ -7,24 +7,24 @@
 #define MAX_SCORE 15
 
 
-DeathmatchMision::DeathmatchMision() {
+DeathmatchMission::DeathmatchMission() {
 	chosen = false;
 }
 
-DeathmatchMision::~DeathmatchMision() { }
+DeathmatchMission::~DeathmatchMission() { }
 
-void DeathmatchMision::initialize() {
+void DeathmatchMission::initialize() {
 }
 
-void DeathmatchMision::choose() {
+void DeathmatchMission::choose() {
 	chosen = true;
 }
 
-bool DeathmatchMision::isTheChosenMision() {
+bool DeathmatchMission::isTheChosenMission() {
 	return chosen;
 }
 
-void DeathmatchMision::updateMissionStatus(Daniable* victim, Daniable* attacker) {
+void DeathmatchMission::updateMissionStatus(Daniable* victim, Daniable* attacker) {
 	Player* playerVictim = NULL;
 	Player* playerAttacker = NULL;
 	int attackScore = 0;
@@ -35,17 +35,17 @@ void DeathmatchMision::updateMissionStatus(Daniable* victim, Daniable* attacker)
 	if ((playerAttacker == NULL) || (playerVictim == NULL)) {
 		return;
 	}
-	attackScore = playerAttacker->misionScore();
-	victimScore = playerVictim->misionScore();
-	playerAttacker->misionScore(attackScore + KILL);
-	playerVictim->misionScore(victimScore - DEATH);
+	attackScore = playerAttacker->missionScore();
+	victimScore = playerVictim->missionScore();
+	playerAttacker->missionScore(attackScore + KILL);
+	playerVictim->missionScore(victimScore - DEATH);
 }
 
-bool DeathmatchMision::missionEnded() {
+bool DeathmatchMission::missionEnded() {
 	Player* player;
 
 	player = GameView::instance().playerWithHighestScore();
-	if (player->misionScore() >= MAX_SCORE) {
+	if (player->missionScore() >= MAX_SCORE) {
 		return true;
 	}
 	return false;

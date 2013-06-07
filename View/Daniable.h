@@ -9,10 +9,11 @@ public:
 	Daniable(void);
 	~Daniable(void);
 	virtual void recibirDano(float dano);
-	virtual std::pair<int, int> getPosicionActualEnTiles();
+	std::pair<int, int> getPosicionActualEnTiles();
 	bool isAlive();
 
 protected:
+	std::pair<int, int> tileActual;
 	float vidaMaxima;
 	float vidaActual;
 };

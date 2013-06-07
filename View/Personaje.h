@@ -61,7 +61,6 @@ private:
 	void perseguirEnemigo();
 
 
-	std::pair<int, int> tileActual; //TODO: Ver porque ya está en PersonajeModelo como posición <-- usada en getPosicionActualEnTiles()
 	PersonajeModelo* modelo;
 	std::vector<SpriteAnimado*> sprites;
 	float velocidad; //velocidad actual

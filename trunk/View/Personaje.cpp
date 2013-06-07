@@ -262,12 +262,16 @@ void Personaje::moverSpriteEnY() {
 
 void Personaje::recibirDano(float dano) {
 	
+	if (this->isFreezed()) {
+		return;
+	}
 	float danoRecibido = Game::instance().getRandom() * dano;
-	vidaActual -= dano;
+	vidaActual -= danoRecibido;
 	if (vidaActual > 0) {
 		this->modelo->herir();
 	} else {
 		this->modelo->morir();
+		//LLAMAR FACTORY
 	}
 }
 
@@ -282,7 +286,7 @@ void Personaje::resolverAtaque(){
 }
 
 void Personaje::atacar() {
-	if ((currentEnemy != NULL) && (currentEnemy->getPosicionAnteriorEnTiles() == this->modelo->obtenerFrentePersonaje()) && (!currentEnemy->isFreezed())) {
+	if ((currentEnemy != NULL) && (currentEnemy->getPosicionActualEnTiles() == this->modelo->obtenerFrentePersonaje())) {
 		this->resolverAtaque();
 		this->modelo->atacar();
 		currentEnemy = NULL;
@@ -293,7 +297,7 @@ void Personaje::setCurrentEnemy(int tileX, int tileY) {
 	std::pair<int, int> tileDestino(tileX, tileY);
 
 	if (modelo->isThereAnEnemy(tileX, tileY)) {
-		currentEnemy = GameView::instance().getCharInTile(tileDestino);
+		currentEnemy = GameView::instance().getDaniableInTile(tileDestino);
 		if (currentEnemy == this) {
 			currentEnemy = NULL;
 		}
@@ -306,12 +310,12 @@ void Personaje::perseguirEnemigo() {
 		this->modelo->setFollowingEnemy(false);
 		return;
 	}
-	if ((currentEnemy->getPosicionAnteriorEnTiles() != modelo->getTarget()) && (modelo->canSee(currentEnemy->getPosicionAnteriorEnTiles()))) {
-		setDestino(currentEnemy->getPosicionAnteriorEnTiles().first, currentEnemy->getPosicionAnteriorEnTiles().second);
+	if ((currentEnemy->getPosicionActualEnTiles() != modelo->getTarget()) && (modelo->canSee(currentEnemy->getPosicionActualEnTiles()))) {
+		setDestino(currentEnemy->getPosicionActualEnTiles().first, currentEnemy->getPosicionActualEnTiles().second);
 		this->modelo->setFollowingEnemy(true);
 		return;
 	}
-	if (!modelo->canSee(currentEnemy->getPosicionAnteriorEnTiles())) {
+	if (!modelo->canSee(currentEnemy->getPosicionActualEnTiles())) {
 		currentEnemy = NULL;
 	}
 	this->modelo->setFollowingEnemy(false);
@@ -417,7 +421,7 @@ std::pair<int,int> Personaje::getPosicionEnTiles(){
 	return modelo->getPosition();
 }
 
-std::pair<int,int> Personaje::getPosicionAnteriorEnTiles(){
+std::pair<int,int> Personaje::getPosicionActualEnTiles(){
 	float deltaAbsX = std::abs(delta.first);
 	float deltaAbsY = std::abs(delta.second);
 

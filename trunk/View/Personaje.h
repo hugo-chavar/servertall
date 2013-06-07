@@ -37,7 +37,10 @@ public:
 	std::string getCharacterId();
 	bool isCenteredInTile();
 	std::string idToString();
+	void increaseSpeed(float factor);
 	void recibirDano(float dano);
+	bool isItem();
+	void eatIfItem(std::pair<int, int> destino);
 
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual

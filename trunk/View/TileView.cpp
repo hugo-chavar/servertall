@@ -49,6 +49,11 @@ void TileView::setGroundEntity(Entity * e){
 
 void TileView::setOtherEntity(Entity * e){
 	this->otherEntity = e;
+	if(e->isItem())
+	{
+		ItemView* item=(ItemView*)e;
+		this->getTileModel()->setHasHiddenItem(item->isHidden());
+	}
 }
 
 KeyPair TileView::getPosition(){
@@ -156,3 +161,8 @@ void TileView::update(){
 //void TileView::renderFog(Camera& camera) {
 //	camera.render(this->getGroundEntity()->getSdlRect(),this->fog->getSdlSurface());
 //}
+
+void TileView::setItemUncover()
+{
+	this->getTileModel()->setHasHiddenItem(false);
+}

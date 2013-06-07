@@ -1,20 +1,20 @@
 #include "Daniable.h"
 
-
-Daniable::Daniable(void)
+Daniable::Daniable()
 {
+
 	vidaMaxima = 0;
 	vidaActual = 0;
 }
 
-
-Daniable::~Daniable(void)
+Daniable::~Daniable()
 {
+
 }
 
 void Daniable::recibirDano(float dano)
 {
-	//ABSTRACT METHOD
+	//Metodo Abstracto
 }
 
 bool Daniable::isAlive() {

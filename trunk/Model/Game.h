@@ -18,7 +18,6 @@ class Game
 {
 public:
 	~Game();
-
 	static Game& instance();
 	StageModel* world();
 	unsigned stageActual();

@@ -5,6 +5,7 @@
 #include "TileModel.h"
 #include "Entity.h"
 #include "DataTypes.h"
+#include "ItemView.h"
 //#include "Camera.h"
 //#include "Surface.h"
 
@@ -40,10 +41,12 @@ public:
 	void setFreezed(bool value);
 	void update();
 	void initialize();
+	void setItemUncover();
 private:
 	TileModel* tileModel;
 	Entity* groundEntity;
 	Entity* otherEntity;
+	ItemView* item;
 	TileView* nextTile;
 	TileView* relatedTile;
 	bool isDrawable;

@@ -28,9 +28,13 @@ public:
 	Personaje* personaje();
 	map <string,Personaje*> personajes;//agrego diccionario de personajes
 	TileView* getTileAt(KeyPair k);
-	std::string manageItemsInitialSynch();
+	void addEntity(string name,TileView* tile);
+	Sprite* getSprite(string name);
+	string manageItemsInitialSynch();
 
 private:
+
+	vector<ItemView*> itemsArray;
 	vector<Sprite*> spriteArray;
 	Personaje* _personaje;
 	StageModel* worldModel;
@@ -39,7 +43,6 @@ private:
 	TileView* firstTile;
 	vector <TileView*> tileLevels;
 	int minLevelsInCamera;
-	vector <Item*> _vItems;
 	//RenderHelper renderHelper;
 	//void calculateTilesToRender(Camera& camera);
 	void loadSprites();

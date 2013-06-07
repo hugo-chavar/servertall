@@ -1,25 +1,22 @@
 #include "TileModel.h"
 #include "Logger.h"
 #include "StringUtilities.h"
-#include "ItemFactory.h"
 
 using namespace common;
 
 
 TileModel::TileModel(KeyPair tilePos){
+	this->hasHiddenItem=false;
 	this->groundEntity = NULL;
 	this->otherEntity = NULL;
 	this->nextTile = NULL;
 	this->relatedTile = NULL;
 	this->isDrawable = true;
 	this->endOfLevel = false;
-	this->item=NULL;
 	this->position=tilePos;
 }
 
 TileModel::~TileModel(){
-	if (this->item!=NULL)
-		delete this->item;
 }
 
 EntityObject * TileModel::getGroundEntity(){
@@ -101,14 +98,24 @@ void TileModel::addEntity(EntityObject * e){
 	}
 }
 
-Item* TileModel::generateItem(float porcentage)
+void TileModel::setHasHiddenItem(bool has)
 {
-	ItemFactory factory;
-	this->item=factory.createItem(porcentage,this->getPosition());
-	return this->item;
+	this->hasHiddenItem=has;
 }
 
-Item* TileModel::getItem()
+bool TileModel::getHasHiddenItem()
 {
-	return this->item;
+	return this->hasHiddenItem;
 }
+
+//Item* TileModel::generateItem(float porcentage)
+//{
+//	ItemFactory factory;
+//	this->item=factory.createItem(porcentage,this->getPosition());
+//	return this->item;
+//}
+//
+//Item* TileModel::getItem()
+//{
+//	return this->item;
+//}

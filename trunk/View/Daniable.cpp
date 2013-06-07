@@ -18,7 +18,7 @@ void Daniable::recibirDano(float dano)
 }
 
 std::pair<int, int> Daniable::getPosicionActualEnTiles() {
-	//Metodo Abstracto
+	return tileActual;
 }
 
 bool Daniable::isAlive() {

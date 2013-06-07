@@ -2,6 +2,8 @@
 #define __MISION_H__
 
 #include "FlagMision.h"
+#include "Daniable.h"
+#include "DeathmatchMission.h"
 
 using namespace std;
 
@@ -13,12 +15,13 @@ public:
 	~Mision();
 	void initialize();
 	void chooseMision(string mision);
+	void missionUpdate(Daniable* victim, Daniable* attacker);
 	string manageMisionInitialSynch();
 	bool isGameOver();
 
 private:
 	FlagMision flagMision;
-	//Deathmatch deathmatch;
+	DeathmatchMision deathmatch;
 
 };
 

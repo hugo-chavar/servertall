@@ -1,4 +1,5 @@
 #include "GameView.h"
+#include "Daniable.h"
 
 
 GameView::GameView() { }
@@ -248,6 +249,17 @@ string GameView::manageCharactersPlaying() {
 			argument.pop_back();
 	}
 	return argument;
+}
+
+Player* GameView::findPlayerByPersonaje(Daniable* personaje) {
+	Player* player = NULL;
+	for (unsigned int i=0; i<_players.size(); i++) {
+		if ((_players[i]->getCharacter()) == personaje) {
+			player = _players[i];
+			break;
+		}					
+	}
+	return player;
 }
 
 Player* GameView::playerWithHighestScore() {

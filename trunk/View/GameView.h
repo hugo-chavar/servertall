@@ -41,6 +41,7 @@ public:
 	SpriteAnimado* getErrorImage();
 	string manageCharactersPlaying();
 	Player* playerWithHighestScore();
+	Player* findPlayerByPersonaje(Daniable* personaje);
 	Mision* getMision();
 
 private:

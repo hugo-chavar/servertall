@@ -41,8 +41,6 @@ void PersonajeModelo::initialize(int pos_x, int pos_y) {
 	following = false;
 	precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
 	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
-	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
-	vidaActual = vidaMaxima;
 	isReseting = false;
 }
 
@@ -142,8 +140,7 @@ void PersonajeModelo::resetChar() {
 	following = false;
 	precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
 	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
-	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
-	vidaActual = vidaMaxima;
+	
 	isReseting = true;
 }
 
@@ -347,14 +344,6 @@ bool PersonajeModelo::esNecesarioCalcularNuevoPath(){
 
 bool PersonajeModelo::followingEnemy() {
 	return following;
-}
-
-void PersonajeModelo::reduceVidaActual(float vida) {
-	this->vidaActual += vida;
-}
-
-float PersonajeModelo::getVidaActual() {
-	return this->vidaActual;
 }
 
 void PersonajeModelo::setFollowingEnemy(bool enemy) {

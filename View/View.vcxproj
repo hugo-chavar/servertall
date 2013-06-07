@@ -73,6 +73,7 @@
   <ItemGroup>
     <ClCompile Include="CharacterFactory.cpp" />
     <ClCompile Include="Daniable.cpp" />
+    <ClCompile Include="DeathmatchMission.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Flag.cpp" />
@@ -90,6 +91,7 @@
   <ItemGroup>
     <ClInclude Include="CharacterFactory.h" />
     <ClInclude Include="Daniable.h" />
+    <ClInclude Include="DeathmatchMission.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Flag.h" />

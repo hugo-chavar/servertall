@@ -7,8 +7,8 @@
 
 #define FUENTE "../Fonts/Arial.ttf"
 
-//Factor de separación. Permite que las orientaciones esten alineadas (p.e. norte siempre termina en 0)
-
+#define VIVO 1
+#define MUERTO 0
 
 //Codigo de las animaciones
 

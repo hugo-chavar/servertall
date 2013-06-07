@@ -6,8 +6,9 @@
 #include "SpriteAnimado.h"
 #include "PersonajeModelo.h"
 #include "Entity.h"
+#include "Daniable.h"
 
-class Personaje : public Entity {
+class Personaje : public Entity, public Daniable {
 public:
 	Personaje(PersonajeModelo*,std::string char_id);
 	~Personaje();
@@ -66,10 +67,11 @@ private:
 	std::pair<float, float> ePot; //Cuanto se mueve por ciclo en x y en y
 	int serr; //variable usada para coordinar el movimiento en x y en y en la diagonal
 	//bool centeredInTile;
-	Personaje* currentEnemy; //el nombre del enemigo que esta atacando el pj
+	Personaje* currentEnemy; //el destruible que esta atacando el pj
 
 
 	std::string playerName;
 	std::string character_id;
 };
+
 #endif

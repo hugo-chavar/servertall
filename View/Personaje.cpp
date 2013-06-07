@@ -19,6 +19,8 @@ Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	ePot.second = 0;
 	serr = 0;
 	currentEnemy = NULL;
+	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
+	vidaActual = vidaMaxima;
 	//crearNombre(modelo->getName());
 
 	//this->modelo->getAnimation()->fps(static_cast<int>(this->modelo->getAnimation()->fps() * (this->modelo->getVelocidad()/2)));
@@ -68,13 +70,6 @@ void Personaje::addFirstSprite(AnimatedEntity* entity) {
 bool Personaje::isCenteredInTile() {
 	return ((delta.first == 0) && (delta.second == 0));
 }
-//
-//#pragma warning( push )
-//#pragma warning( disable : 4100)
-//void Personaje::setCenteredInTile(bool centroTile) {
-//	centeredInTile = ((delta.first == 0) && (delta.second == 0));
-//}
-//#pragma warning( pop )
 
 void Personaje::setFreezed(bool value) {
 		//TODO:
@@ -186,6 +181,7 @@ void Personaje::calcularSigTileAMover(){
 		if (modelo->getIsReseting()) {
 			this->setRectangle(tileActual, sprites[this->currentSpritePosition]);
 			currentEnemy = NULL;
+			vidaActual = vidaMaxima;
 			modelo->setIsReseting();
 		}
 	}
@@ -265,11 +261,10 @@ void Personaje::moverSpriteEnY() {
 
 
 void Personaje::recibirDano(float dano) {
-	float vida = 0;
 	
-	this->modelo->reduceVidaActual(dano*(-1));
-	vida = this->modelo->getVidaActual();
-	if (vida > 0) {
+	float danoRecibido = Game::instance().getRandom() * dano;
+	vidaActual -= dano;
+	if (vidaActual > 0) {
 		this->modelo->herir();
 	} else {
 		this->modelo->morir();
@@ -279,8 +274,10 @@ void Personaje::recibirDano(float dano) {
 void Personaje::resolverAtaque(){
 	float precision = Game::instance().getRandom();
 	if (precision >= this->modelo->getPrecisionMinima()) {
-		float dano = Game::instance().getRandom() * this->modelo->getDanoMaximo();
-		this->currentEnemy->recibirDano(dano);
+		this->currentEnemy->recibirDano(this->modelo->getDanoMaximo());
+		if (!(this->currentEnemy->isAlive())) {
+			GameView::instance().getMision()->missionUpdate(currentEnemy, this);
+		}
 	}
 }
 

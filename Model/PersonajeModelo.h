@@ -62,8 +62,6 @@ public:
 	void setFollowingEnemy(bool enemy);
 	std::pair <int, int> getTarget();
 	bool canSee(std::pair<int, int> tile);
-	void reduceVidaActual(float vida);
-	float getVidaActual();
 
 	void herir();
 	void morir();
@@ -116,8 +114,6 @@ private:
 	//------------------------ATRIBUTOS (PONGAN ACA LOS ATRIBUTOS DEL PJ: VIDA, MAGIA, DAÑO, ETC)------------------------
 	float precisionMinima;
 	float danoMaximo;
-	float vidaMaxima;
-	float vidaActual;
 };
 
 

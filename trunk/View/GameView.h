@@ -35,7 +35,7 @@ public:
 	string managePlayerInitialSynch(string userID);
 	void startUpdatingPlayer(string userID);
 	void setDisconnectedPlayer(string userID);
-	bool isThereACharInTile(int tileX, int tileY);
+	/*bool isThereACharInTile(int tileX, int tileY);*/
 	Daniable* getDaniableInTile(std::pair <int, int> tile);
 	TimeManager* getTimer();
 	//void wakeUpPlayer(string userID);

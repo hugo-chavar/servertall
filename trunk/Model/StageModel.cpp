@@ -92,8 +92,8 @@ unsigned int StageModel::cost(unsigned int x, unsigned int y) {
 	TileModel* tile = _tilesMap->at(make_pair(x,y));
 	if ( (tile->getOtherEntity()) || (tile->getRelatedTile() ))
 		return 0;
-	std::string a;
-	if (GameView::instance().isThereACharInTile((signed) x, (signed) y))
+	std::pair<unsigned,unsigned> a(x,y);
+	if (GameView::instance().getDaniableInTile(a) != NULL)
 		return 0;
 	if(tile->getHasHiddenItem())
 			return 0;

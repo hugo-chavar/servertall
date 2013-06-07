@@ -154,22 +154,22 @@ Daniable* GameView::getDaniableInTile(std::pair <int, int> tile) {
 	return NULL;
 }
 
-bool GameView::isThereACharInTile(int tileX, int tileY) {
-	pair<int,int> tilePos (tileX, tileY);
-	if(Game::instance().world()->isInsideWorld(tilePos))
-	{
-		vector <Player*>::iterator it;
-		for(it=this->_players.begin(); it!=this->_players.end(); it++)
-		{
-			pair<int,int> posChar = (*it)->getCharacter()->getPosicionEnTiles();
-			if(posChar == tilePos)
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
+//bool GameView::isThereACharInTile(int tileX, int tileY) {
+//	pair<int,int> tilePos (tileX, tileY);
+//	if(Game::instance().world()->isInsideWorld(tilePos))
+//	{
+//		vector <Player*>::iterator it;
+//		for(it=this->_players.begin(); it!=this->_players.end(); it++)
+//		{
+//			pair<int,int> posChar = (*it)->getCharacter()->getPosicionEnTiles();
+//			if(posChar == tilePos)
+//			{
+//				return true;
+//			}
+//		}
+//	}
+//	return false;
+//}
 
 string GameView::managePlayersUpdate() {
 	string argument = "";

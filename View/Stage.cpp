@@ -3,6 +3,7 @@
 #include "EntityObject.h"
 #include "DataTypes.h"
 #include "TileModel.h"
+#include "ItemFactoryView.h"
 
 //#define START_LEVEL 0
 //#define EXTRA_TILES_TO_RENDER 9
@@ -56,7 +57,13 @@ TileView* Stage::createTile(TileModel* tileModel) {
 		tile->createOtherEntity(spriteArray[posSpriteEntity]);
 	}
 	else{
-		
+		ItemFactoryView factory;
+		ItemView* item=factory.generateItem(1,"H",tile->getPosition());//Harcodeo porcentaje de items
+		if(item)
+			{
+				itemsArray.push_back(item);
+				tile->setOtherEntity(item);
+			}	
 	}
 	tilesMap.insert(make_pair(tile->getPosition(), tile));
 	return tile;
@@ -89,6 +96,7 @@ void Stage::generateStage() {
 		currentTile = currentTile->getNextTile();
 		tileModel = tileModel->getNextTile();
 	}
+	//Generar Items Random Para los personajes al morir
 }
 //
 //void Stage::setTilesInCamera(int w, int h) {
@@ -273,20 +281,27 @@ void Stage::updateSprites() {
 	}
 }
 
+Sprite* Stage::getSprite(string name)
+{
+	return spriteArray[mapEntityToSprite.at(name)];
+}
+
 string Stage::manageItemsInitialSynch()
 {
 	string itemsInfo="";
-	for(int i=0;i<this->_vItems.size();i++)
+	for(int i=0;i<this->itemsArray.size();i++)
 	{
-		if(_vItems[i]->isAlive())
+		itemsInfo+=itemsArray[i]->getName()+";";
+		if(!itemsArray[i]->isAlive())
 		{
-		itemsInfo+=_vItems[i]->getName()+";";
-		if(_vItems[i]->isHidden())
+			itemsInfo+='D'+';';
+		}
+		else if(itemsArray[i]->isHidden())
 			itemsInfo+="H;";
 		else
-			itemsInfo+="U;";
-		}
-		itemsInfo+=stringUtilities::pairIntToString(_vItems[i]->getPos())+";";
+			itemsInfo+="A;";
+
+		itemsInfo+=stringUtilities::pairIntToString(itemsArray[i]->getPos())+";";
 	}
 	if(itemsInfo.size()>0)
 		itemsInfo.erase(itemsInfo.size()-1);

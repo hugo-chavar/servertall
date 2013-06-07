@@ -29,5 +29,6 @@ public:
 	void setRectangle(std::pair<int, int> pos, Sprite* sprite );
 	void resetSpriteState(); //virtual?
 	SDL_Rect getSdlRect();
+	virtual bool isItem();
 };
 

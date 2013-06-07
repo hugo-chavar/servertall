@@ -3,7 +3,6 @@
 
 #include "EntityObject.h"
 #include "DataTypes.h"
-#include "Item.h"
 
 class TileModel{
 
@@ -28,8 +27,9 @@ public:
 	bool overlapped();
 	void setEOL();
 	bool EOL();
-	Item* generateItem(float porcentage);
-	Item* getItem();
+	void setHasHiddenItem(bool has);
+	bool getHasHiddenItem();
+
 private:
 	EntityObject* groundEntity;
 	EntityObject* otherEntity;
@@ -38,7 +38,7 @@ private:
 	KeyPair position;
 	bool isDrawable;
 	bool endOfLevel;
-	Item* item;
+	bool hasHiddenItem;
 };
 
 

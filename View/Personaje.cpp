@@ -538,3 +538,30 @@ std::string Personaje::idToString() {
 	//out.append(stringUtilities::pairIntToString(modelo->getPosition()));
 	return out;
 }
+
+void Personaje::increaseSpeed(float factor)
+{
+	this->modelo->increaseSpeed(factor);
+}
+
+bool Personaje::isItem()
+{
+	return false;
+}
+
+void Personaje::eatIfItem(std::pair<int, int> destino)
+	{
+		Entity * entity= GameView::instance().getWorldView()->getTileAt(destino)->getOtherEntity();
+		if(entity!=NULL)
+		{
+		if(entity->isItem())
+		{
+			ItemView* item=(ItemView*)entity;
+			if(item->isAlive())
+				{
+				item->modifyCharacter(this);
+				item->kill();
+				}
+		}
+		}
+	}

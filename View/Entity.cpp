@@ -70,9 +70,14 @@ void Entity::resetSpriteState() {
 bool Entity::isFreezed() {
 	return this->freezed;
 }
+
+bool Entity::isItem()
+{
+	return false;
+}
+
 //
 //SDL_Rect Entity::getSdlRect() {
 //	return this->spriteRect;
 //}
-
 

@@ -56,7 +56,7 @@ bool Game::initialize() {
 
 	allEntities = yParser.allLists();
 	_world.loadNamedChars();
-	_world.generateItems(5);//HARCODEO PORCENTAJE ITEMS
+	//_world.generateItems(5);//HARCODEO PORCENTAJE ITEMS
 	_configuration = yParser.getConfig();
 	//this->_time.initializeTime();
 	Logger::instance().setFile(LOGFILE);

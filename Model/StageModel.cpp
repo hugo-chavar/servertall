@@ -95,8 +95,7 @@ unsigned int StageModel::cost(unsigned int x, unsigned int y) {
 	std::string a;
 	if (GameView::instance().isThereACharInTile((signed) x, (signed) y))
 		return 0;
-	if(tile->getItem()!=NULL)
-		if(tile->getItem()->isHidden())
+	if(tile->getHasHiddenItem())
 			return 0;
 	return 1;
 }
@@ -106,7 +105,6 @@ void StageModel::initialize(unsigned int dimentionX, unsigned int dimentionY, un
 	height(dimentionY);
 	tileWidth(tWidth);
 	tileHeight(tHeight);
-	itemChanges.clear();
 }
 
 pair<int,int> StageModel::pixelToTileCoordinatesInStage(pair<int,int> pixelCoordinates, float cameraX, float cameraY) {
@@ -357,22 +355,22 @@ PersonajeModelo* StageModel::getCharacter(string name) {
 }
 
 
-void StageModel::generateItems(float porcentage)
-{
-	_vItems.clear();
-	std::map<KeyPair, TileModel*>::iterator it=this->_tilesMap->begin();
-	for(;it!=this->_tilesMap->end();it++)
-	{
-		if((*it).second->getOtherEntity()==NULL && (*it).second->getRelatedTile()==NULL)
-		{
-			Item* item=(*it).second->generateItem(porcentage);
-			if(item)
-			{
-				_vItems.push_back(item);
-			}
-		}
-	}
-}
+//void StageModel::generateItems(float porcentage)
+//{
+//	_vItems.clear();
+//	std::map<KeyPair, TileModel*>::iterator it=this->_tilesMap->begin();
+//	for(;it!=this->_tilesMap->end();it++)
+//	{
+//		if((*it).second->getOtherEntity()==NULL && (*it).second->getRelatedTile()==NULL)
+//		{
+//			Item* item=(*it).second->generateItem(porcentage);
+//			if(item)
+//			{
+//				_vItems.push_back(item);
+//			}
+//		}
+//	}
+//}
 
 //void StageModel::regenerateItem()
 //{
@@ -384,22 +382,42 @@ void StageModel::generateItems(float porcentage)
 //	}
 //}
 
-void StageModel::reviveItem()
-{
-	bool revive=false;
-	unsigned i=0;
-	while(!revive && i<this->_vItems.size())
-	{
-		if(!_vItems[i]->isAlive())
-		{
-			itemChanges.push_back(_vItems[i]->revive()); //TODO:comunicar a la vista esto
-			revive=true;
-		}
+//void StageModel::reviveItem()
+//{
+//	bool revive=false;
+//	unsigned i=0;
+//	while(!revive && i<this->_vItems.size())
+//	{
+//		if(!_vItems[i]->isAlive())
+//		{
+//			itemChanges.push_back(_vItems[i]->revive()); //TODO:comunicar a la vista esto
+//			revive=true;
+//		}
+//
+//	}
+//}
 
-	}
-}
+//vector <Item*>* StageModel::items()
+//{
+//	return &this->_vItems;
+//}
 
-vector <Item*>* StageModel::items()
-{
-	return &this->_vItems;
-}
+//string StageModel::manageItemsInitialSynch()
+//{
+//	string itemsInfo="";
+//	for(int i=0;i<this->_vItems.size();i++)
+//	{
+//		if(_vItems[i]->isAlive())
+//		{
+//		itemsInfo+=_vItems[i]->getName()+";";
+//		if(_vItems[i]->isHidden())
+//			itemsInfo+="H;";
+//		else
+//			itemsInfo+="U;";
+//		}
+//		itemsInfo+=stringUtilities::pairIntToString(_vItems[i]->getPos())+";";
+//	}
+//	if(itemsInfo.size()>0)
+//		itemsInfo.erase(itemsInfo.size()-1);
+//	return itemsInfo; 
+//}

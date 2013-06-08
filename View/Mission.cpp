@@ -50,6 +50,12 @@ string Mission::manageMissionInitialSynch() {
 	return "";
 }
 
+string Mission::manageMissionChange() {
+	if (flagMission.isTheChosenMission())
+		return flagMission.changeToString();
+	return "";
+}
+
 Daniable* Mission::manageAttack(pair <int,int> tile) {
 	if (flagMission.isTheChosenMission())
 		return flagMission.manageFlagAttack(tile);

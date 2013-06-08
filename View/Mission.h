@@ -17,6 +17,7 @@ public:
 	void chooseMission(string mission);
 	void missionUpdate(Daniable* victim, Daniable* attacker);
 	string manageMissionInitialSynch();
+	string manageMissionChange();
 	Daniable* manageAttack(pair <int,int> tile);
 	bool isGameOver();
 

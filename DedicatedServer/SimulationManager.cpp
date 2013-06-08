@@ -51,6 +51,7 @@ void SimulationManager::simulate() {
 		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 		std::string argument = GameView::instance().managePlayersUpdate();
 		std::string itemsUpdate=GameView::instance().getWorldView()->manageItemsUpdate();
+		std::string missionUpdate = GameView::instance().getMission()->manageMissionChange();
 		bool send=false;
 		if (argument.size() > 0 ) {
 			//Logger::instance().log("Argument "+argument);
@@ -69,6 +70,10 @@ void SimulationManager::simulate() {
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEM_UPDATE,itemsUpdate);
 				send=true;
 			}
+		}
+		if (missionUpdate.size() > 0) {
+			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MISSION_UPDATE, missionUpdate);
+			send = true;
 		}
 		if(send)
 			this->getClients().addBroadcast(instructionOut);
@@ -141,7 +146,7 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			std::string itemsInit = GameView::instance().getWorldView()->manageItemsInitialSynch();
 			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEMS_INIT,itemsInit);
 			std::string missionInit = GameView::instance().getMission()->manageMissionInitialSynch();
-			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_Mission_INIT, missionInit);
+			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MISSION_INIT, missionInit);
 			client->addInstruction(instructionOut);
 			//broadcast for new players
 			instructionOut.clear();

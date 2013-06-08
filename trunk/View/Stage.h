@@ -10,12 +10,10 @@
 #include "Game.h"
 //de la vista
 #include "TileView.h"
-//#include "Camera.h"
 #include "Entity.h"
 #include "Personaje.h"
 #include "SpriteAnimado.h"
-#include "stringQueue.h";
-//#include "RenderHelper.h"
+#include "StringQueue.h"
 
 
 class Stage {

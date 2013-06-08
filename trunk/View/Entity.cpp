@@ -1,28 +1,25 @@
 #include "Entity.h"
-#include "Game.h"
-
+#include "GameView.h"
+#include "TimeManager.h"
 
 Entity::Entity() {
 }
 
 Entity::Entity(int tileX,int tileY,Sprite* spriteCargado) {
-	this->setFreezed(true);
+	this->setFogged(true);
+	this->setStatus(ENTITY_NORMAL);
 	this->resetSpriteState();
 	sprite = spriteCargado;
 	this->setRectangle(std::make_pair(tileX, tileY), spriteCargado);
 }
 
 Entity::~Entity() {
-	//this->shadow.free();
-	//delete this->shadow;
 }
 
 void Entity::setRectangle(std::pair<int, int> pos, Sprite* sprite ) {
 	spriteRect = posicionIsometricaPorTiles(pos.first, pos.second, sprite);
-	/*spriteRect.w = (Uint16)(sprite->getFrameActual()->getSuperficie()->w);
-	spriteRect.h = (Uint16)(sprite->getFrameActual()->getSuperficie()->h);*/
-	//spriteRect.w = (Uint16)(sprite->getSurfaceWidth());
-	//spriteRect.h = (Uint16)(sprite->getSurfaceHeight());
+	//spriteRect.w = (Uint16)(sprite->getCurrentSurface()->getSurface()->w);
+	//spriteRect.h = (Uint16)(sprite->getCurrentSurface()->getSurface()->h);
 }
 
 SDL_Rect Entity::posicionIsometricaPorTiles(int tileX,int tileY,Sprite* sprite) {
@@ -35,49 +32,85 @@ SDL_Rect Entity::posicionIsometricaPorTiles(int tileX,int tileY,Sprite* sprite) 
 }
 
 void Entity::update() {
-	if (this->isFreezed() && (this->freezedSpriteState < 0)) {
-		freezedSpriteState = sprite->getCurrentState();
+	if (this->isImmobilized() && (this->freezedSpriteState < 0)) {
+		freezedSpriteState = sprite->getCurrentSurfaceNumber();
+		return;
 	}
-	//sprite->actualizarFrame();
-	//Aca deberia actualizarse tambien la entidad del modelo
+	if (!this->isImmobilized()) {
+		this->resetSpriteState();
+		return;
+	}
+	if (this->getStatus() == ENTITY_FROZEN) {
+		this->decreaseEndStatusTime(GameView::instance().getTimer()->getDeltaTime());
+		if (this->endStatusTime == 0)
+			this->setStatus(ENTITY_NORMAL);
+	}
 }
-
+//
 //void Entity::render(Camera& camera) {
+//	
+//	this->renderEntitySprite(this->spriteRect,this->sprite,camera);
+//	/*if (this->isImmobilized()) {
+//		if (this->isFogged())
+//			camera.render(spriteRect,sprite->getSurfaceAt(freezedSpriteState)->getBlackShadow());
+//		else
+//			camera.render(spriteRect,sprite->getSurfaceAt(freezedSpriteState)->getWhiteShadow());
+//	}
+//	camera.render(spriteRect,sprite->getSurfaceAt(freezedSpriteState)->getSurfaceToShow(this->isImmobilized()));*/
+//}
 //
-//	//if (this->freezed)
-//	//	camera.render(spriteRect,this->shadow.getSdlSurface());
-//	//camera.render(spriteRect,sprite->getFrameAt(freezedSpriteState)->getSuperficie(this->freezed));
-//
-//	//camera.render(spriteRect,sprite->getFrameActual()->getSuperficie(false));
-//
-//	if (this->freezed)
-//		camera.render(spriteRect,sprite->getSurfaceAt(freezedSpriteState)->getShadow());
-//	camera.render(spriteRect,sprite->getSurfaceAt(freezedSpriteState)->getSurfaceToShow(this->freezed));
+//void Entity::renderEntitySprite(SDL_Rect rect,Sprite * _sprite,Camera& camera)
+//{
+//	if (this->isImmobilized()) {
+//		if (this->isFogged())
+//			camera.render(rect,_sprite->getSurfaceAt(freezedSpriteState)->getBlackShadow());
+//		else
+//			camera.render(rect,_sprite->getSurfaceAt(freezedSpriteState)->getWhiteShadow());
+//	}
+//	camera.render(rect,_sprite->getSurfaceAt(freezedSpriteState)->getSurfaceToShow(this->isImmobilized()));
 //}
 
-void Entity::setFreezed(bool value) {
-	if (this->freezed == value)
-		return;
-	this->freezed = value;
-	if (!this->isFreezed())
-		this->resetSpriteState();
+void Entity::setFogged(bool value) {
+	this->fogged = value;
 }
 
 void Entity::resetSpriteState() {
 	this->freezedSpriteState = -1;
 }
 
-bool Entity::isFreezed() {
-	return this->freezed;
+bool Entity::isFogged() {
+	return this->fogged;
 }
 
-bool Entity::isItem()
-{
+void Entity::setStatus(entityStatus_t status) {
+	this->status = status;
+}
+
+entityStatus_t Entity::getStatus() {
+	return this->status;
+}
+
+bool Entity::isImmobilized() {
+	return ((this->isFogged() )||(this->getStatus() == ENTITY_FROZEN));
+}
+
+void Entity::iceUp(unsigned seconds) {
+	this->setStatus(ENTITY_FROZEN);
+	this->setEndStatusTime(static_cast<Uint32>(seconds*1000));
+}
+
+void Entity::decreaseEndStatusTime(float timeToDecrease) {
+	Uint32 aux = static_cast<Uint32>(timeToDecrease);
+	if (aux < this->endStatusTime)
+		this->endStatusTime -= aux;
+	else
+		this->setEndStatusTime(0);
+}
+
+void Entity::setEndStatusTime(Uint32 endTime) {
+	this->endStatusTime = endTime;
+}
+
+bool Entity::isItem() {
 	return false;
 }
-
-//
-//SDL_Rect Entity::getSdlRect() {
-//	return this->spriteRect;
-//}
-

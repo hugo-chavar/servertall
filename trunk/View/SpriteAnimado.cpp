@@ -9,6 +9,7 @@ SpriteAnimado::SpriteAnimado(AnimatedEntity* entity) {
 	delay = static_cast<float>(entity->delay()); 
 	fps = static_cast<float>(entity->fps());
 	this->initialize();
+	this->accumulatedTime = 0;
 	//cargarFrames(entity);
 }
 
@@ -16,17 +17,17 @@ SpriteAnimado::~SpriteAnimado() {
 }
 
 void SpriteAnimado::initialize() {
-	estado = 0;
-	relx = spriteEntity->pixelRefX();
-	rely = spriteEntity->pixelRefY();
-	_baseWidth = spriteEntity->baseWidth();
-	_baseHeight = spriteEntity->baseHeight();
+	this->restart();
+	this->relx = spriteEntity->pixelRefX();
+	this->rely = spriteEntity->pixelRefY();
+	this->_baseWidth = spriteEntity->baseWidth();
+	this->_baseHeight = spriteEntity->baseHeight();
 	this->loadSurfaces();
 }
 
 void SpriteAnimado::updateFrame() {
 	float deltaTime = GameView::instance().getTimer()->getDeltaTime();
-	if (estado == 0)
+	if (this->getCurrentSurfaceNumber() == 0)
 		deltaTime -= delay;
 	//comienzo_frame = SDL_GetTicks();
 	this->addSticks(deltaTime); //TODO: traer del timer
@@ -39,7 +40,7 @@ void SpriteAnimado::updateFrame() {
 //}
 
 bool SpriteAnimado::lastFrame() {
-	if (this->estado >= (surfacesCount - 1)) {
+	if (static_cast<int>(this->getCurrentSurfaceNumber()) >= (surfacesCount - 1)) {
 		return true;
 	} else {
 		return false;
@@ -47,21 +48,20 @@ bool SpriteAnimado::lastFrame() {
 }
 
 void SpriteAnimado::restart() {
-	this->estado = 0;
+	this->currentSurfaceNumber = 0;
 }
 
 void SpriteAnimado::advance() {
 	if ( this->lastFrame() )
-		this->estado = 0;
+		this->restart();
 	else
-		this->estado++;
+		this->currentSurfaceNumber++;
 	this->accumulatedTime -= (1000/fps);
 }
 
 bool SpriteAnimado::timeIsOver() {
 	return (this->accumulatedTime >= (1000/fps));
 }
-
 
 void SpriteAnimado::loadSurfaces() {
 	AnimatedEntity* auxEntity = (AnimatedEntity*)spriteEntity;
@@ -72,7 +72,7 @@ void SpriteAnimado::loadSurfaces() {
 void SpriteAnimado::addSticks(float ticks) {
 	this->accumulatedTime += ticks;
 }
-
-void SpriteAnimado::setCurrentState(unsigned state) {
-	this->estado = state;
-}
+//
+//void SpriteAnimado::setCurrentState(unsigned state) {
+//	this->estado = state;
+//}

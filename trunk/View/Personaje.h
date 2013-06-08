@@ -19,7 +19,6 @@ public:
 	void addNextSprite(AnimatedEntity*);
 	void addFirstSprite(AnimatedEntity*);
 	std::pair<int,int> getPosicionEnTiles();
-	void setFreezed(bool value);
 	void setAnimating(bool value);
 	std::string updateToString();
 	void updateFromString(std::string data);
@@ -41,6 +40,7 @@ public:
 	void recibirDano(float dano);
 	bool isItem();
 	void eatIfItem(std::pair<int, int> destino);
+	bool hasValidSprite();
 
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual

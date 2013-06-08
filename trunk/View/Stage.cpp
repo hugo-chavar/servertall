@@ -303,7 +303,7 @@ Sprite* Stage::getSprite(string name)
 string Stage::manageItemsInitialSynch()
 {
 	string itemsInfo="";
-	for(int i=0;i<this->itemsArray.size();i++)
+	for(unsigned i=0;i<this->itemsArray.size();i++)
 	{
 		itemsInfo+=itemsArray[i]->getName()+";";
 		if(!itemsArray[i]->isAlive())
@@ -334,7 +334,7 @@ void Stage::addItemChange(string _string)
 
 ItemView* Stage::getItemInTile(int posX,int posY)
 {
-	for(int i=0;i<this->itemsArray.size();i++)
+	for(unsigned i=0;i<this->itemsArray.size();i++)
 	{
 		if(itemsArray[i]->getPosicionActualEnTiles().first==posX && itemsArray[i]->getPosicionActualEnTiles().second==posY)
 			if(itemsArray[i]->isHidden()&&itemsArray[i]->isAlive())

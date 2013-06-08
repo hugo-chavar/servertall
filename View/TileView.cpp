@@ -29,10 +29,9 @@ void TileView::initialize(){
 	this->otherEntity = NULL;
 	this->nextTile = NULL;
 	this->relatedTile = NULL;
-	this->isDrawable = true; //TODO: PASAR A FALSE
-	this->isFreezed = false;
+	this->isDrawable = true;
+	this->isFogged = false;
 	this->tileModel = NULL;
-	//this->fog = NULL;
 }
 
 Entity * TileView::getGroundEntity(){
@@ -112,46 +111,26 @@ void TileView::createGround(Sprite* sprite) {
 void TileView::createOtherEntity(Sprite* sprite) {
 	otherEntity = new Entity(this->tileModel->getPosition().first, this->tileModel->getPosition().second, sprite);
 }
-//
-//void TileView::renderGround(Camera& camera) {
-//	this->getGroundEntity()->render(camera);
-//}
 
-void TileView::setFreezed(bool value) {
-	this->isFreezed = value;
-	this->getGroundEntity()->setFreezed(value);
+void TileView::setFogged(bool value) {
+	this->isFogged = value;
+	this->getGroundEntity()->setFogged(value);
 
 	TileView* tileaux = this->getRelatedTile();
 	if (tileaux) {
 		while (tileaux != this){
-			tileaux->getGroundEntity()->setFreezed(value);
-			if (tileaux->hasOtherEntity()) {
-				tileaux->getOtherEntity()->setFreezed(value);
+			tileaux->getGroundEntity()->setFogged(value);
+			if (tileaux->getOtherEntity()) {
+				tileaux->getOtherEntity()->setFogged(value);
 			}
 			tileaux = tileaux->getRelatedTile();
 		}
 	}
 	else 
-		if (this->hasOtherEntity()) {
-			this->getOtherEntity()->setFreezed(value);
+		if (this->getOtherEntity()) {
+			this->getOtherEntity()->setFogged(value);
 		}
 }
-
-//void TileView::renderEntity(Camera& camera){
-//
-//	if (this->drawable()) {//TODO: PONER EN FALSE POR DEFAULT
-//
-//		TileView* tileaux = this->getRelatedTile();
-//		if (tileaux) {
-//			tileaux->getOtherEntity()->render(camera);
-//		}
-//		else 
-//			if (this->hasOtherEntity()) {
-//				this->getOtherEntity()->render(camera);
-//			}
-//	}
-//
-//}
 
 void TileView::update(){
 	//this->getGroundEntity()->update();
@@ -160,11 +139,6 @@ void TileView::update(){
 	}
 }
 
-//void TileView::renderFog(Camera& camera) {
-//	camera.render(this->getGroundEntity()->getSdlRect(),this->fog->getSdlSurface());
-//}
-
-void TileView::setItemUncover()
-{
+void TileView::setItemUncover() {
 	this->getTileModel()->setHasHiddenItem(false);
 }

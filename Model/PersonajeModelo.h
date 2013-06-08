@@ -50,8 +50,8 @@ public:
 	void restartDirectories();
 	int getOrientacion();
 	void increaseSpeed(float factor);
-	void increaseVisionRange(float factor);
-	void discoverMap();
+	//void increaseVisionRange(float factor);
+	//void discoverMap();
 
 	bool getIsReseting();
 	void setIsReseting();
@@ -65,7 +65,7 @@ public:
 
 	void herir();
 	void morir();
-
+	void setPosition(std::pair<int, int> pos);
 private:
 
 	//void eatIfItem(std::pair<int, int> destino);

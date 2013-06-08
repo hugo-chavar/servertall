@@ -13,7 +13,7 @@ protected:
 
 	int relx,rely,_baseWidth,_baseHeight;
 	EntityObject* spriteEntity;
-	int estado; 
+	unsigned currentSurfaceNumber; 
 	int surfacesCount;
 	int surfaceWidth;
 	int surfaceHeight;
@@ -30,9 +30,12 @@ public:
 	int relaty();
 	int baseWidth();
 	int baseHeight();
-	int getCurrentState();
+	//int getCurrentState();
 	int getSurfaceWidth();
 	int getSurfaceHeight();
+	unsigned getCurrentSurfaceNumber();
+	void setCurrentSurfaceNumber(unsigned surfaceNumber);
+	void restart();	
 	//view::Surface* getSurfaceAt(int state);
 	//view::Surface* getCurrentSurface();
 	//void addSurface(std::string path);

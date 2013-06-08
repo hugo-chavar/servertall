@@ -502,19 +502,23 @@ void PersonajeModelo::increaseSpeed(float factor)
 	}
 }
 
-void PersonajeModelo::discoverMap()
-{
-	//this->getVision()->setHoleMapVision(); FALTA IMPLEMENTAR
+void PersonajeModelo::setPosition(std::pair<int, int> pos) {
+	this->current = pos;
 }
 
-void PersonajeModelo::increaseVisionRange(float factor)
-{
-	this->vision->setRangeVision(static_cast<int>(this->vision->getRangeVision()*factor));
-	if(this->vision->getRangeVision()>MAX_VISION_RANGE)
-	{
-		this->vision->setRangeVision(MAX_VISION_RANGE);
-	}
-}
+//void PersonajeModelo::discoverMap()
+//{
+//	//this->getVision()->setHoleMapVision(); FALTA IMPLEMENTAR
+//}
+//
+//void PersonajeModelo::increaseVisionRange(float factor)
+//{
+//	this->vision->setRangeVision(static_cast<int>(this->vision->getRangeVision()*factor));
+//	if(this->vision->getRangeVision()>MAX_VISION_RANGE)
+//	{
+//		this->vision->setRangeVision(MAX_VISION_RANGE);
+//	}
+//}
 
 //---------------------------Maybe useful in the future--------------------------------------
 

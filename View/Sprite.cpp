@@ -11,11 +11,11 @@ Sprite::Sprite(EntityObject *entity) {
 }
 
 void Sprite::initialize() {
-	estado = 0;
-	relx = spriteEntity->pixelRefX();
-	rely = spriteEntity->pixelRefY();
-	_baseWidth = spriteEntity->baseWidth();
-	_baseHeight = spriteEntity->baseHeight();
+	this->restart();
+	this->relx = this->spriteEntity->pixelRefX();
+	this->rely = this->spriteEntity->pixelRefY();
+	this->_baseWidth = this->spriteEntity->baseWidth();
+	this->_baseHeight = this->spriteEntity->baseHeight();
 	this->loadSurfaces();
 }
 
@@ -44,8 +44,8 @@ int Sprite::baseHeight() {
 	return _baseHeight;
 }
 
-int Sprite::getCurrentState() {
-	return estado;
+unsigned Sprite::getCurrentSurfaceNumber() {
+	return this->currentSurfaceNumber;
 }
 
 void Sprite::loadSurfaces() {
@@ -55,4 +55,12 @@ void Sprite::loadSurfaces() {
 	//this->surfaceHeight = auxSurface->getHeight();
 	//auxSurface->free();
 	surfacesCount = 1;
+}
+
+void Sprite::restart() {
+	this->setCurrentSurfaceNumber(0);
+}
+
+void Sprite::setCurrentSurfaceNumber(unsigned surfaceNumber) {
+	this->currentSurfaceNumber = surfaceNumber;
 }

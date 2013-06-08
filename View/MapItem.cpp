@@ -12,5 +12,5 @@ MapItem::~MapItem(void)
 
 void MapItem::modifyCharacter(Personaje* personaje)
 {
-	//TODO:Implement
+	personaje->personajeModelo()->getVision()->setAllKnown(true);
 }

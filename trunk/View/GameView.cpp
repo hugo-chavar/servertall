@@ -150,6 +150,11 @@ Daniable* GameView::getDaniableInTile(std::pair <int, int> tile) {
 				return (*it)->getCharacter();
 			}
 		}
+		Daniable* item=GameView::instance().getWorldView()->getItemInTile(tile.first,tile.second);
+		if(item)
+		{
+			return item;
+		}
 		return mission.manageAttack(tile);
 	}
 	return NULL;

@@ -50,8 +50,8 @@ void SimulationManager::simulate() {
 		instructionOut.clear();
 		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 		std::string argument = GameView::instance().managePlayersUpdate();
-		
-		if (argument.size() > 0) {
+		std::string itemsUpdate=GameView::instance().getWorldView()->manageItemsUpdate();
+		if (argument.size() > 0 ) {
 			//Logger::instance().log("Argument "+argument);
 			if (this->lastBroadcast != argument){
 				this->lastBroadcast = argument;
@@ -62,7 +62,10 @@ void SimulationManager::simulate() {
 				LOG_DEBUG("SIMULATION GENERATED AT: " + argument);
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CONNECTED_AT, argument);
 				this->getClients().addBroadcast(instructionOut);
-
+			}
+		if(itemsUpdate.size()>0)
+			{
+				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEM_UPDATE, argument);
 			}
 		}
 		i++;

@@ -14,6 +14,7 @@
 #include "Entity.h"
 #include "Personaje.h"
 #include "SpriteAnimado.h"
+#include "stringQueue.h";
 //#include "RenderHelper.h"
 
 
@@ -32,9 +33,12 @@ public:
 	void removeOtherEntity(pair <int,int> tile);
 	Sprite* getSprite(string name);
 	string manageItemsInitialSynch();
-
+	StringQueue * getItemChanges();
+	void addItemChange(string _string);
+	ItemView* getItemInTile(int posX,int posY);
+	string manageItemsUpdate();
 private:
-
+	StringQueue itemChanges;
 	vector<ItemView*> itemsArray;
 	vector<Sprite*> spriteArray;
 	Personaje* _personaje;

@@ -77,11 +77,13 @@
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="ListaPath.cpp" />
+    <ClCompile Include="Mutex.cpp" />
     <ClCompile Include="Nodo.cpp" />
     <ClCompile Include="Par.cpp" />
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="PersonajeModelo.cpp" />
     <ClCompile Include="StageModel.cpp" />
+    <ClCompile Include="StringQueue.cpp" />
     <ClCompile Include="TileModel.cpp" />
     <ClCompile Include="YAMLParser.cpp" />
   </ItemGroup>
@@ -95,12 +97,14 @@
     <ClInclude Include="EntityObject.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="ListaPath.h" />
+    <ClInclude Include="Mutex.h" />
     <ClInclude Include="Nodo.h" />
     <ClInclude Include="Par.h" />
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="PersonajeConstantes.h" />
     <ClInclude Include="PersonajeModelo.h" />
     <ClInclude Include="StageModel.h" />
+    <ClInclude Include="StringQueue.h" />
     <ClInclude Include="TileModel.h" />
     <ClInclude Include="YAMLParser.h" />
   </ItemGroup>

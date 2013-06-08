@@ -29,14 +29,14 @@ public:
 	ItemView(string _name,string _hidden,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite);
 	~ItemView(void);
 	virtual void modifyCharacter(Personaje* personaje);
-	string kill();
+	void kill();
 	bool isAlive();
 	bool isHidden();
-	string uncover();
+	void uncover();
 	string getName();
-	std::pair<int,int> getPos();
+	//std::pair<int,int> getPos();
 	void setPos(std::pair<int,int> position);
-	string revive();
+	void revive(char hidden);
 	void recibirDano(float dano);
 	bool isItem();
 };

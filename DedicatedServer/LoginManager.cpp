@@ -193,8 +193,9 @@ void LoginManager::processRequests() {
 				case OPCODE_LOGOUT_REQUEST:
 					argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
 					client = this->getLoggedClients().detachClient(argument);
-					this->getUsedClients().addClient(client);
+					
 					if (client != NULL) {
+						this->getUsedClients().addClient(client);
 						LOG_DEBUG("THE USER " + argument + " LOGGED OUT");
 						client->stopClient();
 						//delete client;
@@ -218,11 +219,12 @@ void LoginManager::processRequests() {
 					client = this->getPreLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 					if (client == NULL) {
 						client = this->getLoggedClients().detachClient(instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
-						this->getUsedClients().addClient(client);
+						
 					}
 					if (client != NULL) {
-					client->stopClient();
-					delete client;
+						this->getUsedClients().addClient(client);
+						client->stopClient();
+						delete client;
 					} else {
 						LOG_ERROR("CONNECTION ERROR RECEIVED FROM THE NON-EXISTANT USER " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 					}

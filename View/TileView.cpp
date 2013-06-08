@@ -49,10 +49,12 @@ void TileView::setGroundEntity(Entity * e){
 
 void TileView::setOtherEntity(Entity * e){
 	this->otherEntity = e;
-	if(e->isItem())
-	{
-		ItemView* item=(ItemView*)e;
-		this->getTileModel()->setHasHiddenItem(item->isHidden());
+	if (e != NULL) {
+		if(e->isItem())
+		{
+			ItemView* item=(ItemView*)e;
+			this->getTileModel()->setHasHiddenItem(item->isHidden());
+		}
 	}
 }
 

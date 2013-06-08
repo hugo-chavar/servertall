@@ -38,13 +38,13 @@ bool ItemView::isItem()
 void ItemView::kill()
 {
 	this->alive=false;
-	GameView::instance().getWorldView()->addItemChange(itemChangeToString('D'));
+	GameView::instance().getWorldView()->addItemChange(itemChangeToString("D"));
 }
 
 void ItemView::revive(char hidden)
 {
 	this->alive=true;
-	GameView::instance().getWorldView()->addItemChange(itemChangeToString('A'+hidden));
+	GameView::instance().getWorldView()->addItemChange(itemChangeToString("A"+hidden));
 }
 
 bool ItemView::isAlive()
@@ -60,7 +60,7 @@ bool ItemView::isHidden()
 void ItemView::uncover()
 {
 	this->hidden=false;
-	GameView::instance().getWorldView()->addItemChange(itemChangeToString('U'));
+	GameView::instance().getWorldView()->addItemChange(itemChangeToString("U"));
 }
 
 string ItemView::getName()
@@ -78,9 +78,9 @@ void ItemView::setPos(std::pair<int,int> position)
 	this->tileActual=position;
 }
 
-string ItemView::itemChangeToString(char change)
+string ItemView::itemChangeToString(string change)
 {
-	string modification=this->name+stringUtilities::pairIntToString(this->getPosicionActualEnTiles())+","+change;
+	string modification=change+";"+this->name+";"+stringUtilities::pairIntToString(this->getPosicionActualEnTiles());
 	return modification;
 }
 

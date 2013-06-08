@@ -162,6 +162,7 @@ void Personaje::calcularSigTileAMover(){
 		serr = 0;
 		tileActual = modelo->getPosition();
 		//modelo->setIsInCenterTile(true);
+		this->eatIfItem(tileActual);
 		currentAnimationNumber = modelo->mover(tile, velocidad);
 		if (this->modelo->estaAnimandose())
 			return;

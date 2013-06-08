@@ -19,7 +19,7 @@ protected:
 	bool hidden;
 	string name;
 	std::pair<int,int> pos;
-	string ItemView::itemChangeToString(char change);
+	string ItemView::itemChangeToString(string change);
 	SDL_Rect hiddenSpriteRect;
 	Sprite * hiddenSprite;
 	void setHiddenRectangle(std::pair<int, int> pos, Sprite* sprite );

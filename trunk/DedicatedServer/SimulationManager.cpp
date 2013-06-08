@@ -51,6 +51,7 @@ void SimulationManager::simulate() {
 		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 		std::string argument = GameView::instance().managePlayersUpdate();
 		std::string itemsUpdate=GameView::instance().getWorldView()->manageItemsUpdate();
+		bool send=false;
 		if (argument.size() > 0 ) {
 			//Logger::instance().log("Argument "+argument);
 			if (this->lastBroadcast != argument){
@@ -61,13 +62,16 @@ void SimulationManager::simulate() {
 				argument = stringUtilities::unsignedToString(static_cast<unsigned>(SDL_GetTicks()));
 				LOG_DEBUG("SIMULATION GENERATED AT: " + argument);
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CONNECTED_AT, argument);
-				this->getClients().addBroadcast(instructionOut);
+				send=true;
 			}
 		if(itemsUpdate.size()>0)
 			{
-				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEM_UPDATE, argument);
+				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEM_UPDATE,itemsUpdate);
+				send=true;
 			}
 		}
+		if(send)
+			this->getClients().addBroadcast(instructionOut);
 		i++;
 
 		if (milisecondsTonextFrame >= SDL_GetTicks() - frameStartedAt)

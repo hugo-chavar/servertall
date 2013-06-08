@@ -348,7 +348,7 @@ string Stage::manageItemsUpdate()
 	string changes="";
 	while(itemChanges.size()>0)
 	{
-		changes+=itemChanges.pop()+";";
+		changes+=itemChanges.pop()+":";
 	}
 	if (changes.size()!=0)
 	{

@@ -4,6 +4,7 @@
 
 #include <vector>
 #include "Flag.h"
+#include "StringQueue.h"
 
 using namespace std;
 
@@ -18,12 +19,15 @@ public:
 	void choose();
 	bool allFlagsDestroyed();
 	string initToString();
+	string changeToString();
+	void addChange(string change);
 	void updateMissionStatus(Daniable* victim, Daniable* attacker);
 	vector <Flag*>* getFlags();
 	bool isAFlag(Daniable* entity);
 	Daniable* manageFlagAttack(pair <int,int> tile);
 
 private:
+	StringQueue changes;
 	int findFlag(Flag* flag);
 	vector <Flag*> flags;
 	bool chosen;

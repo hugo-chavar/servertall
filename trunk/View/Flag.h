@@ -13,12 +13,10 @@ public:
 	Flag();
 	~Flag();
 	string getName();
-	pair <int,int> position();
 	void destroy();
 
 private:
 	AnimatedEntity* entity;
-	pair <int,int> _position;
 
 };
 

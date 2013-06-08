@@ -53,6 +53,13 @@ entidades:
       fps: 30
       delay: 3000
 
+    - nombre: banderaDestruida
+      imagen: ../Images/banderaDestruida.png
+      ancho_base: 1
+      alto_base: 1 
+      pixel_ref_x: 18
+      pixel_ref_y: 72
+
     - nombre: castillo
       imagen: ../Images/cubo.png
       ancho_base: holamundo 

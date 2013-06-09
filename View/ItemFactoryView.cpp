@@ -23,7 +23,6 @@ ItemView* ItemFactoryView::generateItem(float porcentajeAparicion,string _hidden
 	{
 	int indice=static_cast <int> ((100.0/porcentajeAparicion) * NUMBERITEMS);
 	int random= rand() % indice;
-	ItemView* itemView=NULL;
 	if(random<NUMBERITEMS)
 	{
 	Sprite* hiddenSprite=GameView::instance().getWorldView()->getSprite("Chest");
@@ -40,6 +39,6 @@ ItemView* ItemFactoryView::generateItem(float porcentajeAparicion,string _hidden
 			return new MapItem("MapItem",_hidden,pos,hiddenSprite,sprite);
 		}
 	}
-	return NULL;
 	}
+	return NULL;
 }

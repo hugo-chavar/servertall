@@ -281,10 +281,8 @@ void Personaje::atacar() {
 void Personaje::setCurrentEnemy(int tileX, int tileY) {
 	std::pair<int, int> tileDestino(tileX, tileY);
 
-	//if (modelo->isThereAnEnemy(tileX, tileY)) {
-	currentEnemy = GameView::instance().getDaniableInTile(tileDestino);
-	if(currentEnemy)
-	{
+	if (modelo->isThereAnEnemy(tileX, tileY)) {
+		currentEnemy = GameView::instance().getDaniableInTile(tileDestino);
 		if (currentEnemy == this) {
 			currentEnemy = NULL;
 		}
@@ -302,9 +300,9 @@ void Personaje::perseguirEnemigo() {
 		this->modelo->setFollowingEnemy(true);
 		return;
 	}
-	/*if (!modelo->canSee(currentEnemy->getPosicionActualEnTiles())) {
+	if (!modelo->canSee(currentEnemy->getPosicionActualEnTiles())) {
 		currentEnemy = NULL;
-	}*/
+	}
 	this->modelo->setFollowingEnemy(false);
 }
 

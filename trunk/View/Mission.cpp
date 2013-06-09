@@ -1,7 +1,9 @@
 #include "Mission.h"
 #include "GameView.h"
 
-Mission::Mission() { }
+Mission::Mission() {
+	this->gameOverMessageSent = false;
+}
 
 Mission::~Mission() { }
 
@@ -55,6 +57,12 @@ string Mission::manageMissionInitialSynch() {
 }
 
 string Mission::manageMissionChange() {
+	if ((this->isGameOver()) && (!this->gameOverMessageSent)) {
+		Player* player = GameView::instance().playerWithHighestScore();
+		string data = "GameOver;"+player->getUserID();
+		this->gameOverMessageSent = true;
+		return data;
+	}
 	if (flagMission.isTheChosenMission())
 		return flagMission.changeToString();
 	return "";
@@ -63,4 +71,5 @@ string Mission::manageMissionChange() {
 Daniable* Mission::manageAttack(pair <int,int> tile) {
 	if (flagMission.isTheChosenMission())
 		return flagMission.manageFlagAttack(tile);
+	return NULL;
 }

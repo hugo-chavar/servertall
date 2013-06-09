@@ -308,7 +308,7 @@ string Stage::manageItemsInitialSynch()
 		itemsInfo+=itemsArray[i]->getName()+";";
 		if(!itemsArray[i]->isAlive())
 		{
-			itemsInfo+='D'+';';
+			itemsInfo+="D;";
 		}
 		else if(itemsArray[i]->isHidden())
 			itemsInfo+="H;";

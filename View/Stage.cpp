@@ -4,6 +4,7 @@
 #include "DataTypes.h"
 #include "TileModel.h"
 #include "ItemFactoryView.h"
+#include <algorithm>
 
 //#define START_LEVEL 0
 //#define EXTRA_TILES_TO_RENDER 9
@@ -97,12 +98,12 @@ void Stage::generateStage() {
 		tileModel = tileModel->getNextTile();
 	}
 	//Generar Items Random Para los personajes al morir
-	//for(unsigned i=0;i<NUMBERITEMS;i++)
-	//{
-	//	ItemFactoryView factory;
-	//	ItemView* item=factory.generateItem(i,DEATH_ITEM,pair<int,int>(-1,-1),false);//Harcodeo porcentaje de items
-	//	itemsArray.push_back(item);
-	//}
+	for(unsigned i=0;i<NUMBERITEMS;i++)
+	{
+		ItemFactoryView factory;
+		ItemView* item=factory.generateItem(i,DEATH_ITEM,pair<int,int>(-1,-1),false);//Harcodeo porcentaje de items
+		itemsArray.push_back(item);
+	}
 }
 //
 //void Stage::setTilesInCamera(int w, int h) {
@@ -417,4 +418,28 @@ bool Stage::isThereAPlayerInTile(pair <int,int> pos)
 				return true;
 		}
 	return false;
+}
+
+ItemView* Stage::findDeathItem()
+{
+	for(unsigned i=this->itemsArray.size();i>0;i--)
+	{
+		if(!itemsArray[i-1]->isAlive() && !itemsArray[i-1]->getCanReviveForHimself())
+			{
+				int random=rand()%itemsArray.size();
+				std::swap(itemsArray[i-1],itemsArray[random]);
+				return itemsArray[0];
+			}
+	}
+	return NULL;
+}
+
+void Stage::relocateItem(pair<int,int>pos)
+{
+	ItemView* item=this->findDeathItem();
+	if(item)
+	{
+		item->revive(UNCOVER_ITEM,pos);
+		this->getTileAt(pos)->setOtherEntity(item);
+	}
 }

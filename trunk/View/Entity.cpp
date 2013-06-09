@@ -32,19 +32,19 @@ SDL_Rect Entity::posicionIsometricaPorTiles(int tileX,int tileY,Sprite* sprite) 
 }
 
 void Entity::update() {
+	if (this->needsCountDown()) {
+		this->decreaseEndStatusTime(GameView::instance().getTimer()->getDeltaTime());
+		if (this->endStatusTime == 0)
+			this->setStatus(ENTITY_NORMAL);
+	}
 	if (this->isImmobilized() && (this->freezedSpriteState < 0)) {
 		freezedSpriteState = sprite->getCurrentSurfaceNumber();
 		return;
 	}
 	if (!this->isImmobilized()) {
 		this->resetSpriteState();
-		return;
 	}
-	if (this->getStatus() == ENTITY_FROZEN) {
-		this->decreaseEndStatusTime(GameView::instance().getTimer()->getDeltaTime());
-		if (this->endStatusTime == 0)
-			this->setStatus(ENTITY_NORMAL);
-	}
+
 }
 //
 //void Entity::render(Camera& camera) {
@@ -112,5 +112,27 @@ void Entity::setEndStatusTime(Uint32 endTime) {
 }
 
 bool Entity::isItem() {
+	return false;
+}
+
+bool Entity::needsCountDown() {
+	switch (this->getStatus()) {
+		case ITEM_WAITING_REGENERATION:
+		case EXPLOSIVE_EXPLOSION_COUNTDOWN:
+		case ENTITY_FROZEN:
+			return true;
+		break;
+	}
+	return false;
+}
+
+//devuelve verdadero para las entidades q deben ser borradas..
+//o sea, el estado es "pendiente de borrado" .. el stage se va a encargar de borrarlas ("recoger la basura")
+bool Entity::needsToBeCleaned() {
+	switch (this->getStatus()) {
+		case EXPLOSIVE_DUST_IN_THE_WIND:
+			return true;
+		break;
+	}
 	return false;
 }

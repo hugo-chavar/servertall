@@ -20,6 +20,7 @@ public:
 	void restart();
 	~SpriteAnimado();
 	void addSticks(float ticks);
+	float getDelay();
 	//void setCurrentState(unsigned state);
 };
 

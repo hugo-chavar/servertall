@@ -4,29 +4,36 @@
 #include "StringUtilities.h"
 #include "Daniable.h"
 
+#ifndef item_state_t
+#define item_state_t
+enum item_state_t {
+	HIDDEN_ITEM,
+	UNCOVER_ITEM,
+	DEATH_ITEM,
+	REVIVE_UNCOVER_ITEM,
+	REVIVE_HIDDEN_ITEM
+
+};
+#endif
+
 class ItemView : public Entity,public Daniable
 {
 
-//public:
-//
-//	ItemView(int tileX,int tileY,Sprite* spriteCargado,Sprite * _hiddenSprite,std::string _hidden);
-//	~ItemView();
-//	//void render(Camera& camera);
-//	void changeState();
-
 protected:
-	bool alive;
-	bool hidden;
+	unsigned state;
+	//bool alive;
+	//bool hidden;
 	string name;
-	std::pair<int,int> pos;
-	string ItemView::itemChangeToString(string change);
+	string ItemView::itemChangeToString(unsigned _state);
 	SDL_Rect hiddenSpriteRect;
 	Sprite * hiddenSprite;
 	void setHiddenRectangle(std::pair<int, int> pos, Sprite* sprite );
+	int regenerationTime;
+	bool canReviveForHimself;
 
 public:
 	void update();
-	ItemView(string _name,string _hidden,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite);
+	ItemView(string _name,unsigned _state,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite,bool _canReviveForHimself);
 	~ItemView(void);
 	virtual void modifyCharacter(Personaje* personaje);
 	void kill();
@@ -36,8 +43,9 @@ public:
 	string getName();
 	//std::pair<int,int> getPos();
 	void setPos(std::pair<int,int> position);
-	void revive(char hidden);
+	void revive(unsigned _state);
 	void recibirDano(float dano);
 	bool isItem();
+	unsigned getState();
 };
 

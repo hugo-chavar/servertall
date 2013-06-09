@@ -5,7 +5,7 @@
 class RunningBoots : public ItemView
 {
 public:
-	RunningBoots(string _name,string _hidden,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite);
+	RunningBoots(string _name,unsigned _state,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite,bool _canReviveForHimself);
 	~RunningBoots(void);
 	void modifyCharacter(Personaje* personaje);
 };

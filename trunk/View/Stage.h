@@ -14,7 +14,7 @@
 #include "Personaje.h"
 #include "SpriteAnimado.h"
 #include "StringQueue.h"
-
+#define REGENERATIONTIME 30000
 
 class Stage {
 public:
@@ -35,7 +35,10 @@ public:
 	void addItemChange(string _string);
 	ItemView* getItemInTile(int posX,int posY);
 	string manageItemsUpdate();
+	//void regenerateItem();
+	bool isThereAPlayerInTile(pair <int,int> pos);
 private:
+	unsigned lastRegeneration;
 	StringQueue itemChanges;
 	vector<ItemView*> itemsArray;
 	vector<Sprite*> spriteArray;
@@ -61,6 +64,9 @@ private:
 	void alignLevel(std::pair<int,int> &k1, std::pair<int,int> &k2);
 	void updateTiles();
 	void updateSprites();
+	void updateItems();
+	//void reviveitem(char hidden);
+	//void relocateItem(ItemView* item);
 };
 
 

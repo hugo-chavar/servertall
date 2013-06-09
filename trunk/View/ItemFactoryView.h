@@ -3,9 +3,11 @@
 #include "Lamp.h"
 #include "MapItem.h"
 #include "RunningBoots.h"
+#include "Heart.h"
+#include "MagicBottle.h"
 
 
-#define NUMBERITEMS 3 // Cantidad de items implementados
+#define NUMBERITEMS 5 // Cantidad de items implementados
 
 class ItemFactoryView
 {

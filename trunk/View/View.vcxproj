@@ -79,7 +79,7 @@
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="FlagMission.cpp" />
     <ClCompile Include="GameView.cpp" />
-    <ClCompile Include="Hearth.cpp" />
+    <ClCompile Include="Heart.cpp" />
     <ClCompile Include="ItemFactoryView.cpp" />
     <ClCompile Include="ItemView.cpp" />
     <ClCompile Include="Lamp.cpp" />
@@ -104,7 +104,7 @@
     <ClInclude Include="Flag.h" />
     <ClInclude Include="FlagMission.h" />
     <ClInclude Include="GameView.h" />
-    <ClInclude Include="Hearth.h" />
+    <ClInclude Include="Heart.h" />
     <ClInclude Include="ItemFactoryView.h" />
     <ClInclude Include="ItemView.h" />
     <ClInclude Include="Lamp.h" />

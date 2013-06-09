@@ -42,6 +42,7 @@ void PersonajeModelo::initialize(int pos_x, int pos_y) {
 	precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
 	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
 	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
+	magiaMaxima = DEFAULT_CHARACTER_MAX_MAGIC;
 	isReseting = false;
 }
 
@@ -142,6 +143,7 @@ void PersonajeModelo::resetChar() {
 	precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
 	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
 	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
+	magiaMaxima = DEFAULT_CHARACTER_MAX_MAGIC;
 	isReseting = true;
 }
 
@@ -242,12 +244,20 @@ float PersonajeModelo::getVidaMaxima() {
 	return vidaMaxima;
 }
 
+float PersonajeModelo::getMagiaMaxima() {
+	return magiaMaxima;
+}
+
 void PersonajeModelo::setDanoMaximo(float dano) {
 	danoMaximo = dano;
 }
 
 void PersonajeModelo::setPrecisionMinima(float precision) {
 	precisionMinima = precision;
+}
+
+void PersonajeModelo::setMagiaMaxima(float magia) {
+	magiaMaxima = magia;
 }
 
 void PersonajeModelo::setVidaMaxima(float vida) {

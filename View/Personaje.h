@@ -37,6 +37,8 @@ public:
 	bool isCenteredInTile();
 	std::string idToString();
 	void increaseSpeed(float factor);
+	void heal();
+	void rechargeMagic();
 	void recibirDano(float dano);
 	bool isItem();
 	void eatIfItem(std::pair<int, int> destino);
@@ -71,6 +73,7 @@ private:
 	//bool centeredInTile;
 	Daniable* currentEnemy; //el destruible que esta atacando el pj
 
+	float magiaActual;
 
 	std::string playerName;
 	std::string character_id;

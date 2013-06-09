@@ -166,6 +166,20 @@ entidades:
       alto_base: 1		
       pixel_ref_x: 30	
       pixel_ref_y: 6
+
+    - nombre: MagicBottle
+      imagen: ../Images/MagicBottle.png
+      ancho_base: 1		
+      alto_base: 1		
+      pixel_ref_x: 21	
+      pixel_ref_y: 6
+
+    - nombre: Heart
+      imagen: ../Images/Heart.png
+      ancho_base: 1		
+      alto_base: 1		
+      pixel_ref_x: 21	
+      pixel_ref_y: 6
        
 escenarios: 
     - nombre: bosque_encantado 

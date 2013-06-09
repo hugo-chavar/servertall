@@ -78,10 +78,10 @@
     <ClCompile Include="DeathmatchMission.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="Hearth.cpp">
+    <ClCompile Include="MagicBottle.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="MagicBottle.cpp">
+    <ClCompile Include="Heart.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,10 +149,10 @@
     <ClInclude Include="DeathmatchMission.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Hearth.h">
+    <ClInclude Include="MagicBottle.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="MagicBottle.h">
+    <ClInclude Include="Heart.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

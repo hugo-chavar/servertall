@@ -217,6 +217,7 @@ void GameView::update() {
 			_players[i]->getCharacter()->update();
 	}
 	this->getTimer()->updateTime();
+	this->getWorldView()->update();
 	if (mission.isGameOver()) {
 		//Player* player = this->playerWithHighestScore();
 		// TERMINAR JUEGO

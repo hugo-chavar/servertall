@@ -58,7 +58,7 @@ TileView* Stage::createTile(TileModel* tileModel) {
 	}
 	else{
 		ItemFactoryView factory;
-		ItemView* item=factory.generateItem(1,"H",tile->getPosition());//Harcodeo porcentaje de items
+		ItemView* item=factory.generateRandomItem(1,HIDDEN_ITEM,tile->getPosition(),true);//Harcodeo porcentaje de items
 		if(item)
 			{
 				itemsArray.push_back(item);
@@ -97,6 +97,12 @@ void Stage::generateStage() {
 		tileModel = tileModel->getNextTile();
 	}
 	//Generar Items Random Para los personajes al morir
+	//for(unsigned i=0;i<NUMBERITEMS;i++)
+	//{
+	//	ItemFactoryView factory;
+	//	ItemView* item=factory.generateItem(i,DEATH_ITEM,pair<int,int>(-1,-1),false);//Harcodeo porcentaje de items
+	//	itemsArray.push_back(item);
+	//}
 }
 //
 //void Stage::setTilesInCamera(int w, int h) {
@@ -121,9 +127,10 @@ bool Stage::initialize() {
 }
 
 void Stage::update() {
-	this->updateSprites();
-	this->updateTiles();
-	_personaje->update();
+//	this->updateSprites();
+//	this->updateTiles();
+	this->updateItems();
+//	_personaje->update();
 }
 
 Personaje* Stage::personaje() {
@@ -289,6 +296,14 @@ void Stage::updateTiles() {
 	}
 }
 
+void Stage::updateItems()
+{
+	for(int i=0;i<this->itemsArray.size();i++)
+	{
+		itemsArray[i]->update();
+	}
+}
+
 void Stage::updateSprites() {
 	for (unsigned i = 0 ; i < spriteArray.size(); i++) {
 		spriteArray[i]->updateFrame();
@@ -306,15 +321,15 @@ string Stage::manageItemsInitialSynch()
 	for(unsigned i=0;i<this->itemsArray.size();i++)
 	{
 		itemsInfo+=itemsArray[i]->getName()+";";
-		if(!itemsArray[i]->isAlive())
-		{
-			itemsInfo+="D;";
-		}
-		else if(itemsArray[i]->isHidden())
-			itemsInfo+="H;";
-		else
-			itemsInfo+="A;";
-
+		//if(!itemsArray[i]->isAlive())
+		//{
+		//	itemsInfo+="D;";
+		//}
+		//else if(itemsArray[i]->isHidden())
+		//	itemsInfo+="H;";
+		//else
+		//	itemsInfo+="A;";
+		itemsInfo+=stringUtilities::unsignedToString(itemsArray[i]->getState())+";";
 		itemsInfo+=stringUtilities::pairIntToString(itemsArray[i]->getPosicionActualEnTiles())+";";
 	}
 	if(itemsInfo.size()>0)
@@ -357,4 +372,49 @@ string Stage::manageItemsUpdate()
 	}
 	this->itemChanges.unLock();
 	return changes;
+}
+
+//void Stage::regenerateItem()
+//{
+//	unsigned actual=SDL_GetTicks();
+//	if(actual-this->lastRegeneration>REGENERATIONTIME)
+//	{
+//			this->reviveitem('H');
+//			this->lastRegeneration=actual;
+//	}
+//}
+//
+//void Stage::reviveitem(char hidden)
+//{
+//	bool revive=false;
+//	unsigned i=0;
+//	while(!revive && i<this->itemsArray.size())
+//	{
+//		if(!itemsArray[i]->isAlive())
+//		{
+//			pair<int,int> pos=itemsArray[i]->getPosicionActualEnTiles();
+//			if(pos.first==-1 && pos.second==-1)
+//				this->relocateItem(itemsArray[i]);
+//			itemsArray[i]->revive(hidden); //todo:comunicar a la vista esto
+//			revive=true;
+//		}
+//
+//	}
+//}
+//
+//void Stage::relocateItem(ItemView* item)
+//{
+//	int random= rand() % this->tilesMap.size();
+//	//this->worldModel->
+//}
+
+bool Stage::isThereAPlayerInTile(pair <int,int> pos)
+{
+	std::map<std::string,Personaje*>::iterator it;
+	for(it=this->personajes.begin();it!=personajes.end();it++)
+		{
+			if(it->second->getPosicionEnTiles()==pos)
+				return true;
+		}
+	return false;
 }

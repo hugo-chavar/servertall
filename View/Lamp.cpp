@@ -1,7 +1,7 @@
 #include "Lamp.h"
 //#define FACTORVISION 1.5 //factor de aumento del rango de vision
 
-Lamp::Lamp(string _name,string _hidden,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite) : ItemView(_name,_hidden,_pos,_hiddenSprite,sprite)
+Lamp::Lamp(string _name,unsigned _state,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite,bool _canReviveForHimself) : ItemView(_name,_state,_pos,_hiddenSprite,sprite,_canReviveForHimself)
 {
 }
 

@@ -14,6 +14,7 @@ public:
 
 protected:
 	std::pair<int, int> tileActual;
+	float vidaMaxima;
 	float vidaActual;
 };
 

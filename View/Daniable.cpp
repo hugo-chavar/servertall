@@ -1,7 +1,7 @@
 #include "Daniable.h"
 
-Daniable::Daniable() {
-	vidaMaxima = 0;
+Daniable::Daniable()
+{
 	vidaActual = 0;
 }
 

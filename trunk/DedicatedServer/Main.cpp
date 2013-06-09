@@ -11,14 +11,24 @@
 #include "CraPPyLog.h"
 
 int main(int argc, char *argv[]){
+	std::string mission;
+	if (argc < 2) {
+		std::cout << "Nombre de misión no ingresado"<<std::endl;
+		return EXIT_FAILURE;
+	}
+	else
+		mission = argv[1];
+
 	LOG_DEBUG("PROGRAM STARTED");
 	std::string command;
 
 	WSAData ws;
 	WSAStartup(MAKEWORD(2,2),&ws);
 
-	GameView::instance().initialize();
-
+	if (!GameView::instance().initialize(mission)) {
+		WSACleanup();
+		return EXIT_FAILURE;
+	}
 
 	ChatManager chatManager;
 	chatManager.startChatManager();

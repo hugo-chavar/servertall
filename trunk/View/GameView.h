@@ -21,7 +21,7 @@ public:
 	void update();
 	~GameView();
 	static GameView& instance();
-	bool initialize();
+	bool initialize(string chosenMission);
 	Stage* getWorldView();
 	//Personaje* getPersonaje(string name);
 	void addPlayer(string userID, string characterType);

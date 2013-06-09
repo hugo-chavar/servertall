@@ -10,13 +10,15 @@ GameView::~GameView() {
 	}
 }
 
-bool GameView::initialize() {
+bool GameView::initialize(string chosenMission) {
 	bool modelInitialized = Game::instance().initialize();;
 
 	bool mapInitialized = this->worldView.initialize();
 
-	// ELEGIR MISIÓN ANTES
-	mission.initialize();
+	if (mission.chooseMission(chosenMission))
+		mission.initialize();
+	else
+		return false;
 
 	this->getTimer()->initializeTime();
 

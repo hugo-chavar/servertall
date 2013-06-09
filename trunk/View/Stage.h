@@ -37,7 +37,9 @@ public:
 	string manageItemsUpdate();
 	//void regenerateItem();
 	bool isThereAPlayerInTile(pair <int,int> pos);
+	void relocateItem(pair<int,int>pos);
 private:
+	ItemView* findDeathItem();
 	unsigned lastRegeneration;
 	StringQueue itemChanges;
 	vector<ItemView*> itemsArray;

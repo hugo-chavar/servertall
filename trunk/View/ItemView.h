@@ -43,9 +43,10 @@ public:
 	string getName();
 	//std::pair<int,int> getPos();
 	void setPos(std::pair<int,int> position);
-	void revive(unsigned _state);
+	void revive(unsigned _state,std::pair <int,int> _pos);
 	void recibirDano(float dano);
 	bool isItem();
 	unsigned getState();
+	bool getCanReviveForHimself();
 };
 

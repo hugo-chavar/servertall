@@ -257,7 +257,7 @@ void Personaje::recibirDano(float dano) {
 		this->modelo->herir();
 	} else {
 		this->modelo->morir();
-		//LLAMAR FACTORY
+		GameView::instance().getWorldView()->relocateItem(this->tileActual);
 	}
 }
 

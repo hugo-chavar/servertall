@@ -43,7 +43,10 @@ void ItemView::update()
 					{
 						this->regenerationTime=0;
 						if(!GameView::instance().getWorldView()->isThereAPlayerInTile(this->getPosicionActualEnTiles()))
-							this->revive(HIDDEN_ITEM);
+						{
+							GameView::instance().getWorldView()->getTileAt(this->tileActual)->setOtherEntity(this);
+							this->revive(HIDDEN_ITEM,this->tileActual);//Aca tendria que meter logica para que cambie de lugar el item
+						}
 						else
 							regenerationTime=CONST_REGENERATION_TIME+rand()%VARIABLE_REGENERATION_TIME;
 					}
@@ -56,17 +59,24 @@ bool ItemView::isItem()
 	return true;
 }
 
+bool ItemView::getCanReviveForHimself()
+{
+	return this->canReviveForHimself;
+}
+
 void ItemView::kill()
 {
 	this->state=DEATH_ITEM;
 	//EMPEZAR A CONTAR EL TIEMPO
+	GameView::instance().getWorldView()->getTileAt(this->tileActual)->setOtherEntity(NULL);
 	GameView::instance().getWorldView()->addItemChange(itemChangeToString(DEATH_ITEM));
 	regenerationTime=CONST_REGENERATION_TIME+rand()%VARIABLE_REGENERATION_TIME;
 }
 
-void ItemView::revive(unsigned _state)
+void ItemView::revive(unsigned _state,std::pair <int,int> _pos)
 {
 	//this->alive=true;
+	this->tileActual=_pos;
 	this->state=_state;
 	if(state==HIDDEN_ITEM){
 		GameView::instance().getWorldView()->addItemChange(itemChangeToString(REVIVE_HIDDEN_ITEM));

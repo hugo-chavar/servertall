@@ -8,7 +8,7 @@
 class Hearth : public ItemView {
 
 public:
-	Hearth(string _name,string _hidden,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite);
+	Hearth(string _name,unsigned _state,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite,bool _canReviveForHimself);
 	~Hearth(void);
 	void modifyCharacter(Personaje* personaje);
 };

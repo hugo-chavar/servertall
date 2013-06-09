@@ -9,7 +9,11 @@
 enum entityStatus_t {
 	ENTITY_FROZEN,
 	ENTITY_BLINKING,
-	ENTITY_NORMAL
+	ENTITY_NORMAL,
+	EXPLOSIVE_EXPLOSION_COUNTDOWN,
+	EXPLOSIVE_EXPLOSION,
+	EXPLOSIVE_DUST_IN_THE_WIND,
+	ITEM_WAITING_REGENERATION
 };
 
 
@@ -41,6 +45,8 @@ public:
 	void decreaseEndStatusTime(float timeToDecrease);
 	void iceUp(unsigned seconds);
 	virtual bool isItem();
+	bool needsCountDown();
+	bool needsToBeCleaned();
 };
 
 #endif // _ENTITY_H_

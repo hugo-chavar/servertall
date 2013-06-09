@@ -3,7 +3,7 @@
 
 
 Flag::Flag() {
-	vidaMaxima = 100; // HARCODEADO
+	int vidaMaxima = 100; // HARCODEADO
 	vidaActual = vidaMaxima;
 	entity =  Game::instance().yParser.findAnimatedEntityType("bandera");
 	bool validPosition = false;

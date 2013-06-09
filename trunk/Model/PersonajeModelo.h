@@ -59,6 +59,10 @@ public:
 	void atacar();
 	float getDanoMaximo();
 	float getPrecisionMinima();
+	float getVidaMaxima();
+	void setDanoMaximo(float dano);
+	void setPrecisionMinima(float precision);
+	void setVidaMaxima(float vida);
 	void setFollowingEnemy(bool enemy);
 	std::pair <int, int> getTarget();
 	bool canSee(std::pair<int, int> tile);
@@ -113,6 +117,7 @@ private:
 
 	//------------------------ATRIBUTOS (PONGAN ACA LOS ATRIBUTOS DEL PJ: VIDA, MAGIA, DAÑO, ETC)------------------------
 	float precisionMinima;
+	float vidaMaxima;
 	float danoMaximo;
 };
 

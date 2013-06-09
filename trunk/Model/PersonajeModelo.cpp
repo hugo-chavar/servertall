@@ -41,6 +41,7 @@ void PersonajeModelo::initialize(int pos_x, int pos_y) {
 	following = false;
 	precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
 	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
+	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
 	isReseting = false;
 }
 
@@ -140,7 +141,7 @@ void PersonajeModelo::resetChar() {
 	following = false;
 	precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
 	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
-	
+	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
 	isReseting = true;
 }
 
@@ -189,7 +190,7 @@ bool PersonajeModelo::isThereAnEnemy(int tileX, int tileY) {
 	if ((!this->isActive())||(this->estaAnimandose())) {
 		return false;
 	}
-	if ((vision != NULL) && (vision->isInsideVision(tileDestino)) && (GameView::instance().getDaniableInTile(tileDestino))) {
+	if ((vision != NULL) && (vision->isInsideVision(tileDestino)) && (GameView::instance().getDaniableInTile(tileDestino) != NULL)) {
 		return true;
 	}
 	return false;
@@ -237,44 +238,21 @@ int PersonajeModelo::siCaminaDetenerse() {
 	return cambio;
 }
 
-//pair <int, int> PersonajeModelo::mover(std::pair<int, int> destino) {
-//	Pathfinder pathF;
-//	int cambio = SIN_CAMBIO;
-//	double coste = 0;
-//	float costeF = 0;
-//	pair <int, int> nextTile;
-//
-//	if (target == current) {
-//		nextTile.first = -1;
-//		nextTile.second = -1;
-//		return nextTile;
-//	}
-//	if (esNecesarioCalcularNuevoPath()) {
-//		posMov = 0;
-//		caminoSize = 0;
-//		limpiarPath();
-//		targetParcial.first = target.first;
-//		targetParcial.second = target.second;
-//		caminoSize = pathF.getPath(current.first, current.second, targetParcial.first, targetParcial.second, xPath, yPath);
-//		if (caminoSize == 0) { //Si no se tiene que mover, seteo el destino en los parciales
-//			target.first = targetParcial.first;
-//			target.second = targetParcial.second;
-//		}
-//		if (caminoSize <  0) {
-//			nextTile.first = -1;
-//			nextTile.second = -1;
-//			return nextTile;
-//		}
-//	}
-//	if (posMov < caminoSize) {
-//		nextTile = this->moverse();
-//		return nextTile;
-//	} else {
-//		nextTile.first = -1;
-//		nextTile.second = -1;
-//		return nextTile;
-//	}
-//}
+float PersonajeModelo::getVidaMaxima() {
+	return vidaMaxima;
+}
+
+void PersonajeModelo::setDanoMaximo(float dano) {
+	danoMaximo = dano;
+}
+
+void PersonajeModelo::setPrecisionMinima(float precision) {
+	precisionMinima = precision;
+}
+
+void PersonajeModelo::setVidaMaxima(float vida) {
+	vidaMaxima = vida;
+}
 
 int PersonajeModelo::mover(std::pair<int, int>& destino, float& velocidadAni) {
 	Pathfinder pathF;

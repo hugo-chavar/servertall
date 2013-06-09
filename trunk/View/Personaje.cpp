@@ -19,8 +19,8 @@ Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	ePot.second = 0;
 	serr = 0;
 	currentEnemy = NULL;
-	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
-	vidaActual = vidaMaxima;
+	vidaActual = modelo->getVidaMaxima();
+	magiaActual = modelo->getMagiaMaxima();
 	//crearNombre(modelo->getName());
 
 	//this->modelo->getAnimation()->fps(static_cast<int>(this->modelo->getAnimation()->fps() * (this->modelo->getVelocidad()/2)));
@@ -166,7 +166,8 @@ void Personaje::calcularSigTileAMover(){
 		if (modelo->getIsReseting()) {
 			this->setRectangle(tileActual, sprites[this->currentSpritePosition]);
 			currentEnemy = NULL;
-			vidaActual = vidaMaxima;
+			this->heal();
+			this->rechargeMagic();
 			modelo->setIsReseting();
 		}
 	}
@@ -533,6 +534,16 @@ std::string Personaje::idToString() {
 void Personaje::increaseSpeed(float factor)
 {
 	this->modelo->increaseSpeed(factor);
+}
+
+void Personaje::heal() {
+
+	vidaActual = modelo->getVidaMaxima();
+}
+
+void Personaje::rechargeMagic() {
+
+	magiaActual = modelo->getMagiaMaxima();
 }
 
 bool Personaje::isItem()

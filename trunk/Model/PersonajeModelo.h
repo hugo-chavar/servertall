@@ -7,7 +7,6 @@
 #include "AnimatedEntity.h"
 #include "CharacterVision.h"
 
-class Personaje;
 
 class PersonajeModelo {
 
@@ -57,12 +56,16 @@ public:
 	void setIsReseting();
 	bool isThereAnEnemy(int tileX, int tileY);
 	void atacar();
+
 	float getDanoMaximo();
 	float getPrecisionMinima();
 	float getVidaMaxima();
+	float getMagiaMaxima();
 	void setDanoMaximo(float dano);
 	void setPrecisionMinima(float precision);
 	void setVidaMaxima(float vida);
+	void setMagiaMaxima(float magia);
+
 	void setFollowingEnemy(bool enemy);
 	std::pair <int, int> getTarget();
 	bool canSee(std::pair<int, int> tile);
@@ -118,6 +121,7 @@ private:
 	//------------------------ATRIBUTOS (PONGAN ACA LOS ATRIBUTOS DEL PJ: VIDA, MAGIA, DAÑO, ETC)------------------------
 	float precisionMinima;
 	float vidaMaxima;
+	float magiaMaxima;
 	float danoMaximo;
 };
 

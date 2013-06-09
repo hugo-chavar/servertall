@@ -120,7 +120,7 @@ void ClientList::addBroadcast(Instruction& instruction, std::string from) {
 ClientList::~ClientList(){
 	for(std::list<Client*>::iterator it = this->getClients().begin(); it != this->getClients().end(); ++it){
 		//ONLY CASE WHERE STOP IS UP TO THE CLIENT LIST. IDEALLY AT THIS POINT EVERY CLIENT MUST HAVE BEEN DETACHED AND STOPED BY THE CLASS CONTAINING THE LIST.
-		(*it)->stopClient();
+		//(*it)->stopClient();
 		delete *it;
 	}
 }

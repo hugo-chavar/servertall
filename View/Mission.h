@@ -22,6 +22,7 @@ public:
 	bool isGameOver();
 
 private:
+	bool gameOverMessageSent;
 	FlagMission flagMission;
 	DeathmatchMission deathmatch;
 

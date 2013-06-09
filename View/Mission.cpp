@@ -15,13 +15,17 @@ void Mission::initialize() { // FLAGMission DEFAULT EN CASO DE NO PASAR LA Missi
 	}
 }
 
-void Mission::chooseMission(string mission) {
+bool Mission::chooseMission(string mission) {
 	if (mission.compare("flagMission") == 0) {
 		flagMission.choose();
-	}else {
-		if (mission.compare("deathmatchMission") == 0)
-		deathmatch.choose();
+		return true;
+	} else {
+		if (mission.compare("deathmatchMission") == 0) {
+			deathmatch.choose();
+			return true;
+		}
 	}
+	return false;
 }
 
 void Mission::missionUpdate(Daniable* victim, Daniable* attacker) {

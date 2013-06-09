@@ -4,7 +4,7 @@
 
 
 FlagMission::FlagMission() {
-	chosen = true; // HARCODEADO
+	chosen = false;
 }
 
 FlagMission::~FlagMission() {

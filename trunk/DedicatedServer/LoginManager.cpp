@@ -210,6 +210,7 @@ void LoginManager::processRequests() {
 						LOG_DEBUG("THE USER " + argument + " DISCONNECTED");
 						client->stopClient();
 						delete client;
+						client = NULL;
 					} else {
 						LOG_ERROR("THE NON-EXISTANT USER " + argument + " TRIED TO DISCONNECT");
 					}
@@ -225,6 +226,7 @@ void LoginManager::processRequests() {
 						this->getUsedClients().addClient(client);
 						client->stopClient();
 						delete client;
+						client = NULL;
 					} else {
 						LOG_ERROR("CONNECTION ERROR RECEIVED FROM THE NON-EXISTANT USER " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 					}

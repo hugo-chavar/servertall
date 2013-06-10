@@ -36,6 +36,7 @@ void ChatManager::processRequests() {
 				client = this->getClients().detachClient(argument);
 				client->stopClient();
 				delete client;
+				client = NULL;
 				instructionOut.setOpCode(OPCODE_CHAT_MESSAGE_IN);
 				//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_USERD_ID,argument);
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_FROM,argument);
@@ -72,6 +73,7 @@ void ChatManager::processRequests() {
 				if (client != NULL) {
 					client->stopClient();
 					delete client;
+					client = NULL;
 				}
 				break;
 			}

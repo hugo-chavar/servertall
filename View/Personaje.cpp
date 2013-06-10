@@ -147,7 +147,10 @@ void Personaje::calcularSigTileAMover(){
 		tileActual = modelo->getPosition();
 		//modelo->setIsInCenterTile(true);
 		this->eatIfItem(tileActual);
-		currentAnimationNumber = modelo->mover(tile, velocidad);
+		//if Arma.meTengoQueDetener(posActual, posEnemigo)
+		  //detener
+		//else
+			currentAnimationNumber = modelo->mover(tile, velocidad);
 		if (this->modelo->estaAnimandose())
 			return;
 		this->setCurrentSpritePosition(this->calculateSpritePosition(currentAnimationNumber));
@@ -161,6 +164,7 @@ void Personaje::calcularSigTileAMover(){
 			//modelo->setIsInCenterTile(false);
 			modelo->setCurrent(tile.first, tile.second);
 		} else {
+
 			this->atacar();
 		}
 		if (modelo->getIsReseting()) {
@@ -450,6 +454,10 @@ std::string Personaje::updateToString() {
 	} else {
 		out.append("F");
 	}
+	out.append(";");
+	out.append(stringUtilities::floatToString(this->vidaActual));
+	out.append(";");
+	out.append(stringUtilities::floatToString(this->magiaActual));
 	out.append(";");
 	out.append(this->modelo->getVision()->updateToString());
 	return out;

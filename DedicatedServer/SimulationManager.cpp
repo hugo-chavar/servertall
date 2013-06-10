@@ -113,6 +113,7 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			client = this->getClients().detachClient(argument);
 			client->stopClient();
 			delete client;
+			client = NULL;
 			LOG_DEBUG("THE USER " + argument + " DISCONNECTED FROM SIMULATION");
 			GameView::instance().setDisconnectedPlayer(argument);
 			break;
@@ -166,6 +167,7 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			if (client != NULL) {
 				client->stopClient();
 				delete client;
+				client = NULL;
 			}
 			GameView::instance().setDisconnectedPlayer(argument);
 			break;

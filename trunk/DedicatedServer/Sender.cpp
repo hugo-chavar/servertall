@@ -51,7 +51,7 @@ void Sender::send(){
 				}
 			}
 
-			LOG_DEBUG("---------- ABOUT TO SEND MESSAGE: " + mensaje + " - AT: " + stringUtilities::longToString(SDL_GetTicks()));
+			//LOG_DEBUG("---------- ABOUT TO SEND MESSAGE: " + mensaje + " - AT: " + stringUtilities::longToString(SDL_GetTicks()));
 			this->sendMessage(mensaje);
 		}
 	} while (!this->isStopping());

@@ -71,6 +71,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ammunition.cpp" />
+    <ClCompile Include="AmmunitionPool.cpp" />
     <ClCompile Include="CharacterFactory.cpp" />
     <ClCompile Include="Daniable.cpp" />
     <ClCompile Include="DeathmatchMission.cpp" />
@@ -97,6 +99,8 @@
     <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ammunition.h" />
+    <ClInclude Include="AmmunitionPool.h" />
     <ClInclude Include="CharacterFactory.h" />
     <ClInclude Include="Daniable.h" />
     <ClInclude Include="DeathmatchMission.h" />

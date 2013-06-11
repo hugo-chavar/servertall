@@ -10,7 +10,8 @@ ItemView::ItemView(string _name,unsigned _state,std::pair <int,int> _pos,Sprite*
 	//this->alive=true;
 	this->name=_name;
 	this->tileActual=_pos;
-	this->state=_state;
+	//this->state=_state;
+	this->setStatus(_state);
 	this->canReviveForHimself=_canReviveForHimself;
 	//if(_hidden=="H")
 		//this->hidden=true;
@@ -34,7 +35,7 @@ void ItemView::update()
 {
 	if (this->canReviveForHimself)
 	{
-		if(this->state==DEATH_ITEM)
+		if(this->getStatus()==DEATH_ITEM)
 			{
 				int delta=static_cast <int>(GameView::instance().getTimer()->getDeltaTime());
 				if(regenerationTime-delta>0)
@@ -66,7 +67,8 @@ bool ItemView::getCanReviveForHimself()
 
 void ItemView::kill()
 {
-	this->state=DEATH_ITEM;
+	//this->state=DEATH_ITEM;
+	this->setStatus(DEATH_ITEM);
 	//EMPEZAR A CONTAR EL TIEMPO
 	GameView::instance().getWorldView()->getTileAt(this->tileActual)->setOtherEntity(NULL);
 	GameView::instance().getWorldView()->addItemChange(itemChangeToString(DEATH_ITEM));
@@ -77,8 +79,9 @@ void ItemView::revive(unsigned _state,std::pair <int,int> _pos)
 {
 	//this->alive=true;
 	this->tileActual=_pos;
-	this->state=_state;
-	if(state==HIDDEN_ITEM){
+	//this->state=_state;
+	this->setStatus(_state);
+	if(this->isHidden()){
 		GameView::instance().getWorldView()->addItemChange(itemChangeToString(REVIVE_HIDDEN_ITEM));
 		Game::instance().world()->getTileAt(this->getPosicionActualEnTiles())->setHasHiddenItem(true);
 	}
@@ -89,18 +92,19 @@ void ItemView::revive(unsigned _state,std::pair <int,int> _pos)
 
 bool ItemView::isAlive()
 {
-	return (this->state==HIDDEN_ITEM || this->state==UNCOVER_ITEM);
+	return (this->isHidden() || this->getStatus()==UNCOVER_ITEM);
 }
 
 bool ItemView::isHidden()
 {
-	return (this->state==HIDDEN_ITEM);
+	return (this->getStatus()==HIDDEN_ITEM);
 }
 
 void ItemView::uncover()
 {
 	//this->hidden=false;
-	this->state=UNCOVER_ITEM;
+	//this->state=UNCOVER_ITEM;
+	this->setStatus(UNCOVER_ITEM);
 	GameView::instance().getWorldView()->addItemChange(itemChangeToString(UNCOVER_ITEM));
 }
 
@@ -121,13 +125,13 @@ void ItemView::setPos(std::pair<int,int> position)
 
 string ItemView::itemChangeToString(unsigned _state)
 {
-	string modification=stringUtilities::unsignedToString(_state)+";"+this->name+";"+stringUtilities::pairIntToString(this->getPosicionActualEnTiles());
+	string modification=this->statusToString()+";"+this->name+";"+stringUtilities::pairIntToString(this->getPosicionActualEnTiles());
 	return modification;
 }
 
 void ItemView::recibirDano(float dano)
 {
-	if(dano>0 && this->state==HIDDEN_ITEM)
+	if(dano>0 && this->isHidden())
 	{
 		this->uncover();
 		GameView::instance().getWorldView()->getTileAt(this->getPosicionActualEnTiles())->setItemUncover();
@@ -138,8 +142,8 @@ void ItemView::modifyCharacter(Personaje* personaje)
 {
 	//MetodoAbstracto
 }
-
-unsigned ItemView::getState()
-{
-	return this->state;
-}
+//
+//unsigned ItemView::getState()
+//{
+//	return this->state;
+//}

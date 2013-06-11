@@ -1,30 +1,20 @@
-#pragma once
+#ifndef _AMMUNITION_H_
+#define _AMMUNITION_H_
+
 #include "Entity.h"
 #include "Personaje.h"
 #include "StringUtilities.h"
 #include "Daniable.h"
 
-//#ifndef item_state_t
-//#define item_state_t
-//enum item_state_t {
-//	HIDDEN_ITEM,
-//	UNCOVER_ITEM,
-//	DEATH_ITEM,
-//	REVIVE_UNCOVER_ITEM,
-//	REVIVE_HIDDEN_ITEM
-//
-//};
-//#endif
-
-class ItemView : public Entity,public Daniable
+class Ammunition : public Entity
 {
 
 protected:
-	//unsigned state;
+	unsigned state;
 	//bool alive;
 	//bool hidden;
 	string name;
-	string ItemView::itemChangeToString(unsigned _state);
+	string itemChangeToString(unsigned _state);
 	SDL_Rect hiddenSpriteRect;
 	Sprite * hiddenSprite;
 	void setHiddenRectangle(std::pair<int, int> pos, Sprite* sprite );
@@ -33,8 +23,8 @@ protected:
 
 public:
 	void update();
-	ItemView(string _name,unsigned _state,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite,bool _canReviveForHimself);
-	~ItemView(void);
+	Ammunition(string _name, Sprite* sprite);
+	~Ammunition();
 	virtual void modifyCharacter(Personaje* personaje);
 	void kill();
 	bool isAlive();
@@ -49,4 +39,7 @@ public:
 	//unsigned getState();
 	bool getCanReviveForHimself();
 };
+
+
+#endif // _AMMUNITION_H_
 

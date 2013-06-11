@@ -299,7 +299,7 @@ void Stage::updateTiles() {
 
 void Stage::updateItems()
 {
-	for(int i=0;i<this->itemsArray.size();i++)
+	for(unsigned i=0;i<this->itemsArray.size();i++)
 	{
 		itemsArray[i]->update();
 	}
@@ -330,7 +330,7 @@ string Stage::manageItemsInitialSynch()
 		//	itemsInfo+="H;";
 		//else
 		//	itemsInfo+="A;";
-		itemsInfo+=stringUtilities::unsignedToString(itemsArray[i]->getState())+";";
+		itemsInfo+=itemsArray[i]->statusToString()+";";
 		itemsInfo+=stringUtilities::pairIntToString(itemsArray[i]->getPosicionActualEnTiles())+";";
 	}
 	if(itemsInfo.size()>0)

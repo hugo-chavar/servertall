@@ -4,7 +4,7 @@ pantalla:
 
 configuracion: 
     - vel_personaje: 1
-    - margen_scroll: 500
+    - margen_scroll: 100
     - vision_personaje: 4
     - puerto_servidor: 3500
      
@@ -129,15 +129,6 @@ entidades:
 
     - nombre: piedra 
       imagen: ../Images/pisoPiedra0.png
-
-    - nombre: piso2921 
-      imagen: ../Images/piso2921.png
-
-    - nombre: piso041 
-      imagen: ../Images/piso041.png
-
-    - nombre: piso5050 
-      imagen: ../Images/piso050.png
 
     - nombre: Chest
       imagen: ../Images/cofre.png
@@ -402,7 +393,6 @@ escenarios:
          - {x: 99, y: 99, entidad: bandera}
          - {x: 9, y: 9, entidad: bandera}
          - {x: 15, y: 15, entidad: fuente} 
-         - {x: 0, y: 50, entidad: piso5050}
          - {x: 10, y: 15, entidad: tierra} 
          - {x: 50, y: 50, entidad: agua}
          - {x: 0, y: 12, entidad: arbol}

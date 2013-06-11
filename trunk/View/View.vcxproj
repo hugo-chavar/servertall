@@ -89,6 +89,7 @@
     <ClCompile Include="Personaje.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RunningBoots.cpp" />
+    <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteAnimado.cpp" />
     <ClCompile Include="TileView.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="Personaje.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RunningBoots.h" />
+    <ClInclude Include="Shield.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteAnimado.h" />
     <ClInclude Include="Stage.h" />

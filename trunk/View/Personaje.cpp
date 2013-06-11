@@ -21,6 +21,8 @@ Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	currentEnemy = NULL;
 	vidaActual = modelo->getVidaMaxima();
 	magiaActual = modelo->getMagiaMaxima();
+	this->shieldResistance=0;
+	this->shieldAbsortion=0;
 	//crearNombre(modelo->getName());
 
 	//this->modelo->getAnimation()->fps(static_cast<int>(this->modelo->getAnimation()->fps() * (this->modelo->getVelocidad()/2)));
@@ -248,7 +250,24 @@ void Personaje::moverSpriteEnY() {
 	}
 }
 
-
+void Personaje::manejarDano(float danoRecibido)
+{
+	if(!this->hasShield())
+		vidaActual -= danoRecibido;
+	else
+	{
+		float diference=danoRecibido-this->shieldAbsortion;
+		if(diference>=0)
+		{
+			this->shieldResistance-=this->shieldAbsortion;
+			vidaActual -=diference;
+		}
+		else
+		{
+		this->shieldResistance-=this->shieldAbsortion-diference;
+		}
+	}
+}
 
 void Personaje::recibirDano(float dano) {
 	
@@ -256,7 +275,8 @@ void Personaje::recibirDano(float dano) {
 		return;
 	}
 	float danoRecibido = Game::instance().getRandom() * dano;
-	vidaActual -= danoRecibido;
+	this->manejarDano(danoRecibido);
+	//vidaActual -= danoRecibido;
 	if (vidaActual > 0) {
 		this->modelo->herir();
 	} else {
@@ -578,4 +598,15 @@ void Personaje::eatIfItem(std::pair<int, int> destino)
 
 bool Personaje::hasValidSprite() {
 	return ((this->getCurrentSpritePosition() <= static_cast<int>(sprites.size()-1))&&(this->getCurrentSpritePosition() >= 0));
+}
+
+void Personaje::setShield(float resistance,float absortion)
+{
+	this->shieldResistance=resistance;
+	this->shieldAbsortion=absortion;
+}
+
+bool Personaje::hasShield()
+{
+	return (this->shieldResistance>0);
 }

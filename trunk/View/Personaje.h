@@ -43,6 +43,8 @@ public:
 	bool isItem();
 	void eatIfItem(std::pair<int, int> destino);
 	bool hasValidSprite();
+	void setShield(float resistance,float absortion);
+	bool hasShield();
 
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual
@@ -74,6 +76,9 @@ private:
 	Daniable* currentEnemy; //el destruible que esta atacando el pj
 
 	float magiaActual;
+	float shieldResistance;
+	float shieldAbsortion;
+	void manejarDano(float dano);
 
 	std::string playerName;
 	std::string character_id;

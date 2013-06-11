@@ -172,7 +172,6 @@ entidades:
       pixel_ref_x: 21	
       pixel_ref_y: 6
 
-
     - nombre: Shield
       imagen: ../Images/Shield.png
       ancho_base: 1		
@@ -447,15 +446,24 @@ escenarios:
          - {x: 25, y: 1, entidad: caballoR}
       protagonista: 
          - tipoEntidad: caballo
-           x: 0 
-           y: 0 
+           x: 0
+           y: 0
          - tipoEntidad: frodo
-           x: 3 
+           x: 3
            y: 3
          - tipoEntidad: mago
-           x: 3 
+           x: 3
            y: 5
-    - nombre: bosque_loco 
+      items:
+         porcentaje: 0.5
+         def:
+            - tipo: Shield
+              caracteristicas: life=200
+            - tipo: Arrow
+              caracteristicas: amount=10,distance=5
+            - tipo: Bomb
+              caracteristicas: time=10
+    - nombre: bosque_loco
       size_x: 10
       size_y: 10 
       entidadesDef:  

@@ -26,5 +26,10 @@ struct EntLists {
 
 };
 
+struct sItem {
+	string type;
+	string characteristics;
+};
+
 
 #endif

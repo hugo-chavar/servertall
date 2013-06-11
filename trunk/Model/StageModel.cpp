@@ -23,6 +23,8 @@ StageModel::StageModel(const StageModel &origStage){
 	this->firstTile = origStage.firstTile;
 	this->_vMainCharacters.assign(origStage._vMainCharacters.begin(),origStage._vMainCharacters.end());
 	this->_vEntitiesDef = origStage._vEntitiesDef;
+	this->_mapItems = origStage._mapItems;
+	this->_itemsPercentage = origStage._itemsPercentage;
 	this->tileLevels.assign(origStage.tileLevels.begin(),origStage.tileLevels.end());
 }
 
@@ -36,8 +38,14 @@ StageModel& StageModel::operator=(const StageModel &origStage){
 	this->firstTile = origStage.firstTile;
 	this->_vMainCharacters.assign(origStage._vMainCharacters.begin(),origStage._vMainCharacters.end());
 	this->_vEntitiesDef = origStage._vEntitiesDef;
+	this->_mapItems = origStage._mapItems;
+	this->_itemsPercentage = origStage._itemsPercentage;
 	this->tileLevels.assign(origStage.tileLevels.begin(),origStage.tileLevels.end());
 	return *this;
+}
+
+float StageModel::itemsPercentage() {
+	return this->_itemsPercentage;
 }
 
 string StageModel::name() const {
@@ -62,6 +70,10 @@ void StageModel::width(unsigned int value) {
 
 vector <EntityDef> StageModel::vEntitiesDef() {
 	return _vEntitiesDef;
+}
+
+map <string, string>* StageModel::mapItems() {
+	return &_mapItems;
 }
 
 vector <PersonajeModelo*>* StageModel::vMainCharacters() {
@@ -336,6 +348,12 @@ void StageModel::loadNamedChars() {
 	vector <PersonajeModelo*>::iterator it = _vMainCharacters.begin();
 	for (; it != _vMainCharacters.end(); it++ ) {
 		mapMainCharacters.insert(make_pair((*it)->getName(), (*it)));
+	}
+}
+
+void StageModel::loadMapItems(vector <sItem> vItems) {
+	for (unsigned int i = 0; i < vItems.size(); i++) {
+		this->_mapItems.insert(make_pair(vItems[i].type, vItems[i].characteristics));
 	}
 }
 

@@ -51,6 +51,9 @@ ItemView* ItemFactoryView::generateItem(int itemPos,unsigned _state,std::pair <i
 		case 4:
 			sprite=GameView::instance().getWorldView()->getSprite("MagicBottle");
 			return new MagicBottle("MagicBottle",_state,pos,hiddenSprite,sprite,_canReviveForHimself);
+		case 5:
+			sprite=GameView::instance().getWorldView()->getSprite("Shield");
+			return new Shield("Shield",_state,pos,hiddenSprite,sprite,_canReviveForHimself);
 		}
 	return NULL;
 }

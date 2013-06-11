@@ -5,9 +5,10 @@
 #include "RunningBoots.h"
 #include "Heart.h"
 #include "MagicBottle.h"
+#include "Shield.h"
 
 
-#define NUMBERITEMS 5 // Cantidad de items implementados
+#define NUMBERITEMS 6 // Cantidad de items implementados
 
 class ItemFactoryView
 {

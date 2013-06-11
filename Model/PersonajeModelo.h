@@ -1,20 +1,21 @@
-#ifndef PERSONAJEMODELO_H
-#define PERSONAJEMODELO_H
+#ifndef _PERSONAJEMODELO_H
+#define _PERSONAJEMODELO_H
 
 #include <utility>
 #include "Constants.h"
 #include "DirList.h"
 #include "AnimatedEntity.h"
+#include "Positionable.h"
 #include "CharacterVision.h"
 
 
-class PersonajeModelo {
+class PersonajeModelo: public Positionable {
 
 public:
 	PersonajeModelo();
 	PersonajeModelo(int ActualX, int ActualY);
 	void setEstado(int state);
-	void setCurrent(int x, int y);
+	//void setCurrent(int x, int y);
 	void setDestino(int x, int y);
 	void setVelocidad(float vel);
 	//void getCurrent(std::pair<int, int>& actual);
@@ -36,7 +37,6 @@ public:
 	void animar(char opcion);
 	string getName();
 	void setName(string nombreJugador);
-	std::pair<int, int> getPosition();
 	void createVision(int range);
 	CharacterVision* getVision();
 	void update();
@@ -49,14 +49,10 @@ public:
 	void restartDirectories();
 	int getOrientacion();
 	void increaseSpeed(float factor);
-	//void increaseVisionRange(float factor);
-	//void discoverMap();
-
 	bool getIsReseting();
 	void setIsReseting();
 	bool isThereAnEnemy(int tileX, int tileY);
 	void atacar();
-
 	float getDanoMaximo();
 	float getPrecisionMinima();
 	float getVidaMaxima();
@@ -72,7 +68,7 @@ public:
 
 	void herir();
 	void morir();
-	void setPosition(std::pair<int, int> pos);
+	//void setPosition(std::pair<int, int> pos);
 private:
 
 	//void eatIfItem(std::pair<int, int> destino);
@@ -98,7 +94,7 @@ private:
 	void initialize(int pos_x, int pos_y);
 	
 	std::pair<int, int> startPosition;
-	std::pair<int, int> current;
+	//std::pair<int, int> current;
 	std::pair<int, int> target;
 	std::pair<int, int> targetParcial;
 	int* xPath;

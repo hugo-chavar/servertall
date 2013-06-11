@@ -6,17 +6,20 @@ Flag::Flag() {
 	vidaActual = 100; // HARCODEADO
 	entity =  Game::instance().yParser.findAnimatedEntityType("bandera");
 	bool validPosition = false;
-	KeyPair position;
+	std::pair<int,int> position;
 	while (!validPosition) {
 		position.first = rand() % Game::instance().world()->width();
 		position.second = rand() % Game::instance().world()->height();
 		if ((!GameView::instance().getWorldView()->getTileAt(position)->hasOtherEntity()) && (!GameView::instance().getWorldView()->getTileAt(position)->getRelatedTile()))
 			validPosition = true;
 	}
-	tileActual.first = 4;//position.first;
-	tileActual.second = 3;//position.second;
-	GameView::instance().getWorldView()->addOtherEntity(tileActual, entity->name());
-	Game::instance().world()->getTileAt(tileActual)->setOtherEntity(entity);
+	position.first = 4;
+	position.second = 3;
+	this->setPosition(position);
+	//tileActual.first = 4;//position.first;
+	//tileActual.second = 3;//position.second;
+	GameView::instance().getWorldView()->addOtherEntity(this->getPosition(), entity->name());
+	Game::instance().world()->getTileAt(this->getPosition())->setOtherEntity(entity);
 }
 
 Flag::~Flag() { }
@@ -26,6 +29,6 @@ string Flag::getName() {
 }
 
 void Flag::destroy() {
-	GameView::instance().getWorldView()->removeOtherEntity(tileActual);
-	Game::instance().world()->getTileAt(tileActual)->setOtherEntity(NULL);
+	GameView::instance().getWorldView()->removeOtherEntity(this->getPosition());
+	Game::instance().world()->getTileAt(this->getPosition())->setOtherEntity(NULL);
 }

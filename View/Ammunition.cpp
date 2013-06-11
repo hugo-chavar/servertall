@@ -3,7 +3,7 @@
 #include "Game.h"
 
 
-Ammunition::Ammunition(string _name,Sprite* sprite)//:Entity(_pos.first,_pos.second,sprite)
+Ammunition::Ammunition(string _name,Sprite* )//:Entity(_pos.first,_pos.second,sprite)
 {
 	//this->alive=true;
 	this->name=_name;
@@ -67,7 +67,7 @@ void Ammunition::kill()
 	//regenerationTime=CONST_REGENERATION_TIME+rand()%VARIABLE_REGENERATION_TIME;
 }
 
-void Ammunition::revive(unsigned _state,std::pair <int,int> _pos)
+void Ammunition::revive(unsigned _state,std::pair <int,int> )
 {
 	//this->alive=true;
 //	this->tileActual=_pos;
@@ -100,7 +100,7 @@ void Ammunition::uncover()
 
 
 
-void Ammunition::setPos(std::pair<int,int> position)
+void Ammunition::setPos(std::pair<int,int> )
 {
 	//this->tileActual=position;
 }

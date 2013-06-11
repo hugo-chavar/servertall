@@ -24,7 +24,7 @@ protected:
 	//bool alive;
 	//bool hidden;
 	string name;
-	string ItemView::itemChangeToString(unsigned _state);
+	string ItemView::itemChangeToString(); //unsigned _state
 	SDL_Rect hiddenSpriteRect;
 	Sprite * hiddenSprite;
 	void setHiddenRectangle(std::pair<int, int> pos, Sprite* sprite );
@@ -42,7 +42,7 @@ public:
 	void uncover();
 	string getName();
 	//std::pair<int,int> getPos();
-	void setPos(std::pair<int,int> position);
+	//void setPos(std::pair<int,int> position);
 	void revive(unsigned _state,std::pair <int,int> _pos);
 	void recibirDano(float dano);
 	bool isItem();

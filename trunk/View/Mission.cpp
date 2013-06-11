@@ -51,7 +51,7 @@ bool Mission::isGameOver() {
 }
 
 string Mission::manageMissionInitialSynch() {
-	if (flagMission.isTheChosenMission())
+	if ((flagMission.isTheChosenMission()) && (!flagMission.allFlagsDestroyed()))
 		return flagMission.initToString();
 	return "";
 }

@@ -289,7 +289,7 @@ Mission* GameView::getMission() {
 //------------------------ METODOS QUE NO SE USAN EN UN PRINCIPIO EN EL SERVER-----------------------------
 
 bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos) {
-	bool inside = player.getCharacter()->personajeModelo()->getVision()->isInsideVision(pos);
+	bool inside = player.getCharacter()->personajeModelo()->canSee(pos);
 
 	if (!inside) {
 		TileModel* relatedTile = Game::instance().world()->getTileAt(pos)->getRelatedTile();
@@ -297,7 +297,7 @@ bool GameView::insidePlayerVision(Player player, std::pair<int,int> pos) {
 			// preguntar si es drawable() e ir salteando..
 			while ( (!inside) && (relatedTile != Game::instance().world()->getTileAt(pos)) ) {
 				pair<int, int> posRelated = relatedTile->getPosition();
-				inside = player.getCharacter()->personajeModelo()->getVision()->isInsideVision(posRelated);
+				inside = player.getCharacter()->personajeModelo()->canSee(posRelated);
 				relatedTile = relatedTile->getRelatedTile();
 			}
 		}

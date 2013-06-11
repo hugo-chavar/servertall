@@ -212,3 +212,12 @@ escenarios:
          - tipoEntidad: frodo
            x: 5 
            y: 3 
+      items:
+         porcentaje: 0.5
+         def:
+            - tipo: shield
+              caracteristicas: life=200
+            - tipo: arrow
+              caracteristicas: amount=10,distance=5
+            - tipo: bomb
+              caracteristicas: time=10

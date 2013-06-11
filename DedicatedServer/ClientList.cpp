@@ -120,8 +120,13 @@ void ClientList::addBroadcast(Instruction& instruction, std::string from) {
 ClientList::~ClientList(){
 	for(std::list<Client*>::iterator it = this->getClients().begin(); it != this->getClients().end(); ++it){
 		//ONLY CASE WHERE STOP IS UP TO THE CLIENT LIST. IDEALLY AT THIS POINT EVERY CLIENT MUST HAVE BEEN DETACHED AND STOPED BY THE CLASS CONTAINING THE LIST.
-		//(*it)->stopClient();
-		delete *it;
-		*it = NULL;
+		try	{
+			(*it)->stopClient();
+			delete *it;
+			*it = NULL;
+		} catch (std::bad_alloc& ba) {
+			std::string whatError = ba.what();
+			LOG_ERROR("bad_alloc caught: " + whatError);
+		}
 	}
 }

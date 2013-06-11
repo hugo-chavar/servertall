@@ -331,7 +331,7 @@ string Stage::manageItemsInitialSynch()
 		//else
 		//	itemsInfo+="A;";
 		itemsInfo+=itemsArray[i]->statusToString()+";";
-		itemsInfo+=stringUtilities::pairIntToString(itemsArray[i]->getPosicionActualEnTiles())+";";
+		itemsInfo+=itemsArray[i]->positionToString()+";";
 	}
 	if(itemsInfo.size()>0)
 		itemsInfo.erase(itemsInfo.size()-1);
@@ -352,7 +352,7 @@ ItemView* Stage::getItemInTile(int posX,int posY)
 {
 	for(unsigned i=0;i<this->itemsArray.size();i++)
 	{
-		if(itemsArray[i]->getPosicionActualEnTiles().first==posX && itemsArray[i]->getPosicionActualEnTiles().second==posY)
+		if(itemsArray[i]->getPosition() == std::make_pair(posX, posY))
 			if(itemsArray[i]->isHidden()&&itemsArray[i]->isAlive())
 				return this->itemsArray[i];
 	}

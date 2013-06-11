@@ -9,7 +9,8 @@ ItemView::ItemView(string _name,unsigned _state,std::pair <int,int> _pos,Sprite*
 {
 	//this->alive=true;
 	this->name=_name;
-	this->tileActual=_pos;
+	//this->tileActual=_pos;
+	this->setPosition(_pos);
 	//this->state=_state;
 	this->setStatus(_state);
 	this->canReviveForHimself=_canReviveForHimself;
@@ -43,10 +44,10 @@ void ItemView::update()
 				else
 					{
 						this->regenerationTime=0;
-						if(!GameView::instance().getWorldView()->isThereAPlayerInTile(this->getPosicionActualEnTiles()))
+						if(!GameView::instance().getWorldView()->isThereAPlayerInTile(this->getPosition()))
 						{
-							GameView::instance().getWorldView()->getTileAt(this->tileActual)->setOtherEntity(this);
-							this->revive(HIDDEN_ITEM,this->tileActual);//Aca tendria que meter logica para que cambie de lugar el item
+							GameView::instance().getWorldView()->getTileAt(this->getPosition())->setOtherEntity(this);
+							this->revive(HIDDEN_ITEM,this->getPosition());//Aca tendria que meter logica para que cambie de lugar el item
 						}
 						else
 							regenerationTime=CONST_REGENERATION_TIME+rand()%VARIABLE_REGENERATION_TIME;
@@ -70,24 +71,26 @@ void ItemView::kill()
 	//this->state=DEATH_ITEM;
 	this->setStatus(DEATH_ITEM);
 	//EMPEZAR A CONTAR EL TIEMPO
-	GameView::instance().getWorldView()->getTileAt(this->tileActual)->setOtherEntity(NULL);
-	GameView::instance().getWorldView()->addItemChange(itemChangeToString(DEATH_ITEM));
+	GameView::instance().getWorldView()->getTileAt(this->getPosition())->setOtherEntity(NULL);
+	GameView::instance().getWorldView()->addItemChange(itemChangeToString());
 	regenerationTime=CONST_REGENERATION_TIME+rand()%VARIABLE_REGENERATION_TIME;
 }
 
 void ItemView::revive(unsigned _state,std::pair <int,int> _pos)
 {
 	//this->alive=true;
-	this->tileActual=_pos;
+	//this->tileActual=_pos;
+	this->setPosition(_pos);
 	//this->state=_state;
 	this->setStatus(_state);
+	GameView::instance().getWorldView()->addItemChange(itemChangeToString());
 	if(this->isHidden()){
-		GameView::instance().getWorldView()->addItemChange(itemChangeToString(REVIVE_HIDDEN_ITEM));
-		Game::instance().world()->getTileAt(this->getPosicionActualEnTiles())->setHasHiddenItem(true);
+		//GameView::instance().getWorldView()->addItemChange(itemChangeToString(REVIVE_HIDDEN_ITEM));
+		Game::instance().world()->getTileAt(this->getPosition())->setHasHiddenItem(true);
 	}
-	else{
-		GameView::instance().getWorldView()->addItemChange(itemChangeToString(REVIVE_UNCOVER_ITEM));
-	}
+	//else{
+	//	GameView::instance().getWorldView()->addItemChange(itemChangeToString(REVIVE_UNCOVER_ITEM));
+	//}
 }
 
 bool ItemView::isAlive()
@@ -105,7 +108,7 @@ void ItemView::uncover()
 	//this->hidden=false;
 	//this->state=UNCOVER_ITEM;
 	this->setStatus(UNCOVER_ITEM);
-	GameView::instance().getWorldView()->addItemChange(itemChangeToString(UNCOVER_ITEM));
+	GameView::instance().getWorldView()->addItemChange(itemChangeToString());
 }
 
 string ItemView::getName()
@@ -117,15 +120,15 @@ string ItemView::getName()
 //{
 //	return pos;
 //}
+//
+//void ItemView::setPos(std::pair<int,int> position)
+//{
+//	this->tileActual=position;
+//}
 
-void ItemView::setPos(std::pair<int,int> position)
+string ItemView::itemChangeToString() //unsigned _state
 {
-	this->tileActual=position;
-}
-
-string ItemView::itemChangeToString(unsigned _state)
-{
-	string modification=this->statusToString()+";"+this->name+";"+stringUtilities::pairIntToString(this->getPosicionActualEnTiles());
+	string modification=this->statusToString()+";"+this->name+";"+stringUtilities::pairIntToString(this->getPosition());
 	return modification;
 }
 
@@ -134,11 +137,11 @@ void ItemView::recibirDano(float dano)
 	if(dano>0 && this->isHidden())
 	{
 		this->uncover();
-		GameView::instance().getWorldView()->getTileAt(this->getPosicionActualEnTiles())->setItemUncover();
+		GameView::instance().getWorldView()->getTileAt(this->getPosition())->setItemUncover();
 	}
 }
 
-void ItemView::modifyCharacter(Personaje* personaje)
+void ItemView::modifyCharacter(Personaje* )
 {
 	//MetodoAbstracto
 }

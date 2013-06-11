@@ -51,8 +51,8 @@ void FlagMission::updateMissionStatus(Daniable* victim, Daniable* attacker) {
 		Flag* flag = static_cast<Flag*>(victim);
 		if (!flag->isAlive()) {
 			int flagNumber = findFlag(flag);
-			this->addChange("flagMission;D;"+flags[flagNumber]->getName()+";"+stringUtilities::pairIntToString(flags[flagNumber]->getPosicionActualEnTiles()));
-			this->addChange("flagMission;A;banderaDestruida;"+stringUtilities::pairIntToString(flags[flagNumber]->getPosicionActualEnTiles()));
+			this->addChange("flagMission;D;"+flags[flagNumber]->getName()+";"+flags[flagNumber]->positionToString());
+			this->addChange("flagMission;A;banderaDestruida;"+flags[flagNumber]->positionToString());
 			flags[flagNumber]->destroy();
 			delete flags[flagNumber];
 			flags.erase(flags.begin()+flagNumber);
@@ -70,7 +70,7 @@ string FlagMission::initToString() {
 	string argument = "flagMission;"+flags[0]->getName()+";";
 	for(unsigned int i=0; i<this->flags.size(); i++)
 	{
-		argument += stringUtilities::pairIntToString(flags[i]->getPosicionActualEnTiles())+";";
+		argument += flags[i]->positionToString()+";";
 	}
 	if(argument.size()>0)
 		argument.erase(argument.size()-1);
@@ -99,7 +99,7 @@ vector <Flag*>* FlagMission::getFlags() {
 Daniable* FlagMission::manageFlagAttack(pair <int,int> tile) {
 	vector <Flag*>::iterator it;
 	for (it=flags.begin(); it!=flags.end(); it++)
-		if ((*it)->getPosicionActualEnTiles() == tile)
+		if ((*it)->getPosition() == tile)
 			return *it;
 	return NULL;
 }

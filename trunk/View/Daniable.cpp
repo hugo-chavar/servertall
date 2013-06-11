@@ -13,10 +13,10 @@ void Daniable::recibirDano(float dano) {
 	else
 		vidaActual -= dano;
 }
-
-std::pair<int, int> Daniable::getPosicionActualEnTiles() {
-	return tileActual;
-}
+//
+//std::pair<int, int> Daniable::getPosicionActualEnTiles() {
+//	return tileActual;
+//}
 
 bool Daniable::isAlive() {
 	if (vidaActual > 0) {

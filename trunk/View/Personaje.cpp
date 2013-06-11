@@ -10,7 +10,7 @@
 Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	modelo = pj;
 	this->character_id=char_id;
-	tileActual = pj->getPosition();
+	this->setPosition(pj->getPosition());
 	this->setCurrentSpritePosition(this->calculateSpritePosition(pj->getEstado()));
 	velocidad = pj->getVelocidad();
 	delta.first = 0;
@@ -66,7 +66,7 @@ void Personaje::addNextSprite(AnimatedEntity* entity) {
 void Personaje::addFirstSprite(AnimatedEntity* entity) {
 	SpriteAnimado* newSprite = new SpriteAnimado(entity);
 	sprites.push_back(newSprite);
-	this->setRectangle(tileActual, newSprite);
+	this->setRectangle(this->getPosition(), newSprite);
 }
 
 bool Personaje::isCenteredInTile() {
@@ -146,9 +146,10 @@ void Personaje::calcularSigTileAMover(){
 
 	if (this->isCenteredInTile()) {
 		serr = 0;
-		tileActual = modelo->getPosition();
+		this->setPosition(modelo->getPosition());
+		//tileActual = modelo->getPosition();
 		//modelo->setIsInCenterTile(true);
-		this->eatIfItem(tileActual);
+		this->eatIfItem(this->getPosition());
 		//if Arma.meTengoQueDetener(posActual, posEnemigo)
 		  //detener
 		//else
@@ -164,13 +165,13 @@ void Personaje::calcularSigTileAMover(){
 		//common::Logger::instance().log("Velocidad: "+ aux);
 		if (velocidad != 0) {
 			//modelo->setIsInCenterTile(false);
-			modelo->setCurrent(tile.first, tile.second);
+			modelo->setPosition(tile);
 		} else {
 
 			this->atacar();
 		}
 		if (modelo->getIsReseting()) {
-			this->setRectangle(tileActual, sprites[this->currentSpritePosition]);
+			this->setRectangle(this->getPosition(), sprites[this->currentSpritePosition]);
 			currentEnemy = NULL;
 			this->heal();
 			this->rechargeMagic();
@@ -281,11 +282,11 @@ void Personaje::recibirDano(float dano) {
 		this->modelo->herir();
 	} else {
 		this->modelo->morir();
-		GameView::instance().getWorldView()->relocateItem(this->tileActual);
+		GameView::instance().getWorldView()->relocateItem(this->getPosition());
 	}
 }
 
-void Personaje::resolverAtaque(){
+void Personaje::resolverAtaque() {
 	float precision = Game::instance().getRandom();
 	if (precision >= this->modelo->getPrecisionMinima()) {
 		this->currentEnemy->recibirDano(this->modelo->getDanoMaximo());
@@ -296,7 +297,7 @@ void Personaje::resolverAtaque(){
 }
 
 void Personaje::atacar() {
-	if ((currentEnemy != NULL) && (currentEnemy->getPosicionActualEnTiles() == this->modelo->obtenerFrentePersonaje())) {
+	if ((currentEnemy != NULL) && (currentEnemy->getPosition() == this->modelo->obtenerFrentePersonaje())) {
 		this->resolverAtaque();
 		this->modelo->atacar();
 		currentEnemy = NULL;
@@ -320,12 +321,12 @@ void Personaje::perseguirEnemigo() {
 		this->modelo->setFollowingEnemy(false);
 		return;
 	}
-	if ((currentEnemy->getPosicionActualEnTiles() != modelo->getTarget()) && (modelo->canSee(currentEnemy->getPosicionActualEnTiles()))) {
-		setDestino(currentEnemy->getPosicionActualEnTiles().first, currentEnemy->getPosicionActualEnTiles().second);
+	if ((currentEnemy->getPosition() != modelo->getTarget()) && (modelo->canSee(currentEnemy->getPosition()))) {
+		setDestino(currentEnemy->getPosition().first, currentEnemy->getPosition().second);
 		this->modelo->setFollowingEnemy(true);
 		return;
 	}
-	if (!modelo->canSee(currentEnemy->getPosicionActualEnTiles())) {
+	if (!modelo->canSee(currentEnemy->getPosition())) {
 		currentEnemy = NULL;
 	}
 	this->modelo->setFollowingEnemy(false);
@@ -436,15 +437,15 @@ std::pair<int,int> Personaje::getPosicionActualEnTiles(){
 	float deltaAbsY = std::abs(delta.second);
 
 	if ((deltaAbsX <= 32) && (deltaAbsY == 0)) {
-		return this->getPosicionEnTiles();
+		return modelo->getPosition();
 	}
 	if ((deltaAbsX == 0) && (deltaAbsY <= 16)) {
-		return this->getPosicionEnTiles();
+		return modelo->getPosition();
 	}
 	if ((deltaAbsX <= 16) && (deltaAbsY <= 8)) {
-		return this->getPosicionEnTiles();
+		return modelo->getPosition();
 	}
-	return tileActual;
+	return this->getPosition();
 }
 
 //tilex, tiley; pixelx, pixely; isFreezed; nro_status; nro_surface
@@ -488,7 +489,7 @@ void Personaje::updateFromString(std::string data) {
 	vector <std::string> splittedData;
 	stringUtilities::splitString(data, splittedData, ';');
 	std::pair<int,int> tilePosition = stringUtilities::stringToPairInt(splittedData[0]);
-	this->tileActual = tilePosition;
+	this->setPosition(this->modelo->getPosition());
 	this->modelo->setPosition(tilePosition);
 	this->modelo->getVision()->updatePosition(modelo->getPosition());
 	std::pair<int,int> pixels = stringUtilities::stringToPairInt(splittedData[1]);

@@ -458,11 +458,11 @@ escenarios:
          porcentaje: 0.5
          def:
             - tipo: Shield
-              caracteristicas: life=200
-            - tipo: Arrow
-              caracteristicas: amount=10,distance=5
-            - tipo: Bomb
-              caracteristicas: time=10
+              caracteristicas: resistance=50,absortion=10
+            - tipo: Lamp
+              caracteristicas: incrementVision=2
+            - tipo: RunningBoots
+              caracteristicas: factorVelocidad=2
     - nombre: bosque_loco
       size_x: 10
       size_y: 10 
@@ -482,3 +482,12 @@ escenarios:
          - tipoEntidad: frodo
            x: 3 
            y: 3 
+      items:
+         porcentaje: 0.5
+         def:
+            - tipo: Shield
+              caracteristicas: resistance=50,absortion=10
+            - tipo: Lamp
+              caracteristicas: incrementVision=2
+            - tipo: RunningBoots
+              caracteristicas: factorVelocidad=2

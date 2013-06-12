@@ -25,6 +25,8 @@ namespace stringUtilities {
 	//Metodo para convertir un string a unsigned.
 	unsigned stringToUnsigned(const std::string Text);
 
+	float stringToFloat(const std::string Text);
+
 	//Metodo para convertir un int a string.
 	std::string intToString(int i);
 
@@ -52,6 +54,8 @@ namespace stringUtilities {
 	std::pair<int, int> stringToPairInt(std::string source);
 
 	std::pair<unsigned, unsigned> pairUnsignedToString(std::string source); 
+
+	std::string substrAfterFirst(std::string cadena,char car);
 
 }
 

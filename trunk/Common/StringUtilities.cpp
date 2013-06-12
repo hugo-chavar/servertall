@@ -65,6 +65,15 @@ namespace stringUtilities {
 		return static_cast<unsigned>(stringToInt(Text));
 	}
 
+	float stringToFloat(const std::string Text){
+		return atof(Text.c_str());
+	}
+
+	std::string substrAfterFirst(std::string cadena,char car)
+	{
+		return cadena.substr(cadena.find_first_of(car)+1);
+	}
+
 	std::string intToString(int i) {
 		std::stringstream stringstream;
 		stringstream << i;

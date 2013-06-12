@@ -63,6 +63,7 @@ public:
 	void loadNamedChars();
 	void loadMapItems(vector <sItem> vItems);
 	PersonajeModelo* getCharacter(string name);
+	string getItemInfo(string name);
 	//void generateItems(float porcentage);
 	//string manageItemsInitialSynch();
 

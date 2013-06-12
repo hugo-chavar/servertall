@@ -4,6 +4,8 @@
 
 class RunningBoots : public ItemView
 {
+private:
+	float factor;
 public:
 	RunningBoots(string _name,unsigned _state,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite,bool _canReviveForHimself);
 	~RunningBoots(void);

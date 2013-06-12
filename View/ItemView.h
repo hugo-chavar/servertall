@@ -3,6 +3,7 @@
 #include "Personaje.h"
 #include "StringUtilities.h"
 #include "Daniable.h"
+#include "Game.h"
 
 //#ifndef item_state_t
 //#define item_state_t

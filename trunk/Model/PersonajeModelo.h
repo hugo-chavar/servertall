@@ -2,11 +2,13 @@
 #define _PERSONAJEMODELO_H
 
 #include <utility>
+#include <vector>
 #include "Constants.h"
 #include "DirList.h"
 #include "AnimatedEntity.h"
 #include "Positionable.h"
 #include "CharacterVision.h"
+#include "Weapon.h"
 
 
 class PersonajeModelo: public Positionable {
@@ -69,6 +71,10 @@ public:
 	void herir();
 	void morir();
 	//void setPosition(std::pair<int, int> pos);
+
+	void setCurrentWeaponIndex(unsigned int currentWeaponIndex);
+
+
 private:
 
 	//void eatIfItem(std::pair<int, int> destino);
@@ -113,6 +119,12 @@ private:
 	CharacterVision* vision;
 	//bool isInCenterTile;
 	bool following;
+
+	std::vector<model::Weapon*> weapons;
+
+	unsigned int currentWeaponIndex;
+
+	std::vector<model::Weapon*>& getWeapons();
 
 	//------------------------ATRIBUTOS (PONGAN ACA LOS ATRIBUTOS DEL PJ: VIDA, MAGIA, DAÑO, ETC)------------------------
 	float precisionMinima;

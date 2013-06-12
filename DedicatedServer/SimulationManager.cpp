@@ -130,9 +130,13 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			if (argument!="") {
 				GameView::instance().manageAnimationUpdate(userID, argument);
 			}
+			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_CHANGE_WEAPON);
+			if (argument!="") {
+				GameView::instance().changeWeapon(userID,stringUtilities::stringToUnsigned(argument));
 			}
 			break;
-		case OPCODE_INIT_SYNCHRONIZE:{
+		}
+		case OPCODE_INIT_SYNCHRONIZE: {
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
 			client = this->getClients().getClient(argument);
 			std::string characterType = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER);
@@ -156,8 +160,8 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTERS_UPDATE, argument);
 			this->lastBroadcast = "";
 			this->getClients().addBroadcast(instructionOut);
-			}
 			break;
+		}
 		case OPCODE_SIMULATION_UPDATE:
 			break;
 		case OPCODE_CONNECTION_ERROR: {

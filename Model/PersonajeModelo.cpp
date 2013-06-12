@@ -7,6 +7,8 @@
 #include "Game.h"
 #include "../View/GameView.h"
 #include "../View/Personaje.h"
+#include "Sword.h"
+#include "Bow.h"
 
 using namespace common;
 
@@ -48,6 +50,15 @@ void PersonajeModelo::initialize(int pos_x, int pos_y) {
 	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
 	magiaMaxima = DEFAULT_CHARACTER_MAX_MAGIC;
 	isReseting = false;
+
+	//Initializing weapons
+	model::Sword* sword = new model::Sword();
+	sword->initialize(true,1,DEFAULT_CHARACTER_MAX_DAMAGE,DEFAULT_CHARACTER_MIN_PRECISION);
+	this->getWeapons().push_back(sword);
+
+	model::Bow* bow = new model::Bow();
+	bow->initialize(false,5,DEFAULT_CHARACTER_MAX_DAMAGE,DEFAULT_CHARACTER_MIN_PRECISION);
+	this->getWeapons().push_back(bow);
 }
 
 void PersonajeModelo::setAnimation(AnimatedEntity* ae) {
@@ -430,6 +441,11 @@ PersonajeModelo::~PersonajeModelo(){
 	this->limpiarPath();
 	if (this->vision)
 		delete this->vision;
+
+	//Destroying weapons
+	for (unsigned int i = 0; i < this->getWeapons().size(); i++) {
+		delete this->getWeapons()[i];
+	}
 }
 
 void PersonajeModelo::setName(string nombreJugador) {
@@ -490,6 +506,14 @@ void PersonajeModelo::increaseSpeed(float factor)
 	{
 		this->velocidad=MAX_MAIN_CHARACTER_SPEED;
 	}
+}
+
+std::vector<model::Weapon*>& PersonajeModelo::getWeapons() {
+	return this->weapons;
+}
+
+void PersonajeModelo::setCurrentWeaponIndex(unsigned int currentWeaponIndex) {
+	this->currentWeaponIndex = currentWeaponIndex;
 }
 
 //---------------------------Maybe useful in the future--------------------------------------

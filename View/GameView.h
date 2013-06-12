@@ -45,6 +45,7 @@ public:
 	Player* findPlayerByPersonaje(Daniable* personaje);
 	Mission* getMission();
 
+	void changeWeapon(string userID, unsigned int weaponIndex);
 private:
 	GameView();
 	Stage worldView;

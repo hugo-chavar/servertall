@@ -139,6 +139,11 @@ void GameView::manageAnimationUpdate(string userID, string animation) {
 	}
 }
 
+void GameView::changeWeapon(string userID, unsigned int weaponIndex) {
+	Player *player = findPlayer(userID);
+	player->getCharacter()->personajeModelo()->setCurrentWeaponIndex(weaponIndex);
+}
+
 Daniable* GameView::getDaniableInTile(std::pair <int, int> tile) {
 	
 	if(Game::instance().world()->isInsideWorld(tile))

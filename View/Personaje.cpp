@@ -480,6 +480,8 @@ std::string Personaje::updateToString() {
 	out.append(";");
 	out.append(stringUtilities::floatToString(this->magiaActual));
 	out.append(";");
+	out.append(stringUtilities::floatToString(this->shieldResistance));
+	out.append(";");
 	out.append(this->modelo->getVision()->updateToString());
 	return out;
 }

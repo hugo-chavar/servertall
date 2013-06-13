@@ -20,6 +20,6 @@ Lamp::~Lamp(void)
 
 void Lamp::modifyCharacter(Personaje* personaje)
 {
-	int incrementar = 3; //TODO: Yami, traelo del parser
-	personaje->personajeModelo()->getVision()->increaseRangeVision(incrementar);
+	//int incrementar = 3; //TODO: Yami, traelo del parser
+	personaje->personajeModelo()->getVision()->increaseRangeVision(this->incremento);
 }

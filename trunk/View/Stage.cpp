@@ -426,11 +426,11 @@ ItemView* Stage::findDeathItem()
 {
 	for(unsigned i=this->itemsArray.size();i>0;i--)
 	{
-		if(!itemsArray[i-1]->isAlive() && !itemsArray[i-1]->getCanReviveForHimself())
+		if(!itemsArray[i-1]->isAlive() && !(itemsArray[i-1]->getCanReviveForHimself()))
 			{
 				int random=rand()%itemsArray.size();
 				std::swap(itemsArray[i-1],itemsArray[random]);
-				return itemsArray[0];
+				return itemsArray[random];
 			}
 	}
 	return NULL;

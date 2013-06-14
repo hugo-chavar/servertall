@@ -24,14 +24,14 @@ bool DeathmatchMission::isTheChosenMission() {
 	return chosen;
 }
 
-void DeathmatchMission::updateMissionStatus(Daniable* victim, Daniable* attacker) {
+void DeathmatchMission::updateMissionStatus(Daniable* victim, string attacker) {
 	Player* playerVictim = NULL;
 	Player* playerAttacker = NULL;
 	int attackScore = 0;
 	int victimScore = 0;
 
 	playerVictim = GameView::instance().findPlayerByPersonaje(victim);
-	playerAttacker = GameView::instance().findPlayerByPersonaje(attacker);
+	playerAttacker = GameView::instance().findPlayer(attacker);
 	if ((playerAttacker == NULL) || (playerVictim == NULL)) {
 		return;
 	}

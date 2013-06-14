@@ -46,7 +46,7 @@ bool FlagMission::isAFlag(Daniable* entity) {
 	return false;
 }
 
-void FlagMission::updateMissionStatus(Daniable* victim, Daniable* attacker) {
+void FlagMission::updateMissionStatus(Daniable* victim, string attacker) {
 	if (isAFlag(victim)) {
 		Flag* flag = static_cast<Flag*>(victim);
 		if (!flag->isAlive()) {
@@ -56,8 +56,8 @@ void FlagMission::updateMissionStatus(Daniable* victim, Daniable* attacker) {
 			flags[flagNumber]->destroy();
 			delete flags[flagNumber];
 			flags.erase(flags.begin()+flagNumber);
-			int score = GameView::instance().GameView::instance().findPlayerByPersonaje(attacker)->missionScore();
-			GameView::instance().findPlayerByPersonaje(attacker)->missionScore(score+1);
+			int score = GameView::instance().GameView::instance().findPlayer(attacker)->missionScore();
+			GameView::instance().findPlayer(attacker)->missionScore(score+1);
 		}
 	}
 }

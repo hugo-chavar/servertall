@@ -291,7 +291,7 @@ void Personaje::resolverAtaque() {
 	if (precision >= this->modelo->getPrecisionMinima()) {
 		this->currentEnemy->recibirDano(this->modelo->getDanoMaximo());
 		if (!(this->currentEnemy->isAlive())) {
-			GameView::instance().getMission()->missionUpdate(currentEnemy, this);
+			GameView::instance().getMission()->missionUpdate(currentEnemy, this->getPlayerName());
 		}
 	}
 }

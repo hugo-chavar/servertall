@@ -30,7 +30,7 @@ bool Mission::chooseMission(string mission) {
 	return false;
 }
 
-void Mission::missionUpdate(Daniable* victim, Daniable* attacker) {
+void Mission::missionUpdate(Daniable* victim, string attacker) {
 	if (flagMission.isTheChosenMission()) {
 		flagMission.updateMissionStatus(victim, attacker);
 	} else {

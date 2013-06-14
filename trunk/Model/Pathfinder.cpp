@@ -20,7 +20,7 @@ int Pathfinder::getPath (int OrigenX, int OrigenY, int& DestinoX, int& DestinoY,
 	ListaPath openList;
 	std::vector<Par> camino;
 	int controlTamano = 0;
-	int tamanoMax = 800;
+	int tamanoMax = 100;
 	int tamano;
 
 	if ((OrigenX == DestinoX) && (OrigenY == DestinoY)) {

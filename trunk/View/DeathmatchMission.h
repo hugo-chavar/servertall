@@ -12,7 +12,7 @@ public:
 	~DeathmatchMission();
 	void initialize();
 	bool isTheChosenMission();
-	void updateMissionStatus(Daniable* victim, Daniable* attacker);
+	void updateMissionStatus(Daniable* victim, string attacker);
 	bool missionEnded();
 	void choose();
 

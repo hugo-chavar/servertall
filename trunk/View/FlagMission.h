@@ -21,7 +21,7 @@ public:
 	string initToString();
 	string changeToString();
 	void addChange(string change);
-	void updateMissionStatus(Daniable* victim, Daniable* attacker);
+	void updateMissionStatus(Daniable* victim, string attacker);
 	vector <Flag*>* getFlags();
 	bool isAFlag(Daniable* entity);
 	Daniable* manageFlagAttack(pair <int,int> tile);

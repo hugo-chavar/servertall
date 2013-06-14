@@ -15,7 +15,7 @@ public:
 	~Mission();
 	void initialize();
 	bool chooseMission(string mission);
-	void missionUpdate(Daniable* victim, Daniable* attacker);
+	void missionUpdate(Daniable* victim, string attacker);
 	string manageMissionInitialSynch();
 	string manageMissionChange();
 	Daniable* manageAttack(pair <int,int> tile);

@@ -7,7 +7,8 @@ Mission::Mission() {
 
 Mission::~Mission() { }
 
-void Mission::initialize() { // FLAGMission DEFAULT EN CASO DE NO PASAR LA Mission ?
+void Mission::initialize() {
+	this->gameOverMessageSent = false;
 	if (flagMission.isTheChosenMission()) {
 		flagMission.initialize();
 	} else {
@@ -72,4 +73,8 @@ Daniable* Mission::manageAttack(pair <int,int> tile) {
 	if (flagMission.isTheChosenMission())
 		return flagMission.manageFlagAttack(tile);
 	return NULL;
+}
+
+bool Mission::hasGameOverMessageBeenSent() {
+	return this->gameOverMessageSent;
 }

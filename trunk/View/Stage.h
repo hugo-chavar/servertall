@@ -24,7 +24,7 @@ public:
 	//void render(Camera& camera);
 	bool initialize();
 	void setTilesInCamera(int h, int v);
-	Personaje* personaje();
+	//Personaje* personaje();
 	map <string,Personaje*> personajes;//agrego diccionario de personajes
 	TileView* getTileAt(KeyPair k);
 	bool addOtherEntity(std::pair <int,int> position, std::string entityName);
@@ -38,13 +38,14 @@ public:
 	//void regenerateItem();
 	bool isThereAPlayerInTile(pair <int,int> pos);
 	void relocateItem(pair<int,int>pos);
+	void deleteStage();
 private:
 	ItemView* findDeathItem();
 	unsigned lastRegeneration;
 	StringQueue itemChanges;
 	vector<ItemView*> itemsArray;
 	vector<Sprite*> spriteArray;
-	Personaje* _personaje;
+	//Personaje* _personaje;
 	StageModel* worldModel;
 	map<string,int> mapEntityToSprite;
 	map<KeyPair, TileView*> tilesMap;
@@ -55,7 +56,6 @@ private:
 	//void calculateTilesToRender(Camera& camera);
 	void loadSprites();
 	void generateStage();
-	void deleteStage();
 	TileView* createTile(TileModel* tile);
 	TileView* getFirstMatch(std::pair<int,int> k);
 	TileView* getLastMatch(TileView* firstMatch, std::pair<int,int> k);

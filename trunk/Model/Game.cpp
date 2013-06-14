@@ -65,6 +65,21 @@ bool Game::initialize() {
 	return true;
 }
 
+void Game::restart() {
+	//initialize random number generator
+	srand((unsigned)time(NULL));
+
+	unsigned int scenario = this->stageActual() + 1;
+	if (scenario < yParser.vStages().size())
+		Game::instance().setStageActual(scenario);
+	else
+		Game::instance().setStageActual(0);
+
+	_world = yParser.vStages()[this->stageActual()];
+	//_world.generateItems(5);//HARCODEO PORCENTAJE ITEMS
+	//this->_time.initializeTime();
+}
+
 float Game::getRandom() {
 	float max = 1.0;
 	float min = 0.0;

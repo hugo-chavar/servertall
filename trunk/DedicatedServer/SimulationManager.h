@@ -27,6 +27,8 @@ private:
 
 	void processInstruction(Instruction instruction);
 
+	Instruction manageInitSynchronize(std::string userID);
+
 	void* run();
 
 	std::string lastBroadcast;

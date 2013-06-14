@@ -22,6 +22,7 @@ public:
 	~GameView();
 	static GameView& instance();
 	bool initialize(string chosenMission);
+	void restart();
 	Stage* getWorldView();
 	//Personaje* getPersonaje(string name);
 	void addPlayer(string userID, string characterType);

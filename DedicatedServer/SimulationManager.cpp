@@ -124,7 +124,6 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
 			if (argument!="") {
 				GameView::instance().manageMovementUpdate(userID, argument);
-
 			}
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_STATE);
 			if (argument!="") {
@@ -134,6 +133,9 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			if (argument!="") {
 				GameView::instance().changeWeapon(userID,stringUtilities::stringToUnsigned(argument));
 			}
+			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_RESTART_GAME);
+			if (argument == "1")
+				client->addInstruction(this->manageInitSynchronize(userID));
 			break;
 		}
 		case OPCODE_INIT_SYNCHRONIZE: {
@@ -144,15 +146,8 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			GameView::instance().startUpdatingPlayer(argument);
 			client->setActive(true);
 
-			instructionOut.clear();
-			instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
-			std::string characterInit = GameView::instance().managePlayerInitialSynch(argument);
-			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
-			std::string itemsInit = GameView::instance().getWorldView()->manageItemsInitialSynch();
-			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEMS_INIT,itemsInit);
-			std::string missionInit = GameView::instance().getMission()->manageMissionInitialSynch();
-			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MISSION_INIT, missionInit);
-			client->addInstruction(instructionOut);
+			client->addInstruction(this->manageInitSynchronize(argument));
+
 			//broadcast for new players
 			instructionOut.clear();
 			instructionOut.setOpCode(OPCODE_CHARACTERS_SYNCHRONIZE);
@@ -179,6 +174,20 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 		default:
 			LOG_WARNING("INVALID OPCODE RECEIVED FROM CLIENT " + instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID));
 	}
+}
+
+Instruction SimulationManager::manageInitSynchronize(std::string userID) {
+	Instruction instructionOut;
+	instructionOut.clear();
+	instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
+	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));
+	std::string characterInit = GameView::instance().managePlayerInitialSynch(userID);
+	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
+	std::string itemsInit = GameView::instance().getWorldView()->manageItemsInitialSynch();
+	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEMS_INIT,itemsInit);
+	std::string missionInit = GameView::instance().getMission()->manageMissionInitialSynch();
+	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MISSION_INIT, missionInit);
+	return instructionOut;
 }
 
 void* SimulationManager::run() {

@@ -483,7 +483,7 @@ escenarios:
            x: 3 
            y: 3 
       items:
-         porcentaje: 0.5
+         porcentaje: 10
          def:
             - tipo: Shield
               caracteristicas: resistance=50,absortion=10

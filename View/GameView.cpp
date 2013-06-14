@@ -33,6 +33,16 @@ bool GameView::initialize(string chosenMission) {
 	return (modelInitialized&mapInitialized);
 }
 
+void GameView::restart() {
+	this->worldView.deleteStage();
+
+	Game::instance().restart();;
+
+	bool mapInitialized = this->worldView.initialize();
+
+	mission.initialize();
+}
+
 GameView& GameView::instance() {
 	static GameView singleton;
 	return singleton;
@@ -223,8 +233,8 @@ void GameView::update() {
 	}
 	this->getTimer()->updateTime();
 	this->getWorldView()->update();
-	if (mission.isGameOver()) {
-		// TODO: Reiniciar el juego.
+	if (mission.isGameOver() && mission.hasGameOverMessageBeenSent()) {
+		GameView::instance().restart();
 	}
 }
 

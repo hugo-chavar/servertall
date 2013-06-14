@@ -10,7 +10,7 @@
 //#define EXTRA_TILES_TO_RENDER 9
 
 Stage::Stage() {
-	_personaje = NULL;
+	//_personaje = NULL;
 }
 
 Stage::~Stage() {
@@ -19,10 +19,10 @@ Stage::~Stage() {
 	}
 
 	spriteArray.clear();
-	if (_personaje){
-		delete _personaje;
-		_personaje = NULL;
-	}
+	//if (_personaje){
+	//	delete _personaje;
+	//	_personaje = NULL;
+	//}
 	deleteStage();
 }
 
@@ -134,9 +134,9 @@ void Stage::update() {
 //	_personaje->update();
 }
 
-Personaje* Stage::personaje() {
-	return _personaje;
-}
+//Personaje* Stage::personaje() {
+//	return _personaje;
+//}
 
 TileView* Stage::getTileAt(KeyPair k) {
 	return tilesMap.at(k);
@@ -286,6 +286,8 @@ void Stage::deleteStage() {
 		delete nextAux;
 	}
 	tilesMap.clear();
+
+	itemsArray.clear();
 }
 
 

@@ -23,14 +23,13 @@ public:
 	unsigned stageActual();
 	void setStageActual(unsigned stageActual);
 	bool initialize();
+	void restart();
 	//TimeManager* time();
 	EntLists allEntities;
 	YAMLParser yParser;
 	AnimatedEntity* animatedEntityAt(unsigned pos);
 	EntityObject* entityObjectAt(unsigned pos);
 	Configuration* configuration();
-	int getStageNumber();
-	void setStageNumber(int stageNo);
 	float getRandom();
 
 private:

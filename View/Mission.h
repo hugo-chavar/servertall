@@ -20,6 +20,7 @@ public:
 	string manageMissionChange();
 	Daniable* manageAttack(pair <int,int> tile);
 	bool isGameOver();
+	bool hasGameOverMessageBeenSent();
 
 private:
 	bool gameOverMessageSent;

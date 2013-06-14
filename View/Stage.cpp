@@ -441,7 +441,7 @@ void Stage::relocateItem(pair<int,int>pos)
 	ItemView* item=this->findDeathItem();
 	if(item)
 	{
-		item->revive(UNCOVER_ITEM,pos);
+		item->revive(REVIVE_UNCOVER_ITEM,pos);
 		this->getTileAt(pos)->setOtherEntity(item);
 	}
 }

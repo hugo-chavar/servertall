@@ -84,7 +84,12 @@ void ItemView::revive(unsigned _state,std::pair <int,int> _pos)
 	//this->state=_state;
 	this->setStatus(_state);
 	GameView::instance().getWorldView()->addItemChange(itemChangeToString());
-	if(this->isHidden()){
+	if(_state==REVIVE_UNCOVER_ITEM)
+	{
+		this->setStatus(UNCOVER_ITEM);
+	}
+	else{
+		this->setStatus(HIDDEN_ITEM);
 		//GameView::instance().getWorldView()->addItemChange(itemChangeToString(REVIVE_HIDDEN_ITEM));
 		Game::instance().world()->getTileAt(this->getPosition())->setHasHiddenItem(true);
 	}

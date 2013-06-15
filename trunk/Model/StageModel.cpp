@@ -101,14 +101,16 @@ void StageModel::name(string value) {
 }
 
 unsigned int StageModel::cost(unsigned int x, unsigned int y) {
-	TileModel* tile = _tilesMap->at(make_pair(x,y));
-	if ( (tile->getOtherEntity()) || (tile->getRelatedTile() ))
-		return 0;
-	std::pair<unsigned,unsigned> a(x,y);
-	if (GameView::instance().getDaniableInTile(a) != NULL)
-		return 0;
-	if(tile->getHasHiddenItem())
+	if(_tilesMap->find(make_pair(x,y)) != _tilesMap->end()) {
+		TileModel* tile = _tilesMap->at(make_pair(x,y));
+		if ( (tile->getOtherEntity()) || (tile->getRelatedTile() ))
 			return 0;
+		std::pair<unsigned,unsigned> a(x,y);
+		if (GameView::instance().getDaniableInTile(a) != NULL)
+			return 0;
+		if(tile->getHasHiddenItem())
+			return 0;
+	}
 	return 1;
 }
 
@@ -307,7 +309,9 @@ void StageModel::insertEntity(KeyPair k, EntityObject* e) {
 }
 
 TileModel* StageModel::getTileAt(KeyPair k) {
-	return _tilesMap->at(k);
+	if(_tilesMap->find(k) != _tilesMap->end())
+		return _tilesMap->at(k);
+	return NULL;
 }
 
 TileModel* StageModel::getFirstTile() {
@@ -345,7 +349,8 @@ void StageModel::setSize(unsigned w, unsigned h) {
 }
 
 void StageModel::loadNamedChars() {
-	vector <PersonajeModelo*>::iterator it = _vMainCharacters.begin();
+	vector <PersonajeModelo*>::iterator it;
+	it = _vMainCharacters.begin();
 	for (; it != _vMainCharacters.end(); it++ ) {
 		mapMainCharacters.insert(make_pair((*it)->getName(), (*it)));
 	}
@@ -380,71 +385,3 @@ string StageModel::getItemInfo(string name)
 	else
 		return it->second;
 }
-
-
-//void StageModel::generateItems(float porcentage)
-//{
-//	_vItems.clear();
-//	std::map<KeyPair, TileModel*>::iterator it=this->_tilesMap->begin();
-//	for(;it!=this->_tilesMap->end();it++)
-//	{
-//		if((*it).second->getOtherEntity()==NULL && (*it).second->getRelatedTile()==NULL)
-//		{
-//			Item* item=(*it).second->generateItem(porcentage);
-//			if(item)
-//			{
-//				_vItems.push_back(item);
-//			}
-//		}
-//	}
-//}
-
-//void StageModel::regenerateItem()
-//{
-//	Uint32 actual=SDL_GetTicks();
-//	if(actual-this->lastRegeneration>REGENERATIONTIME)
-//	{
-//			this->reviveItem();
-//			this->lastRegeneration=actual;
-//	}
-//}
-
-//void StageModel::reviveItem()
-//{
-//	bool revive=false;
-//	unsigned i=0;
-//	while(!revive && i<this->_vItems.size())
-//	{
-//		if(!_vItems[i]->isAlive())
-//		{
-//			itemChanges.push_back(_vItems[i]->revive()); //TODO:comunicar a la vista esto
-//			revive=true;
-//		}
-//
-//	}
-//}
-
-//vector <Item*>* StageModel::items()
-//{
-//	return &this->_vItems;
-//}
-
-//string StageModel::manageItemsInitialSynch()
-//{
-//	string itemsInfo="";
-//	for(int i=0;i<this->_vItems.size();i++)
-//	{
-//		if(_vItems[i]->isAlive())
-//		{
-//		itemsInfo+=_vItems[i]->getName()+";";
-//		if(_vItems[i]->isHidden())
-//			itemsInfo+="H;";
-//		else
-//			itemsInfo+="U;";
-//		}
-//		itemsInfo+=stringUtilities::pairIntToString(_vItems[i]->getPos())+";";
-//	}
-//	if(itemsInfo.size()>0)
-//		itemsInfo.erase(itemsInfo.size()-1);
-//	return itemsInfo; 
-//}

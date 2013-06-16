@@ -20,12 +20,20 @@ Personaje *Player::getCharacter() {
 	return _character;
 }
 
+void Player::setCharacter(Personaje *character) {
+	_character = character;
+}
+
 string Player::getUserID() {
 	return _userID;
 }
 
 void Player::startUpdating() {
 	this->updating = true;
+}
+
+void Player::stopUpdating() {
+	this->updating = false;
 }
 
 bool Player::isUpdating() {

@@ -17,6 +17,8 @@ private:
 
 	bool statusOk;
 
+	int numberOfRestartedClients;
+
 	std::string error;
 
 	void setStatusOk(bool statusOk);

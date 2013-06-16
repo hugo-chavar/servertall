@@ -35,6 +35,7 @@ public:
 	string managePlayersUpdate();
 	string managePlayerInitialSynch(string userID);
 	void startUpdatingPlayer(string userID);
+	void stopUpdatingPlayer(string userID);
 	void setDisconnectedPlayer(string userID);
 	/*bool isThereACharInTile(int tileX, int tileY);*/
 	Daniable* getDaniableInTile(std::pair <int, int> tile);
@@ -44,8 +45,9 @@ public:
 	string manageCharactersPlaying();
 	Player* playerWithHighestScore();
 	Player* findPlayerByPersonaje(Daniable* personaje);
+	int numberOfLoggedInPlayers();
 	Mission* getMission();
-
+	void restartPlayers();
 	void changeWeapon(string userID, unsigned int weaponIndex);
 private:
 	GameView();

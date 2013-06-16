@@ -76,6 +76,7 @@ void Game::restart() {
 		Game::instance().setStageActual(0);
 
 	_world = yParser.vStages()[this->stageActual()];
+	_world.loadNamedChars();
 	//_world.generateItems(5);//HARCODEO PORCENTAJE ITEMS
 	//this->_time.initializeTime();
 }

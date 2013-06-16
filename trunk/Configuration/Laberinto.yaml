@@ -13,7 +13,7 @@ entidades:
       imagen: ../Images/arbol/
       ancho_base: 1 
       alto_base: 1 
-      pixel_ref_x: 32.0 
+      pixel_ref_x: 32
       pixel_ref_y: 32
       fps: 15
       delay: 1000
@@ -174,10 +174,19 @@ entidades:
 
     - nombre: Shield
       imagen: ../Images/Shield.png
-      ancho_base: 1		
-      alto_base: 1		
-      pixel_ref_x: 16	
+      ancho_base: 1
+      alto_base: 1
+      pixel_ref_x: 16
       pixel_ref_y: 0
+
+    - nombre: Arrow
+      imagen: ../Images/flecha/
+      ancho_base: 1
+      alto_base: 1
+      pixel_ref_x: 16
+      pixel_ref_y: 0
+      fps: 0
+      delay: 0
        
 escenarios: 
     - nombre: bosque_encantado 
@@ -213,14 +222,11 @@ escenarios:
          - {x: 2, y: 13, entidad: arbol}
          - {x: 2, y: 14, entidad: arbol}
          - {x: 2, y: 16, entidad: arbol}
-         - {x: 3, y: 4, entidad: arbol}
          - {x: 3, y: 7, entidad: arbol}
-         - {x: 3, y: 10, entidad: arbol}
          - {x: 3, y: 14, entidad: arbol}
          - {x: 3, y: 16, entidad: arbol}
          - {x: 4, y: 0, entidad: arbol}
          - {x: 4, y: 1, entidad: arbol}
-         - {x: 4, y: 4, entidad: arbol}
          - {x: 4, y: 7, entidad: arbol}
          - {x: 4, y: 10, entidad: arbol}
          - {x: 4, y: 14, entidad: arbol}
@@ -231,12 +237,9 @@ escenarios:
          - {x: 5, y: 10, entidad: arbol}
          - {x: 5, y: 14, entidad: arbol}
          - {x: 5, y: 16, entidad: arbol}
-         - {x: 6, y: 1, entidad: arbol}
          - {x: 6, y: 2, entidad: arbol}
          - {x: 6, y: 3, entidad: arbol}
          - {x: 6, y: 4, entidad: arbol}
-         - {x: 6, y: 7, entidad: arbol}
-         - {x: 6, y: 10, entidad: arbol}
          - {x: 6, y: 14, entidad: arbol}
          - {x: 6, y: 16, entidad: arbol}
          - {x: 7, y: 1, entidad: arbol}
@@ -246,9 +249,6 @@ escenarios:
          - {x: 8, y: 1, entidad: arbol}
          - {x: 8, y: 2, entidad: arbol}
          - {x: 8, y: 3, entidad: arbol}
-         - {x: 8, y: 4, entidad: arbol}
-         - {x: 8, y: 5, entidad: arbol}
-         - {x: 8, y: 6, entidad: arbol}
          - {x: 8, y: 7, entidad: arbol}
          - {x: 8, y: 8, entidad: arbol}
          - {x: 8, y: 9, entidad: arbol}
@@ -273,7 +273,6 @@ escenarios:
          - {x: 14, y: 12, entidad: arbol}
          - {x: 14, y: 13, entidad: arbol}
          - {x: 14, y: 14, entidad: arbol}
-		 
          - {x: 0, y: 0, entidad: piedra}
          - {x: 1, y: 0, entidad: piedra}
          - {x: 1, y: 1, entidad: piedra}

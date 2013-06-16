@@ -1,4 +1,5 @@
 #include "LoginManager.h"
+#include "GameView.h"
 
 #pragma warning(disable: 4355)
 

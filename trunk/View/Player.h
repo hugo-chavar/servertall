@@ -12,8 +12,10 @@ public:
 	~Player();
 	//void initialize(float speed, string userID, unsigned int visionRange);
 	Personaje *getCharacter();
+	void setCharacter(Personaje *character);
 	string getUserID();
 	void startUpdating();
+	void stopUpdating();
 	bool isUpdating();
 	void missionScore(int score);
 	int missionScore();

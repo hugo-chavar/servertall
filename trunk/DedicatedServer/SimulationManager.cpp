@@ -10,6 +10,7 @@
 SimulationManager::SimulationManager() {
 	this->statusOk = true;
 	this->error = "";
+	this->numberOfRestartedClients = 0;
 }
 
 // ----------------------------------- PRIVATE METHODS -----------------------------------
@@ -134,8 +135,20 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 				GameView::instance().changeWeapon(userID,stringUtilities::stringToUnsigned(argument));
 			}
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_RESTART_GAME);
-			if (argument == "1")
-				client->addInstruction(this->manageInitSynchronize(userID));
+			if (argument == "1") {
+				this->numberOfRestartedClients++;
+				Instruction instructionOut = this->manageInitSynchronize(userID);
+				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "0");
+				client->addInstruction(instructionOut);
+				if (numberOfRestartedClients >= GameView::instance().numberOfLoggedInPlayers()) {
+					GameView::instance().restartPlayers();
+					instructionOut.clear();
+					instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
+					instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "1");
+					this->lastBroadcast = "";
+					this->getClients().addBroadcast(instructionOut);
+				}
+			}
 			break;
 		}
 		case OPCODE_INIT_SYNCHRONIZE: {

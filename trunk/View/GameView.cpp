@@ -78,6 +78,16 @@ void GameView::addPlayer(string userID, string characterType) {
 	}
 }
 
+void GameView::restartPlayers() {
+	for (unsigned int i=0; i<this->_players.size(); i++) {
+		string characterType = _players[i]->getCharacter()->getCharacterId();
+		string userID = _players[i]->getUserID();
+		delete(_players[i]->getCharacter());
+		Personaje* character = characterFactory.createViewCharacter(characterType, userID);
+		_players[i]->setCharacter(character);
+	}
+}
+
 Player* GameView::findPlayer(string userID) {
 	bool found = false;
 	Player* player = NULL;
@@ -241,6 +251,19 @@ void GameView::update() {
 void GameView::startUpdatingPlayer(string userID) {
 	Player *player = findPlayer(userID);
 	player->startUpdating();
+}
+
+void GameView::stopUpdatingPlayer(string userID) {
+	Player *player = findPlayer(userID);
+	player->stopUpdating();
+}
+
+int GameView::numberOfLoggedInPlayers() {
+	int loggedInPlayers = 0;
+	for (unsigned int i=0; i<_players.size(); i++)
+		if (_players[i]->getCharacter()->personajeModelo()->isActive())
+			loggedInPlayers++;
+	return loggedInPlayers;
 }
 
 TimeManager* GameView::getTimer() {

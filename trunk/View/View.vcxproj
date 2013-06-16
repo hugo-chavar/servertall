@@ -82,6 +82,8 @@
     <ClCompile Include="FlagMission.cpp" />
     <ClCompile Include="GameView.cpp" />
     <ClCompile Include="Heart.cpp" />
+    <ClCompile Include="Hechizo.cpp" />
+    <ClCompile Include="HechizoProteccion.cpp" />
     <ClCompile Include="ItemFactoryView.cpp" />
     <ClCompile Include="ItemView.cpp" />
     <ClCompile Include="Lamp.cpp" />
@@ -110,6 +112,8 @@
     <ClInclude Include="FlagMission.h" />
     <ClInclude Include="GameView.h" />
     <ClInclude Include="Heart.h" />
+    <ClInclude Include="Hechizo.h" />
+    <ClInclude Include="HechizoProteccion.h" />
     <ClInclude Include="ItemFactoryView.h" />
     <ClInclude Include="ItemView.h" />
     <ClInclude Include="Lamp.h" />

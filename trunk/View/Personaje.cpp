@@ -23,6 +23,9 @@ Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	magiaActual = modelo->getMagiaMaxima();
 	this->shieldResistance=0;
 	this->shieldAbsortion=0;
+	hechizoActual = NULL;
+	invulnerable = false;
+	protCost = 0;
 	//crearNombre(modelo->getName());
 
 	//this->modelo->getAnimation()->fps(static_cast<int>(this->modelo->getAnimation()->fps() * (this->modelo->getVelocidad()/2)));
@@ -106,6 +109,41 @@ void Personaje::animar() {
 	}
 }
 
+void Personaje::stopProtectionSpell() {
+	if (this->invulnerable) {
+		invulnerable = false;
+		protCost = 0;
+	}
+}
+
+void Personaje::updateProtectionSpell() {
+	if ((this->invulnerable) || (!this->useMagic(protCost))) {
+		this->stopProtectionSpell();
+	}
+}
+
+void Personaje::detenerMagia() {
+		modelo->hacerMagia();
+		this->stopProtectionSpell();
+}
+
+void Personaje::setProtCost(float cost) {
+	this->protCost = cost;
+}
+
+void Personaje::invocarMagia() {
+	bool canActivate;
+	
+	if (this->hechizoActual != NULL) {
+		canActivate = this->hechizoActual->startSpell(this->character_id);
+		if (canActivate) {
+			modelo->hacerMagia();
+			delete (this->hechizoActual);
+			this->hechizoActual = NULL;
+		}
+	}
+}
+
 void Personaje::update() {
 	this->setFogged(!modelo->isActive());
 	this->mover();
@@ -113,6 +151,7 @@ void Personaje::update() {
 		this->animar();
 	}
 	modelo->update();
+	this->updateProtectionSpell();
 	if (this->isImmobilized())
 		return;
 	if (this->getCurrentSpritePosition() > static_cast<int>(sprites.size()-1)) {
@@ -171,13 +210,23 @@ void Personaje::calcularSigTileAMover(){
 			this->atacar();
 		}
 		if (modelo->getIsReseting()) {
-			this->setRectangle(this->getPosition(), sprites[this->currentSpritePosition]);
-			currentEnemy = NULL;
-			this->heal();
-			this->rechargeMagic();
-			modelo->setIsReseting();
+			this->reset();
 		}
 	}
+}
+
+void Personaje::reset() {
+	this->setRectangle(this->getPosition(), sprites[this->currentSpritePosition]);
+	currentEnemy = NULL;
+	this->heal();
+	this->rechargeMagic();
+	if (this->hechizoActual != NULL) {
+		delete hechizoActual;
+		hechizoActual = NULL;
+	}
+	invulnerable = false;
+	protCost = 0;
+	modelo->setIsReseting();
 }
 
 void Personaje::moverSprite(std::pair<float, float>& factor){
@@ -272,7 +321,7 @@ void Personaje::manejarDano(float danoRecibido)
 
 void Personaje::recibirDano(float dano) {
 	
-	if (this->isFogged()) {
+	if ((this->isFogged()) || (this->invulnerable)) {
 		return;
 	}
 	float danoRecibido = Game::instance().getRandom() * dano;
@@ -302,6 +351,10 @@ void Personaje::atacar() {
 		this->modelo->atacar();
 		currentEnemy = NULL;
 	}
+}
+
+void Personaje::setInvulnerable(bool inv) {
+	this->invulnerable = inv;
 }
 
 void Personaje::setCurrentEnemy(int tileX, int tileY) {
@@ -570,6 +623,14 @@ void Personaje::increaseSpeed(float factor)
 void Personaje::heal() {
 
 	vidaActual = modelo->getVidaMaxima();
+}
+
+bool Personaje::useMagic(float usedMagic) {
+	if(magiaActual >= usedMagic) {
+		magiaActual -= usedMagic;
+		return true;
+	}
+	return false;
 }
 
 void Personaje::rechargeMagic() {

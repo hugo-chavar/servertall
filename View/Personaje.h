@@ -7,6 +7,7 @@
 #include "PersonajeModelo.h"
 #include "Entity.h"
 #include "Daniable.h"
+#include "Hechizo.h"
 
 class Personaje : public Entity, public Daniable {
 public:
@@ -45,6 +46,11 @@ public:
 	bool hasValidSprite();
 	void setShield(float resistance,float absortion);
 	bool hasShield();
+	bool useMagic(float usedMagic); //Devuelve si pudo usar esa cantidad de magia
+	void setInvulnerable(bool inv);
+	void invocarMagia();
+	void detenerMagia();
+	void setProtCost(float cost);
 
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual
@@ -63,7 +69,9 @@ private:
 	void atacar();
 	void resolverAtaque();
 	void perseguirEnemigo();
-
+	void reset();
+	void stopProtectionSpell();
+	void updateProtectionSpell();
 
 	PersonajeModelo* modelo;
 	std::vector<SpriteAnimado*> sprites;
@@ -75,8 +83,11 @@ private:
 	//bool centeredInTile;
 	Daniable* currentEnemy; //el destruible que esta atacando el pj
 
+	Hechizo* hechizoActual;
+	float protCost;
 	float magiaActual;
 	float shieldResistance;
+	bool invulnerable;
 	float shieldAbsortion;
 	void manejarDano(float dano);
 

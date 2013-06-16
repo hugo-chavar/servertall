@@ -70,6 +70,7 @@ public:
 
 	void herir();
 	void morir();
+	void hacerMagia();
 	//void setPosition(std::pair<int, int> pos);
 
 	void setCurrentWeaponIndex(unsigned int currentWeaponIndex);
@@ -113,6 +114,7 @@ private:
 	int estado;
 	int orientacion;
 	float velocidad;
+	float velocidadInicial;
 	bool active;
 	AnimatedEntity * animation;
 	string name;

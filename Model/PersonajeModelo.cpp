@@ -63,6 +63,11 @@ void PersonajeModelo::herir() {
 	this->resolverAnimacion(animacionActual);
 }
 
+void PersonajeModelo::hacerMagia() {
+	animacionActual = MAGIA;
+	this->resolverAnimacion(animacionActual);
+}
+
 void PersonajeModelo::morir() {
 	animacionActual = MORIR;
 	this->resolverAnimacion(animacionActual);
@@ -141,15 +146,15 @@ void PersonajeModelo::resetChar() {
 	posMov = 0;
 	caminoSize = 0;
 	estado = PARADO;
-	velocidad = DEFAULT_MAIN_CHARACTER_SPEED;
+	velocidad = Game::instance().configuration()->mainCharacterSpeed();
 	orientacion = SUR;
 	this->setAnimating(false);
 	animacionActual = SIN_CAMBIO;
 	following = false;
-	precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
-	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
-	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
-	magiaMaxima = DEFAULT_CHARACTER_MAX_MAGIC;
+	//precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
+	//danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
+	//vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
+	//magiaMaxima = DEFAULT_CHARACTER_MAX_MAGIC;
 	isReseting = true;
 }
 

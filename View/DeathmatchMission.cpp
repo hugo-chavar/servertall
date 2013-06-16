@@ -4,7 +4,7 @@
 
 #define KILL 3
 #define DEATH 2
-#define MAX_SCORE 15
+#define MAX_SCORE 6
 
 
 DeathmatchMission::DeathmatchMission() {
@@ -45,6 +45,8 @@ bool DeathmatchMission::missionEnded() {
 	Player* player;
 
 	player = GameView::instance().playerWithHighestScore();
+	if (player == NULL)
+		return false;
 	if (player->missionScore() >= MAX_SCORE) {
 		return true;
 	}

@@ -107,8 +107,13 @@ void ClientList::addBroadcast(Instruction& instruction, std::string from) {
 	this->getClientListMutex().lock();
 
 	for (std::list<Client*>::iterator it = this->getClients().begin(); it != this->getClients().end(); ++it) {
-		if (from != (*it)->getUserID())
-			(*it)->addBroadcast(instruction);
+		try	{
+			if (from != (*it)->getUserID()) 
+				(*it)->addBroadcast(instruction);
+		} catch (std::bad_alloc& ba) {
+			std::string whatError = ba.what();
+			LOG_ERROR("bad_alloc caught: " + whatError);
+		}
 	}
 	this->getClientListMutex().unlock();
 

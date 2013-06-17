@@ -447,12 +447,24 @@ escenarios:
          - tipoEntidad: caballo
            x: 0
            y: 0
+           precisionMinima: 0.8
+           danoMaximo: 30.0
+           vidaMaxima: 300.0
+           magiaMaxima: 50.0
          - tipoEntidad: frodo
            x: 3
            y: 3
+           precisionMinima: 0.5
+           danoMaximo: 20.0
+           vidaMaxima: 200.0
+           magiaMaxima: 100.0
          - tipoEntidad: mago
            x: 3
            y: 5
+           precisionMinima: 0.3
+           danoMaximo: 15.0
+           vidaMaxima: 250.0
+           magiaMaxima: 300.0
       items:
          porcentaje: 2
          def:
@@ -476,11 +488,26 @@ escenarios:
 
       protagonista: 
          - tipoEntidad: caballo
-           x: 0 
-           y: 0 
+           x: 0
+           y: 0
+           precisionMinima: 0.8
+           danoMaximo: 30.0
+           vidaMaxima: 300.0
+           magiaMaxima: 50.0
          - tipoEntidad: frodo
-           x: 3 
-           y: 3 
+           x: 3
+           y: 3
+           precisionMinima: 0.5
+           danoMaximo: 20.0
+           vidaMaxima: 200.0
+           magiaMaxima: 100.0
+         - tipoEntidad: mago
+           x: 3
+           y: 5
+           precisionMinima: 0.3
+           danoMaximo: 15.0
+           vidaMaxima: 250.0
+           magiaMaxima: 300.0
       items:
          porcentaje: 5
          def:

@@ -36,7 +36,7 @@ bool GameView::initialize(string chosenMission) {
 void GameView::restart() {
 	this->worldView.deleteStage();
 
-	Game::instance().restart();;
+	Game::instance().restart();
 
 	bool mapInitialized = this->worldView.initialize();
 

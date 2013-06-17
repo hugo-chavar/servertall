@@ -38,19 +38,19 @@ void PersonajeModelo::initialize(int pos_x, int pos_y) {
 	animacionActual = SIN_CAMBIO;
 	this->vision = NULL;
 	following = false;
-	precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
-	danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
-	vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
-	magiaMaxima = DEFAULT_CHARACTER_MAX_MAGIC;
+	//precisionMinima = DEFAULT_CHARACTER_MIN_PRECISION;
+	//danoMaximo = DEFAULT_CHARACTER_MAX_DAMAGE;
+	//vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
+	//magiaMaxima = DEFAULT_CHARACTER_MAX_MAGIC;
 	isReseting = false;
 
 	//Initializing weapons
 	model::Sword* sword = new model::Sword();
-	sword->initialize(true,1,DEFAULT_CHARACTER_MAX_DAMAGE,DEFAULT_CHARACTER_MIN_PRECISION);
+	sword->initialize(true,1,this->danoMaximo,this->precisionMinima); //sword->initialize(true,1,DEFAULT_CHARACTER_MAX_DAMAGE,DEFAULT_CHARACTER_MIN_PRECISION);
 	this->getWeapons().push_back(sword);
 
 	model::Bow* bow = new model::Bow();
-	bow->initialize(false,5,DEFAULT_CHARACTER_MAX_DAMAGE,DEFAULT_CHARACTER_MIN_PRECISION);
+	bow->initialize(false,5,this->danoMaximo,this->precisionMinima); //bow->initialize(false,5,DEFAULT_CHARACTER_MAX_DAMAGE,DEFAULT_CHARACTER_MIN_PRECISION);
 	this->getWeapons().push_back(bow);
 }
 

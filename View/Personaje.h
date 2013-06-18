@@ -33,7 +33,7 @@ public:
 	std::string getPlayerName();
 	std::pair<int,int> getPosicionActualEnTiles();
 	void setDestino(int xTile, int yTile);
-	void animateModel(char animation);
+	void processKeyCommand(char animation);
 	std::string getCharacterId();
 	bool isCenteredInTile();
 	std::string idToString();
@@ -51,6 +51,8 @@ public:
 	void invocarMagia();
 	void detenerMagia();
 	void setProtCost(float cost);
+	void setHechizo(Hechizo* hechizo);
+	void setProtTime(float time);
 
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual
@@ -85,6 +87,7 @@ private:
 
 	Hechizo* hechizoActual;
 	float protCost;
+	float protTime;
 	float magiaActual;
 	float shieldResistance;
 	bool invulnerable;

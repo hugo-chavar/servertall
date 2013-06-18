@@ -172,6 +172,13 @@ entidades:
       pixel_ref_x: 21	
       pixel_ref_y: 6
 
+    - nombre: ItemHProteccion
+      imagen: ../Images/ItemHProteccion.png
+      ancho_base: 1		
+      alto_base: 1		
+      pixel_ref_x: 21	
+      pixel_ref_y: 6
+
     - nombre: Shield
       imagen: ../Images/Shield.png
       ancho_base: 1

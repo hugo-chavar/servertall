@@ -11,8 +11,8 @@ class Hechizo {
 public:
 	Hechizo(float coste, std::string spellId);
 	~Hechizo();
-	//No todos los metodos son necesarios para todos los hechizos
 	virtual bool startSpell(std::string actualCaster);
+	std::string getSpellId();
 
 protected:
 	float cost;

@@ -20,6 +20,7 @@ bool HechizoProteccion::startSpell(std::string actualCaster) {
 	if (invocador->useMagic(cost)) {
 		invocador->setInvulnerable(true);
 		invocador->setProtCost(this->cost);
+		invocador->setProtTime(0.0);
 		return true;
 	}
 	return false;

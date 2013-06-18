@@ -4,11 +4,12 @@
 #include "MapItem.h"
 #include "RunningBoots.h"
 #include "Heart.h"
+#include "ItemHProteccion.h"
 #include "MagicBottle.h"
 #include "Shield.h"
 
 
-#define NUMBERITEMS 6 // Cantidad de items implementados
+#define NUMBERITEMS 7 // Cantidad de items implementados
 
 class ItemFactoryView
 {

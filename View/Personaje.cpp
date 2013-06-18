@@ -4,6 +4,7 @@
 #include "Logger.h"
 #include "StringUtilities.h"
 
+#include "../Model/OpcionesJuego.h"
 #include "../Model/Game.h"
 
 
@@ -26,6 +27,7 @@ Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	hechizoActual = NULL;
 	invulnerable = false;
 	protCost = 0;
+	protTime = 0;
 	//crearNombre(modelo->getName());
 
 	//this->modelo->getAnimation()->fps(static_cast<int>(this->modelo->getAnimation()->fps() * (this->modelo->getVelocidad()/2)));
@@ -113,12 +115,26 @@ void Personaje::stopProtectionSpell() {
 	if (this->invulnerable) {
 		invulnerable = false;
 		protCost = 0;
+		protTime = 0;
 	}
 }
 
+void Personaje::setProtTime(float time) {
+	protTime = time;
+}
+
 void Personaje::updateProtectionSpell() {
-	if ((this->invulnerable) || (!this->useMagic(protCost))) {
-		this->stopProtectionSpell();
+	float tiempoTranscurrido = 0.0;
+	
+	if (this->invulnerable) {
+		protTime += GameView::instance().getTimer()->getDeltaTime()/1000;
+	}
+	if (protTime > 1.0) {
+		tiempoTranscurrido = std::floor(protTime);
+		protTime -= tiempoTranscurrido;
+		if (!(this->useMagic(protCost*tiempoTranscurrido))) {
+			this->stopProtectionSpell();
+		}
 	}
 }
 
@@ -135,7 +151,7 @@ void Personaje::invocarMagia() {
 	bool canActivate;
 	
 	if (this->hechizoActual != NULL) {
-		canActivate = this->hechizoActual->startSpell(this->character_id);
+		canActivate = this->hechizoActual->startSpell(this->getPlayerName());
 		if (canActivate) {
 			modelo->hacerMagia();
 			delete (this->hechizoActual);
@@ -226,6 +242,7 @@ void Personaje::reset() {
 	}
 	invulnerable = false;
 	protCost = 0;
+	protTime = 0;
 	modelo->setIsReseting();
 }
 
@@ -390,8 +407,26 @@ void Personaje::setDestino(int xTile, int yTile){
 	setCurrentEnemy(xTile, yTile);
 }
 
-void Personaje::animateModel(char animacion) {
-	modelo->animar(animacion);
+void Personaje::processKeyCommand(char animacion) {
+	switch (animacion) {
+		case (OPCION_MAGIA): {
+			this->invocarMagia();
+			break;
+				  }
+		case (OPCION_TERMINAR_MAGIA): {
+			this->stopProtectionSpell();
+			break;
+				  }
+		default:;
+		}
+}
+
+void Personaje::setHechizo(Hechizo* hechizo) {
+	if (this->hechizoActual != NULL) {
+		delete (this->hechizoActual);
+		this->hechizoActual = NULL;
+	}
+	this->hechizoActual = hechizo;
 }
 
 void Personaje::calcularvelocidadRelativa(std::pair<float, float>& factor) {
@@ -534,6 +569,18 @@ std::string Personaje::updateToString() {
 	out.append(stringUtilities::floatToString(this->magiaActual));
 	out.append(";");
 	out.append(stringUtilities::floatToString(this->shieldResistance));
+	out.append(";");
+	if (this->invulnerable) {
+	out.append("T");
+	} else {
+		out.append("F");
+	}
+	out.append(";");
+	if (hechizoActual != NULL) {
+		out.append(hechizoActual->getSpellId());
+	} else {
+		out.append("");
+	}
 	out.append(";");
 	out.append(this->modelo->getVision()->updateToString());
 	return out;

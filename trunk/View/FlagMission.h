@@ -25,6 +25,7 @@ public:
 	vector <Flag*>* getFlags();
 	bool isAFlag(Daniable* entity);
 	Daniable* manageFlagAttack(pair <int,int> tile);
+	string getWinner();
 
 private:
 	StringQueue changes;

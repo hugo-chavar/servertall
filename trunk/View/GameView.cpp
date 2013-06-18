@@ -85,7 +85,13 @@ void GameView::restartPlayers() {
 		delete(_players[i]->getCharacter());
 		Personaje* character = characterFactory.createViewCharacter(characterType, userID);
 		_players[i]->setCharacter(character);
+		_players[i]->missionScore(0);
 	}
+}
+
+void GameView::restartPlayersScores() {
+	for (unsigned int i=0; i<this->_players.size(); i++)
+		_players[i]->missionScore(0);
 }
 
 Player* GameView::findPlayer(string userID) {

@@ -15,9 +15,11 @@ public:
 	void updateMissionStatus(Daniable* victim, string attacker);
 	bool missionEnded();
 	void choose();
+	string getWinner();
 
 private:
 	bool chosen;
+	string winner;
 
 };
 

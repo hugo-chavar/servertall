@@ -616,8 +616,9 @@ int Personaje::getCurrentSpritePosition() {
 }
 
 void Personaje::setCurrentSpritePosition(int pos) {
-	if (pos == ESTADO_ERROR) {
+	if (pos < 0) {
 		this->currentSpritePosition = 0;
+		return;
 	}
 	this->currentSpritePosition = pos;
 }

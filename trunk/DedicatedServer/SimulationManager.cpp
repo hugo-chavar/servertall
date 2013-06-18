@@ -52,6 +52,7 @@ void SimulationManager::simulate() {
 		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
 		std::string argument = GameView::instance().managePlayersUpdate();
 		std::string itemsUpdate=GameView::instance().getWorldView()->manageItemsUpdate();
+		std::string eventsUpdate=GameView::instance().manageEventsUpdate();
 		std::string missionUpdate = GameView::instance().getMission()->manageMissionChange();
 		bool send=false;
 		if (argument.size() > 0 ) {
@@ -71,6 +72,11 @@ void SimulationManager::simulate() {
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEM_UPDATE,itemsUpdate);
 				send=true;
 			}
+		}
+		if(eventsUpdate.size()>0)
+		{
+				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_EVENT_UPDATE,eventsUpdate);
+				send=true;
 		}
 		if (missionUpdate.size() > 0) {
 			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MISSION_UPDATE, missionUpdate);

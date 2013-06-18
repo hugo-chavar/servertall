@@ -5,6 +5,7 @@
 #include "TileModel.h"
 #include "ItemFactoryView.h"
 #include <algorithm>
+#include "GameView.h"
 
 //#define START_LEVEL 0
 //#define EXTRA_TILES_TO_RENDER 9
@@ -363,7 +364,8 @@ ItemView* Stage::getItemInTile(int posX,int posY)
 
 string Stage::manageItemsUpdate()
 {
-	this->itemChanges.lock();
+	return GameView::instance().manageUpdate(&this->itemChanges);
+	/*this->itemChanges.lock();
 	string changes="";
 	while(itemChanges.size()>0)
 	{
@@ -374,8 +376,9 @@ string Stage::manageItemsUpdate()
 		changes.pop_back();
 	}
 	this->itemChanges.unLock();
-	return changes;
+	return changes;*/
 }
+
 
 //void Stage::regenerateItem()
 //{

@@ -155,7 +155,7 @@ void GameView::manageAnimationUpdate(string userID, string animation) {
 	Player *player = findPlayer(userID);
 	if (animation.size() == 1) {
 		opcion_animacion = animation.front();
-		player->getCharacter()->animateModel(opcion_animacion);
+		player->getCharacter()->processKeyCommand(opcion_animacion);
 	}
 }
 

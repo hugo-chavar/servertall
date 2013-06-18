@@ -85,6 +85,7 @@
     <ClCompile Include="Hechizo.cpp" />
     <ClCompile Include="HechizoProteccion.cpp" />
     <ClCompile Include="ItemFactoryView.cpp" />
+    <ClCompile Include="ItemHProteccion.cpp" />
     <ClCompile Include="ItemView.cpp" />
     <ClCompile Include="Lamp.cpp" />
     <ClCompile Include="MagicBottle.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Hechizo.h" />
     <ClInclude Include="HechizoProteccion.h" />
     <ClInclude Include="ItemFactoryView.h" />
+    <ClInclude Include="ItemHProteccion.h" />
     <ClInclude Include="ItemView.h" />
     <ClInclude Include="Lamp.h" />
     <ClInclude Include="MagicBottle.h" />

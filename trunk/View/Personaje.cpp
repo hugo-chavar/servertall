@@ -568,6 +568,10 @@ std::string Personaje::updateToString() {
 	out.append(";");
 	out.append(stringUtilities::floatToString(this->magiaActual));
 	out.append(";");
+	out.append(stringUtilities::floatToString(this->modelo->getVidaMaxima()));
+	out.append(";");
+	out.append(stringUtilities::floatToString(this->modelo->getMagiaMaxima()));
+	out.append(";");
 	out.append(stringUtilities::floatToString(this->shieldResistance));
 	out.append(";");
 	if (this->invulnerable) {

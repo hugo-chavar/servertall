@@ -411,16 +411,16 @@ string Stage::manageItemsUpdate()
 //	//this->worldModel->
 //}
 
-bool Stage::isThereAPlayerInTile(pair <int,int> pos)
-{
-	std::map<std::string,Personaje*>::iterator it;
-	for(it=this->personajes.begin();it!=personajes.end();it++)
-		{
-			if(it->second->getPosicionEnTiles()==pos)
-				return true;
-		}
-	return false;
-}
+//bool Stage::isThereAPlayerInTile(pair <int,int> pos)
+//{
+//	std::map<std::string,Personaje*>::iterator it;
+//	for(it=this->personajes.begin();it!=personajes.end();it++)
+//		{
+//			if(it->second->getPosicionEnTiles()==pos)
+//				return true;
+//		}
+//	return false;
+//}
 
 ItemView* Stage::findDeathItem()
 {

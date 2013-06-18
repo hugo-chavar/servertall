@@ -44,7 +44,7 @@ void ItemView::update()
 				else
 					{
 						this->regenerationTime=0;
-						if(!GameView::instance().getWorldView()->isThereAPlayerInTile(this->getPosition()))
+						if(!GameView::instance().isThereAPlayerInTile(this->getPosition()))
 						{
 							GameView::instance().getWorldView()->getTileAt(this->getPosition())->setOtherEntity(this);
 							this->revive(HIDDEN_ITEM,this->getPosition());//Aca tendria que meter logica para que cambie de lugar el item

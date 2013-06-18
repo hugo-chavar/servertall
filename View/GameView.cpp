@@ -347,4 +347,12 @@ bool GameView::isKnownByPlayer(Player player, std::pair<int,int> pos) {
 	return player.getCharacter()->personajeModelo()->getVision()->testPosition(pos);
 }
 
-
+bool  GameView::isThereAPlayerInTile(pair <int,int> pos)
+{
+	for(int i=0;i<this->_players.size();i++)
+	{
+		if(_players[i]->getCharacter()->getPosicionActualEnTiles()==pos)
+			return true;
+	}
+	return false;
+}

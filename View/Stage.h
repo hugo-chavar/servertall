@@ -36,7 +36,7 @@ public:
 	ItemView* getItemInTile(int posX,int posY);
 	string manageItemsUpdate();
 	//void regenerateItem();
-	bool isThereAPlayerInTile(pair <int,int> pos);
+	//bool isThereAPlayerInTile(pair <int,int> pos);
 	void relocateItem(pair<int,int>pos);
 	void deleteStage();
 private:

@@ -147,6 +147,7 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "0");
 				client->addInstruction(instructionOut);
 				if (numberOfRestartedClients >= GameView::instance().numberOfLoggedInPlayers()) {
+					this->numberOfRestartedClients = 0;
 					GameView::instance().restartPlayers();
 					instructionOut.clear();
 					instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);

@@ -15,7 +15,7 @@ FlagMission::~FlagMission() {
 }
 
 void FlagMission::initialize() {
-	int numberOfFlags = 1; // HARCODEADO
+	int numberOfFlags = rand() % 6;
 	for (int i=0; i<numberOfFlags; i++) {
 		flags.push_back(new Flag());
 	}

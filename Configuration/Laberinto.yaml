@@ -409,8 +409,6 @@ escenarios:
          - {x: 10, y: 15, entidad: piedra}
          - {x: 10, y: 16, entidad: piedra}
          - {x: 0, y: 41, entidad: piso041}
-         - {x: 99, y: 99, entidad: bandera}
-         - {x: 9, y: 9, entidad: bandera}
          - {x: 15, y: 15, entidad: fuente} 
          - {x: 10, y: 15, entidad: tierra} 
          - {x: 50, y: 50, entidad: agua}
@@ -449,7 +447,6 @@ escenarios:
          - {x: 2, y: 24, entidad: piedra}
          - {x: 3, y: 24, entidad: piedra}
          - {x: 0, y: 27, entidad: watermill}
-         - {x: 15, y: 30, entidad: bandera}
          - {x: 20, y: 26, entidad: agua}
          - {x: 20, y: 27, entidad: agua}
          - {x: 20, y: 28, entidad: agua}

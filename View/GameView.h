@@ -50,6 +50,9 @@ public:
 	void restartPlayers();
 	void changeWeapon(string userID, unsigned int weaponIndex);
 	bool isThereAPlayerInTile(pair <int,int> pos);
+	void addEventUpdate(string _string);
+	string manageEventsUpdate();
+	string manageUpdate(StringQueue* queue);
 private:
 	GameView();
 	Stage worldView;
@@ -58,6 +61,7 @@ private:
 	CharacterFactory characterFactory;
 	SpriteAnimado* errorImage;
 	Mission mission;
+	StringQueue eventsUpdates;
 
 };
 

@@ -84,8 +84,11 @@
     <ClCompile Include="Heart.cpp" />
     <ClCompile Include="Hechizo.cpp" />
     <ClCompile Include="HechizoProteccion.cpp" />
+    <ClCompile Include="HechizoTerremoto.cpp" />
     <ClCompile Include="ItemFactoryView.cpp" />
+    <ClCompile Include="ItemFlecha.cpp" />
     <ClCompile Include="ItemHProteccion.cpp" />
+    <ClCompile Include="ItemTerremoto.cpp" />
     <ClCompile Include="ItemView.cpp" />
     <ClCompile Include="Lamp.cpp" />
     <ClCompile Include="MagicBottle.cpp" />
@@ -115,8 +118,11 @@
     <ClInclude Include="Heart.h" />
     <ClInclude Include="Hechizo.h" />
     <ClInclude Include="HechizoProteccion.h" />
+    <ClInclude Include="HechizoTerremoto.h" />
     <ClInclude Include="ItemFactoryView.h" />
+    <ClInclude Include="ItemFlecha.h" />
     <ClInclude Include="ItemHProteccion.h" />
+    <ClInclude Include="ItemTerremoto.h" />
     <ClInclude Include="ItemView.h" />
     <ClInclude Include="Lamp.h" />
     <ClInclude Include="MagicBottle.h" />

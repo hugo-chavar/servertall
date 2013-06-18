@@ -7,9 +7,10 @@
 #include "ItemHProteccion.h"
 #include "MagicBottle.h"
 #include "Shield.h"
+#include "ItemTerremoto.h"
+#include "ItemFlecha.h"
 
-
-#define NUMBERITEMS 7 // Cantidad de items implementados
+#define NUMBERITEMS 9 // Cantidad de items implementados
 
 class ItemFactoryView
 {

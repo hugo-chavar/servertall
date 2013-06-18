@@ -356,3 +356,29 @@ bool  GameView::isThereAPlayerInTile(pair <int,int> pos)
 	}
 	return false;
 }
+
+string GameView::manageUpdate(StringQueue* queue)
+{
+	queue->lock();
+	string changes="";
+	while(queue->size()>0)
+	{
+		changes+=queue->pop()+":";
+	}
+	if (changes.size()!=0)
+	{
+		changes.pop_back();
+	}
+	queue->unLock();
+	return changes;
+}
+
+string GameView::manageEventsUpdate()
+{
+	return this->manageUpdate(&this->eventsUpdates);
+}
+
+void GameView::addEventUpdate(string _string)
+{
+	this->eventsUpdates.push(_string);
+}

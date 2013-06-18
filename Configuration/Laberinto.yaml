@@ -149,7 +149,7 @@ entidades:
       ancho_base: 1		
       alto_base: 1		
       pixel_ref_x: 24	
-      pixel_ref_y: 22
+      pixel_ref_y: 12
 
     - nombre: MapItem
       imagen: ../Images/mapa.png
@@ -178,6 +178,20 @@ entidades:
       alto_base: 1		
       pixel_ref_x: 21	
       pixel_ref_y: 6
+
+    - nombre: ItemTerremoto
+      imagen: ../Images/terremoto.png
+      ancho_base: 1		
+      alto_base: 1		
+      pixel_ref_x: 16	
+      pixel_ref_y: -16
+
+    - nombre: ItemFlecha
+      imagen: ../Images/ItemFlecha.png
+      ancho_base: 1		
+      alto_base: 1		
+      pixel_ref_x: 16	
+      pixel_ref_y: 0
 
     - nombre: Shield
       imagen: ../Images/Shield.png

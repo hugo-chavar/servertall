@@ -48,11 +48,13 @@ public:
 	int numberOfLoggedInPlayers();
 	Mission* getMission();
 	void restartPlayers();
+	void restartPlayersScores();
 	void changeWeapon(string userID, unsigned int weaponIndex);
 	bool isThereAPlayerInTile(pair <int,int> pos);
 	void addEventUpdate(string _string);
 	string manageEventsUpdate();
 	string manageUpdate(StringQueue* queue);
+
 private:
 	GameView();
 	Stage worldView;

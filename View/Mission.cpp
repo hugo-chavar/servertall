@@ -59,9 +59,13 @@ string Mission::manageMissionInitialSynch() {
 
 string Mission::manageMissionChange() {
 	if ((this->isGameOver()) && (!this->gameOverMessageSent)) {
-		Player* player = GameView::instance().playerWithHighestScore();
-		string data = "GameOver;"+player->getUserID();
 		this->gameOverMessageSent = true;
+		string winner;
+		if (deathmatch.isTheChosenMission())
+			winner = deathmatch.getWinner();
+		else
+			winner = flagMission.getWinner();
+		string data = "GameOver;"+winner;
 		return data;
 	}
 	if (flagMission.isTheChosenMission())

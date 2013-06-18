@@ -88,6 +88,10 @@ string FlagMission::changeToString() {
 	return change;
 }
 
+string FlagMission::getWinner() {
+	return GameView::instance().playerWithHighestScore()->getUserID();
+}
+
 void FlagMission::addChange(string change) {
 	this->changes.push(change);
 }

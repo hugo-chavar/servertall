@@ -49,6 +49,7 @@ public:
 	Mission* getMission();
 	void restartPlayers();
 	void changeWeapon(string userID, unsigned int weaponIndex);
+	bool isThereAPlayerInTile(pair <int,int> pos);
 private:
 	GameView();
 	Stage worldView;

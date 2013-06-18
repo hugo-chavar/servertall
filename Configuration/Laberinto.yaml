@@ -208,6 +208,15 @@ entidades:
       pixel_ref_y: 0
       fps: 0
       delay: 0
+
+    - nombre: Grenade
+      imagen: ../Images/granada/
+      ancho_base: 1
+      alto_base: 1
+      pixel_ref_x: 16
+      pixel_ref_y: 0
+      fps: 0
+      delay: 0
        
 escenarios: 
     - nombre: bosque_encantado 

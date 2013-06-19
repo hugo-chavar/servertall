@@ -28,38 +28,38 @@ void Circle::clear() {
 }
 
 void Circle::initialize(pair<int, int> centerPoint, int range) {
-	this->radius = range;
-	this->center = centerPoint;
-	this->clear();
-	int x = range, y = 0;
-	int xChange = 1 - range*2;
-	int yChange = 0;
-	int rangeError = 0;
+	this->setRadius(range);
+	this->setCenter(centerPoint);
+	this->initialize();
+	//int x = range, y = 0;
+	//int xChange = 1 - range*2;
+	//int yChange = 0;
+	//int rangeError = 0;
 
-	while (x >= y) {
-		limits.insert(make_pair(x + this->center.first, y + this->center.second));
-		limits.insert(make_pair(y + this->center.first, x + this->center.second));
-		limits.insert(make_pair(-x + this->center.first, y + this->center.second));
-		limits.insert(make_pair(-y + this->center.first, x + this->center.second));
-		limits.insert(make_pair(-x + this->center.first, -y + this->center.second));
-		limits.insert(make_pair(-y + this->center.first, -x + this->center.second));
-		limits.insert(make_pair(x + this->center.first, -y + this->center.second));
-		limits.insert(make_pair(y + this->center.first, -x + this->center.second));
+	//while (x >= y) {
+	//	limits.insert(make_pair(x + this->center.first, y + this->center.second));
+	//	limits.insert(make_pair(y + this->center.first, x + this->center.second));
+	//	limits.insert(make_pair(-x + this->center.first, y + this->center.second));
+	//	limits.insert(make_pair(-y + this->center.first, x + this->center.second));
+	//	limits.insert(make_pair(-x + this->center.first, -y + this->center.second));
+	//	limits.insert(make_pair(-y + this->center.first, -x + this->center.second));
+	//	limits.insert(make_pair(x + this->center.first, -y + this->center.second));
+	//	limits.insert(make_pair(y + this->center.first, -x + this->center.second));
 
-		y++;
-		rangeError += yChange;
-		yChange += 2;
-		if(((rangeError << 1) + xChange) > 0)
-		{
-			x--;
-			rangeError += xChange;
-			xChange += 2;
-		}
-	}
-	vector <pair<int, int> > aux;
-	std::copy(limits.begin(), limits.end(), std::inserter(aux, aux.begin()));
-	std::sort (aux.begin(), aux.end(), comparator);
-	orderedLimits.assign(aux.begin(),aux.end());
+	//	y++;
+	//	rangeError += yChange;
+	//	yChange += 2;
+	//	if(((rangeError << 1) + xChange) > 0)
+	//	{
+	//		x--;
+	//		rangeError += xChange;
+	//		xChange += 2;
+	//	}
+	//}
+	//vector <pair<int, int> > aux;
+	//std::copy(limits.begin(), limits.end(), std::inserter(aux, aux.begin()));
+	//std::sort (aux.begin(), aux.end(), comparator);
+	//orderedLimits.assign(aux.begin(),aux.end());
 }
 
 void Circle::fill() {
@@ -111,5 +111,55 @@ int Circle::distanceToCenter(pair<int, int> point) {
 	firstCoordinate = firstCoordinate*firstCoordinate;
 	secondCoordinate = secondCoordinate*secondCoordinate;
 	double distance = sqrt(static_cast<double>(firstCoordinate + secondCoordinate));
-	return static_cast<int> (std::floor(distance + 0.5));
+	return static_cast<int> (floor(distance + 0.5));
+}
+
+void Circle::setCenter(pair<int, int> value) {
+	this->center = value;
+}
+
+pair<int, int> Circle::getCenter() {
+	return this->center;
+}
+
+void Circle::setRadius(int value) {
+	this->radius = value;
+}
+
+int Circle::getRadius() {
+	return this->radius;
+}
+
+void Circle::initialize() {
+	this->clear();
+	int x = this->getRadius();
+	int y = 0;
+	int xChange = 1 - this->getRadius()*2;
+	int yChange = 0;
+	int rangeError = 0;
+
+	while (x >= y) {
+		limits.insert(make_pair(x + this->getCenter().first, y + this->getCenter().second));
+		limits.insert(make_pair(y + this->getCenter().first, x + this->getCenter().second));
+		limits.insert(make_pair(-x + this->getCenter().first, y + this->getCenter().second));
+		limits.insert(make_pair(-y + this->getCenter().first, x + this->getCenter().second));
+		limits.insert(make_pair(-x + this->getCenter().first, -y + this->getCenter().second));
+		limits.insert(make_pair(-y + this->getCenter().first, -x + this->getCenter().second));
+		limits.insert(make_pair(x + this->getCenter().first, -y + this->getCenter().second));
+		limits.insert(make_pair(y + this->getCenter().first, -x + this->getCenter().second));
+
+		y++;
+		rangeError += yChange;
+		yChange += 2;
+		if(((rangeError << 1) + xChange) > 0)
+		{
+			x--;
+			rangeError += xChange;
+			xChange += 2;
+		}
+	}
+	vector <pair<int, int> > aux;
+	std::copy(limits.begin(), limits.end(), std::inserter(aux, aux.begin()));
+	std::sort (aux.begin(), aux.end(), comparator);
+	orderedLimits.assign(aux.begin(),aux.end());
 }

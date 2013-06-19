@@ -412,6 +412,16 @@ void Personaje::setDestino(int xTile, int yTile){
 	setCurrentEnemy(xTile, yTile);
 }
 
+void Personaje::changeWeapon() {
+
+	/*if ((this->getWeapons().size() - 1) == (this->getSelectedWeapon())) {
+		this->setSelectedWeapon(0);
+	} else {
+		this->setSelectedWeapon(this->getSelectedWeapon()+1);
+	}*/
+}
+
+
 void Personaje::processKeyCommand(char animacion) {
 	switch (animacion) {
 		case (OPCION_MAGIA): {
@@ -420,6 +430,10 @@ void Personaje::processKeyCommand(char animacion) {
 				  }
 		case (OPCION_TERMINAR_MAGIA): {
 			this->stopProtectionSpell();
+			break;
+				  }
+		case (OPCION_CAMBIAR_ARMA): {
+			this->changeWeapon();
 			break;
 				  }
 		default:;

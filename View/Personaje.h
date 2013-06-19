@@ -53,7 +53,7 @@ public:
 	void setProtCost(float cost);
 	void setHechizo(Hechizo* hechizo);
 	void setProtTime(float time);
-
+	bool isWood();
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual
 	int calculateSpritePosition(int currentAnimationNumber);

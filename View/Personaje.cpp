@@ -153,6 +153,7 @@ void Personaje::invocarMagia() {
 	if (this->hechizoActual != NULL) {
 		canActivate = this->hechizoActual->startSpell(this->getPlayerName());
 		if (canActivate) {
+			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_MAGIC)+";"+stringUtilities::pairIntToString(this->getPosicionActualEnTiles()));
 			modelo->hacerMagia();
 			delete (this->hechizoActual);
 			this->hechizoActual = NULL;

@@ -9,8 +9,9 @@
 #include "Shield.h"
 #include "ItemTerremoto.h"
 #include "ItemFlecha.h"
+#include "ItemCrystallBall.h"
 
-#define NUMBERITEMS 9 // Cantidad de items implementados
+#define NUMBERITEMS 10 // Cantidad de items implementados
 
 class ItemFactoryView
 {

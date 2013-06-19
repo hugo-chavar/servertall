@@ -85,6 +85,7 @@
     <ClCompile Include="Hechizo.cpp" />
     <ClCompile Include="HechizoProteccion.cpp" />
     <ClCompile Include="HechizoTerremoto.cpp" />
+    <ClCompile Include="HechizoVidencia.cpp" />
     <ClCompile Include="ItemCrystallBall.cpp" />
     <ClCompile Include="ItemFactoryView.cpp" />
     <ClCompile Include="ItemFlecha.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="Hechizo.h" />
     <ClInclude Include="HechizoProteccion.h" />
     <ClInclude Include="HechizoTerremoto.h" />
+    <ClInclude Include="HechizoVidencia.h" />
     <ClInclude Include="ItemCrystallBall.h" />
     <ClInclude Include="ItemFactoryView.h" />
     <ClInclude Include="ItemFlecha.h" />

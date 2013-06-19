@@ -510,6 +510,9 @@ Personaje::~Personaje(){
 	if (sprites.size() > 0) {
 		this->clearSprites();
 	}
+	if (hechizoActual != NULL) {
+		delete hechizoActual;
+	}
 }
 
 PersonajeModelo* Personaje::personajeModelo(){

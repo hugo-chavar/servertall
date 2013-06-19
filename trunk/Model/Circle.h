@@ -13,11 +13,16 @@ public:
 	~Circle();
 	bool inside(pair<int, int>);
 	void initialize(pair<int, int>, int);
+	void initialize();
 	void clear();
 	void fill();
 	bool hasNext();
 	pair<int, int> next();
 	int distanceToCenter(pair<int, int>);
+	void setCenter(pair<int, int>);
+	pair<int, int> getCenter();
+	void setRadius(int);
+	int getRadius();
 private:
 	set <pair<int, int> > limits;
 	set <pair<int, int> >::iterator itlim;

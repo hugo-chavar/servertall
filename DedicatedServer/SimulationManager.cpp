@@ -48,43 +48,45 @@ void SimulationManager::simulate() {
 		GameView::instance().update();
 
 		// HACER UN BROADCAST DEL UPDATE A LOS CLIENTES
-		instructionOut.clear();
-		instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
-		std::string argument = GameView::instance().managePlayersUpdate();
-		std::string itemsUpdate=GameView::instance().getWorldView()->manageItemsUpdate();
-		std::string eventsUpdate=GameView::instance().manageEventsUpdate();
-		std::string missionUpdate = GameView::instance().getMission()->manageMissionChange();
-		bool send=false;
-		if (argument.size() > 0 ) {
-			//Logger::instance().log("Argument "+argument);
-			if (this->lastBroadcast != argument){
-				this->lastBroadcast = argument;
-				//argument.append(":");
-				//argument.append(stringUtilities::unsignedToString(static_cast<unsigned>(SDL_GetTicks())));
-				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
-				argument = stringUtilities::unsignedToString(static_cast<unsigned>(SDL_GetTicks()));
-				//LOG_DEBUG("SIMULATION GENERATED AT: " + argument);
-				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CONNECTED_AT, argument);
-				send=true;
+		if (GameView::instance().numberOfLoggedInPlayers() > 0) {
+			instructionOut.clear();
+			instructionOut.setOpCode(OPCODE_SIMULATION_UPDATE);
+			std::string argument = GameView::instance().managePlayersUpdate();
+			std::string itemsUpdate=GameView::instance().getWorldView()->manageItemsUpdate();
+			std::string eventsUpdate=GameView::instance().manageEventsUpdate();
+			std::string missionUpdate = GameView::instance().getMission()->manageMissionChange();
+			bool send=false;
+			if (argument.size() > 0 ) {
+				//Logger::instance().log("Argument "+argument);
+				if (this->lastBroadcast != argument){
+					this->lastBroadcast = argument;
+					//argument.append(":");
+					//argument.append(stringUtilities::unsignedToString(static_cast<unsigned>(SDL_GetTicks())));
+					instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_SIMULATION_UPDATE, argument);
+					argument = stringUtilities::unsignedToString(static_cast<unsigned>(SDL_GetTicks()));
+					//LOG_DEBUG("SIMULATION GENERATED AT: " + argument);
+					instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CONNECTED_AT, argument);
+					send=true;
+				}
+			if(itemsUpdate.size()>0)
+				{
+					instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEM_UPDATE,itemsUpdate);
+					send=true;
+				}
 			}
-		if(itemsUpdate.size()>0)
+			if(eventsUpdate.size()>0)
 			{
-				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEM_UPDATE,itemsUpdate);
-				send=true;
+					instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_EVENT_UPDATE,eventsUpdate);
+					send=true;
 			}
+			if (missionUpdate.size() > 0) {
+				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MISSION_UPDATE, missionUpdate);
+				send = true;
+			}
+			if(send)
+				this->getClients().addBroadcast(instructionOut);
+			i++;
 		}
-		if(eventsUpdate.size()>0)
-		{
-				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_EVENT_UPDATE,eventsUpdate);
-				send=true;
-		}
-		if (missionUpdate.size() > 0) {
-			instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MISSION_UPDATE, missionUpdate);
-			send = true;
-		}
-		if(send)
-			this->getClients().addBroadcast(instructionOut);
-		i++;
 
 		if (milisecondsTonextFrame >= SDL_GetTicks() - frameStartedAt)
 			SDL_Delay(milisecondsTonextFrame - (SDL_GetTicks() - frameStartedAt));

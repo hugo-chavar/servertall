@@ -365,12 +365,12 @@ void Personaje::resolverAtaque() {
 
 void Personaje::atacar() {
 	if ((currentEnemy != NULL) && (currentEnemy->getPosition() == this->modelo->obtenerFrentePersonaje())) {
-		this->resolverAtaque();
-		this->modelo->atacar();
 		if(currentEnemy->isWood())
 			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_WOOD)+";"+stringUtilities::pairIntToString(this->getPosition()));//AGREGO SONIDO
 		else
 			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_SHIELD)+";"+stringUtilities::pairIntToString(this->getPosition()));//AGREGO SONIDO
+		this->resolverAtaque();
+		this->modelo->atacar();
 		currentEnemy = NULL;
 	}
 }

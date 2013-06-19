@@ -74,6 +74,7 @@ private:
 	void reset();
 	void stopProtectionSpell();
 	void updateProtectionSpell();
+	void changeWeapon();
 
 	PersonajeModelo* modelo;
 	std::vector<SpriteAnimado*> sprites;

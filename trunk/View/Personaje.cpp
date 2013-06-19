@@ -366,6 +366,10 @@ void Personaje::atacar() {
 	if ((currentEnemy != NULL) && (currentEnemy->getPosition() == this->modelo->obtenerFrentePersonaje())) {
 		this->resolverAtaque();
 		this->modelo->atacar();
+		if(currentEnemy->isWood())
+			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_WOOD)+";"+stringUtilities::pairIntToString(this->getPosition()));//AGREGO SONIDO
+		else
+			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_SHIELD)+";"+stringUtilities::pairIntToString(this->getPosition()));//AGREGO SONIDO
 		currentEnemy = NULL;
 	}
 }
@@ -710,6 +714,7 @@ void Personaje::eatIfItem(std::pair<int, int> destino)
 			{
 				item->modifyCharacter(this);
 				item->kill();
+				GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_EAT_ITEM)+";"+stringUtilities::pairIntToString(this->getPosicionActualEnTiles()));
 			}
 		}
 	}
@@ -728,4 +733,10 @@ void Personaje::setShield(float resistance,float absortion)
 bool Personaje::hasShield()
 {
 	return (this->shieldResistance>0);
+}
+
+
+bool Personaje::isWood()
+{
+	return false;
 }

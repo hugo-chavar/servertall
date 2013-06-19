@@ -28,3 +28,8 @@ void Flag::destroy() {
 	GameView::instance().getWorldView()->removeOtherEntity(this->getPosition());
 	Game::instance().world()->getTileAt(this->getPosition())->setOtherEntity(NULL);
 }
+
+bool Flag::isWood()
+{
+	return true;
+}

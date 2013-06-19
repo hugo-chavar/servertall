@@ -48,6 +48,7 @@ void ItemView::update()
 						{
 							GameView::instance().getWorldView()->getTileAt(this->getPosition())->setOtherEntity(this);
 							this->revive(HIDDEN_ITEM,this->getPosition());//Aca tendria que meter logica para que cambie de lugar el item
+							GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_REGENERATION)+";"+stringUtilities::pairIntToString(this->getPosition()));
 						}
 						else
 							regenerationTime=CONST_REGENERATION_TIME+rand()%VARIABLE_REGENERATION_TIME;
@@ -155,3 +156,8 @@ void ItemView::modifyCharacter(Personaje* )
 //{
 //	return this->state;
 //}
+
+bool ItemView::isWood()
+{
+	return true;
+}

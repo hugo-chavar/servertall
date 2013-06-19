@@ -49,5 +49,6 @@ public:
 	bool isItem();
 	//unsigned getState();
 	bool getCanReviveForHimself();
+	bool isWood();
 };
 

@@ -19,7 +19,7 @@ bool HechizoTerremoto::startSpell(std::string actualCaster) {
 	}
 	if (invocador->useMagic(cost)) {
 		//Realizar el terremoto
-		GameView::instance().addEventUpdate("vibrar");
+		GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_VIBRATING));
 		return true;
 	}
 	return false;

@@ -53,6 +53,9 @@ public:
 	void setProtCost(float cost);
 	void setHechizo(Hechizo* hechizo);
 	void setProtTime(float time);
+	void setVidCost(float cost);
+	void setVidencia(bool vid);
+	void setVidTime(float time);
 	bool isWood();
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual
@@ -74,6 +77,9 @@ private:
 	void reset();
 	void stopProtectionSpell();
 	void updateProtectionSpell();
+	void updateCrystallBall();
+	void stopCrystallBall();
+	void stopMagic();
 	void changeWeapon();
 
 	PersonajeModelo* modelo;
@@ -92,6 +98,9 @@ private:
 	float magiaActual;
 	float shieldResistance;
 	bool invulnerable;
+	bool videncia;
+	float vidCost;
+	float vidTime;
 	float shieldAbsortion;
 	void manejarDano(float dano);
 

@@ -28,6 +28,9 @@ Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	invulnerable = false;
 	protCost = 0;
 	protTime = 0;
+	vidCost = 0;
+	vidTime = 0;
+	videncia = false;
 	//crearNombre(modelo->getName());
 
 	//this->modelo->getAnimation()->fps(static_cast<int>(this->modelo->getAnimation()->fps() * (this->modelo->getVelocidad()/2)));
@@ -111,6 +114,14 @@ void Personaje::animar() {
 	}
 }
 
+void Personaje::stopCrystallBall() {
+	if (this->videncia) {
+		vidCost = 0;
+		vidTime = 0;
+		videncia = false;
+	}
+}
+
 void Personaje::stopProtectionSpell() {
 	if (this->invulnerable) {
 		invulnerable = false;
@@ -119,8 +130,44 @@ void Personaje::stopProtectionSpell() {
 	}
 }
 
+void Personaje::setVidCost(float cost) {
+	vidCost = cost;
+}
+
+void Personaje::setVidTime(float time) {
+	vidTime = time;
+}
+
+void Personaje::setVidencia(bool vid) {
+	videncia = vid;
+}
+
 void Personaje::setProtTime(float time) {
 	protTime = time;
+}
+
+void Personaje::stopMagic() {
+	if (this->videncia) {
+		stopCrystallBall();
+	}
+	if (this->invulnerable) {
+		stopProtectionSpell();
+	}
+}
+
+void Personaje::updateCrystallBall() {
+	float tiempoTranscurrido = 0.0;
+	
+	if (this->videncia) {
+		vidTime += GameView::instance().getTimer()->getDeltaTime()/1000;
+	}
+	if (vidTime > 1.0) {
+		tiempoTranscurrido = std::floor(vidTime);
+		vidTime -= tiempoTranscurrido;
+		if (!(this->useMagic(vidCost*tiempoTranscurrido))) {
+			this->stopCrystallBall();
+		}
+	}
 }
 
 void Personaje::updateProtectionSpell() {
@@ -169,6 +216,7 @@ void Personaje::update() {
 	}
 	modelo->update();
 	this->updateProtectionSpell();
+	this->updateCrystallBall();
 	if (this->isImmobilized())
 		return;
 	if (this->getCurrentSpritePosition() > static_cast<int>(sprites.size()-1)) {
@@ -244,6 +292,9 @@ void Personaje::reset() {
 	invulnerable = false;
 	protCost = 0;
 	protTime = 0;
+	vidCost = 0;
+	vidTime = 0;
+	videncia = false;
 	modelo->setIsReseting();
 }
 
@@ -429,7 +480,7 @@ void Personaje::processKeyCommand(char animacion) {
 			break;
 				  }
 		case (OPCION_TERMINAR_MAGIA): {
-			this->stopProtectionSpell();
+			this->stopMagic();
 			break;
 				  }
 		case (OPCION_CAMBIAR_ARMA): {
@@ -606,6 +657,12 @@ std::string Personaje::updateToString() {
 		out.append(hechizoActual->getSpellId());
 	} else {
 		out.append("");
+	}
+	out.append(";");
+	if(this->videncia){
+		out.append("T");
+	} else {
+		out.append("F");
 	}
 	out.append(";");
 	out.append(this->modelo->getVision()->updateToString());

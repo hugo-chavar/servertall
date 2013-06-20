@@ -49,7 +49,7 @@ bool FlagMission::isAFlag(Daniable* entity) {
 void FlagMission::updateMissionStatus(Daniable* victim, string attacker) {
 	if (isAFlag(victim)) {
 		Flag* flag = static_cast<Flag*>(victim);
-		if (!flag->isAlive()) {
+		if (!flag->Daniable::isAlive()) {
 			int flagNumber = findFlag(flag);
 			this->addChange("flagMission;D;"+flags[flagNumber]->getName()+";"+flags[flagNumber]->positionToString());
 			this->addChange("flagMission;A;banderaDestruida;"+flags[flagNumber]->positionToString());

@@ -3,7 +3,7 @@
 #include "GameView.h"
 #include "Logger.h"
 #include "StringUtilities.h"
-
+#include "HandGrenade.h"
 #include "../Model/OpcionesJuego.h"
 #include "../Model/Game.h"
 
@@ -217,6 +217,8 @@ void Personaje::update() {
 	modelo->update();
 	this->updateProtectionSpell();
 	this->updateCrystallBall();
+	this->getWeapons()[WEAPON_BOW]->setRange((this->personajeModelo()->getVision()->getRangeVision())/2 + 1);
+	this->getWeapons()[WEAPON_HAND_GRENADE]->setRange((this->personajeModelo()->getVision()->getRangeVision())/2 + 1);
 	if (this->isImmobilized())
 		return;
 	if (this->getCurrentSpritePosition() > static_cast<int>(sprites.size()-1)) {
@@ -224,6 +226,14 @@ void Personaje::update() {
 	} else {
 		sprites[this->currentSpritePosition]->updateFrame();
 	}
+}
+
+bool Personaje::repositionToStrike() {
+	std::pair<int, int> reposition = this->getWeapons()[this->getSelectedWeapon()]->calculateRepositionToStrike(this->currentEnemy->getPosition());
+	if (reposition == this->getPosition())
+		return false;
+	this->modelo->setDestino(reposition.first, reposition.second);
+	return true;
 }
 
 void Personaje::mover() {
@@ -242,7 +252,6 @@ void Personaje::mover() {
 	}
 }
 
-
 void Personaje::calcularSigTileAMover(){
 	int currentAnimationNumber = 0;	//animacion del personaje en el sistema de PersonajeModelo
 	std::pair<int, int> tile;	//Un tile
@@ -254,28 +263,43 @@ void Personaje::calcularSigTileAMover(){
 		//tileActual = modelo->getPosition();
 		//modelo->setIsInCenterTile(true);
 		this->eatIfItem(this->getPosition());
-		//if Arma.meTengoQueDetener(posActual, posEnemigo)
-		  //detener
-		//else
-			currentAnimationNumber = modelo->mover(tile, velocidad);
-		if (this->modelo->estaAnimandose())
-			return;
-		this->setCurrentSpritePosition(this->calculateSpritePosition(currentAnimationNumber));
-		if (previousSpritePosition != this->currentSpritePosition) {
-			ePot.first = 0;
-			ePot.second = 0;
-		} 
-		//std::string aux = stringUtilities::floatToString(velocidad);
-		//common::Logger::instance().log("Velocidad: "+ aux);
-		if (velocidad != 0) {
-			//modelo->setIsInCenterTile(false);
-			modelo->setPosition(tile);
-		} else {
+		if (this->currentEnemy != NULL) {
+			//prepare things to attack
+			//common::Logger::instance().log(":calcularSigTileAMover()  enemy NOT NULL");
+			//common::Logger::instance().log("Enemy:  " + ((Entity*)this->currentEnemy)->getName());
+			this->getWeapons()[this->getSelectedWeapon()]->setPosition(this->getPosition());
+			this->getWeapons()[this->getSelectedWeapon()]->setDirection(this->modelo->getDirection());
+			if (this->getWeapons()[this->getSelectedWeapon()]->readyToStrike(this->currentEnemy->getPosition())) {
+				if (this->getWeapons()[this->getSelectedWeapon()]->needsToReposition(this->currentEnemy->getPosition())) {
+					this->repositionToStrike();
+					currentAnimationNumber = modelo->mover(tile, velocidad);
+				}
+				else {
+					this->modelo->setNoTarget();
+					this->velocidad = 0;
+				}
+			} else {
+				currentAnimationNumber = modelo->mover(tile, velocidad);
+			}
+			if (this->modelo->estaAnimandose())
+				return;
+			this->setCurrentSpritePosition(this->calculateSpritePosition(currentAnimationNumber));
+			if (previousSpritePosition != this->currentSpritePosition) {
+				ePot.first = 0;
+				ePot.second = 0;
+			} 
+			//std::string aux = stringUtilities::floatToString(velocidad);
+			//common::Logger::instance().log("Velocidad: "+ aux);
+			if (velocidad != 0) {
+				//modelo->setIsInCenterTile(false);
+				modelo->setPosition(tile);
+			} else {
 
-			this->atacar();
-		}
-		if (modelo->getIsReseting()) {
-			this->reset();
+				this->atacar();
+			}
+			if (modelo->getIsReseting()) {
+				this->reset();
+			}
 		}
 	}
 }
@@ -416,12 +440,45 @@ void Personaje::resolverAtaque() {
 
 void Personaje::atacar() {
 	if ((currentEnemy != NULL) && (currentEnemy->getPosition() == this->modelo->obtenerFrentePersonaje())) {
+		//common::Logger::instance().log("Enemy: going to attack  " );
+		this->getWeapons()[this->selectedWeapon]->setPosition(this->getPosition());
+		this->getWeapons()[this->selectedWeapon]->setDirection(this->modelo->getDirection());
+		if (!this->getWeapons()[this->selectedWeapon]->sameDirection(currentEnemy->getPosition()))
+			return;
+		if (!this->getWeapons()[this->selectedWeapon]->isInsideRange(currentEnemy->getPosition()))
+			return;
 		if(currentEnemy->isWood())
 			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_WOOD)+";"+stringUtilities::pairIntToString(this->getPosition()));//AGREGO SONIDO
 		else
 			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_SHIELD)+";"+stringUtilities::pairIntToString(this->getPosition()));//AGREGO SONIDO
-		this->resolverAtaque();
-		this->modelo->atacar();
+		
+		switch (this->selectedWeapon) {
+			case WEAPON_SWORD: {
+			//ataque con espada
+				this->getWeapons()[this->selectedWeapon]->strike(currentEnemy);
+				this->modelo->atacar();
+					//if (!(this->currentEnemy->isAlive()))
+					//	GameView::instance().getMission()->missionUpdate(currentEnemy, this->getPlayerName());
+					//currentEnemy = NULL;
+				break;
+			}
+			case WEAPON_BOW: {
+				//ataque con arco y flecha
+				this->getWeapons()[this->selectedWeapon]->strike(currentEnemy);
+				this->modelo->defender();
+				break;
+			}
+			case WEAPON_HAND_GRENADE: {
+				//ataque con granada
+				this->getWeapons()[this->selectedWeapon]->strike(currentEnemy);
+				this->modelo->defender();
+				break;
+			}
+		}
+
+		//this->resolverAtaque();
+		//this->modelo->atacar();
+
 		currentEnemy = NULL;
 	}
 }
@@ -464,12 +521,12 @@ void Personaje::setDestino(int xTile, int yTile){
 }
 
 void Personaje::changeWeapon() {
-
-	/*if ((this->getWeapons().size() - 1) == (this->getSelectedWeapon())) {
+	//this->setSelectedWeapon(this->getSelectedWeapon()+1);
+	if ((this->getWeapons().size() - 1) == (this->getSelectedWeapon())) {
 		this->setSelectedWeapon(0);
 	} else {
 		this->setSelectedWeapon(this->getSelectedWeapon()+1);
-	}*/
+	}
 }
 
 
@@ -582,6 +639,11 @@ Personaje::~Personaje(){
 	}
 	if (hechizoActual != NULL) {
 		delete hechizoActual;
+	}
+
+	//Destroying weapons
+	for (unsigned int i = 0; i < this->getWeapons().size(); i++) {
+		delete this->getWeapons()[i];
 	}
 }
 
@@ -807,6 +869,39 @@ bool Personaje::hasShield()
 	return (this->shieldResistance>0);
 }
 
+std::vector<Weapon*>& Personaje::getWeapons() {
+	return this->weapons;
+}
+
+void Personaje::loadWeapons() {
+	//Initializing weapons
+	Sword* sword = new Sword();
+	sword->setOwner(this->getPlayerName());
+	
+	sword->initialize(true,1,this->modelo->getDanoMaximo(),this->modelo->getPrecisionMinima());
+	this->getWeapons().push_back(sword);
+
+	Bow* bow = new Bow();
+	bow->setOwner(this->getPlayerName());
+	bow->initialize(true,2,this->modelo->getDanoMaximo(),this->modelo->getPrecisionMinima());
+	this->getWeapons().push_back(bow);
+	HandGrenade* handGrenade = new HandGrenade();
+	handGrenade->setOwner(this->getPlayerName());
+	handGrenade->initialize(true,2,this->modelo->getDanoMaximo(),this->modelo->getPrecisionMinima());
+	this->getWeapons().push_back(handGrenade);
+	//this->setSelectedWeapon(WEAPON_SWORD); //selectedWeapon es la posicion en el vector de weapons, ver PersonajeConstantes.h
+	//this->setSelectedWeapon(WEAPON_BOW);
+	//this->setSelectedWeapon(WEAPON_ICE_INCANTATOR);
+	this->setSelectedWeapon(WEAPON_HAND_GRENADE);
+}
+
+void Personaje::setSelectedWeapon(unsigned value) {
+	this->selectedWeapon = value;
+}
+
+unsigned Personaje::getSelectedWeapon() {
+	return this->selectedWeapon;
+}
 
 bool Personaje::isWood()
 {

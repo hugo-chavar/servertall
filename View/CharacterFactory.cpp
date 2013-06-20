@@ -23,5 +23,6 @@ Personaje* CharacterFactory::createViewCharacter(std::string entityName, std::st
 	Personaje* newViewCharacter = new Personaje(this->createModelCharacter(entityName),entityName);
 	newViewCharacter->setPlayerName(playerName);
 	newViewCharacter->loadSprites();
+	newViewCharacter->loadWeapons();
 	return newViewCharacter;
 }

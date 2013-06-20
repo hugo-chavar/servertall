@@ -33,7 +33,7 @@ SDL_Rect Entity::posicionIsometricaPorTiles(int tileX,int tileY,Sprite* sprite) 
 
 void Entity::update() {
 	if (this->needsCountDown()) {
-		this->decreaseEndStatusTime(GameView::instance().getTimer()->getDeltaTime());
+		this->decreaseEndStatusTime();
 		if (this->endStatusTime == 0)
 			this->setStatus(ENTITY_NORMAL);
 	}
@@ -74,6 +74,10 @@ void Entity::setFogged(bool value) {
 	this->fogged = value;
 }
 
+bool Entity::isAlive() {
+	return true;
+}
+
 void Entity::resetSpriteState() {
 	this->freezedSpriteState = -1;
 }
@@ -90,6 +94,30 @@ unsigned Entity::getStatus() {
 	return this->status;
 }
 
+void Entity::setSprite(Sprite* sprite) {
+	this->sprite = sprite;
+}
+
+Sprite* Entity::getSprite() {
+	return this->sprite;
+}
+
+std::string Entity::getName() {
+	return this->name;
+}
+
+void Entity::setName(std::string value) {
+	this->name = value;
+}
+
+unsigned Entity::getTileWidth() {
+	return Game::instance().world()->tileWidth();
+}
+
+unsigned Entity::getTileHeight() {
+	return Game::instance().world()->tileHeight();
+}
+
 bool Entity::isImmobilized() {
 	return ((this->isFogged() )||(this->getStatus() == ENTITY_FROZEN));
 }
@@ -99,10 +127,10 @@ void Entity::iceUp(unsigned seconds) {
 	this->setEndStatusTime(static_cast<Uint32>(seconds*1000));
 }
 
-void Entity::decreaseEndStatusTime(float timeToDecrease) {
-	Uint32 aux = static_cast<Uint32>(timeToDecrease);
-	if (aux < this->endStatusTime)
-		this->endStatusTime -= aux;
+void Entity::decreaseEndStatusTime(/*float timeToDecrease*/) {
+	//Uint32 aux = static_cast<Uint32>(timeToDecrease);
+	if (this->getDeltaTime() < this->endStatusTime)
+		this->endStatusTime -= this->getDeltaTime();
 	else
 		this->setEndStatusTime(0);
 }

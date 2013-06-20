@@ -8,6 +8,9 @@
 #include "Entity.h"
 #include "Daniable.h"
 #include "Hechizo.h"
+#include "Weapon.h"
+#include "Sword.h"
+#include "Bow.h"
 
 class Personaje : public Entity, public Daniable {
 public:
@@ -57,6 +60,12 @@ public:
 	void setVidencia(bool vid);
 	void setVidTime(float time);
 	bool isWood();
+	std::vector<Weapon*>& getWeapons();
+	void setSelectedWeapon(unsigned value);
+	unsigned getSelectedWeapon();
+	void loadWeapons();
+	bool repositionToStrike();
+
 private:
 	//determina en que posicion del vector de sprites esta el sprite del estado actual
 	int calculateSpritePosition(int currentAnimationNumber);
@@ -103,9 +112,10 @@ private:
 	float vidTime;
 	float shieldAbsortion;
 	void manejarDano(float dano);
-
+	unsigned selectedWeapon;
 	std::string playerName;
 	std::string character_id;
+	std::vector<Weapon*> weapons;
 };
 
 #endif

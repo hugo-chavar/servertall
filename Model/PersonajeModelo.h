@@ -8,10 +8,10 @@
 #include "AnimatedEntity.h"
 #include "Positionable.h"
 #include "CharacterVision.h"
-#include "Weapon.h"
+#include "Directionable.h"
 
 
-class PersonajeModelo: public Positionable {
+class PersonajeModelo: public Positionable, public Directionable {
 
 public:
 	PersonajeModelo();
@@ -71,9 +71,13 @@ public:
 	void herir();
 	void morir();
 	void hacerMagia();
+	void setNoTarget();
 	//void setPosition(std::pair<int, int> pos);
 
 	void setCurrentWeaponIndex(unsigned int currentWeaponIndex);
+	void changeToAnimation(int animationNumber);
+	void changeToState(int addedState);
+	void defender();
 
 
 private:
@@ -90,12 +94,11 @@ private:
 	/*pair<int, int> moverse();*/
 	void moverse(std::pair<int, int>& destino, float &velocidadAni);
 	//void activarDesactivar();
-	void defender();
 	bool followingEnemy();
 	
 
 	bool perseguirEnemigo();
-	void resolverAnimacion(int animacionNueva);
+	//void resolverAnimacion(int animacionNueva);
 	void resetChar();
 
 	void initialize(int pos_x, int pos_y);
@@ -122,11 +125,8 @@ private:
 	//bool isInCenterTile;
 	bool following;
 
-	std::vector<model::Weapon*> weapons;
-
 	unsigned int currentWeaponIndex;
 
-	std::vector<model::Weapon*>& getWeapons();
 
 	//------------------------ATRIBUTOS (PONGAN ACA LOS ATRIBUTOS DEL PJ: VIDA, MAGIA, DAÑO, ETC)------------------------
 	float precisionMinima;

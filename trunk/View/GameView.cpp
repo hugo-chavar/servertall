@@ -38,7 +38,8 @@ void GameView::restart() {
 
 	Game::instance().restart();
 
-	bool mapInitialized = this->worldView.initialize();
+	if( !this->worldView.initialize())
+		return;
 
 	mission.initialize();
 }
@@ -355,7 +356,7 @@ bool GameView::isKnownByPlayer(Player player, std::pair<int,int> pos) {
 
 bool  GameView::isThereAPlayerInTile(pair <int,int> pos)
 {
-	for(int i=0;i<this->_players.size();i++)
+	for(unsigned i=0;i<this->_players.size();i++)
 	{
 		if(_players[i]->getCharacter()->getPosicionActualEnTiles()==pos)
 			return true;

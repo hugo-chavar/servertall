@@ -17,7 +17,7 @@
 //};
 //#endif
 
-class ItemView : public Entity,public Daniable
+class ItemView : public Daniable
 {
 
 protected:

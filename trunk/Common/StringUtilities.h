@@ -22,10 +22,11 @@ namespace stringUtilities {
 	//Metodo para convertir un string a int.
 	int stringToInt(const std::string Text);
 
+	//Metodo para convertir un string a float.
+	float stringToFloat(const std::string Text);
+
 	//Metodo para convertir un string a unsigned.
 	unsigned stringToUnsigned(const std::string Text);
-
-	float stringToFloat(const std::string Text);
 
 	//Metodo para convertir un int a string.
 	std::string intToString(int i);

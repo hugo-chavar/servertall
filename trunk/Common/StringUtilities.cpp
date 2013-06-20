@@ -55,6 +55,17 @@ namespace stringUtilities {
 		return paddedString;
 	}
 
+	float stringToFloat(const std::string Text) {
+		float result;
+		std::stringstream stringstream(Text);
+		return stringstream >> result ? result : 0;
+	}
+
+std::string substrAfterFirst(std::string cadena,char car)
+	{
+		return cadena.substr(cadena.find_first_of(car)+1);
+	}
+
 	int stringToInt(const std::string Text) {
 		int result;
 		std::stringstream stringstream(Text);
@@ -63,15 +74,6 @@ namespace stringUtilities {
 
 	unsigned stringToUnsigned(const std::string Text){
 		return static_cast<unsigned>(stringToInt(Text));
-	}
-
-	float stringToFloat(const std::string Text){
-		return atof(Text.c_str());
-	}
-
-	std::string substrAfterFirst(std::string cadena,char car)
-	{
-		return cadena.substr(cadena.find_first_of(car)+1);
 	}
 
 	std::string intToString(int i) {

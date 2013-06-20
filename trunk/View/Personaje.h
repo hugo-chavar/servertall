@@ -9,8 +9,6 @@
 #include "Daniable.h"
 #include "Hechizo.h"
 #include "Weapon.h"
-#include "Sword.h"
-#include "Bow.h"
 
 class Personaje : public Daniable {
 public:
@@ -67,7 +65,6 @@ public:
 	bool repositionToStrike();
 
 private:
-	//determina en que posicion del vector de sprites esta el sprite del estado actual
 	int calculateSpritePosition(int currentAnimationNumber);
 	void calcularvelocidadRelativa(std::pair<float, float>& factor);
 	void mover();

@@ -7,8 +7,6 @@
 #include "Game.h"
 #include "../View/GameView.h"
 #include "../View/Personaje.h"
-#include "Sword.h"
-#include "Bow.h"
 
 using namespace common;
 
@@ -23,8 +21,8 @@ PersonajeModelo::PersonajeModelo(int ActualX, int ActualY) {
 void PersonajeModelo::initialize(int pos_x, int pos_y) {
 
 	this->setPosition(std::make_pair(pos_x, pos_y));
-
-	this->targetParcial = this->target;
+	this->setNoTarget();
+	//this->targetParcial = this->target;
 	this->startPosition = this->target;
 	xPath = NULL;
 	yPath = NULL;
@@ -43,15 +41,6 @@ void PersonajeModelo::initialize(int pos_x, int pos_y) {
 	//vidaMaxima = DEFAULT_CHARACTER_MAX_LIFE;
 	//magiaMaxima = DEFAULT_CHARACTER_MAX_MAGIC;
 	isReseting = false;
-
-	//Initializing weapons
-	model::Sword* sword = new model::Sword();
-	sword->initialize(true,1,this->danoMaximo,this->precisionMinima); //sword->initialize(true,1,DEFAULT_CHARACTER_MAX_DAMAGE,DEFAULT_CHARACTER_MIN_PRECISION);
-	this->getWeapons().push_back(sword);
-
-	model::Bow* bow = new model::Bow();
-	bow->initialize(false,5,this->danoMaximo,this->precisionMinima); //bow->initialize(false,5,DEFAULT_CHARACTER_MAX_DAMAGE,DEFAULT_CHARACTER_MIN_PRECISION);
-	this->getWeapons().push_back(bow);
 }
 
 void PersonajeModelo::setAnimation(AnimatedEntity* ae) {
@@ -60,29 +49,43 @@ void PersonajeModelo::setAnimation(AnimatedEntity* ae) {
 
 void PersonajeModelo::herir() {
 	animacionActual = HERIR;
-	this->resolverAnimacion(animacionActual);
+	this->changeToAnimation(animacionActual);
 }
 
 void PersonajeModelo::hacerMagia() {
 	animacionActual = MAGIA;
-	this->resolverAnimacion(animacionActual);
+	this->changeToAnimation(animacionActual);
 }
 
 void PersonajeModelo::morir() {
 	animacionActual = MORIR;
-	this->resolverAnimacion(animacionActual);
+	this->changeToAnimation(animacionActual);
 }
 
-void PersonajeModelo::resolverAnimacion(int nuevaAnimacion) {
+void PersonajeModelo::changeToAnimation(int animationNumber) {
 	this->setAnimating(true);
-	this->target = this->getPosition();
-	this->targetParcial = this->target;
+	this->setNoTarget();
 	if (estado >= MOVIMIENTO) {
-		estado = estado + nuevaAnimacion - MOVIMIENTO;
+		this->changeToState(animationNumber - MOVIMIENTO);
 	} else {
-		estado = estado + nuevaAnimacion - PARADO;
+		this->changeToState(animationNumber - PARADO);
 	}
 }
+
+void PersonajeModelo::changeToState(int addedState) {
+	this->estado += addedState;
+}
+
+//void PersonajeModelo::resolverAnimacion(int nuevaAnimacion) {
+//	this->setAnimating(true);
+//	this->target = this->getPosition();
+//	this->targetParcial = this->target;
+//	if (estado >= MOVIMIENTO) {
+//		estado = estado + nuevaAnimacion - MOVIMIENTO;
+//	} else {
+//		estado = estado + nuevaAnimacion - PARADO;
+//	}
+//}
 
 float PersonajeModelo::getDanoMaximo() {
 	return this->danoMaximo;
@@ -94,18 +97,12 @@ float PersonajeModelo::getPrecisionMinima() {
 
 void PersonajeModelo::atacar() {
 		animacionActual = ATACAR;
-		this->resolverAnimacion(animacionActual);
+		this->changeToAnimation(animacionActual);
 }
 
 void PersonajeModelo::defender() {
 	animacionActual = DEFENDER;
-	this->target = this->getPosition();
-	this->targetParcial = this->target;
-	if (estado >= MOVIMIENTO) {
-		estado = estado + DEFENDER - MOVIMIENTO;
-	} else {
-		estado = estado + DEFENDER - PARADO;
-	}
+	this->changeToAnimation(animacionActual);
 }
 
 bool PersonajeModelo::estaAnimandose() {
@@ -439,11 +436,6 @@ PersonajeModelo::~PersonajeModelo(){
 	this->limpiarPath();
 	if (this->vision)
 		delete this->vision;
-
-	//Destroying weapons
-	for (unsigned int i = 0; i < this->getWeapons().size(); i++) {
-		delete this->getWeapons()[i];
-	}
 }
 
 void PersonajeModelo::setName(string nombreJugador) {
@@ -506,12 +498,13 @@ void PersonajeModelo::increaseSpeed(float factor)
 	}
 }
 
-std::vector<model::Weapon*>& PersonajeModelo::getWeapons() {
-	return this->weapons;
-}
-
 void PersonajeModelo::setCurrentWeaponIndex(unsigned int currentWeaponIndex) {
 	this->currentWeaponIndex = currentWeaponIndex;
+}
+
+void PersonajeModelo::setNoTarget() {
+	this->target = this->getPosition();
+	this->targetParcial = this->target;
 }
 
 //---------------------------Maybe useful in the future--------------------------------------

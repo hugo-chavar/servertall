@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Sprite.h"
+#include "GameDependent.h"
 
 
 
@@ -15,8 +16,11 @@ enum entityStatus_t {
 	ENTITY_FROZEN,
 	ENTITY_BLINKING,
 	ENTITY_NORMAL,
-	EXPLOSIVE_AVAILABLE,
+	EXPLOSIVE_INACTIVE,
+	EXPLOSIVE_FLYING,
 	EXPLOSIVE_EXPLOSION_COUNTDOWN,
+	EXPLOSIVE_BOUNCING,
+	EXPLOSIVE_BURNING,
 	EXPLOSIVE_EXPLOSION,
 	EXPLOSIVE_DUST_IN_THE_WIND,
 	ITEM_WAITING_REGENERATION
@@ -25,8 +29,8 @@ enum entityStatus_t {
 
 
 
-class Entity
-{
+class Entity : public GameDependent {
+
 protected:
 	SDL_Rect spriteRect;
 	Sprite * sprite;
@@ -35,6 +39,7 @@ protected:
 	Uint32 endStatusTime;
 	int freezedSpriteState;
 	unsigned status;
+	std::string name;
 
 public:
 	Entity();
@@ -49,12 +54,19 @@ public:
 	unsigned getStatus();
 	bool isImmobilized();
 	void setEndStatusTime(Uint32 endTime);
-	void decreaseEndStatusTime(float timeToDecrease);
+	void decreaseEndStatusTime();
 	void iceUp(unsigned seconds);
 	virtual bool isItem();
 	bool needsCountDown();
 	bool needsToBeCleaned();
 	string statusToString();
+	unsigned getTileWidth();
+	unsigned getTileHeight();
+	void setSprite(Sprite* sprite);
+	virtual bool isAlive();
+	Sprite* getSprite();
+	std::string getName();
+	void setName(std::string value);
 };
 
 #endif // _ENTITY_H_

@@ -18,8 +18,10 @@ Stage::~Stage() {
 	for (unsigned int i = 0; i < spriteArray.size(); i++) {
 		delete spriteArray[i];
 	}
-
 	spriteArray.clear();
+	
+	this->ammunitions.clear();
+
 	//if (_personaje){
 	//	delete _personaje;
 	//	_personaje = NULL;
@@ -128,10 +130,29 @@ bool Stage::initialize() {
 	return true;
 }
 
+Sprite* Stage::getSpriteWithName(string value) {
+    bool found = false;
+    map<string, int>::iterator it = mapEntityToSprite.begin();
+    while(it != mapEntityToSprite.end())
+    {
+        found = (it->first == value);
+        if(found)
+            break;
+        ++it;
+    }
+	if (found) {
+		int posSprite = mapEntityToSprite.at(value);
+		Sprite* auxSprite = spriteArray[posSprite];
+		return auxSprite;
+	} 
+	return NULL;
+}
+
 void Stage::update() {
 //	this->updateSprites();
 //	this->updateTiles();
 	this->updateItems();
+//	this->updateAmmunitions();
 //	_personaje->update();
 }
 
@@ -447,4 +468,26 @@ void Stage::relocateItem(pair<int,int>pos)
 		item->revive(REVIVE_UNCOVER_ITEM,pos);
 		this->getTileAt(pos)->setOtherEntity(item);
 	}
+}
+
+
+void Stage::updateAmmunitions() {
+	vector<Entity*>::iterator it;
+	it = ammunitions.begin();
+	while ( it != ammunitions.end()) {
+		if ((*it)->isAlive()) {
+			(*it)->update();
+			it++;
+		} else {
+			ammunitions.erase(it); //TODO: testear esto
+		}
+	}
+	//for (unsigned i = 0 ; i < this->ammunitions.size(); i++) {
+
+	//	this->ammunitions[i]->update();
+	//}
+}
+
+void Stage::addAmmunition(Entity * ammo) {
+	this->ammunitions.push_back(ammo);
 }

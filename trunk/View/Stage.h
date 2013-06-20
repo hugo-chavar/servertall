@@ -39,12 +39,16 @@ public:
 	//bool isThereAPlayerInTile(pair <int,int> pos);
 	void relocateItem(pair<int,int>pos);
 	void deleteStage();
+	Sprite* getSpriteWithName(string value);
+	void updateAmmunitions();
+	void addAmmunition(Entity * ammo);
 private:
 	ItemView* findDeathItem();
 	unsigned lastRegeneration;
 	StringQueue itemChanges;
 	vector<ItemView*> itemsArray;
 	vector<Sprite*> spriteArray;
+	vector<Entity*> ammunitions;
 	//Personaje* _personaje;
 	StageModel* worldModel;
 	map<string,int> mapEntityToSprite;

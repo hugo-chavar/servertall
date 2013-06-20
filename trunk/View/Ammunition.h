@@ -1,45 +1,47 @@
 #ifndef _AMMUNITION_H_
 #define _AMMUNITION_H_
 
-#include "Entity.h"
-#include "Personaje.h"
-#include "StringUtilities.h"
-#include "Daniable.h"
+#ifndef ammoType_t
+#define ammoType_t
+enum ammoType_t {
+	SWORD,
+	IMPACT_AMMO,
+	HAND_GRENADE,
+	BOMB,
+	ICE_BOMB
+};
+#endif
 
-class Ammunition : public Entity
-{
+#include <string>
+
+
+class Ammunition {
+
+private:
+	// ----- Static class members ----
+	static unsigned ammo_id_counter;
 
 protected:
-	unsigned state;
-	//bool alive;
-	//bool hidden;
-	string name;
-	string itemChangeToString(unsigned _state);
-	SDL_Rect hiddenSpriteRect;
-	Sprite * hiddenSprite;
-	void setHiddenRectangle(std::pair<int, int> pos, Sprite* sprite );
-	int regenerationTime;
-	bool canReviveForHimself;
-
+	// ----- Non-static class members ----
+	std::string owner;
+	unsigned ammunitionType;
+	float damage;
+	std::string ammo_id;
+	bool available;
 public:
-	void update();
-	Ammunition(string _name, Sprite* sprite);
+	
+	Ammunition();
 	~Ammunition();
-	virtual void modifyCharacter(Personaje* personaje);
-	void kill();
-	bool isAlive();
-	bool isHidden();
-	void uncover();
-	string getName();
-	//std::pair<int,int> getPos();
-	void setPos(std::pair<int,int> position);
-	void revive(unsigned _state,std::pair <int,int> _pos);
-	void recibirDano(float dano);
-	bool isItem();
-	//unsigned getState();
-	bool getCanReviveForHimself();
+	std::string getOwner();
+	void setOwner(std::string value);
+	std::string getAmmoId();
+	void setAmmoID(std::string value);
+	unsigned getAmmunitionType();
+	void setAmmunitionType(unsigned value);
+	float getDamage();
+	void setDamage(float value);
+	bool isAvailable();
+	void setAvailable(bool value);
 };
 
-
 #endif // _AMMUNITION_H_
-

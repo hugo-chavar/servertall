@@ -70,41 +70,37 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedEntity.cpp" />
-    <ClCompile Include="Bow.cpp" />
     <ClCompile Include="CharacterVision.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Configuration.cpp" />
+    <ClCompile Include="Directionable.cpp" />
     <ClCompile Include="EntityObject.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameDependent.cpp" />
     <ClCompile Include="ListaPath.cpp" />
-    <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="Mutex.cpp" />
     <ClCompile Include="Nodo.cpp" />
     <ClCompile Include="Par.cpp" />
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="PersonajeModelo.cpp" />
-    <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="ProjectileWeapon.cpp" />
     <ClCompile Include="Positionable.cpp" />
     <ClCompile Include="StageModel.cpp" />
     <ClCompile Include="StringQueue.cpp" />
-    <ClCompile Include="Sword.cpp" />
     <ClCompile Include="TileModel.cpp" />
-    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="YAMLParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedEntity.h" />
-    <ClInclude Include="Bow.h" />
     <ClInclude Include="CharacterVision.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="DataTypes.h" />
+    <ClInclude Include="Directionable.h" />
     <ClInclude Include="EntityObject.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameDependent.h" />
     <ClInclude Include="ListaPath.h" />
-    <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Mutex.h" />
     <ClInclude Include="Nodo.h" />
     <ClInclude Include="OpcionesJuego.h" />
@@ -112,14 +108,10 @@
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="PersonajeConstantes.h" />
     <ClInclude Include="PersonajeModelo.h" />
-    <ClInclude Include="Projectile.h" />
-    <ClInclude Include="ProjectileWeapon.h" />
     <ClInclude Include="Positionable.h" />
     <ClInclude Include="StageModel.h" />
     <ClInclude Include="StringQueue.h" />
-    <ClInclude Include="Sword.h" />
     <ClInclude Include="TileModel.h" />
-    <ClInclude Include="Weapon.h" />
     <ClInclude Include="YAMLParser.h" />
   </ItemGroup>
   <ItemGroup>

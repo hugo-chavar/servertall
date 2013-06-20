@@ -3,7 +3,11 @@
 #include "GameView.h"
 #include "Logger.h"
 #include "StringUtilities.h"
+#include "Sword.h"
+#include "Bow.h"
 #include "HandGrenade.h"
+#include "BombDropper.h"
+#include "WeaponIceIncantator.h"
 #include "../Model/OpcionesJuego.h"
 #include "../Model/Game.h"
 
@@ -446,7 +450,7 @@ void Personaje::resolverAtaque() {
 }
 
 void Personaje::atacar() {
-	if ((currentEnemy != NULL) && (currentEnemy->getPosition() == this->modelo->obtenerFrentePersonaje())) {
+if (currentEnemy != NULL) {
 		//common::Logger::instance().log("Enemy: going to attack  " );
 		this->getWeapons()[this->selectedWeapon]->setPosition(this->getPosition());
 		this->getWeapons()[this->selectedWeapon]->setDirection(this->modelo->getDirection());
@@ -455,9 +459,10 @@ void Personaje::atacar() {
 		if (!this->getWeapons()[this->selectedWeapon]->isInsideRange(currentEnemy->getPosition()))
 			return;
 		if(currentEnemy->isWood())
-			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_WOOD)+";"+stringUtilities::pairIntToString(this->getPosition()));//AGREGO SONIDO
+			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_WOOD)+";"+this->positionToString());//AGREGO SONIDO
 		else
-			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_SHIELD)+";"+stringUtilities::pairIntToString(this->getPosition()));//AGREGO SONIDO
+			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_SHIELD)+";"+this->positionToString());//AGREGO SONIDO
+		
 		
 		switch (this->selectedWeapon) {
 			case WEAPON_SWORD: {
@@ -481,11 +486,19 @@ void Personaje::atacar() {
 				this->modelo->defender();
 				break;
 			}
+			case WEAPON_BOMB_DROPPER: {
+				//ataque con bomba
+				this->getWeapons()[this->selectedWeapon]->strike(currentEnemy);
+				this->modelo->defender();
+				break;
+			}
+			case WEAPON_ICE_INCANTATOR: {
+				//ataque con varita magica
+				this->getWeapons()[this->selectedWeapon]->strike(currentEnemy);
+				this->modelo->defender();
+				break;
+			}
 		}
-
-		//this->resolverAtaque();
-		//this->modelo->atacar();
-
 		currentEnemy = NULL;
 	}
 }
@@ -892,14 +905,25 @@ void Personaje::loadWeapons() {
 	bow->setOwner(this->getPlayerName());
 	bow->initialize(true,2,this->modelo->getDanoMaximo(),this->modelo->getPrecisionMinima());
 	this->getWeapons().push_back(bow);
+
 	HandGrenade* handGrenade = new HandGrenade();
 	handGrenade->setOwner(this->getPlayerName());
 	handGrenade->initialize(true,2,this->modelo->getDanoMaximo(),this->modelo->getPrecisionMinima());
 	this->getWeapons().push_back(handGrenade);
-	//this->setSelectedWeapon(WEAPON_SWORD); //selectedWeapon es la posicion en el vector de weapons, ver PersonajeConstantes.h
+
+	BombDropper* bombDropper = new BombDropper();
+	bombDropper->setOwner(this->getPlayerName());
+	bombDropper->initialize(true,2,this->modelo->getDanoMaximo(),this->modelo->getPrecisionMinima());
+	this->getWeapons().push_back(bombDropper);
+	WeaponIceIncantator* weaponIceIncantator = new WeaponIceIncantator();
+	weaponIceIncantator->setOwner(this->getPlayerName());
+	weaponIceIncantator->initialize(true,2,this->modelo->getDanoMaximo(),this->modelo->getPrecisionMinima());
+	this->getWeapons().push_back(weaponIceIncantator);
+
+	this->setSelectedWeapon(WEAPON_SWORD); //selectedWeapon es la posicion en el vector de weapons, ver PersonajeConstantes.h
 	//this->setSelectedWeapon(WEAPON_BOW);
 	//this->setSelectedWeapon(WEAPON_ICE_INCANTATOR);
-	this->setSelectedWeapon(WEAPON_HAND_GRENADE);
+	//this->setSelectedWeapon(WEAPON_HAND_GRENADE);
 }
 
 void Personaje::setSelectedWeapon(unsigned value) {

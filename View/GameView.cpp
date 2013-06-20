@@ -168,7 +168,7 @@ void GameView::manageAnimationUpdate(string userID, string animation) {
 
 void GameView::changeWeapon(string userID, unsigned int weaponIndex) {
 	Player *player = findPlayer(userID);
-	player->getCharacter()->personajeModelo()->setCurrentWeaponIndex(weaponIndex);
+	player->getCharacter()->setSelectedWeapon(weaponIndex);
 }
 
 Daniable* GameView::getDaniableInTile(std::pair <int, int> tile) {

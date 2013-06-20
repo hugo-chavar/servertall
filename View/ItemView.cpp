@@ -5,7 +5,7 @@
 #define CONST_REGENERATION_TIME 30000
 
 
-ItemView::ItemView(string _name,unsigned _state,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite,bool _canReviveForHimself):Entity(_pos.first,_pos.second,sprite)
+ItemView::ItemView(string _name,unsigned _state,std::pair <int,int> _pos,Sprite* _hiddenSprite, Sprite* sprite,bool _canReviveForHimself):Daniable(_pos.first,_pos.second,sprite)
 {
 	//this->alive=true;
 	this->name=_name;

@@ -281,25 +281,32 @@ void Personaje::calcularSigTileAMover(){
 			} else {
 				currentAnimationNumber = modelo->mover(tile, velocidad);
 			}
-			if (this->modelo->estaAnimandose())
-				return;
-			this->setCurrentSpritePosition(this->calculateSpritePosition(currentAnimationNumber));
-			if (previousSpritePosition != this->currentSpritePosition) {
-				ePot.first = 0;
-				ePot.second = 0;
-			} 
-			//std::string aux = stringUtilities::floatToString(velocidad);
-			//common::Logger::instance().log("Velocidad: "+ aux);
-			if (velocidad != 0) {
-				//modelo->setIsInCenterTile(false);
-				modelo->setPosition(tile);
-			} else {
+		} else {
+			//common::Logger::instance().log("calcularSigTileAMover()  ENEMY IS NULL ");
+			currentAnimationNumber = modelo->mover(tile, velocidad);
+		}
+		//currentAnimationNumber = modelo->mover(tile, velocidad);
+		if (this->modelo->estaAnimandose())
+			return;
+		this->setCurrentSpritePosition(this->calculateSpritePosition(currentAnimationNumber));
+		//if (currentSpritePosition < 0)
+		//	this->currentSpritePosition = 0;
+		if (previousSpritePosition != this->currentSpritePosition) {
+			ePot.first = 0;
+			ePot.second = 0;
+		} 
+		//std::string aux = stringUtilities::floatToString(velocidad);
+		//common::Logger::instance().log("Velocidad: "+ aux);
+		if (velocidad != 0) {
+			//modelo->setIsInCenterTile(false);
+			modelo->setPosition(tile);
+		} else {
 
-				this->atacar();
-			}
-			if (modelo->getIsReseting()) {
-				this->reset();
-			}
+			this->atacar();
+		}
+		//common::Logger::instance().log("if (modelo->getIsReseting()) "+ stringUtilities::intToString(this->currentSpritePosition));
+		if (modelo->getIsReseting()) {
+			this->reset();
 		}
 	}
 }

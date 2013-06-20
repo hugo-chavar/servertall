@@ -1,6 +1,5 @@
 #include "Entity.h"
 #include "GameView.h"
-#include "TimeManager.h"
 
 Entity::Entity() {
 }
@@ -46,36 +45,9 @@ void Entity::update() {
 	}
 
 }
-//
-//void Entity::render(Camera& camera) {
-//	
-//	this->renderEntitySprite(this->spriteRect,this->sprite,camera);
-//	/*if (this->isImmobilized()) {
-//		if (this->isFogged())
-//			camera.render(spriteRect,sprite->getSurfaceAt(freezedSpriteState)->getBlackShadow());
-//		else
-//			camera.render(spriteRect,sprite->getSurfaceAt(freezedSpriteState)->getWhiteShadow());
-//	}
-//	camera.render(spriteRect,sprite->getSurfaceAt(freezedSpriteState)->getSurfaceToShow(this->isImmobilized()));*/
-//}
-//
-//void Entity::renderEntitySprite(SDL_Rect rect,Sprite * _sprite,Camera& camera)
-//{
-//	if (this->isImmobilized()) {
-//		if (this->isFogged())
-//			camera.render(rect,_sprite->getSurfaceAt(freezedSpriteState)->getBlackShadow());
-//		else
-//			camera.render(rect,_sprite->getSurfaceAt(freezedSpriteState)->getWhiteShadow());
-//	}
-//	camera.render(rect,_sprite->getSurfaceAt(freezedSpriteState)->getSurfaceToShow(this->isImmobilized()));
-//}
 
 void Entity::setFogged(bool value) {
 	this->fogged = value;
-}
-
-bool Entity::isAlive() {
-	return true;
 }
 
 void Entity::resetSpriteState() {
@@ -94,48 +66,23 @@ unsigned Entity::getStatus() {
 	return this->status;
 }
 
-void Entity::setSprite(Sprite* sprite) {
-	this->sprite = sprite;
-}
-
-Sprite* Entity::getSprite() {
-	return this->sprite;
-}
-
-std::string Entity::getName() {
-	return this->name;
-}
-
-void Entity::setName(std::string value) {
-	this->name = value;
-}
-
-unsigned Entity::getTileWidth() {
-	return Game::instance().world()->tileWidth();
-}
-
-unsigned Entity::getTileHeight() {
-	return Game::instance().world()->tileHeight();
-}
-
 bool Entity::isImmobilized() {
 	return ((this->isFogged() )||(this->getStatus() == ENTITY_FROZEN));
 }
 
-void Entity::iceUp(unsigned seconds) {
+void Entity::iceUp(float seconds) {
 	this->setStatus(ENTITY_FROZEN);
-	this->setEndStatusTime(static_cast<Uint32>(seconds*1000));
+	this->setEndStatusTime(seconds);
 }
 
-void Entity::decreaseEndStatusTime(/*float timeToDecrease*/) {
-	//Uint32 aux = static_cast<Uint32>(timeToDecrease);
+void Entity::decreaseEndStatusTime() {
 	if (this->getDeltaTime() < this->endStatusTime)
 		this->endStatusTime -= this->getDeltaTime();
 	else
 		this->setEndStatusTime(0);
 }
 
-void Entity::setEndStatusTime(Uint32 endTime) {
+void Entity::setEndStatusTime(float endTime) {
 	this->endStatusTime = endTime;
 }
 
@@ -165,6 +112,39 @@ bool Entity::needsToBeCleaned() {
 	return false;
 }
 
-string Entity::statusToString() {
+std::string Entity::statusToString() {
 	return stringUtilities::unsignedToString(this->getStatus());
+}
+
+void Entity::setSprite(Sprite* sprite) {
+	this->sprite = sprite;
+}
+
+Sprite* Entity::getSprite() {
+	return this->sprite;
+}
+
+unsigned Entity::getTileWidth() {
+	return Game::instance().world()->tileWidth();
+}
+
+unsigned Entity::getTileHeight() {
+	return Game::instance().world()->tileHeight();
+}
+
+void Entity::updateRectanglePosition(int x, int y) {
+	this->spriteRect.x = static_cast<Uint16>(x);
+	this->spriteRect.y = static_cast<Uint16>(y);
+}
+
+bool Entity::isAlive() {
+	return true;
+}
+
+std::string Entity::getName() {
+	return this->name;
+}
+
+void Entity::setName(std::string value) {
+	this->name = value;
 }

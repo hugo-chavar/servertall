@@ -14,13 +14,12 @@ private:
 public:
 	void initialize();
 	void updateFrame();
-	//void getNextFrame();
 	SpriteAnimado(AnimatedEntity* entity);
 	bool lastFrame();
 	void restart();
 	~SpriteAnimado();
 	void addSticks(float ticks);
 	float getDelay();
-	//void setCurrentState(unsigned state);
+	void setAccumulatedTime(float ticks);
 };
 

@@ -34,13 +34,6 @@ entidades:
       fps: 15
       delay: 3000
 
-    - nombre: capillaRoja		
-      imagen: ../Images/CapillaRoja0.png
-      ancho_base: 5		
-      alto_base: 5		
-      pixel_ref_x: 98	
-      pixel_ref_y: 89
-
     - nombre: fuente
       imagen: ../Images/fuente/
       ancho_base: 3
@@ -238,8 +231,8 @@ entidades:
       imagen: ../Images/redexplot/
       ancho_base: 1
       alto_base: 1
-      pixel_ref_x: 36
-      pixel_ref_y: 20
+      pixel_ref_x: 26
+      pixel_ref_y: 47
       fps: 15
       delay: 1000
 
@@ -257,59 +250,59 @@ escenarios:
       entidadesDef:  
          - {x: 0, y: 1, entidad: arbol}
          - {x: 0, y: 2, entidad: arbol}
-         - {x: 0, y: 3, entidad: arbol}
-         - {x: 0, y: 4, entidad: arbol}
-         - {x: 0, y: 5, entidad: arbol}
-         - {x: 0, y: 6, entidad: arbol}
+         - {x: 0, y: 23, entidad: arbol}
+         - {x: 0, y: 14, entidad: arbol}
+         - {x: 0, y: 25, entidad: arbol}
+         - {x: 0, y: 36, entidad: arbol}
          - {x: 0, y: 7, entidad: arbol}
          - {x: 0, y: 8, entidad: arbol}
          - {x: 0, y: 9, entidad: arbol}
          - {x: 0, y: 10, entidad: arbol}
-         - {x: 0, y: 11, entidad: arbol}
-         - {x: 0, y: 12, entidad: arbol}
-         - {x: 0, y: 13, entidad: arbol}
-         - {x: 0, y: 14, entidad: arbol}
+         - {x: 30, y: 11, entidad: arbol}
+         - {x: 30, y: 12, entidad: arbol}
+         - {x: 20, y: 13, entidad: arbol}
+         - {x: 20, y: 14, entidad: arbol}
          - {x: 0, y: 15, entidad: arbol}
          - {x: 0, y: 16, entidad: arbol}
          - {x: 1, y: 7, entidad: arbol}
          - {x: 1, y: 16, entidad: arbol}
          - {x: 2, y: 1, entidad: arbol}
-         - {x: 2, y: 2, entidad: arbol}
-         - {x: 2, y: 3, entidad: arbol}
-         - {x: 2, y: 4, entidad: arbol}
-         - {x: 2, y: 7, entidad: arbol}
-         - {x: 2, y: 10, entidad: arbol}
-         - {x: 2, y: 11, entidad: arbol}
-         - {x: 2, y: 12, entidad: arbol}
-         - {x: 2, y: 13, entidad: arbol}
+         - {x: 2, y: 22, entidad: arbol}
+         - {x: 2, y: 30, entidad: arbol}
+         - {x: 2, y: 43, entidad: arbol}
+         - {x: 2, y: 17, entidad: arbol}
+         - {x: 22, y: 10, entidad: arbol}
+         - {x: 22, y: 11, entidad: arbol}
+         - {x: 22, y: 12, entidad: arbol}
+         - {x: 22, y: 13, entidad: arbol}
          - {x: 2, y: 14, entidad: arbol}
          - {x: 2, y: 16, entidad: arbol}
          - {x: 3, y: 7, entidad: arbol}
-         - {x: 3, y: 14, entidad: arbol}
-         - {x: 3, y: 16, entidad: arbol}
-         - {x: 4, y: 0, entidad: arbol}
-         - {x: 4, y: 1, entidad: arbol}
-         - {x: 4, y: 7, entidad: arbol}
-         - {x: 4, y: 10, entidad: arbol}
-         - {x: 4, y: 14, entidad: arbol}
-         - {x: 4, y: 16, entidad: arbol}
-         - {x: 5, y: 1, entidad: arbol}
-         - {x: 5, y: 4, entidad: arbol}
-         - {x: 5, y: 7, entidad: arbol}
-         - {x: 5, y: 10, entidad: arbol}
-         - {x: 5, y: 14, entidad: arbol}
-         - {x: 5, y: 16, entidad: arbol}
-         - {x: 6, y: 2, entidad: arbol}
-         - {x: 6, y: 3, entidad: arbol}
-         - {x: 6, y: 4, entidad: arbol}
+         - {x: 31, y: 14, entidad: arbol}
+         - {x: 31, y: 16, entidad: arbol}
+         - {x: 14, y: 0, entidad: arbol}
+         - {x: 14, y: 1, entidad: arbol}
+         - {x: 14, y: 7, entidad: arbol}
+         - {x: 24, y: 10, entidad: arbol}
+         - {x: 34, y: 14, entidad: arbol}
+         - {x: 34, y: 16, entidad: arbol}
+         - {x: 35, y: 1, entidad: arbol}
+         - {x: 15, y: 4, entidad: arbol}
+         - {x: 15, y: 7, entidad: arbol}
+         - {x: 35, y: 10, entidad: arbol}
+         - {x: 50, y: 14, entidad: arbol}
+         - {x: 25, y: 16, entidad: arbol}
+         - {x: 36, y: 2, entidad: arbol}
+         - {x: 36, y: 3, entidad: arbol}
+         - {x: 36, y: 4, entidad: arbol}
          - {x: 6, y: 14, entidad: arbol}
          - {x: 6, y: 16, entidad: arbol}
          - {x: 7, y: 1, entidad: arbol}
-         - {x: 7, y: 10, entidad: arbol}
-         - {x: 7, y: 14, entidad: arbol}
-         - {x: 7, y: 16, entidad: arbol}
+         - {x: 27, y: 10, entidad: arbol}
+         - {x: 17, y: 14, entidad: arbol}
+         - {x: 37, y: 16, entidad: arbol}
          - {x: 8, y: 1, entidad: arbol}
-         - {x: 8, y: 2, entidad: arbol}
+         - {x: 28, y: 2, entidad: arbol}
          - {x: 8, y: 3, entidad: arbol}
          - {x: 8, y: 7, entidad: arbol}
          - {x: 8, y: 8, entidad: arbol}
@@ -319,17 +312,16 @@ escenarios:
          - {x: 8, y: 16, entidad: arbol}
          - {x: 9, y: 14, entidad: arbol}
          - {x: 9, y: 16, entidad: arbol}
-
-         - {x: 10, y: 10, entidad: arbol}
-         - {x: 10, y: 11, entidad: arbol}
-         - {x: 10, y: 12, entidad: arbol}
-         - {x: 10, y: 13, entidad: arbol}
-         - {x: 10, y: 14, entidad: arbol}
-         - {x: 11, y: 10, entidad: arbol}
-         - {x: 11, y: 14, entidad: arbol}
-         - {x: 12, y: 14, entidad: arbol}
-         - {x: 13, y: 10, entidad: arbol}
-         - {x: 13, y: 14, entidad: arbol}
+         - {x: 40, y: 10, entidad: arbol}
+         - {x: 40, y: 11, entidad: arbol}
+         - {x: 40, y: 12, entidad: arbol}
+         - {x: 20, y: 13, entidad: arbol}
+         - {x: 20, y: 14, entidad: arbol}
+         - {x: 21, y: 10, entidad: arbol}
+         - {x: 21, y: 14, entidad: arbol}
+         - {x: 32, y: 14, entidad: arbol}
+         - {x: 33, y: 10, entidad: arbol}
+         - {x: 33, y: 14, entidad: arbol}
          - {x: 14, y: 10, entidad: arbol}
          - {x: 14, y: 11, entidad: arbol}
          - {x: 14, y: 12, entidad: arbol}

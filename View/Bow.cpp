@@ -35,7 +35,7 @@ void Bow::strike(Daniable* target) {
 			arrow->setVelocity(150.0);//TODO: sacar harcodeo
 			arrow->initialize();
 			GameView::instance().getWorldView()->addAmmunition(arrow);
-			//TODO: put projectile into simulation entities list.
+			//sendCreationAmmunition(arrow->serialize());
 		}
 	}
 }

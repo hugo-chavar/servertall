@@ -4,8 +4,9 @@
 #include "Movable.h"
 #include "Daniable.h"
 #include "Explosive.h"
+#include "../DedicatedServer/Serializable.h"
 
-class Bomb: public Entity, public Explosive, public Positionable {
+class Bomb: public Entity, public Explosive, public Positionable, public Serializable {
 
 private:
 	SpriteAnimado * explosionSprite;
@@ -16,6 +17,8 @@ public:
 	bool isAlive();
 	void update();
 	void startCountDown(float seconds);
+	void deserialize(std::string in);
+	std::string serialize();
 };
 
 

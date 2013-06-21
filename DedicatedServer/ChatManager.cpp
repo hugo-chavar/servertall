@@ -39,8 +39,8 @@ void ChatManager::processRequests() {
 				client = NULL;
 				instructionOut.setOpCode(OPCODE_CHAT_MESSAGE_IN);
 				//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_USERD_ID,argument);
-				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_FROM,argument);
-				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MESSAGE,"---logged out---");
+				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_FROM,"Server");
+				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MESSAGE,"---"+argument+" logged out---");
 				this->getClients().addBroadcast(instructionOut,argument);
 				LOG_DEBUG("THE USER " + argument + " DISCONNECTED FROM CHAT");
 				//std::cout << "THE USER " << argument << " DISCONNECTED FROM CHAT" << std::endl;

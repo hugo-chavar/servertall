@@ -236,11 +236,27 @@ entidades:
       fps: 15
       delay: 1000
 
+    - nombre: blueexplosion
+      imagen: ../Images/bluexplot/
+      ancho_base: 1
+      alto_base: 1
+      pixel_ref_x: 26
+      pixel_ref_y: 47
+      fps: 15
+      delay: 1000
+
     - nombre: crystalBall
       imagen: ../Images/crystalBall.png
       ancho_base: 1		
       alto_base: 1		
       pixel_ref_x: 12	
+      pixel_ref_y: 0
+
+    - nombre: ItemIceSpell
+      imagen: ../Images/ItemIceSpell.png
+      ancho_base: 1		
+      alto_base: 1		
+      pixel_ref_x: 15	
       pixel_ref_y: 0
        
 escenarios: 

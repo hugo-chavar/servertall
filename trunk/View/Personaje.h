@@ -57,6 +57,10 @@ public:
 	void setVidCost(float cost);
 	void setVidencia(bool vid);
 	void setVidTime(float time);
+	bool hasIceSpell();
+	void setIceSpell(bool value);
+	bool hasWandSpell();
+	void setWandSpell(bool value);
 	bool isWood();
 	std::vector<Weapon*>& getWeapons();
 	void setSelectedWeapon(unsigned value);
@@ -70,7 +74,6 @@ private:
 	void calcularvelocidadRelativa(std::pair<float, float>& factor);
 	void mover();
 	void calcularSigTileAMover();
-	//realiza el desplazamiento en x y en y del sprite, de un tile a otro
 	void moverSprite(std::pair<float, float>& factor);
 	void moverSpriteEnX();
 	void moverSpriteEnY();
@@ -79,7 +82,7 @@ private:
 	void detenerAnimacion();
 	void setCurrentEnemy(int tileX, int tileY);
 	void atacar();
-	//void resolverAtaque();
+	void manejarDano(float dano);
 	void perseguirEnemigo();
 	void reset();
 	void stopProtectionSpell();
@@ -91,14 +94,13 @@ private:
 
 	PersonajeModelo* modelo;
 	std::vector<SpriteAnimado*> sprites;
-	float velocidad; //velocidad actual
-	int currentSpritePosition; //estado actual, si se mueve y en que dirección
-	std::pair<float, float> delta; //Cuanto recorrio en x y en y del movimiento
-	std::pair<float, float> ePot; //Cuanto se mueve por ciclo en x y en y
-	int serr; //variable usada para coordinar el movimiento en x y en y en la diagonal
+	float velocidad;
+	int currentSpritePosition;
+	std::pair<float, float> delta;
+	std::pair<float, float> ePot;
+	int serr;
 	//bool centeredInTile;
-	Daniable* currentEnemy; //el destruible que esta atacando el pj
-
+	Daniable* currentEnemy;
 	Hechizo* hechizoActual;
 	float protCost;
 	float protTime;
@@ -106,10 +108,12 @@ private:
 	float shieldResistance;
 	bool invulnerable;
 	bool videncia;
+	bool iceSpell;
+	bool wandSpell;
 	float vidCost;
 	float vidTime;
 	float shieldAbsortion;
-	void manejarDano(float dano);
+	
 	unsigned selectedWeapon;
 	std::string playerName;
 	std::string character_id;

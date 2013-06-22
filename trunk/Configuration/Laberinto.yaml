@@ -77,14 +77,14 @@ entidades:
        
     - nombre: frodo 
       imagen: ../Images/personajeVampiro/
-      pixel_ref_x: 48
-      pixel_ref_y: 64
+      pixel_ref_x: 65
+      pixel_ref_y: 75
       fps: 10 
 
     - nombre: mago 
       imagen: ../Images/personajeMago/
       pixel_ref_x: 65
-      pixel_ref_y: 70
+      pixel_ref_y: 75
       fps: 10 
        
     - nombre: caballo

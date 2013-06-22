@@ -1,0 +1,4 @@
+personajeVampiro
+
+pixel_Ref_X = 64
+pixel_Ref_Y = 80

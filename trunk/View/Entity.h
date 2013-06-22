@@ -39,6 +39,7 @@ protected:
 	float endStatusTime;
 	int freezedSpriteState;
 	unsigned status;
+	unsigned previousStatus;
 	std::string name;
 
 public:

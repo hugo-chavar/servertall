@@ -53,7 +53,9 @@ void ItemView::update()
 						else
 							regenerationTime=CONST_REGENERATION_TIME+rand()%VARIABLE_REGENERATION_TIME;
 					}
-			}
+			} else {
+				Entity::update();
+		}
 	}
 }
 

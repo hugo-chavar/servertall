@@ -736,7 +736,7 @@ std::string Personaje::updateToString() {
 		out.append("F");
 	}
 	out.append(";");
-	out.append(stringUtilities::intToString(this->getSelectedWeapon()));
+	out.append(stringUtilities::intToString(this->getSelectedWeapon())+","+stringUtilities::unsignedToString(this->weapons[this->getSelectedWeapon()]->getAmmo()));
 	out.append(";");
 	out.append(this->modelo->getVision()->updateToString());
 	return out;

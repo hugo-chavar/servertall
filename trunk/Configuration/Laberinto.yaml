@@ -258,7 +258,14 @@ entidades:
       alto_base: 1		
       pixel_ref_x: 15	
       pixel_ref_y: 0
-       
+
+    - nombre: ItemMagicWand
+      imagen: ../Images/ItemMagicWand.png
+      ancho_base: 1		
+      alto_base: 1		
+      pixel_ref_x: 17	
+      pixel_ref_y: 0
+
 escenarios: 
     - nombre: bosque_encantado 
       size_x: 50

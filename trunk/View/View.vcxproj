@@ -99,6 +99,8 @@
     <ClCompile Include="ItemFactoryView.cpp" />
     <ClCompile Include="ItemFlecha.cpp" />
     <ClCompile Include="ItemHProteccion.cpp" />
+    <ClCompile Include="ItemIceSpell.cpp" />
+    <ClCompile Include="ItemMagicWand.cpp" />
     <ClCompile Include="ItemTerremoto.cpp" />
     <ClCompile Include="ItemView.cpp" />
     <ClCompile Include="Lamp.cpp" />
@@ -148,6 +150,8 @@
     <ClInclude Include="ItemFactoryView.h" />
     <ClInclude Include="ItemFlecha.h" />
     <ClInclude Include="ItemHProteccion.h" />
+    <ClInclude Include="ItemIceSpell.h" />
+    <ClInclude Include="ItemMagicWand.h" />
     <ClInclude Include="ItemTerremoto.h" />
     <ClInclude Include="ItemView.h" />
     <ClInclude Include="Lamp.h" />

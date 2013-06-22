@@ -10,8 +10,10 @@
 #include "ItemTerremoto.h"
 #include "ItemFlecha.h"
 #include "ItemCrystallBall.h"
+#include "ItemMagicWand.h"
+#include "ItemIceSpell.h"
 
-#define NUMBERITEMS 10 // Cantidad de items implementados
+#define NUMBERITEMS 12 // Cantidad de items implementados
 
 class ItemFactoryView
 {

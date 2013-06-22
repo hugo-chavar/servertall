@@ -45,7 +45,6 @@ void GameView::restart() {
 
 	mission.initialize();
 
-	// AGREGADO AHORA
 	this->restartPlayers();
 }
 
@@ -259,10 +258,6 @@ void GameView::update() {
 	}
 	this->getTimer()->updateTime();
 	this->getWorldView()->update();
-	//if (mission.isGameOver() && mission.hasGameOverMessageBeenSent() && this->playersRestarting) {
-	//	this->playersRestarting = false;
-	//	GameView::instance().restart();
-	//}
 }
 
 void GameView::startUpdatingPlayer(string userID) {

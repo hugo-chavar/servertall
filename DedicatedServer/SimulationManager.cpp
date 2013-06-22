@@ -145,19 +145,12 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_RESTART_GAME);
 			if (argument == "RESTART GAME") {
 				this->numberOfRestartedClients++;
-				//Instruction instructionOut = this->manageInitSynchronize(userID);
-				//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "0");
-				//client->addInstruction(instructionOut);
 				if (numberOfRestartedClients >= GameView::instance().numberOfLoggedInPlayers()) {
 					GameView::instance().restart();
 					this->numberOfRestartedClients = 0;
 					
 					Instruction instructionOut = this->manageGeneralInitSynchronize(userID);
 					instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "0");
-					
-					//instructionOut.clear();
-					//instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
-					//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "1");
 					this->lastBroadcast = "";
 					this->getClients().addBroadcast(instructionOut);
 				}

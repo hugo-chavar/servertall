@@ -92,24 +92,23 @@ void Personaje::detenerAnimacion() {
 }
 
 void Personaje::animar() {
-
 	if (!this->modelo->estaAnimandose() || this->isImmobilized())
 		return;
 	int currentAnimationNumber = modelo->getEstado();
 	if (this->calculateSpritePosition(currentAnimationNumber) != this->getCurrentSpritePosition()) {
-		if (this->getCurrentSpritePosition() > static_cast<int>(sprites.size()-1)) {
+		if (!this->hasValidSprite()) {
 			GameView::instance().getErrorImage()->restart();
 		} else {
 			sprites[this->getCurrentSpritePosition()]->restart();
 		}
-		if (this->calculateSpritePosition(currentAnimationNumber) > static_cast<int>(sprites.size()-1)) {
+		if (!this->isThisSpriteValid(currentAnimationNumber)) {
 			GameView::instance().getErrorImage()->restart();
 		} else {
 			sprites[this->calculateSpritePosition(currentAnimationNumber)]->restart();
 		}
 	}
 	this->setCurrentSpritePosition(this->calculateSpritePosition(currentAnimationNumber));
-	if (this->currentSpritePosition > static_cast<int>(sprites.size()-1)) {
+	if (!this->hasValidSprite()) {
 		if (GameView::instance().getErrorImage()->lastFrame())
 			this->detenerAnimacion();
 	} else {
@@ -225,7 +224,7 @@ void Personaje::update() {
 	this->getWeapons()[WEAPON_HAND_GRENADE]->setRange((this->personajeModelo()->getVision()->getRangeVision())/2 + 1);
 	if (this->isImmobilized())
 		return;
-	if (this->getCurrentSpritePosition() > static_cast<int>(sprites.size()-1)) {
+	if (!this->hasValidSprite()) {
 		GameView::instance().getErrorImage()->updateFrame();
 	} else {
 		sprites[this->currentSpritePosition]->updateFrame();
@@ -438,16 +437,16 @@ void Personaje::recibirDano(float dano) {
 		GameView::instance().getWorldView()->relocateItem(this->getPosition());
 	}
 }
-
-void Personaje::resolverAtaque() {
-	float precision = Game::instance().getRandom();
-	if (precision >= this->modelo->getPrecisionMinima()) {
-		this->currentEnemy->recibirDano(this->modelo->getDanoMaximo());
-		if (!(this->currentEnemy->isAlive())) {
-			GameView::instance().getMission()->missionUpdate(currentEnemy, this->getPlayerName());
-		}
-	}
-}
+//
+//void Personaje::resolverAtaque() {
+//	float precision = Game::instance().getRandom();
+//	if (precision >= this->modelo->getPrecisionMinima()) {
+//		this->currentEnemy->recibirDano(this->modelo->getDanoMaximo());
+//		if (!(this->currentEnemy->isAlive())) {
+//			GameView::instance().getMission()->missionUpdate(currentEnemy, this->getPlayerName());
+//		}
+//	}
+//}
 
 void Personaje::atacar() {
 if (currentEnemy != NULL) {
@@ -509,8 +508,8 @@ void Personaje::setInvulnerable(bool inv) {
 
 void Personaje::setCurrentEnemy(int tileX, int tileY) {
 	std::pair<int, int> tileDestino(tileX, tileY);
-
 	if (modelo->isThereAnEnemy(tileX, tileY)) {
+		this->modelo->orientar(tileDestino);
 		currentEnemy = GameView::instance().getDaniableInTile(tileDestino);
 		if (currentEnemy == this) {
 			currentEnemy = NULL;
@@ -878,6 +877,11 @@ void Personaje::eatIfItem(std::pair<int, int> destino)
 
 bool Personaje::hasValidSprite() {
 	return ((this->getCurrentSpritePosition() <= static_cast<int>(sprites.size()-1))&&(this->getCurrentSpritePosition() >= 0));
+}
+
+
+bool Personaje::isThisSpriteValid(int currentAnimationNumber) {
+	return ((this->calculateSpritePosition(currentAnimationNumber) <= static_cast<int>(sprites.size()-1))&&(this->calculateSpritePosition(currentAnimationNumber) >= 0));
 }
 
 void Personaje::setShield(float resistance,float absortion)

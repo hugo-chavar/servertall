@@ -206,8 +206,8 @@ entidades:
       imagen: ../Images/hielo/
       ancho_base: 1
       alto_base: 1
-      pixel_ref_x: 0
-      pixel_ref_y: 30
+      pixel_ref_x: 12
+      pixel_ref_y: 12
       fps: 0
       delay: 0
 

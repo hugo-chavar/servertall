@@ -480,7 +480,8 @@ void Stage::updateAmmunitions() {
 		if ((*it)->isAlive()) {
 			(*it)->update();
 			if(((Ammunition*)(*it))->needsUpdates())
-				GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_AMMUNITION_CHANGE)+";"+((Serializable*)(*it))->serialize());
+				if ((*it)->getName() == "Arrow")
+				  GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_AMMUNITION_CHANGE)+";"+((Serializable*)(*it))->serialize());
 			it++;
 		} else {
 			ammunitions.erase(it); //TODO: testear esto

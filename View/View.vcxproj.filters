@@ -90,9 +90,6 @@
     <ClCompile Include="Ammunition.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="AmmunitionPool.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="Hechizo.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -237,9 +234,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Ammunition.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="AmmunitionPool.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Hechizo.h">

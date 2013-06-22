@@ -6,6 +6,8 @@
 #include "ItemFactoryView.h"
 #include <algorithm>
 #include "GameView.h"
+#include "Ammunition.h"
+#include "../DedicatedServer/Serializable.h"
 
 //#define START_LEVEL 0
 //#define EXTRA_TILES_TO_RENDER 9
@@ -152,7 +154,7 @@ void Stage::update() {
 //	this->updateSprites();
 //	this->updateTiles();
 	this->updateItems();
-//	this->updateAmmunitions();
+	this->updateAmmunitions();
 //	_personaje->update();
 }
 
@@ -477,15 +479,17 @@ void Stage::updateAmmunitions() {
 	while ( it != ammunitions.end()) {
 		if ((*it)->isAlive()) {
 			(*it)->update();
+			if(((Ammunition*)(*it))->needsUpdates())
+				GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_AMMUNITION_CHANGE)+";"+((Serializable*)(*it))->serialize());
 			it++;
 		} else {
 			ammunitions.erase(it); //TODO: testear esto
 		}
-	}
+	//}
 	//for (unsigned i = 0 ; i < this->ammunitions.size(); i++) {
 
 	//	this->ammunitions[i]->update();
-	//}
+	}
 }
 
 void Stage::addAmmunition(Entity * ammo) {

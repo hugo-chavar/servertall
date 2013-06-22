@@ -69,6 +69,7 @@ public:
 	void addEventUpdate(string _string);
 	string manageEventsUpdate();
 	string manageUpdate(StringQueue* queue);
+	void setPlayersRestarting(bool state);
 
 private:
 	GameView();
@@ -79,6 +80,7 @@ private:
 	SpriteAnimado* errorImage;
 	Mission mission;
 	StringQueue eventsUpdates;
+	bool playersRestarting;
 
 };
 

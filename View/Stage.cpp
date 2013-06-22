@@ -8,6 +8,9 @@
 #include "GameView.h"
 #include "Ammunition.h"
 #include "Arrow.h"
+#include "Bomb.h"
+#include "Grenade.h"
+//#include "IceBomb.h"
 //#include "../DedicatedServer/Serializable.h"
 
 //#define START_LEVEL 0
@@ -476,17 +479,28 @@ void Stage::relocateItem(pair<int,int>pos)
 void Stage::updateAmmunitions() {
 	vector<Entity*>::iterator it;
 	it = ammunitions.begin();
+	std::string data;
+	std::string evento = stringUtilities::intToString(EVENT_AMMUNITION_CHANGE) + ";";
 	while ( it != ammunitions.end()) {
+		if(((Ammunition*)(*it))->needsUpdates()) {
+			if (((*it)->getName() == "Arrow")||((*it)->getName() == "IceIncantation")) {
+				data = ((ImpactAmmo*)(*it))->serialize();
+			}
+			if ((*it)->getName() == "Bomb") {
+				data = ((Bomb*)(*it))->serialize();
+			}
+			//if ((*it)->getName() == "Grenade") {
+			//	data = ((Grenade*)(*it))->serialize();
+			//}
+			//if ((*it)->getName() == "IceBomb") {
+			//	data = ((IceBomb*)(*it))->serialize();
+			//}
+			GameView::instance().addEventUpdate(evento + data);
+		}
 		if ((*it)->isAlive()) {
 			(*it)->update();
-			if(((Ammunition*)(*it))->needsUpdates())
-				if ((*it)->getName() == "Arrow") {
-					std::string data = ((Arrow*)(*it))->serialize();
-					GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_AMMUNITION_CHANGE) + ";" + data);
-				}
 			it++;
 		} else {
-			 GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_AMMUNITION_DEATH)+";"+((Serializable*)(*it))->serialize());
 			ammunitions.erase(it); 
 		}
 	}

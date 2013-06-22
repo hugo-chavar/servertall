@@ -91,7 +91,6 @@ bool Bomb::needsUpdates() {
 	return true;
 }
 
-void Bomb::setNeedsUpdate(bool needs)
-{
+void Bomb::setNeedsUpdate(bool needs) {
 	this->needsUpdate=needs;
 }

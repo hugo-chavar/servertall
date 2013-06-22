@@ -29,7 +29,7 @@ void Bow::strike(Daniable* target) {
 			arrow->setTargetReached(false);
 			arrow->setOwner(this->getOwner());
 			arrow->setTargetTile(target->getPosition());
-			arrow->setInitialTile(this->getPosition());
+			arrow->setInitialTile(this->getPosition() + this->getDirection());
 			arrow->setDamage(this->getDamage());
 			arrow->setDirection(this->getDirection());
 			arrow->setVelocity(150.0);//TODO: sacar harcodeo

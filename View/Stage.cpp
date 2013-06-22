@@ -482,7 +482,10 @@ void Stage::updateAmmunitions() {
 	std::string data;
 	std::string evento = stringUtilities::intToString(EVENT_AMMUNITION_CHANGE) + ";";
 	while ( it != ammunitions.end()) {
-		if(((Ammunition*)(*it))->needsUpdates()) {
+		//if(((Ammunition*)(*it))->needsUpdates()) {
+
+		if ((*it)->isAlive()) {
+			(*it)->update();
 			if (((*it)->getName() == "Arrow")||((*it)->getName() == "IceIncantation")) {
 				data = ((ImpactAmmo*)(*it))->serialize();
 			}
@@ -495,10 +498,8 @@ void Stage::updateAmmunitions() {
 			//if ((*it)->getName() == "IceBomb") {
 			//	data = ((IceBomb*)(*it))->serialize();
 			//}
+			common::Logger::instance().log("alive "+ data);
 			GameView::instance().addEventUpdate(evento + data);
-		}
-		if ((*it)->isAlive()) {
-			(*it)->update();
 			it++;
 		} else {
 			ammunitions.erase(it); 

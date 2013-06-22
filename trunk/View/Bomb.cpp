@@ -69,7 +69,7 @@ void Bomb::startCountDown(float seconds) {
 
 void Bomb::deserialize(std::string in) {
 	std::vector<std::string> splittedIn;
-	stringUtilities::splitString(in,splittedIn,';');
+	stringUtilities::splitString(in,splittedIn,'?');
 
 	this->setName(splittedIn[0]);
 	this->setAmmoID(splittedIn[1]);
@@ -78,9 +78,9 @@ void Bomb::deserialize(std::string in) {
 
 std::string Bomb::serialize() {
 	std::string out = this->getName();
-	out.append(";");
+	out.append("?");
 	out.append(this->getAmmoId());
-	out.append(";");
+	out.append("?");
 	out.append(this->positionToString());
 	return out;
 }

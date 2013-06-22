@@ -13,6 +13,8 @@ Arrow::~Arrow() {
 
 void Arrow::impact(Daniable* daniable) {
 	if (daniable) {
+		if (daniable->getPosition() == this->getInitialTile())
+			return;
 		daniable->recibirDano(this->getDamage());
 		this->setTargetReached(true);
 		this->setAvailable(true);

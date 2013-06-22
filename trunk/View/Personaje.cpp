@@ -437,16 +437,6 @@ void Personaje::recibirDano(float dano) {
 		GameView::instance().getWorldView()->relocateItem(this->getPosition());
 	}
 }
-//
-//void Personaje::resolverAtaque() {
-//	float precision = Game::instance().getRandom();
-//	if (precision >= this->modelo->getPrecisionMinima()) {
-//		this->currentEnemy->recibirDano(this->modelo->getDanoMaximo());
-//		if (!(this->currentEnemy->isAlive())) {
-//			GameView::instance().getMission()->missionUpdate(currentEnemy, this->getPlayerName());
-//		}
-//	}
-//}
 
 void Personaje::atacar() {
 if (currentEnemy != NULL) {

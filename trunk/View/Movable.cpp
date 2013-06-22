@@ -102,7 +102,8 @@ void Movable::update() {
 void Movable::move() {
 	//common::Logger::instance().log("Ammo pos: " + stringUtilities::pairIntToString(this->getCurrentTile()));
 	std::pair<float, float> deltaMovement;
-	float deltaVelocity = this->getVelocity()*this->getDeltaTime();//0.02;//
+	float deltaTime = this->getDeltaTime()/1000;
+	float deltaVelocity = this->getVelocity()*deltaTime;
 	deltaMovement.first = deltaVelocity*this->getPixelDirection().first + this->remaining.first;
 	deltaMovement.second = deltaVelocity*this->getPixelDirection().second/2 + this->remaining.second;
 	float deltaFirst = (deltaMovement.first < 0) ? std::ceil(deltaMovement.first) : std::floor(deltaMovement.first);

@@ -7,7 +7,8 @@
 #include <algorithm>
 #include "GameView.h"
 #include "Ammunition.h"
-#include "../DedicatedServer/Serializable.h"
+#include "Arrow.h"
+//#include "../DedicatedServer/Serializable.h"
 
 //#define START_LEVEL 0
 //#define EXTRA_TILES_TO_RENDER 9
@@ -472,7 +473,6 @@ void Stage::relocateItem(pair<int,int>pos)
 	}
 }
 
-
 void Stage::updateAmmunitions() {
 	vector<Entity*>::iterator it;
 	it = ammunitions.begin();
@@ -480,16 +480,14 @@ void Stage::updateAmmunitions() {
 		if ((*it)->isAlive()) {
 			(*it)->update();
 			if(((Ammunition*)(*it))->needsUpdates())
-				if ((*it)->getName() == "Arrow")
-				  GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_AMMUNITION_CHANGE)+";"+((Serializable*)(*it))->serialize());
+				if ((*it)->getName() == "Arrow") {
+					std::string data = ((Arrow*)(*it))->serialize();
+					GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_AMMUNITION_CHANGE) + ";" + data);
+				}
 			it++;
 		} else {
-			ammunitions.erase(it); //TODO: testear esto
+			ammunitions.erase(it);
 		}
-	//}
-	//for (unsigned i = 0 ; i < this->ammunitions.size(); i++) {
-
-	//	this->ammunitions[i]->update();
 	}
 }
 

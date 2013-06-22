@@ -59,13 +59,12 @@ public:
 	void setVidTime(float time);
 	bool hasIceSpell();
 	void setIceSpell(bool value);
-	bool hasWandSpell();
-	void setWandSpell(bool value);
 	bool isWood();
 	std::vector<Weapon*>& getWeapons();
 	void setSelectedWeapon(unsigned value);
 	unsigned getSelectedWeapon();
 	void loadWeapons();
+	bool isValidWeapon();
 	bool repositionToStrike();
 	bool isThisSpriteValid(int currentAnimationNumber);
 

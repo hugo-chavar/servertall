@@ -35,9 +35,7 @@ Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	vidCost = 0;
 	vidTime = 0;
 	videncia = false;
-	//crearNombre(modelo->getName());
-
-	//this->modelo->getAnimation()->fps(static_cast<int>(this->modelo->getAnimation()->fps() * (this->modelo->getVelocidad()/2)));
+	this->setIceSpell(false);
 
 	this->setFogged(false);
 	//this->setCenteredInTile(true);
@@ -538,6 +536,14 @@ void Personaje::changeWeapon() {
 	}
 }
 
+bool Personaje::isValidWeapon() {
+	switch (this->getSelectedWeapon()) {
+	case WEAPON_ICE_BOMB_SPELL:
+		return this->hasIceSpell();
+		break;
+	}
+	return true;
+}
 
 void Personaje::processKeyCommand(char animacion) {
 	switch (animacion) {
@@ -551,6 +557,8 @@ void Personaje::processKeyCommand(char animacion) {
 				  }
 		case (OPCION_CAMBIAR_ARMA): {
 			this->changeWeapon();
+			while (!this->isValidWeapon())
+				this->changeWeapon();
 			break;
 				  }
 		default:;
@@ -933,12 +941,4 @@ bool Personaje::hasIceSpell() {
 
 void Personaje::setIceSpell(bool value) {
 	this->iceSpell = value;
-}
-
-bool Personaje::hasWandSpell() {
-	return this->wandSpell;
-}
-
-void Personaje::setWandSpell(bool value) {
-	this->wandSpell = value;
 }

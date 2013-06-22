@@ -7,6 +7,7 @@ Bomb::Bomb() {
 	this->setStatus(EXPLOSIVE_INACTIVE);
 	this->setSprite(this->getSpriteWithName(this->getName()));
 	explosionSprite = (SpriteAnimado*)(this->getSpriteWithName("redexplosion"));
+	this->setNeedsUpdate(false);
 }
 
 Bomb::~Bomb() {
@@ -43,7 +44,7 @@ void Bomb::update() {
 						GameView::instance().getMission()->missionUpdate(daniable, this->getOwner());
 				}
 			}
-
+			this->setNeedsUpdate(true);
 			//this->setSprite(explosionSprite);
 			//this->setRectangle(this->getPosition(),explosionSprite);
 			break;
@@ -81,4 +82,16 @@ std::string Bomb::serialize() {
 	out.append(";");
 	out.append(this->positionToString());
 	return out;
+}
+
+bool Bomb::needsUpdates() {
+	if(!this->needsUpdate)
+		return false;
+	this->needsUpdate=false;
+	return true;
+}
+
+void Bomb::setNeedsUpdate(bool needs)
+{
+	this->needsUpdate=needs;
 }

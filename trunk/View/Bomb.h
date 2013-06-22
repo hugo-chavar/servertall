@@ -10,7 +10,7 @@ class Bomb: public Entity, public Explosive, public Positionable, public Seriali
 
 private:
 	SpriteAnimado * explosionSprite;
-
+	bool needsUpdate;
 public:
 	Bomb();
 	~Bomb();
@@ -19,6 +19,8 @@ public:
 	void startCountDown(float seconds);
 	void deserialize(std::string in);
 	std::string serialize();
+	bool needsUpdates();
+	void setNeedsUpdate(bool needs);
 };
 
 

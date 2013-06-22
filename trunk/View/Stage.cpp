@@ -486,7 +486,8 @@ void Stage::updateAmmunitions() {
 				}
 			it++;
 		} else {
-			ammunitions.erase(it);
+			 GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_AMMUNITION_DEATH)+";"+((Serializable*)(*it))->serialize());
+			ammunitions.erase(it); 
 		}
 	}
 }

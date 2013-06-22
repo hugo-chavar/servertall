@@ -35,6 +35,7 @@ void HandGrenade::strike(Daniable* target) {
 			grenade->setVelocity(150.0);//TODO: sacar harcodeo
 			grenade->initialize();
 			GameView::instance().getWorldView()->addAmmunition(grenade);
+			grenade->setNeedsUpdate(true);
 			//TODO: put projectile into simulation entities list.
 		}
 	}

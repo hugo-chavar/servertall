@@ -70,6 +70,7 @@ void Grenade::update() {
 						GameView::instance().getMission()->missionUpdate(daniable, this->getOwner());
 				}
 			}
+			this->setNeedsUpdate(true);
 			break;
 		}
 		case EXPLOSIVE_BURNING: {
@@ -87,4 +88,17 @@ void Grenade::update() {
 		
 void Grenade::startCountDown(float seconds) {
 	this->setEndStatusTime(seconds);
+}
+
+bool Grenade::needsUpdates() {
+	if(!this->needsUpdate)
+		return false;
+	else if(this->status!=EXPLOSIVE_FLYING)
+		this->needsUpdate=false;
+	return true;
+}
+
+void Grenade::setNeedsUpdate(bool needs)
+{
+	this->needsUpdate=needs;
 }

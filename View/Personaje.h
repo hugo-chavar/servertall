@@ -63,6 +63,7 @@ public:
 	unsigned getSelectedWeapon();
 	void loadWeapons();
 	bool repositionToStrike();
+	bool isThisSpriteValid(int currentAnimationNumber);
 
 private:
 	int calculateSpritePosition(int currentAnimationNumber);
@@ -78,7 +79,7 @@ private:
 	void detenerAnimacion();
 	void setCurrentEnemy(int tileX, int tileY);
 	void atacar();
-	void resolverAtaque();
+	//void resolverAtaque();
 	void perseguirEnemigo();
 	void reset();
 	void stopProtectionSpell();

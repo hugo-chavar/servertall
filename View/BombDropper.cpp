@@ -31,6 +31,7 @@ void BombDropper::strike(Daniable*) {
 			bomb->setRectangle(bomb->getPosition(), bomb->getSprite() );
 			bomb->setDamage(this->getDamage());
 			bomb->startCountDown(5);
+			bomb->setNeedsUpdate(true);
 			//sendCreationAmmunition(bomb->serialize());
 			GameView::instance().getWorldView()->addAmmunition(bomb);
 		}

@@ -263,7 +263,7 @@ entidades:
       imagen: ../Images/ItemMagicWand.png
       ancho_base: 1		
       alto_base: 1		
-      pixel_ref_x: 17	
+      pixel_ref_x: 13
       pixel_ref_y: 0
 
 escenarios: 

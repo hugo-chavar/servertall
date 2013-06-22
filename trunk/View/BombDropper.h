@@ -17,8 +17,6 @@ public:
 	void strike(Daniable* target);
 	std::vector<Bomb*>& getBombs();
 	Bomb* getAvailableBomb();
-	unsigned getAmmo();
-	void setAmmo(unsigned ammo);
 	//----- Functional methods  -----
 	bool sameDirection(std::pair<int, int> tile);
 	bool isInsideRange(std::pair<int, int> tile);

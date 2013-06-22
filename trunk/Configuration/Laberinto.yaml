@@ -224,8 +224,8 @@ entidades:
       imagen: ../Images/bomb.png
       ancho_base: 1	
       alto_base: 1		
-      pixel_ref_x: 36
-      pixel_ref_y: 20
+      pixel_ref_x: 15
+      pixel_ref_y: 10
 
     - nombre: redexplosion
       imagen: ../Images/redexplot/

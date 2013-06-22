@@ -25,7 +25,8 @@ void ImpactAmmo::deserialize(std::string in) {
 	this->setName(splittedIn[0]);
 	this->setAmmoID(splittedIn[1]);
 	this->positionFromString(splittedIn[2]);
-	this->setCouldContinue(splittedIn[3] == "A");
+	this->directionFromString(splittedIn[3]);
+	this->setCouldContinue(splittedIn[4] == "A");
 }
 
 std::string ImpactAmmo::serialize() {
@@ -34,6 +35,8 @@ std::string ImpactAmmo::serialize() {
 	out.append(this->getAmmoId());
 	out.append("?");
 	out.append(this->positionToString());
+	out.append("?");
+	out.append(this->directionToString());
 	out.append("?");
 	if (this->isAlive())
 		out.append("A");

@@ -445,10 +445,10 @@ if (currentEnemy != NULL) {
 			return;
 		if (!this->getWeapons()[this->selectedWeapon]->isInsideRange(currentEnemy->getPosition()))
 			return;
-		if(currentEnemy->isWood())
-			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_WOOD)+";"+this->positionToString());//AGREGO SONIDO
-		else
-			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_SHIELD)+";"+this->positionToString());//AGREGO SONIDO
+		//if(currentEnemy->isWood())
+		//	GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_WOOD)+";"+this->positionToString());//AGREGO SONIDO
+		//else
+		//	GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_SHIELD)+";"+this->positionToString());//AGREGO SONIDO
 		
 		
 		switch (this->selectedWeapon) {

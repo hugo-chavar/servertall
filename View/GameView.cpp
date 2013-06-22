@@ -2,7 +2,9 @@
 #include "Daniable.h"
 
 
-GameView::GameView() { }
+GameView::GameView() {
+	this->playersRestarting = false;
+}
 
 GameView::~GameView() {
 	if (errorImage != NULL) {
@@ -42,6 +44,9 @@ void GameView::restart() {
 		return;
 
 	mission.initialize();
+
+	// AGREGADO AHORA
+	this->restartPlayers();
 }
 
 GameView& GameView::instance() {
@@ -243,6 +248,10 @@ bool GameView::isCharacterTypeValid(string characterType) {
 	return false;
 }
 
+void GameView::setPlayersRestarting(bool state) {
+	this->playersRestarting = state;
+}
+
 void GameView::update() {
 	for(unsigned i = 0; i < this->_players.size(); i++) {
 		if (_players[i]->isUpdating())
@@ -250,9 +259,10 @@ void GameView::update() {
 	}
 	this->getTimer()->updateTime();
 	this->getWorldView()->update();
-	if (mission.isGameOver() && mission.hasGameOverMessageBeenSent()) {
-		GameView::instance().restart();
-	}
+	//if (mission.isGameOver() && mission.hasGameOverMessageBeenSent() && this->playersRestarting) {
+	//	this->playersRestarting = false;
+	//	GameView::instance().restart();
+	//}
 }
 
 void GameView::startUpdatingPlayer(string userID) {

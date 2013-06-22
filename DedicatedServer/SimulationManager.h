@@ -30,6 +30,8 @@ private:
 	void processInstruction(Instruction instruction);
 
 	Instruction manageInitSynchronize(std::string userID);
+	
+	Instruction manageGeneralInitSynchronize(std::string userID);
 
 	void* run();
 

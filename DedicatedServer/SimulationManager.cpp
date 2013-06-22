@@ -143,19 +143,34 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 				GameView::instance().changeWeapon(userID,stringUtilities::stringToUnsigned(argument));
 			}
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_RESTART_GAME);
-			if (argument == "1") {
+			if (argument == "RESTART GAME") {
 				this->numberOfRestartedClients++;
-				Instruction instructionOut = this->manageInitSynchronize(userID);
-				instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "0");
-				client->addInstruction(instructionOut);
+				//Instruction instructionOut = this->manageInitSynchronize(userID);
+				//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "0");
+				//client->addInstruction(instructionOut);
 				if (numberOfRestartedClients >= GameView::instance().numberOfLoggedInPlayers()) {
+					GameView::instance().restart();
 					this->numberOfRestartedClients = 0;
-					GameView::instance().restartPlayers();
-					instructionOut.clear();
-					instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
-					instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "1");
+					
+					Instruction instructionOut = this->manageGeneralInitSynchronize(userID);
+					instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "0");
+					
+					//instructionOut.clear();
+					//instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
+					//instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "1");
 					this->lastBroadcast = "";
 					this->getClients().addBroadcast(instructionOut);
+				}
+			}
+			else {
+				if (argument == "RESTART CHARACTER") {
+					Instruction instructionOut;
+					instructionOut.clear();
+					instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
+					std::string characterInit = GameView::instance().managePlayerInitialSynch(userID);
+					instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
+					instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "1");
+					client->addInstruction(instructionOut);
 				}
 			}
 			break;
@@ -205,6 +220,18 @@ Instruction SimulationManager::manageInitSynchronize(std::string userID) {
 	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));
 	std::string characterInit = GameView::instance().managePlayerInitialSynch(userID);
 	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
+	std::string itemsInit = GameView::instance().getWorldView()->manageItemsInitialSynch();
+	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEMS_INIT,itemsInit);
+	std::string missionInit = GameView::instance().getMission()->manageMissionInitialSynch();
+	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_MISSION_INIT, missionInit);
+	return instructionOut;
+}
+
+Instruction SimulationManager::manageGeneralInitSynchronize(std::string userID) {
+	Instruction instructionOut;
+	instructionOut.clear();
+	instructionOut.setOpCode(OPCODE_INIT_SYNCHRONIZE);
+	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_STAGE_NUMBER, stringUtilities::intToString(Game::instance().stageActual()));
 	std::string itemsInit = GameView::instance().getWorldView()->manageItemsInitialSynch();
 	instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_ITEMS_INIT,itemsInit);
 	std::string missionInit = GameView::instance().getMission()->manageMissionInitialSynch();

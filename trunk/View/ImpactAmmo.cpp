@@ -34,6 +34,7 @@ std::string ImpactAmmo::serialize() {
 	out.append(this->getAmmoId());
 	out.append("?");
 	out.append(this->positionToString());
+	out.append("?");
 	if (this->isAlive())
 		out.append("A");
 	else

@@ -13,6 +13,8 @@ IceIncantation::~IceIncantation() {
 
 void IceIncantation::impact(Daniable* daniable) {
 	if (daniable) {
+		if (daniable->getPosition() == this->getInitialTile())
+			return;
 		GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ICESPELL_IMPACT)+";"+stringUtilities::pairIntToString(this->getCurrentTile()));
 		daniable->iceUp(5);
 		this->setTargetReached(true);

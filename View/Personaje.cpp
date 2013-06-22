@@ -847,16 +847,12 @@ bool Personaje::isItem()
 	return false;
 }
 
-void Personaje::eatIfItem(std::pair<int, int> destino)
-{
+void Personaje::eatIfItem(std::pair<int, int> destino) {
 	Entity * entity= GameView::instance().getWorldView()->getTileAt(destino)->getOtherEntity();
-	if(entity!=NULL)
-	{
-		if(entity->isItem())
-		{
+	if (entity != NULL) {
+		if(entity->isItem()) {
 			ItemView* item=(ItemView*)entity;
-			if(item->isAlive())
-			{
+			if(item->isAlive()) {
 				item->modifyCharacter(this);
 				item->kill();
 				GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_EAT_ITEM)+";"+stringUtilities::pairIntToString(this->getPosicionActualEnTiles()));
@@ -869,20 +865,17 @@ bool Personaje::hasValidSprite() {
 	return ((this->getCurrentSpritePosition() <= static_cast<int>(sprites.size()-1))&&(this->getCurrentSpritePosition() >= 0));
 }
 
-
 bool Personaje::isThisSpriteValid(int currentAnimationNumber) {
 	return ((this->calculateSpritePosition(currentAnimationNumber) <= static_cast<int>(sprites.size()-1))&&(this->calculateSpritePosition(currentAnimationNumber) >= 0));
 }
 
-void Personaje::setShield(float resistance,float absortion)
-{
+void Personaje::setShield(float resistance,float absortion) {
 	this->shieldResistance=resistance;
 	this->shieldAbsortion=absortion;
 }
 
-bool Personaje::hasShield()
-{
-	return (this->shieldResistance>0);
+bool Personaje::hasShield() {
+	return (this->shieldResistance > 0);
 }
 
 std::vector<Weapon*>& Personaje::getWeapons() {
@@ -930,7 +923,22 @@ unsigned Personaje::getSelectedWeapon() {
 	return this->selectedWeapon;
 }
 
-bool Personaje::isWood()
-{
+bool Personaje::isWood() {
 	return false;
+}
+
+bool Personaje::hasIceSpell() {
+	return this->iceSpell;
+}
+
+void Personaje::setIceSpell(bool value) {
+	this->iceSpell = value;
+}
+
+bool Personaje::hasWandSpell() {
+	return this->wandSpell;
+}
+
+void Personaje::setWandSpell(bool value) {
+	this->wandSpell = value;
 }

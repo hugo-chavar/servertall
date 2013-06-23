@@ -99,16 +99,24 @@ void Movable::update() {
 	this->verify();
 }
 
+void Movable::render(Camera& camera) {
+	//TODO: al metodo isAlive() llamar fuera de la clase y no entrar acá
+	if (!this->isAlive())
+		return;
+	//TODO: ver si necesito datos de la camara para calcular la posicion
+	this->updateRectanglePosition(this->getPosition().first, this->getPosition().second);
+	camera.render(this->spriteRect,this->sprite->getSurfaceAt(this->getOrientation())->getSurfaceToShow(false));
+}
+
 void Movable::move() {
-	//common::Logger::instance().log("Ammo pos: " + stringUtilities::pairIntToString(this->getCurrentTile()));
 	std::pair<float, float> deltaMovement;
-	float deltaTime = this->getDeltaTime()/1000;
-	float deltaVelocity = this->getVelocity()*deltaTime;
+	float deltaTime = this->getDeltaTime();
+	float deltaVelocity = this->getVelocity()*deltaTime;//0.02;//
 	deltaMovement.first = deltaVelocity*this->getPixelDirection().first + this->remaining.first;
 	deltaMovement.second = deltaVelocity*this->getPixelDirection().second/2 + this->remaining.second;
 	float deltaFirst = (deltaMovement.first < 0) ? std::ceil(deltaMovement.first) : std::floor(deltaMovement.first);
 	float deltaSecond = (deltaMovement.second < 0) ? std::ceil(deltaMovement.second):std::floor(deltaMovement.second);
-	if ( (std::abs(deltaFirst) > 0) && (std::abs(deltaSecond) == 0) && (std::abs(deltaMovement.second) > 0)) {
+	if ( this->goingDiagonal() && (std::abs(deltaFirst) > 0) && (std::abs(deltaSecond) == 0) && (std::abs(deltaMovement.second) > 0)) {
 		this->remaining.first = deltaMovement.first;
 		this->remaining.second = deltaMovement.second;
 	} else {
@@ -163,4 +171,8 @@ void Movable::initialize() {
 
 std::pair<int, int> Movable::whichTile(std::pair<int, int> pix) {
 	return this->pixelToTileCoordinates(std::make_pair(pix.first + this->getSprite()->relatx(), pix.second + this->getSprite()->relaty()));
+}
+
+bool Movable::goingDiagonal() {
+	return ((this->getPixelDirection().first != 0) && (this->getPixelDirection().second != 0));
 }

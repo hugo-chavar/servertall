@@ -756,6 +756,12 @@ std::string Personaje::updateToString() {
 	out.append(stringUtilities::intToString(this->weapons[this->getSelectedWeapon()]->getRange()));
 	out.append(";");
 	out.append(this->modelo->getVision()->updateToString());
+	out.append(";");
+	if(this->getStatus()==ENTITY_FROZEN){
+		out.append("T");
+	} else {
+		out.append("F");
+	}
 	return out;
 }
 

@@ -34,8 +34,14 @@ void Entity::update() {
 	if (this->needsCountDown()) {
 		this->decreaseEndStatusTime();
 		if (this->endStatusTime == 0)
-			//this->setStatus(ENTITY_NORMAL);
+		{
+			if(this->status==ENTITY_FROZEN && this->isItem())
+			{
+				GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_STOP_ITEMICEUP)+";"+((Daniable*)this)->positionToString());
+			}
+				//this->setStatus(ENTITY_NORMAL);
 			this->setStatus(previousStatus);
+		}
 	}
 	if (this->isImmobilized() && (this->freezedSpriteState < 0)) {
 		freezedSpriteState = sprite->getCurrentSurfaceNumber();

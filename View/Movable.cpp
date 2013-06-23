@@ -7,7 +7,6 @@ Movable::Movable() {
 	this->remaining = std::make_pair<float, float>(0, 0);
 	this->setTargetReached(false);
 	this->setCouldContinue(true);
-	//this->setBouncing(false);
 
 }
 
@@ -63,14 +62,6 @@ void Movable::setTargetReached(bool value) {
 bool Movable::isTargetReached() {
 	return this->targetReached;
 }
-//
-//void Movable::setBouncing(bool value) {
-//	this->bouncing = value;
-//}
-//
-//bool Movable::isBouncing() {
-//	return this->bouncing;
-//}
 
 void Movable::setCouldContinue(bool value) {
 	this->_couldContinue = value;
@@ -83,11 +74,6 @@ bool Movable::couldContinue() {
 bool Movable::isItem() {
 	return false;
 }
-
-//
-//string Movable::getName() {
-//	return this->name;
-//}
 
 // ------------------- Functional methods -------------------
 void Movable::update() {

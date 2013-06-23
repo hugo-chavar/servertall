@@ -107,15 +107,3 @@ bool TileModel::getHasHiddenItem()
 {
 	return this->hasHiddenItem;
 }
-
-//Item* TileModel::generateItem(float porcentage)
-//{
-//	ItemFactory factory;
-//	this->item=factory.createItem(porcentage,this->getPosition());
-//	return this->item;
-//}
-//
-//Item* TileModel::getItem()
-//{
-//	return this->item;
-//}

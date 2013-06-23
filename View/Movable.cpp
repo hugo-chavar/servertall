@@ -99,19 +99,10 @@ void Movable::update() {
 	this->verify();
 }
 
-void Movable::render(Camera& camera) {
-	//TODO: al metodo isAlive() llamar fuera de la clase y no entrar acá
-	if (!this->isAlive())
-		return;
-	//TODO: ver si necesito datos de la camara para calcular la posicion
-	this->updateRectanglePosition(this->getPosition().first, this->getPosition().second);
-	camera.render(this->spriteRect,this->sprite->getSurfaceAt(this->getOrientation())->getSurfaceToShow(false));
-}
-
 void Movable::move() {
 	std::pair<float, float> deltaMovement;
-	float deltaTime = this->getDeltaTime();
-	float deltaVelocity = this->getVelocity()*deltaTime;//0.02;//
+	float deltaTime = this->getDeltaTime()/1000;
+	float deltaVelocity = this->getVelocity()*deltaTime;
 	deltaMovement.first = deltaVelocity*this->getPixelDirection().first + this->remaining.first;
 	deltaMovement.second = deltaVelocity*this->getPixelDirection().second/2 + this->remaining.second;
 	float deltaFirst = (deltaMovement.first < 0) ? std::ceil(deltaMovement.first) : std::floor(deltaMovement.first);

@@ -219,6 +219,7 @@ void Personaje::update() {
 	this->updateProtectionSpell();
 	this->updateCrystallBall();
 	this->getWeapons()[WEAPON_BOW]->setRange((this->personajeModelo()->getVision()->getRangeVision())/2 + 1);
+	this->getWeapons()[WEAPON_ICE_INCANTATOR]->setRange((this->personajeModelo()->getVision()->getRangeVision())/2 + 2);
 	this->getWeapons()[WEAPON_HAND_GRENADE]->setRange((this->personajeModelo()->getVision()->getRangeVision())/2 + 1);
 	if (this->isImmobilized())
 		return;
@@ -449,17 +450,12 @@ void Personaje::recibirDano(float dano) {
 
 void Personaje::atacar() {
 if (currentEnemy != NULL) {
-		//common::Logger::instance().log("Enemy: going to attack  " );
 		this->getWeapons()[this->selectedWeapon]->setPosition(this->getPosition());
 		this->getWeapons()[this->selectedWeapon]->setDirection(this->modelo->getDirection());
 		if (!this->getWeapons()[this->selectedWeapon]->sameDirection(currentEnemy->getPosition()))
 			return;
 		if (!this->getWeapons()[this->selectedWeapon]->isInsideRange(currentEnemy->getPosition()))
 			return;
-		//if(currentEnemy->isWood())
-		//	GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_WOOD)+";"+this->positionToString());//AGREGO SONIDO
-		//else
-		//	GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_SHIELD)+";"+this->positionToString());//AGREGO SONIDO
 		
 		
 		switch (this->selectedWeapon) {
@@ -467,9 +463,6 @@ if (currentEnemy != NULL) {
 			//ataque con espada
 				this->getWeapons()[this->selectedWeapon]->strike(currentEnemy);
 				this->modelo->atacar();
-					//if (!(this->currentEnemy->isAlive()))
-					//	GameView::instance().getMission()->missionUpdate(currentEnemy, this->getPlayerName());
-					//currentEnemy = NULL;
 				break;
 			}
 			case WEAPON_BOW: {
@@ -492,8 +485,10 @@ if (currentEnemy != NULL) {
 			}
 			case WEAPON_ICE_INCANTATOR: {
 				//ataque con varita magica
-				this->getWeapons()[this->selectedWeapon]->strike(currentEnemy);
-				this->modelo->defender();
+				if (this->useMagic(15.0)) {
+					this->getWeapons()[this->selectedWeapon]->strike(currentEnemy);
+					this->modelo->defender();
+				}
 				break;
 			}
 		}
@@ -539,7 +534,6 @@ void Personaje::setDestino(int xTile, int yTile){
 }
 
 void Personaje::changeWeapon() {
-	//this->setSelectedWeapon(this->getSelectedWeapon()+1);
 	if ((this->getWeapons().size() - 1) == (this->getSelectedWeapon())) {
 		this->setSelectedWeapon(0);
 	} else {
@@ -756,6 +750,8 @@ std::string Personaje::updateToString() {
 	}
 	out.append(";");
 	out.append(stringUtilities::intToString(this->getSelectedWeapon())+","+stringUtilities::unsignedToString(this->weapons[this->getSelectedWeapon()]->getAmmo()));
+	out.append(";");
+	out.append(stringUtilities::intToString(this->weapons[this->getSelectedWeapon()]->getRange()));
 	out.append(";");
 	out.append(this->modelo->getVision()->updateToString());
 	return out;

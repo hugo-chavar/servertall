@@ -29,7 +29,7 @@ void WeaponIceIncantator::strike(Daniable* target) {
 			iceIncantation->setTargetReached(false);
 			iceIncantation->setOwner(this->getOwner());
 			iceIncantation->setTargetTile(target->getPosition());
-			iceIncantation->setInitialTile(this->getPosition());
+			iceIncantation->setInitialTile(this->getPosition() + this->getDirection());
 			iceIncantation->setDamage(this->getDamage());
 			iceIncantation->setDirection(this->getDirection());
 			iceIncantation->setVelocity(150.0);//TODO: sacar harcodeo

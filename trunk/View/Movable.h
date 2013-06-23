@@ -40,7 +40,6 @@ public:
 	//bool isBouncing();
 	//----- Functional methods  -----
 	void update();
-	void render(Camera& camera);
 	void move();
 	bool validTilePosition(std::pair<int, int> pixelPosition);
 	std::pair<int, int> whichTile(std::pair<int, int> pixel);

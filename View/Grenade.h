@@ -6,6 +6,7 @@
 #include "Explosive.h"
 #include "SpriteAnimado.h"
 
+
 class Grenade: public Movable, public Explosive {
 
 private:
@@ -17,6 +18,7 @@ public:
 	~Grenade();
 	bool isAlive();
 	void update();
+	std::string serialize();
 	void startCountDown(float seconds);
 	bool needsUpdates();
 	void setNeedsUpdate(bool needs);

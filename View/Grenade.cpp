@@ -85,7 +85,23 @@ void Grenade::update() {
 		}
 	}
 }
-		
+
+std::string Grenade::serialize() {
+	std::string out = this->getName();
+	out.append("?");
+	out.append(this->getAmmoId());
+	out.append("?");
+	out.append(this->positionToString());
+	out.append("?");
+	out.append(this->directionToString());
+	out.append("?");
+	if (this->isAlive())
+		out.append("A");
+	else
+		out.append("D");
+	return out;
+}
+
 void Grenade::startCountDown(float seconds) {
 	this->setEndStatusTime(seconds);
 }
@@ -93,7 +109,7 @@ void Grenade::startCountDown(float seconds) {
 bool Grenade::needsUpdates() {
 	if(!this->needsUpdate)
 		return false;
-	else if(this->status!=EXPLOSIVE_FLYING)
+	else if (this->status != EXPLOSIVE_FLYING)
 		this->needsUpdate=false;
 	return true;
 }

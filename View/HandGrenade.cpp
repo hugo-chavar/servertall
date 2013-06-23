@@ -29,7 +29,7 @@ void HandGrenade::strike(Daniable* target) {
 			grenade->setTargetReached(false);
 			grenade->setOwner(this->getOwner());
 			grenade->setTargetTile(target->getPosition());
-			grenade->setInitialTile(this->getPosition());
+			grenade->setInitialTile(this->getPosition() + this->getDirection());
 			grenade->setDamage(this->getDamage());
 			grenade->setDirection(this->getDirection());
 			grenade->setVelocity(150.0);//TODO: sacar harcodeo

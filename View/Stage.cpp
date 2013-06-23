@@ -348,9 +348,11 @@ void Stage::updateAmmunitions() {
 					data = ((Bomb*)(*it))->serialize();
 				}
 			}
-			//if ((*it)->getName() == "Grenade") {
-			//	data = ((Grenade*)(*it))->serialize();
-			//}
+			if ((*it)->getName() == "Grenade") {
+				if (((Grenade*)(*it))->needsUpdates()) {
+					data = ((Grenade*)(*it))->serialize();
+				}
+			}
 			//if ((*it)->getName() == "IceBomb") {
 			//	data = ((IceBomb*)(*it))->serialize();
 			//}

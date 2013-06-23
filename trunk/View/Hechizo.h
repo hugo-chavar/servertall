@@ -5,8 +5,9 @@
 
 #include <string.h>
 #include <string>
+#include "Explosive.h"
 
-class Hechizo {
+class Hechizo: public Explosive  {
 
 public:
 	Hechizo(float coste, std::string spellId);

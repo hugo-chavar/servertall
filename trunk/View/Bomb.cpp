@@ -21,13 +21,11 @@ void Bomb::update() {
 	switch (this->getStatus()){
 		case EXPLOSIVE_EXPLOSION_COUNTDOWN: {
 			this->decreaseEndStatusTime();
-			//common::Logger::instance().log("this->endStatusTime: " + stringUtilities::unsignedToString(static_cast<unsigned>(this->endStatusTime)));
 			if (this->endStatusTime == 0)
 				this->setStatus(EXPLOSIVE_EXPLOSION);
 			break;
 		}
 		case EXPLOSIVE_EXPLOSION: {
-			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_EXPLOSION)+";"+this->positionToString());
 			this->setStatus(EXPLOSIVE_BURNING);
 			explosionSprite->setAccumulatedTime(0.0);
 			explosionSprite->restart();
@@ -46,8 +44,6 @@ void Bomb::update() {
 				}
 			}
 			this->setNeedsUpdate(true);
-			//this->setSprite(explosionSprite);
-			//this->setRectangle(this->getPosition(),explosionSprite);
 			break;
 		}
 		case EXPLOSIVE_BURNING: {
@@ -82,6 +78,8 @@ std::string Bomb::serialize() {
 	out.append(this->getAmmoId());
 	out.append("?");
 	out.append(this->positionToString());
+	out.append("?");
+	out.append(this->statusToString());
 	return out;
 }
 

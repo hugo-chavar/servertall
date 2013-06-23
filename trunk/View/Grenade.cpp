@@ -99,6 +99,8 @@ std::string Grenade::serialize() {
 		out.append("A");
 	else
 		out.append("D");
+	out.append("?");
+	out.append(this->statusToString());
 	return out;
 }
 

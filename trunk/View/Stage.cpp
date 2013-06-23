@@ -184,127 +184,6 @@ void Stage::removeOtherEntity(pair <int,int> tile) {
 	this->getTileAt(tile)->setOtherEntity(NULL);
 }
 
-//TileView* Stage::getFirstMatch(std::pair<int,int> k) {
-//	TileView* aux = tileLevels.at(this->fixLevel(k));
-//	KeyPair position = aux->getPosition();
-//	while ((static_cast<int>(position.second) > k.second) && (aux)) {
-//		aux = aux->getNextTile();
-//		if (aux)
-//			position = aux->getPosition();
-//	}
-//	return aux;
-//}
-//
-//TileView* Stage::getLastMatch(TileView* firstMatch, std::pair<int,int> k) {
-//	TileView* aux = firstMatch;
-//	KeyPair position = aux->getPosition();
-//	while ((static_cast<int>(position.first) <= k.first) && (!aux->EOL())) {
-//		aux = aux->getNextTile();
-//		position = aux->getPosition();
-//	}
-//	return aux;
-//}
-//
-//void Stage::fixKeyLeftBottom(int level, std::pair<int,int> &k) {
-//	while (level < (k.first + k.second)) {
-//			k.first--;
-//	}
-//}
-//
-//void Stage::fixKeyRightBottom(int level, std::pair<int,int> &k) {
-//	while (level < (k.first + k.second)) {
-//			k.second--;
-//	}
-//}
-//
-//int Stage::fixLevel(std::pair<int,int> k) {
-//	int level = k.first + k.second;
-//	if (level > this->worldModel->maxLevels() ) {
-//		level = this->worldModel->maxLevels();
-//	}
-//	else if (level < START_LEVEL )
-//		level = START_LEVEL;
-//	return level;
-//}
-//
-//int Stage::fixStartLevel(int endLevel, std::pair<int,int> &ref) {
-//	int level = this->fixLevel(ref);
-//	if (((endLevel - level) < minLevelsInCamera) && (level > START_LEVEL)) {
-//		if ((endLevel - minLevelsInCamera) > START_LEVEL) {
-//			ref.first -= minLevelsInCamera - (endLevel - level);
-//			level = this->fixLevel(ref);
-//		}else {
-//			level = START_LEVEL;
-//		}
-//	}
-//	return level;
-//}
-//
-//void Stage::alignLevel(std::pair<int,int> &k1, std::pair<int,int> &k2) {
-//	int level1 = this->fixLevel(k1);
-//	int level2 = this->fixLevel(k2);
-//	while (level1 > level2 )  {
-//		k2.first++;
-//		level2 = this->fixLevel(k2);
-//	}
-//	while (level1 < level2 ) {
-//		k2.second--;
-//		level2 = this->fixLevel(k2);
-//	}
-//}
-
-// void Stage::calculateTilesToRender(Camera& camera) { 
-//	renderHelper.clear();
-//	std::pair<int,int> position = std::make_pair(static_cast<int>(camera.getOffsetX()),static_cast<int>(camera.getOffsetY()));
-//	std::pair<int,int> cameraReferenceTile = this->worldModel->pixelToTileCoordinates(position);
-//	cameraReferenceTile.second -= EXTRA_TILES_TO_RENDER;
-//	cameraReferenceTile.first -= EXTRA_TILES_TO_RENDER;
-//	std::pair<int,int> leftBottom = this->worldModel->pixelToTileCoordinatesInStage(make_pair(0,camera.getHeight()), camera.getOffsetX(), camera.getOffsetY());
-//	std::pair<int,int> rightBottom = this->worldModel->pixelToTileCoordinatesInStage(make_pair(camera.getWidth(),camera.getHeight()), camera.getOffsetX(), camera.getOffsetY());
-//	leftBottom.second += EXTRA_TILES_TO_RENDER;
-//	rightBottom.first += EXTRA_TILES_TO_RENDER;
-//	int endLevel = this->fixLevel(leftBottom);
-//	this->fixKeyLeftBottom(endLevel, leftBottom);
-//	this->alignLevel(leftBottom, rightBottom );
-//	int startLevel = this->fixStartLevel(endLevel, cameraReferenceTile);
-//	renderHelper.setStartLevel(startLevel);
-//	renderHelper.setEndLevel(endLevel);
-//	while (renderHelper.incomplete()) {
-//		TileView* firstMatch = this->getFirstMatch(leftBottom);
-//		TileView* lastMatch;
-//		if (firstMatch) {
-//			lastMatch = this->getLastMatch(firstMatch,rightBottom);
-//			renderHelper.addLevel(firstMatch,lastMatch);
-//		} else {
-//			renderHelper.setEmptyLevel();
-//		}
-//
-//		if (renderHelper.flip()) {
-//			leftBottom.first--;
-//			rightBottom.first--;
-//		} else {
-//			rightBottom.second--;
-//			leftBottom.second--;
-//		}
-//	}
-//
-//}
-
-//void Stage::render(Camera& camera) {
-//	this->calculateTilesToRender(camera);
-//	renderHelper.renderGround(camera);
-//	renderHelper.startRenderingEntities();
-//	int a = 0;
-//	while (renderHelper.hasLevelsToRender()) {
-//		a++;
-//		if (a == 53)
-//			a--;
-//		renderHelper.renderNextLevel(camera);
-//		if (renderHelper.shouldRenderThis(_personaje->getPosicionEnTiles(),_personaje->getPosicionActualEnTiles()))
-//			_personaje->render(camera);
-//	}
-//}
-
 void Stage::deleteStage() {
 	TileView* aux = this->firstTile;
 	TileView* nextAux;
@@ -314,7 +193,6 @@ void Stage::deleteStage() {
 		delete nextAux;
 	}
 	tilesMap.clear();
-
 	itemsArray.clear();
 }
 
@@ -483,14 +361,16 @@ void Stage::updateAmmunitions() {
 	std::string evento = stringUtilities::intToString(EVENT_AMMUNITION_CHANGE) + ";";
 	while ( it != ammunitions.end()) {
 		//if(((Ammunition*)(*it))->needsUpdates()) {
-
+		data = "";
 		if ((*it)->isAlive()) {
 			(*it)->update();
 			if (((*it)->getName() == "Arrow")||((*it)->getName() == "IceIncantation")) {
 				data = ((ImpactAmmo*)(*it))->serialize();
 			}
 			if ((*it)->getName() == "Bomb") {
-				data = ((Bomb*)(*it))->serialize();
+				if(((Bomb*)(*it))->needsUpdates()) {
+					data = ((Bomb*)(*it))->serialize();
+				}
 			}
 			//if ((*it)->getName() == "Grenade") {
 			//	data = ((Grenade*)(*it))->serialize();
@@ -498,8 +378,9 @@ void Stage::updateAmmunitions() {
 			//if ((*it)->getName() == "IceBomb") {
 			//	data = ((IceBomb*)(*it))->serialize();
 			//}
-			common::Logger::instance().log("alive "+ data);
-			GameView::instance().addEventUpdate(evento + data);
+			//common::Logger::instance().log("alive "+ data);
+			if (data != "")
+				GameView::instance().addEventUpdate(evento + data);
 			it++;
 		} else {
 			ammunitions.erase(it); 

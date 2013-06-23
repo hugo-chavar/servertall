@@ -3,13 +3,6 @@
 #ifndef PERSONAJECONSTANTES_H
 #define PERSONAJECONSTANTES_H
 
-//Fuente de texto
-
-#define FUENTE "../Fonts/Arial.ttf"
-
-#define VIVO 1
-#define MUERTO 0
-
 //Codigo de las animaciones
 
 #define ESTADO_ERROR -1

@@ -16,11 +16,11 @@ private:
 	std::pair<int, int> lastTile;
 	bool targetReached;
 	bool _couldContinue;
-	//bool bouncing;
 
 public:
 	Movable();
 	~Movable();
+
 	//----- Getters/Setters methods -----
 	void setVelocity(float value);
 	float getVelocity();
@@ -36,8 +36,7 @@ public:
 	bool isTargetReached();
 	void setCouldContinue(bool value);
 	bool couldContinue();
-	//void setBouncing(bool value);
-	//bool isBouncing();
+
 	//----- Functional methods  -----
 	void update();
 	void move();

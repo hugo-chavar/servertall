@@ -31,35 +31,6 @@ void Circle::initialize(pair<int, int> centerPoint, int range) {
 	this->setRadius(range);
 	this->setCenter(centerPoint);
 	this->initialize();
-	//int x = range, y = 0;
-	//int xChange = 1 - range*2;
-	//int yChange = 0;
-	//int rangeError = 0;
-
-	//while (x >= y) {
-	//	limits.insert(make_pair(x + this->center.first, y + this->center.second));
-	//	limits.insert(make_pair(y + this->center.first, x + this->center.second));
-	//	limits.insert(make_pair(-x + this->center.first, y + this->center.second));
-	//	limits.insert(make_pair(-y + this->center.first, x + this->center.second));
-	//	limits.insert(make_pair(-x + this->center.first, -y + this->center.second));
-	//	limits.insert(make_pair(-y + this->center.first, -x + this->center.second));
-	//	limits.insert(make_pair(x + this->center.first, -y + this->center.second));
-	//	limits.insert(make_pair(y + this->center.first, -x + this->center.second));
-
-	//	y++;
-	//	rangeError += yChange;
-	//	yChange += 2;
-	//	if(((rangeError << 1) + xChange) > 0)
-	//	{
-	//		x--;
-	//		rangeError += xChange;
-	//		xChange += 2;
-	//	}
-	//}
-	//vector <pair<int, int> > aux;
-	//std::copy(limits.begin(), limits.end(), std::inserter(aux, aux.begin()));
-	//std::sort (aux.begin(), aux.end(), comparator);
-	//orderedLimits.assign(aux.begin(),aux.end());
 }
 
 void Circle::fill() {

@@ -9,10 +9,9 @@ TileView::TileView(){
 	this->initialize();
 }
 
-TileView::TileView(TileModel* tModel){ //, Surface* fogSurface
+TileView::TileView(TileModel* tModel) {
 	this->initialize();
 	this->tileModel = tModel;
-	//this->fog = fogSurface;
 }
 
 TileView::~TileView(){

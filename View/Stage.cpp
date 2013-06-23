@@ -13,11 +13,9 @@
 //#include "IceBomb.h"
 //#include "../DedicatedServer/Serializable.h"
 
-//#define START_LEVEL 0
-//#define EXTRA_TILES_TO_RENDER 9
+
 
 Stage::Stage() {
-	//_personaje = NULL;
 }
 
 Stage::~Stage() {
@@ -28,10 +26,6 @@ Stage::~Stage() {
 	
 	this->ammunitions.clear();
 
-	//if (_personaje){
-	//	delete _personaje;
-	//	_personaje = NULL;
-	//}
 	deleteStage();
 }
 
@@ -114,25 +108,11 @@ void Stage::generateStage() {
 		itemsArray.push_back(item);
 	}
 }
-//
-//void Stage::setTilesInCamera(int w, int h) {
-//	unsigned horizontalTilesInCamera = static_cast<unsigned>(ceil(static_cast<float>(w) / DEFAULT_TILE_WIDTH));
-//	unsigned verticalTilesInCamera = static_cast<unsigned>(ceil(static_cast<float>(h) / DEFAULT_TILE_HEIGHT));
-//	minLevelsInCamera = horizontalTilesInCamera + verticalTilesInCamera;
-//}
 
 bool Stage::initialize() {
 	worldModel = Game::instance().world();
-	
 	this->loadSprites();
 	this->generateStage();
-
-	//if (!Game::instance().personaje()){
-	//	return false;
-	//}
-	//_personaje = new Personaje(Game::instance().personaje());
-	//_personaje->loadSprites();
-
 	return true;
 }
 
@@ -161,10 +141,6 @@ void Stage::update() {
 	this->updateAmmunitions();
 //	_personaje->update();
 }
-
-//Personaje* Stage::personaje() {
-//	return _personaje;
-//}
 
 TileView* Stage::getTileAt(KeyPair k) {
 	return tilesMap.at(k);

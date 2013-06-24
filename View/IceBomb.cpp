@@ -5,8 +5,7 @@ IceBomb::IceBomb() {
 	this->setName("IceBomb");
 	this->setAmmunitionType(BOMB);
 	this->setStatus(EXPLOSIVE_INACTIVE);
-	this->setSprite(this->getSpriteWithName(this->getName()));
-	explosionSprite = (SpriteAnimado*)(this->getSpriteWithName("redexplosion"));
+	explosionSprite = (SpriteAnimado*)(this->getSpriteWithName("blueexplosion"));
 	this->setNeedsUpdate(false);
 }
 
@@ -27,18 +26,21 @@ void IceBomb::update() {
 		}
 		case EXPLOSIVE_EXPLOSION: {
 			this->setStatus(EXPLOSIVE_BURNING);
-			explosionSprite->setAccumulatedTime(0.0);
 			explosionSprite->restart();
+			explosionSprite->advance();
+			explosionSprite->setAccumulatedTime(0.0);
 			this->setCenter(this->getPosition());
-			this->setRange(3);
+			this->setRange(4);
 			this->activate();
 			this->range.fill();
 			std::pair<int, int > aux;
 			while (this->range.hasNext()) {
 				aux = this->range.next();
-				Daniable* daniable = GameView::instance().getDaniableInTile(aux);
-				if (daniable) {
-					daniable->iceUp(5);
+				if (aux != this->getPosition() ) {
+					Daniable* daniable = GameView::instance().getDaniableInTile(aux);
+					if (daniable) {
+						daniable->iceUp(5);
+					}
 				}
 			}
 			this->setNeedsUpdate(true);

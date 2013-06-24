@@ -444,7 +444,7 @@ void Personaje::recibirDano(float dano) {
 	this->manejarDano(danoRecibido);
 	//vidaActual -= danoRecibido;
 	if (vidaActual > 0) {
-		this->modelo->herir();
+		//this->modelo->herir();
 	} else {
 		this->modelo->morir();
 		GameView::instance().getWorldView()->relocateItem(this->getPosition());

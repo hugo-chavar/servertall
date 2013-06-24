@@ -84,7 +84,7 @@ void Game::restart() {
 float Game::getRandom() {
 	float max = 1.0;
 	float min = 0.0;
-	return (float)(((float) rand() / (((float)RAND_MAX) + 1.0)) * (max-min+1) + min);
+	return ((float)rand()/(float)RAND_MAX);
 }
 
 EntityObject* Game::entityObjectAt(unsigned pos) {

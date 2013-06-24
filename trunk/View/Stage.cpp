@@ -10,7 +10,7 @@
 #include "Arrow.h"
 #include "Bomb.h"
 #include "Grenade.h"
-//#include "IceBomb.h"
+#include "IceBomb.h"
 //#include "../DedicatedServer/Serializable.h"
 
 
@@ -353,9 +353,11 @@ void Stage::updateAmmunitions() {
 					data = ((Grenade*)(*it))->serialize();
 				}
 			}
-			//if ((*it)->getName() == "IceBomb") {
-			//	data = ((IceBomb*)(*it))->serialize();
-			//}
+			if ((*it)->getName() == "IceBomb") {
+				if(((IceBomb*)(*it))->needsUpdates()) {
+					data = ((IceBomb*)(*it))->serialize();
+				}
+			}
 			//common::Logger::instance().log("alive "+ data);
 			if (data != "")
 				GameView::instance().addEventUpdate(evento + data);

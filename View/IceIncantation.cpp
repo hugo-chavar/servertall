@@ -17,7 +17,7 @@ void IceIncantation::impact(Daniable* daniable) {
 			return;
 		if(daniable->isItem())
 			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_ICESPELL_ITEMIMPACT)+";"+stringUtilities::pairIntToString(this->getCurrentTile()));
-		daniable->iceUp(5000);
+		daniable->iceUp(5);
 		this->setTargetReached(true);
 		this->setAvailable(true);
 	}

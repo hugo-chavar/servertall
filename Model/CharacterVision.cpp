@@ -12,7 +12,7 @@ CharacterVision::CharacterVision() {
 }
 
 CharacterVision::~CharacterVision() {
-
+	mapKnowledge.clear();
 }
 
 void CharacterVision::setRangeVision(int value) {

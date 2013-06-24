@@ -677,6 +677,8 @@ Personaje::~Personaje(){
 	for (unsigned int i = 0; i < this->getWeapons().size(); i++) {
 		delete this->getWeapons()[i];
 	}
+
+	delete(this->modelo);
 }
 
 PersonajeModelo* Personaje::personajeModelo(){

@@ -846,7 +846,7 @@ std::string Personaje::getCharacterId() {
 std::string Personaje::idToString() {
 	std::string out = this->getPlayerName();
 	out.append(";");
-	out.append(modelo->getName());
+	out.append(modelo->getAnimation()->name());
 	return out;
 }
 

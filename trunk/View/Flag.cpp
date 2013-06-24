@@ -13,6 +13,8 @@ Flag::Flag() {
 		if ((!GameView::instance().getWorldView()->getTileAt(position)->hasOtherEntity()) && (!GameView::instance().getWorldView()->getTileAt(position)->getRelatedTile()))
 			validPosition = true;
 	}
+	position.first = 0;
+	position.second = 0;
 	this->setPosition(position);
 	GameView::instance().getWorldView()->addOtherEntity(this->getPosition(), entity->name());
 	Game::instance().world()->getTileAt(this->getPosition())->setOtherEntity(entity);

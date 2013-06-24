@@ -40,6 +40,8 @@ void IceBomb::update() {
 					Daniable* daniable = GameView::instance().getDaniableInTile(aux);
 					if (daniable) {
 						daniable->iceUp(5);
+						if(daniable->isItem())
+							GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_ICESPELL_ITEMIMPACT)+";"+daniable->positionToString());
 					}
 				}
 			}

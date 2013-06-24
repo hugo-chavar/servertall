@@ -15,11 +15,13 @@ void Arrow::impact(Daniable* daniable) {
 	if (daniable) {
 		if (daniable->getPosition() == this->getInitialTile())
 			return;
-		if(daniable->isWood())
-			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_WOOD)+";"+daniable->positionToString());
-		else
-			GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_SHIELD)+";"+daniable->positionToString());
-		daniable->recibirDano(this->getDamage());
+		if (this->canHit()) {
+			if(daniable->isWood())
+				GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_WOOD)+";"+daniable->positionToString());
+			else
+				GameView::instance().addEventUpdate(stringUtilities::intToString(EVENT_SOUND_ATTACK_ON_SHIELD)+";"+daniable->positionToString());
+			daniable->recibirDano(this->getDamage());
+		}
 		this->setTargetReached(true);
 		this->setAvailable(true);
 		if (!(daniable->isAlive()))

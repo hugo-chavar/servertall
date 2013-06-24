@@ -15,7 +15,15 @@ public:
 	void verify();
 	virtual void impact(Daniable* ) = 0;
 	void deserialize(std::string in);
+	void setRange(int range);
+	int getRange();
+	void setPrecision(float precision);
+	bool canHit();
+	float getPrecision();
 	std::string serialize();
+private:
+	int range;
+	float precision;
 };
 
 

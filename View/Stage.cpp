@@ -95,7 +95,7 @@ void Stage::generateStage() {
 			tilePos = tileModel->getRelatedTile()->getPosition();
 			prevTile = tilesMap.at(tilePos);
 			currentTile->setRelatedTile(prevTile);
-		} else {
+		} else if  (!currentTile->hasOtherEntity()) {
 			ItemView* item = factory.generateRandomItem(Game::instance().world()->itemsPercentage(),HIDDEN_ITEM,currentTile->getPosition(),true);
 			if(item) {
 				itemsArray.push_back(item);

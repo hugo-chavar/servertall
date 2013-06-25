@@ -17,22 +17,6 @@ entidades:
       pixel_ref_y: 32
       fps: 15
       delay: 1000
-   
-    - nombre: arbolRojo 
-      imagen: ../Images/arbolRojo.png
-      ancho_base: 1 
-      alto_base: 1 
-      pixel_ref_x: 53
-      pixel_ref_y: 112
-       
-    - nombre: molino
-      imagen: ../Images/molino/
-      ancho_base: 2
-      alto_base: 2 
-      pixel_ref_x: 64
-      pixel_ref_y: 124
-      fps: 15
-      delay: 3000
 
     - nombre: fuente
       imagen: ../Images/fuente/
@@ -85,12 +69,6 @@ entidades:
       imagen: ../Images/personajeMago/
       pixel_ref_x: 65
       pixel_ref_y: 75
-      fps: 10 
-       
-    - nombre: caballo
-      imagen: ../Images/personajeCaballo/
-      pixel_ref_x: 74
-      pixel_ref_y: 80
       fps: 10 
 
     - nombre: caballoC

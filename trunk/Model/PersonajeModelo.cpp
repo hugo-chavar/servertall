@@ -188,32 +188,31 @@ int PersonajeModelo::getRefPixelY() {
 //-----------------Functional methods -----------------------
 
 void PersonajeModelo::herir() {
-	animacionActual = HERIR;
-	this->changeToAnimation(animacionActual);
+	this->changeToAnimation(HERIR);
 }
 
 void PersonajeModelo::morir() {
-	animacionActual = MORIR;
-	this->changeToAnimation(animacionActual);
+	this->changeToAnimation(MORIR);
 }
 
 
 void PersonajeModelo::atacar() {
-		animacionActual = ATACAR;
-		this->changeToAnimation(animacionActual);
+	this->changeToAnimation(ATACAR);
+	
 }
 
 void PersonajeModelo::defender() {
-	animacionActual = DEFENDER;
-	this->changeToAnimation(animacionActual);
+	this->changeToAnimation(DEFENDER);
 }
 
 void PersonajeModelo::hacerMagia() {
-	animacionActual = MAGIA;
-	this->changeToAnimation(animacionActual);
+	this->changeToAnimation(MAGIA);
 }
 
 void PersonajeModelo::changeToAnimation(int animationNumber) {
+	if (this->isAnimating)
+		return;
+	animacionActual = animationNumber;
 	this->setAnimating(true);
 	this->setNoTarget();
 	if (estado >= MOVIMIENTO) {

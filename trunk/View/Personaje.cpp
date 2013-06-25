@@ -86,7 +86,7 @@ bool Personaje::isCenteredInTile() {
 }
 
 void Personaje::detenerAnimacion() {
-	if (modelo->getEstado() == ATACAR) {
+	if ((modelo->getEstado() == ATACAR)&&(currentEnemy != NULL)) {
 		this->getWeapons()[WEAPON_SWORD]->strike(currentEnemy);
 		currentEnemy = NULL;
 	}

@@ -37,6 +37,7 @@ Personaje::Personaje(PersonajeModelo* pj,std::string char_id) {
 	vidTime = 0;
 	videncia = false;
 	this->setIceSpell(false);
+	this->setStatus(ENTITY_NORMAL);
 
 	this->setFogged(false);
 	//this->setCenteredInTile(true);
@@ -214,6 +215,12 @@ void Personaje::invocarMagia() {
 
 void Personaje::update() {
 	this->setFogged(!modelo->isActive());
+	if (this->getStatus() == ENTITY_FROZEN) {
+		this->decreaseEndStatusTime();
+		if (this->endStatusTime == 0) {
+			this->setStatus(ENTITY_NORMAL);
+		}
+	}
 	this->mover();
 	if (this->isCenteredInTile()) {
 		this->animar();
@@ -705,9 +712,7 @@ std::pair<int,int> Personaje::getPosicionActualEnTiles(){
 	return this->getPosition();
 }
 
-//tilex, tiley; pixelx, pixely; isFreezed; nro_status; nro_surface
 std::string Personaje::updateToString() {
-
 	std::string out = stringUtilities::pairIntToString(modelo->getPosition());
 	out.append(";");
 	out.append(stringUtilities::pairIntToString(this->getPixelPosition()));
@@ -767,15 +772,11 @@ std::string Personaje::updateToString() {
 	out.append(";");
 	out.append(this->modelo->getVision()->updateToString());
 	out.append(";");
-	if(this->getStatus()==ENTITY_FROZEN){
-		out.append("T");
-	} else {
-		out.append("F");
-	}
+	out.append(this->statusToString());
+
 	return out;
 }
 
-//tilex, tiley; pixelx, pixely; isFreezed; nro_status; nro_surface
 void Personaje::updateFromString(std::string data) {
 	vector <std::string> splittedData;
 	stringUtilities::splitString(data, splittedData, ';');
@@ -817,7 +818,6 @@ void Personaje::setPixelPosition(std::pair<int,int> pixel) {
 	spriteRect.y = static_cast< Sint16 >(pixel.second);
 }
 
-//tilex,tiley;pixelx,pixely;isFreezed;nro_status;nro_surface~datos_vision
 std::string Personaje::initToString() {
 	std::string out = this->updateToString();
 	out.append("~");
@@ -825,7 +825,6 @@ std::string Personaje::initToString() {
 	return out;
 }
 
-//tilex,tiley;pixelx,pixely;isFreezed;nro_status;nro_surface~datos_vision
 void Personaje::initFromString(std::string data) {
 	vector <std::string> splittedData;
 	stringUtilities::splitString(data, splittedData, '~');
@@ -875,8 +874,7 @@ void Personaje::rechargeMagic() {
 	magiaActual = modelo->getMagiaMaxima();
 }
 
-bool Personaje::isItem()
-{
+bool Personaje::isItem() {
 	return false;
 }
 
@@ -947,7 +945,7 @@ void Personaje::loadWeapons() {
 	iceBombDropper->initialize(true,2,this->modelo->getDanoMaximo(),this->modelo->getPrecisionMinima());
 	this->getWeapons().push_back(iceBombDropper);
 
-	this->setSelectedWeapon(WEAPON_SWORD); //selectedWeapon es la posicion en el vector de weapons, ver PersonajeConstantes.h
+	this->setSelectedWeapon(WEAPON_SWORD);
 	//this->setSelectedWeapon(WEAPON_BOW);
 	//this->setSelectedWeapon(WEAPON_ICE_INCANTATOR);
 	//this->setSelectedWeapon(WEAPON_HAND_GRENADE);

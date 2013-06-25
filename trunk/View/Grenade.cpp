@@ -48,8 +48,10 @@ void Grenade::update() {
 		case EXPLOSIVE_EXPLOSION_COUNTDOWN: {
 			this->decreaseEndStatusTime();
 			//common::Logger::instance().log("this->endStatusTime: " + stringUtilities::unsignedToString(static_cast<unsigned>(this->endStatusTime)));
-			if (this->endStatusTime == 0)
+			if (this->endStatusTime == 0) {
 				this->setStatus(EXPLOSIVE_EXPLOSION);
+				this->setNeedsUpdate(true);
+			}
 			break;
 		}
 		case EXPLOSIVE_EXPLOSION: {
@@ -79,6 +81,9 @@ void Grenade::update() {
 			this->decreaseEndStatusTime();
 			if ((this->endStatusTime == 0)&&(explosionSprite->lastFrame())) {
 				this->setStatus(EXPLOSIVE_DUST_IN_THE_WIND);
+				std::string data = this->serialize();
+				std::string evento = stringUtilities::intToString(EVENT_AMMUNITION_CHANGE) + ";";
+				GameView::instance().addEventUpdate(evento + data);
 				this->setAvailable(true);
 			}
 			break;
@@ -95,12 +100,9 @@ std::string Grenade::serialize() {
 	out.append("?");
 	out.append(this->directionToString());
 	out.append("?");
-	if (this->isAlive())
-		out.append("A");
-	else
-		out.append("D");
-	out.append("?");
 	out.append(this->statusToString());
+	out.append("?");
+	out.append(stringUtilities::pairIntToString(this->getTargetTile()));
 	return out;
 }
 

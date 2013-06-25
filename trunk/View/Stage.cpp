@@ -59,15 +59,13 @@ TileView* Stage::createTile(TileModel* tileModel) {
 	if (tile->hasOtherEntity()) {
 		posSpriteEntity = mapEntityToSprite.at(tile->getOtherEntityName());
 		tile->createOtherEntity(spriteArray[posSpriteEntity]);
-	}
-	else{
+	} else if (tile->getRelatedTile() == NULL) {
 		ItemFactoryView factory;
-		ItemView* item=factory.generateRandomItem(Game::instance().world()->itemsPercentage(),HIDDEN_ITEM,tile->getPosition(),true);//Harcodeo porcentaje de items
-		if(item)
-			{
-				itemsArray.push_back(item);
-				tile->setOtherEntity(item);
-			}	
+		ItemView* item = factory.generateRandomItem(Game::instance().world()->itemsPercentage(),HIDDEN_ITEM,tile->getPosition(),true);
+		if(item) {
+			itemsArray.push_back(item);
+			tile->setOtherEntity(item);
+		}	
 	}
 	tilesMap.insert(make_pair(tile->getPosition(), tile));
 	return tile;

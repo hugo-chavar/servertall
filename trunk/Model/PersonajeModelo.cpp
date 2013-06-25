@@ -192,6 +192,7 @@ void PersonajeModelo::herir() {
 }
 
 void PersonajeModelo::morir() {
+	this->terminarAnimacion();
 	this->changeToAnimation(MORIR);
 }
 

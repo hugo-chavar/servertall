@@ -193,8 +193,8 @@ entidades:
       imagen: ../Images/granada/
       ancho_base: 1
       alto_base: 1
-      pixel_ref_x: 16
-      pixel_ref_y: 0
+      pixel_ref_x: 12
+      pixel_ref_y: 12
       fps: 0
       delay: 0
 

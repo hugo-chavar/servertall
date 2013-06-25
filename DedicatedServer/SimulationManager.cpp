@@ -129,7 +129,6 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 		case OPCODE_CLIENT_COMMAND: {
 			LOG_DEBUG("PROCESSING COMMAND FROM CLIENT: " + instructionIn.serialize());
 			std::string userID = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_USER_ID);
-			client = this->getClients().getClient(userID);
 			argument = instructionIn.getArgument(INSTRUCTION_ARGUMENT_KEY_COMMAND_DESTINATION);
 			if (argument!="") {
 				GameView::instance().manageMovementUpdate(userID, argument);
@@ -163,7 +162,9 @@ void SimulationManager::processInstruction(Instruction instructionIn) {
 					std::string characterInit = GameView::instance().managePlayerInitialSynch(userID);
 					instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_CHARACTER_INIT, characterInit);
 					instructionOut.insertArgument(INSTRUCTION_ARGUMENT_KEY_RESTART, "1");
-					client->addInstruction(instructionOut);
+					client = this->getClients().getClient(userID);
+					if (client)
+						client->addInstruction(instructionOut);
 				}
 			}
 			break;

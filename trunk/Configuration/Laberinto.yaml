@@ -533,7 +533,7 @@ escenarios:
             - tipo: Lamp
               caracteristicas: incrementVision=2
             - tipo: RunningBoots
-              caracteristicas: factorVelocidad=2
+              caracteristicas: factorVelocidad=1.25
     - nombre: bosque_loco
       size_x: 20
       size_y: 20 

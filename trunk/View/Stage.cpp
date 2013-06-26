@@ -179,7 +179,7 @@ void Stage::deleteStage() {
 	vector<Entity*>::iterator it;
 	it = ammunitions.begin();
 	while (it != ammunitions.end()) {
-		((Ammunition*)*it)->setAvailable(false);
+		((Ammunition*)*it)->setAvailable(true);
 		ammunitions.erase(it);
 	}
 }

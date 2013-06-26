@@ -18,6 +18,17 @@ void Mission::initialize() {
 	}
 }
 
+void Mission::restart() {
+	this->gameOverMessageSent = false;
+	if (flagMission.isTheChosenMission()) {
+		flagMission.restart();
+	} else {
+		if (deathmatch.isTheChosenMission()) {
+			deathmatch.initialize();
+		}
+	}
+}
+
 bool Mission::chooseMission(string mission) {
 	if (mission.compare("flagMission") == 0) {
 		flagMission.choose();

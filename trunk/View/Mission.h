@@ -14,6 +14,7 @@ public:
 	Mission();
 	~Mission();
 	void initialize();
+	void restart();
 	bool chooseMission(string mission);
 	void missionUpdate(Daniable* victim, string attacker);
 	string manageMissionInitialSynch();

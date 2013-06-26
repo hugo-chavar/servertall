@@ -43,7 +43,7 @@ void GameView::restart() {
 	if( !this->worldView.initialize())
 		return;
 
-	mission.initialize();
+	mission.restart();
 
 	this->restartPlayers();
 }

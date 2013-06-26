@@ -542,7 +542,9 @@ void Personaje::setCurrentEnemy(int tileX, int tileY) {
 }
 
 void Personaje::perseguirEnemigo() {
-	
+	Daniable* enemy;
+
+	enemy = currentEnemy;
 	if (currentEnemy == NULL) {
 		this->modelo->setFollowingEnemy(false);
 		return;
@@ -550,6 +552,7 @@ void Personaje::perseguirEnemigo() {
 	if ((currentEnemy->getPosition() != modelo->getTarget()) && (modelo->canSee(currentEnemy->getPosition()))) {
 		setDestino(currentEnemy->getPosition().first, currentEnemy->getPosition().second);
 		this->modelo->setFollowingEnemy(true);
+		currentEnemy = enemy;
 		return;
 	}
 	if (!modelo->canSee(currentEnemy->getPosition())) {

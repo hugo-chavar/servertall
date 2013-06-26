@@ -103,6 +103,24 @@ std::string Grenade::serialize() {
 	out.append(this->statusToString());
 	out.append("?");
 	out.append(stringUtilities::pairIntToString(this->getTargetTile()));
+	out.append("?");
+	out.append(stringUtilities::pairIntToString(this->getCurrentTile()));
+	out.append("?");
+	out.append(stringUtilities::pairIntToString(this->getInitialTile()));
+	out.append("?");
+	out.append(stringUtilities::floatToString(this->getVelocity()));
+	out.append("?");
+	out.append(stringUtilities::pairIntToString(this->getLastTile()));
+	out.append("?");
+	if(this->couldContinue())
+		out.append("T");
+	else
+		out.append("F");
+	out.append("?");
+	if(this->isTargetReached())
+		out.append("T");
+	else
+		out.append("F");
 	return out;
 }
 

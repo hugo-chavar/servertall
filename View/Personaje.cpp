@@ -470,7 +470,10 @@ if (currentEnemy != NULL) {
 			return;
 		if (!this->getWeapons()[this->selectedWeapon]->isInsideRange(currentEnemy->getPosition()))
 			return;
-		
+		if (this->getWeapons()[this->selectedWeapon]->getAmmo() < 1) {
+			currentEnemy = NULL;
+			return;
+		}
 		
 		switch (this->selectedWeapon) {
 			case WEAPON_SWORD: {
@@ -783,7 +786,7 @@ std::string Personaje::updateToString() {
 	out.append(this->modelo->getVision()->updateToString());
 	out.append(";");
 	out.append(this->statusToString());
-
+	//common::Logger::instance().log("Update: "+ out);
 	return out;
 }
 
@@ -933,7 +936,7 @@ void Personaje::loadWeapons() {
 
 	Bow* bow = new Bow();
 	bow->setOwner(this->getPlayerName());
-	bow->initialize(true,2,this->modelo->getDanoMaximo(),this->modelo->getPrecisionMinima());
+	bow->initialize(true,2,this->modelo->getDanoMaximo(),this->modelo->getPrecisionMinima()*0.5);
 	this->getWeapons().push_back(bow);
 
 	HandGrenade* handGrenade = new HandGrenade();
@@ -947,7 +950,7 @@ void Personaje::loadWeapons() {
 	this->getWeapons().push_back(bombDropper);
 	WeaponIceIncantator* weaponIceIncantator = new WeaponIceIncantator();
 	weaponIceIncantator->setOwner(this->getPlayerName());
-	weaponIceIncantator->initialize(true,2,this->modelo->getDanoMaximo(),this->modelo->getPrecisionMinima());
+	weaponIceIncantator->initialize(true,2,this->modelo->getDanoMaximo(),this->modelo->getPrecisionMinima()*0.4);
 	this->getWeapons().push_back(weaponIceIncantator);
 
 	IceBombDropper* iceBombDropper = new IceBombDropper();

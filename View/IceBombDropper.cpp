@@ -2,7 +2,7 @@
 #include "IceBombDropper.h"
 
 IceBombDropper::IceBombDropper() {
-	this->setAmmo(5);//TODO: quitar harcodeo
+	this->setAmmo(1);
 	IceBomb* bomb = NULL;
 	for (unsigned int i = 0; i < BOMB_POOL_SIZE; i++) {
 		bomb = new IceBomb();
@@ -23,7 +23,7 @@ void IceBombDropper::strike(Daniable*) {
 	if (this->getAmmo() > 0) {
 		bomb = this->getAvailableBomb();
 		if (bomb != NULL) {
-			this->ammo--;
+			//this->ammo--;
 			bomb->setStatus(EXPLOSIVE_EXPLOSION_COUNTDOWN);
 			bomb->setOwner(this->getOwner());
 			bomb->setPosition(this->getPosition());

@@ -3,7 +3,7 @@
 #include "Sword.h"
 
 Sword::Sword() {
-	this->ammo=1;
+	this->setAmmo(1);
 }
 
 Sword::~Sword() {

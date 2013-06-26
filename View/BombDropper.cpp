@@ -2,7 +2,7 @@
 #include "BombDropper.h"
 
 BombDropper::BombDropper() {
-	this->setAmmo(5);//TODO: quitar harcodeo
+	this->setAmmo(5);
 	Bomb* bomb = NULL;
 	for (unsigned int i = 0; i < BOMB_POOL_SIZE; i++) {
 		bomb = new Bomb();

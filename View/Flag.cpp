@@ -25,7 +25,7 @@ string Flag::getName() {
 }
 
 void Flag::destroy() {
-	GameView::instance().getWorldView()->removeOtherEntity(this->getPosition());
+	//GameView::instance().getWorldView()->removeOtherEntity(this->getPosition());
 	Game::instance().world()->getTileAt(this->getPosition())->setOtherEntity(NULL);
 }
 

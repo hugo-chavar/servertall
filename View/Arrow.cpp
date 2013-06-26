@@ -12,7 +12,7 @@ Arrow::~Arrow() {
 }
 
 void Arrow::impact(Daniable* daniable) {
-	if (daniable) {
+	if ((daniable) && (daniable->isAlive())) {
 		if (daniable->getPosition() == this->getInitialTile())
 			return;
 		if (this->canHit()) {

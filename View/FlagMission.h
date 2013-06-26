@@ -15,6 +15,7 @@ public:
 	FlagMission();
 	~FlagMission();
 	void initialize();
+	void restart();
 	bool isTheChosenMission();
 	void choose();
 	bool allFlagsDestroyed();

@@ -41,7 +41,7 @@ bool HechizoTerremoto::startSpell(std::string actualCaster) {
 		while (this->range.hasNext()) {
 			aux = this->range.next();
 			Daniable* daniable = GameView::instance().getDaniableInTile(aux);
-			if (daniable) {
+			if ((daniable) && (daniable->isAlive())) {
 				if(daniable!=invocador){
 					daniable->recibirDano(30.0);
 					if (!(daniable->isAlive()))

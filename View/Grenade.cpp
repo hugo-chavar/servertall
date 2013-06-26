@@ -66,7 +66,7 @@ void Grenade::update() {
 			while (this->range.hasNext()) {
 				aux = this->range.next();
 				Daniable* daniable = GameView::instance().getDaniableInTile(aux);
-				if (daniable) {
+				if ((daniable) && (daniable->isAlive())) {
 					daniable->recibirDano(this->getDamage());
 					if (!(daniable->isAlive()))
 						GameView::instance().getMission()->missionUpdate(daniable, this->getOwner());

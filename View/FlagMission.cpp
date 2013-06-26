@@ -21,6 +21,15 @@ void FlagMission::initialize() {
 	}
 }
 
+void FlagMission::restart() {
+	for (int i=0; i<flags.size(); i++) {
+		if (flags[i])
+			delete flags[i];
+	}
+	flags.clear();
+	this->initialize();
+}
+
 bool FlagMission::isTheChosenMission() {
 	return chosen;
 }
@@ -54,8 +63,8 @@ void FlagMission::updateMissionStatus(Daniable* victim, string attacker) {
 			this->addChange("flagMission;D;"+flags[flagNumber]->getName()+";"+flags[flagNumber]->positionToString());
 			this->addChange("flagMission;A;banderaDestruida;"+flags[flagNumber]->positionToString());
 			flags[flagNumber]->destroy();
-			delete flags[flagNumber];
-			flags.erase(flags.begin()+flagNumber);
+			//delete flags[flagNumber];
+			//flags.erase(flags.begin()+flagNumber);
 			int score = GameView::instance().GameView::instance().findPlayer(attacker)->missionScore();
 			GameView::instance().findPlayer(attacker)->missionScore(score+1);
 		}
@@ -63,7 +72,13 @@ void FlagMission::updateMissionStatus(Daniable* victim, string attacker) {
 }
 
 bool FlagMission::allFlagsDestroyed() {
-	return flags.empty();
+	if (!flags.empty()) {
+		for (unsigned int i=0; i<this->flags.size(); i++) {
+			if (flags[i]->Daniable::isAlive())
+				return false;
+		}
+	}
+	return true;
 }
 
 string FlagMission::initToString() {

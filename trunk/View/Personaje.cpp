@@ -532,7 +532,9 @@ void Personaje::setCurrentEnemy(int tileX, int tileY) {
 			currentEnemy = NULL;
 		}
 	} else {
-		currentEnemy = NULL;
+		if (! modelo->canAttack(tileX, tileY)) {
+			currentEnemy = NULL;
+		}
 	}
 }
 

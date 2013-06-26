@@ -24,7 +24,6 @@ public:
 	bool readyToStrike(std::pair<int, int> tile);
 private:
 	std::vector<Bomb*> bombs;
-	unsigned ammo;
 	unsigned nextBombIndex;
 	unsigned getNextBombIndex();
 	void setNextBombIndex(unsigned value);

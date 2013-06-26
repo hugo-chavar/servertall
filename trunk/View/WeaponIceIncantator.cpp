@@ -3,7 +3,7 @@
 #include "IceIncantation.h"
 
 WeaponIceIncantator::WeaponIceIncantator() {
-	this->setAmmo(500);//TODO: quitar harcodeo
+	this->setAmmo(5);
 	IceIncantation* iceIncantation = NULL;
 	for (unsigned int i = 0; i < ICE_INCANTATOR_POOL_SIZE; i++) {
 		iceIncantation = new IceIncantation();
@@ -32,7 +32,7 @@ void WeaponIceIncantator::strike(Daniable* target) {
 			iceIncantation->setInitialTile(this->getPosition() + this->getDirection());
 			iceIncantation->setDamage(this->getDamage());
 			iceIncantation->setDirection(this->getDirection());
-			iceIncantation->setVelocity(150.0);//TODO: sacar harcodeo
+			iceIncantation->setVelocity(190.0);
 			iceIncantation->resetTileCount();
 			iceIncantation->setPrecision(this->getPrecision());
 			iceIncantation->setRange(this->getRange());

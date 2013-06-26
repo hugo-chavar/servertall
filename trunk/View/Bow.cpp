@@ -3,7 +3,7 @@
 #include "Arrow.h"
 
 Bow::Bow() {
-	this->setAmmo(5);//TODO: quitar harcodeo
+	this->setAmmo(10);
 	Arrow* arrow = NULL;
 	for (unsigned int i = 0; i < ARROW_POOL_SIZE; i++) {
 		arrow = new Arrow();
@@ -32,7 +32,7 @@ void Bow::strike(Daniable* target) {
 			arrow->setInitialTile(this->getPosition() + this->getDirection());
 			arrow->setDamage(this->getDamage());
 			arrow->setDirection(this->getDirection());
-			arrow->setVelocity(150.0);//TODO: sacar harcodeo
+			arrow->setVelocity(170.0);
 			arrow->resetTileCount();
 			arrow->setPrecision(this->getPrecision());
 			arrow->setRange(this->getRange());

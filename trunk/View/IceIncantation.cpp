@@ -4,7 +4,6 @@
 IceIncantation::IceIncantation():ImpactAmmo() {
 	this->setName("IceIncantation");
 	this->setAmmunitionType(IMPACT_AMMO);
-	//this->setDamage(50.0);
 	this->setSprite(this->getSpriteWithName(this->getName()));
 }
 

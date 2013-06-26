@@ -175,6 +175,13 @@ void Stage::deleteStage() {
 	}
 	tilesMap.clear();
 	itemsArray.clear();
+
+	vector<Entity*>::iterator it;
+	it = ammunitions.begin();
+	while (it != ammunitions.end()) {
+		((Ammunition*)*it)->setAvailable(false);
+		ammunitions.erase(it);
+	}
 }
 
 
